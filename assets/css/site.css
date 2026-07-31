@@ -1,0 +1,1141 @@
+/* =============================================================================
+   iNexa — Marketing site layer
+   Requires inexa-tokens.css then inexa-components.css.
+
+   Everything here is composed from the design-system tokens. There are no raw
+   hex values, no unapproved hues, no gradients on any surface, and no motion
+   longer than the slow duration token. Prefixed nx- so it never collides with
+   the inx- system layer.
+   ========================================================================== */
+
+/* -----------------------------------------------------------------------------
+   PAGE FRAME
+   -------------------------------------------------------------------------- */
+
+/* [MANUAL] Headings are Manrope Regular. The browser default of bold would
+   otherwise introduce weight 700, which is not an approved weight — so every
+   heading on the page is reset to Regular and steps up to Semi Bold only where
+   a rule below says so. */
+h1, h2, h3, h4, h5, h6 { font-weight: var(--inx-weight-regular); }
+
+/* Anchors default to the UA link blue, which is outside the palette. Colour is
+   always set deliberately by the component. */
+a { color: inherit; }
+
+html { scroll-behavior: smooth; }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+}
+
+body {
+  margin: 0;
+  background: var(--inx-n-0);
+  overflow-x: hidden;
+}
+
+/* The site sits slightly wider than the system default so the 12-column rhythm
+   has room to read as a grid rather than as a text column. */
+:root { --nx-shell: 1320px; }
+
+.nx-shell {
+  inline-size: 100%;
+  max-inline-size: var(--nx-shell);
+  margin-inline: auto;
+  padding-inline: var(--inx-space-6);
+  position: relative;
+}
+
+@media (max-width: 768px) {
+  .nx-shell { padding-inline: var(--inx-space-5); }
+}
+
+/* Skip link */
+.nx-skip {
+  position: absolute;
+  inset-block-start: -100px;
+  inset-inline-start: var(--inx-space-4);
+  z-index: var(--inx-z-toast);
+  background: var(--inx-n-0);
+  color: var(--inx-n-950);
+  padding: var(--inx-space-3) var(--inx-space-5);
+  border-radius: var(--inx-radius-pill);
+  font-size: var(--inx-text-xs);
+  font-weight: var(--inx-weight-semi);
+  text-decoration: none;
+  transition: inset-block-start var(--inx-transition);
+}
+.nx-skip:focus { inset-block-start: var(--inx-space-4); }
+
+
+/* -----------------------------------------------------------------------------
+   SECTION RHYTHM
+   96px on desktop, 48px below 900px — the section rhythm defined in the guide.
+   -------------------------------------------------------------------------- */
+
+.nx-section {
+  position: relative;
+  padding-block: var(--inx-space-10);
+  isolation: isolate;
+}
+
+/* Anchored sections clear the fixed navigation rather than sliding under it. */
+[id] { scroll-margin-block-start: var(--inx-space-10); }
+
+.nx-section--tight { padding-block: var(--inx-space-8); }
+.nx-section--tall  { padding-block: var(--inx-space-11); }
+
+@media (max-width: 900px) {
+  .nx-section,
+  .nx-section--tall { padding-block: var(--inx-space-8); }
+  .nx-section--tight { padding-block: var(--inx-space-7); }
+}
+
+/* A hairline seam between sections, aligned to the shell rather than the
+   viewport, so the page reads as one ruled sheet. */
+.nx-seam { border-block-start: 1px solid var(--inx-border); }
+
+
+/* -----------------------------------------------------------------------------
+   THE GRID
+   A 12-column hairline overlay pinned to the shell. This is the structural
+   device the whole page is measured against: every block starts and ends on a
+   column line, and the lines stay faintly visible so that discipline is felt
+   rather than merely claimed.
+   -------------------------------------------------------------------------- */
+
+.nx-rules {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  max-inline-size: var(--nx-shell);
+  margin-inline: auto;
+  padding-inline: var(--inx-space-6);
+  display: grid;
+  grid-template-columns: repeat(var(--inx-columns), 1fr);
+}
+
+/* Kept faint on light surfaces so the column lines register as structure
+   rather than competing with the hairlines that actually separate content. */
+.nx-rules > i {
+  display: block;
+  border-inline-start: 1px solid var(--inx-border);
+  opacity: 0.45;
+}
+
+.inx-on-ink .nx-rules > i { opacity: 1; }
+.nx-rules > i:last-child { border-inline-end: 1px solid var(--inx-border); }
+
+@media (max-width: 900px) {
+  .nx-rules { display: none; }
+}
+
+/* Grid rows: the 12-column layout primitives used throughout the page. */
+.nx-grid {
+  display: grid;
+  grid-template-columns: repeat(var(--inx-columns), minmax(0, 1fr));
+  gap: var(--inx-gutter);
+}
+
+.nx-span-2  { grid-column: span 2; }
+.nx-span-3  { grid-column: span 3; }
+.nx-span-4  { grid-column: span 4; }
+.nx-span-5  { grid-column: span 5; }
+.nx-span-6  { grid-column: span 6; }
+.nx-span-7  { grid-column: span 7; }
+.nx-span-8  { grid-column: span 8; }
+.nx-span-12 { grid-column: span 12; }
+
+@media (max-width: 1024px) {
+  .nx-span-2, .nx-span-3, .nx-span-4 { grid-column: span 6; }
+  .nx-span-5, .nx-span-7, .nx-span-8 { grid-column: span 12; }
+}
+
+@media (max-width: 768px) {
+  .nx-grid { gap: var(--inx-space-5); }
+  .nx-span-3, .nx-span-4, .nx-span-6 { grid-column: span 12; }
+}
+
+@media (max-width: 600px) {
+  .nx-span-2 { grid-column: span 12; }
+}
+
+
+/* -----------------------------------------------------------------------------
+   SECTION HEADINGS
+   Eyebrow names the section, display line carries it, lead explains it.
+   -------------------------------------------------------------------------- */
+
+.nx-head { margin-block-end: var(--inx-space-9); }
+
+.nx-head__index {
+  display: flex;
+  align-items: center;
+  gap: var(--inx-space-4);
+  padding-block-end: var(--inx-space-5);
+  margin-block-end: var(--inx-space-6);
+  border-block-end: 1px solid var(--inx-border);
+}
+
+.nx-head__index .inx-eyebrow { flex: none; }
+
+.nx-head__num {
+  margin-inline-start: auto;
+  font-family: var(--inx-font-mono);
+  font-size: var(--inx-text-2xs);
+  letter-spacing: var(--inx-tracking-wide);
+  color: var(--inx-text-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.nx-head__title {
+  font-size: var(--inx-display-section);
+  font-weight: var(--inx-weight-regular);
+  line-height: var(--inx-leading-display);
+  letter-spacing: var(--inx-tracking-display);
+  margin: 0;
+  text-wrap: balance;
+}
+
+.nx-head__lead {
+  font-size: var(--inx-text-md);
+  line-height: var(--inx-leading-snug);
+  color: var(--inx-text-muted);
+  margin: 0;
+  max-inline-size: 46ch;
+}
+
+@media (max-width: 900px) {
+  .nx-head { margin-block-end: var(--inx-space-7); }
+  .nx-head__lead { margin-block-start: var(--inx-space-5); }
+}
+
+
+/* -----------------------------------------------------------------------------
+   NAVIGATION
+   Sits transparent over the ink hero, then condenses into a floating ink bar.
+   It stays on ink at every scroll position, which is what keeps the links
+   legible over both the light and the dark sections beneath it.
+   -------------------------------------------------------------------------- */
+
+.nx-progress {
+  position: fixed;
+  inset-block-start: 0;
+  inset-inline-start: 0;
+  z-index: calc(var(--inx-z-sticky) + 2);
+  block-size: 2px;
+  inline-size: 100%;
+  transform: scaleX(0);
+  transform-origin: left;
+  background: var(--inx-n-200);
+}
+
+.nx-nav {
+  position: fixed;
+  inset-block-start: 0;
+  inset-inline: 0;
+  z-index: var(--inx-z-sticky);
+  padding-block: var(--inx-space-4);
+  transition: padding-block var(--inx-duration-slow) var(--inx-ease);
+}
+
+/* The nav carries .inx-on-ink so its links stay legible over every section
+   beneath it. That class also paints a background, which the bar must not
+   have until it condenses — hence the explicit reset. */
+.nx-nav,
+.nx-nav__bar { background: transparent; }
+
+.nx-nav__bar {
+  display: flex;
+  align-items: center;
+  gap: var(--inx-space-6);
+  block-size: 64px;
+  padding-inline: var(--inx-space-5);
+  border: 1px solid transparent;
+  border-radius: var(--inx-radius-pill);
+  transition: background-color var(--inx-duration-slow) var(--inx-ease),
+              border-color var(--inx-duration-slow) var(--inx-ease),
+              block-size var(--inx-duration-slow) var(--inx-ease),
+              box-shadow var(--inx-duration-slow) var(--inx-ease);
+}
+
+/* Condensed state, set by script once the hero is scrolled past its threshold */
+.nx-nav.is-stuck { padding-block: var(--inx-space-3); }
+
+.nx-nav.is-stuck .nx-nav__bar {
+  block-size: 56px;
+  background: rgba(7, 11, 20, 0.86);
+  border-color: var(--inx-border-strong);
+  box-shadow: var(--inx-shadow-md);
+  -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: blur(14px);
+}
+
+.nx-nav__brand {
+  display: inline-flex;
+  align-items: center;
+  flex: none;
+  text-decoration: none;
+  border-radius: var(--inx-radius-sm);
+}
+
+.nx-nav__links {
+  display: flex;
+  align-items: center;
+  gap: var(--inx-space-1);
+  margin-inline: auto;
+}
+
+.nx-nav__link {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--inx-space-2);
+  block-size: 36px;
+  padding-inline: var(--inx-space-4);
+  border: 0;
+  border-radius: var(--inx-radius-pill);
+  background: transparent;
+  font-family: var(--inx-font);
+  font-size: var(--inx-text-xs);
+  font-weight: var(--inx-weight-semi);
+  color: var(--inx-text-muted);
+  text-decoration: none;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: color var(--inx-transition), background-color var(--inx-transition);
+}
+
+.nx-nav__link:hover,
+.nx-nav__link[aria-expanded="true"] {
+  color: var(--inx-text);
+  background: rgba(184, 208, 229, 0.10);
+}
+
+.nx-nav__link[aria-current="true"] { color: var(--inx-text); }
+
+.nx-nav__caret {
+  inline-size: 9px;
+  block-size: 9px;
+  flex: none;
+  transition: transform var(--inx-transition);
+}
+.nx-nav__link[aria-expanded="true"] .nx-nav__caret { transform: rotate(180deg); }
+
+.nx-nav__actions { display: flex; align-items: center; gap: var(--inx-space-3); flex: none; }
+
+/* Services panel -------------------------------------------------------- */
+
+.nx-menu {
+  position: absolute;
+  inset-block-start: calc(100% + var(--inx-space-3));
+  inset-inline-start: 50%;
+  transform: translateX(-50%) translateY(-6px);
+  inline-size: min(680px, calc(100vw - var(--inx-space-8)));
+  padding: var(--inx-space-5);
+  border: 1px solid var(--inx-border-strong);
+  border-radius: var(--inx-radius-xl);
+  background: rgba(7, 11, 20, 0.94);
+  -webkit-backdrop-filter: blur(18px);
+  backdrop-filter: blur(18px);
+  box-shadow: var(--inx-shadow-lg);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity var(--inx-transition),
+              transform var(--inx-transition),
+              visibility var(--inx-transition);
+}
+
+.nx-menu.is-open {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transform: translateX(-50%) translateY(0);
+}
+
+.nx-menu__grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--inx-space-2);
+}
+
+.nx-menu__item {
+  display: block;
+  padding: var(--inx-space-4);
+  border: 1px solid transparent;
+  border-radius: var(--inx-radius-lg);
+  text-decoration: none;
+  transition: background-color var(--inx-transition), border-color var(--inx-transition);
+}
+.nx-menu__item:hover { background: var(--inx-bg-raised); border-color: var(--inx-border); }
+
+.nx-menu__title {
+  display: flex;
+  align-items: baseline;
+  gap: var(--inx-space-3);
+  font-size: var(--inx-text-sm);
+  font-weight: var(--inx-weight-semi);
+  color: var(--inx-text);
+  margin: 0 0 var(--inx-space-2);
+}
+.nx-menu__title span {
+  font-family: var(--inx-font-mono);
+  font-size: var(--inx-text-3xs);
+  color: var(--inx-accent);
+  font-variant-numeric: tabular-nums;
+}
+.nx-menu__desc { font-size: var(--inx-text-xs); line-height: var(--inx-leading-snug); color: var(--inx-text-muted); margin: 0; }
+
+.nx-menu__foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--inx-space-4);
+  margin-block-start: var(--inx-space-4);
+  padding-block-start: var(--inx-space-4);
+  border-block-start: 1px solid var(--inx-border);
+  font-size: var(--inx-text-xs);
+  color: var(--inx-text-muted);
+}
+
+.nx-nav__item { position: relative; }
+
+/* Mobile ---------------------------------------------------------------- */
+
+.nx-nav__toggle { display: none; }
+
+.nx-drawer {
+  position: fixed;
+  inset: 0;
+  z-index: var(--inx-z-overlay);
+  padding: calc(var(--inx-space-11) + var(--inx-space-2)) var(--inx-space-5) var(--inx-space-8);
+  background: var(--inx-n-950);
+  overflow-y: auto;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity var(--inx-duration-slow) var(--inx-ease), visibility var(--inx-duration-slow) var(--inx-ease);
+}
+.nx-drawer.is-open { opacity: 1; visibility: visible; }
+
+.nx-drawer__link {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--inx-space-4);
+  padding-block: var(--inx-space-5);
+  border-block-end: 1px solid var(--inx-border);
+  font-size: var(--inx-text-lg);
+  color: var(--inx-text);
+  text-decoration: none;
+}
+.nx-drawer__link span {
+  font-family: var(--inx-font-mono);
+  font-size: var(--inx-text-3xs);
+  color: var(--inx-text-muted);
+}
+
+@media (max-width: 1024px) {
+  .nx-nav__links,
+  .nx-nav__actions .inx-btn--secondary { display: none; }
+  .nx-nav__toggle { display: inline-flex; margin-inline-start: auto; }
+  .nx-nav__actions { margin-inline-start: auto; }
+}
+
+@media (max-width: 480px) {
+  .nx-nav__actions .nx-nav__cta { display: none; }
+}
+
+
+/* -----------------------------------------------------------------------------
+   HERO
+   -------------------------------------------------------------------------- */
+
+.nx-hero {
+  position: relative;
+  isolation: isolate;
+  padding-block: calc(var(--inx-space-11) + var(--inx-space-9)) var(--inx-space-9);
+  overflow: hidden;
+}
+
+@media (max-width: 900px) {
+  .nx-hero { padding-block: calc(var(--inx-space-10) + var(--inx-space-7)) var(--inx-space-8); }
+}
+
+.nx-hero__title {
+  font-size: var(--inx-display-hero);
+  font-weight: var(--inx-weight-regular);
+  line-height: var(--inx-leading-display);
+  letter-spacing: var(--inx-tracking-display);
+  margin: var(--inx-space-6) 0 0;
+}
+
+/* Line-by-line reveal. Each line is masked by its own overflow box so the
+   type rises into place rather than fading in as a block.
+
+   The mask would otherwise crop descenders — the g in "Operating" — so each
+   line carries a little extra room below and pulls it back with a matching
+   negative margin. The leading is unaffected. */
+.nx-line,
+[data-reveal="line"] {
+  padding-block-end: 0.14em;
+  margin-block-end: -0.14em;
+}
+
+.nx-line { display: block; overflow: hidden; }
+.nx-line > span {
+  display: block;
+  transform: translateY(105%);
+  transition: transform var(--inx-duration-slow) var(--inx-ease-out);
+  transition-delay: var(--nx-delay, 0ms);
+}
+.is-ready .nx-line > span { transform: translateY(0); }
+
+.nx-hero__lead {
+  font-size: var(--inx-text-md);
+  line-height: var(--inx-leading-snug);
+  color: var(--inx-text-muted);
+  margin: var(--inx-space-6) 0 0;
+  max-inline-size: 44ch;
+}
+
+.nx-hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--inx-space-3);
+  margin-block-start: var(--inx-space-7);
+}
+
+.nx-hero__note {
+  margin-block-start: var(--inx-space-7);
+  padding-block-start: var(--inx-space-4);
+  border-block-start: 1px solid var(--inx-border);
+  font-size: var(--inx-text-xs);
+  color: var(--inx-text-muted);
+  max-inline-size: 52ch;
+}
+
+/* Hero side panel — a quiet operations readout. Borders and rules only. */
+.nx-readout {
+  border: 1px solid var(--inx-border);
+  border-radius: var(--inx-radius-xl);
+  background: var(--inx-bg-raised);
+  overflow: hidden;
+}
+
+.nx-readout__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--inx-space-4);
+  padding: var(--inx-space-4) var(--inx-space-5);
+  border-block-end: 1px solid var(--inx-border);
+}
+
+.nx-readout__row {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: var(--inx-space-4);
+  padding: var(--inx-space-4) var(--inx-space-5);
+  border-block-end: 1px solid var(--inx-border);
+}
+.nx-readout__row:last-child { border-block-end: 0; }
+
+.nx-readout__label { font-size: var(--inx-text-xs); color: var(--inx-text-muted); margin: 0; }
+.nx-readout__value {
+  font-size: var(--inx-text-sm);
+  font-weight: var(--inx-weight-semi);
+  font-variant-numeric: tabular-nums;
+  margin: 0;
+}
+
+/* Meter — a flat bar, no gradient, filled on reveal. */
+.nx-meter {
+  grid-column: 1 / -1;
+  block-size: 3px;
+  background: var(--inx-border);
+  border-radius: var(--inx-radius-pill);
+  overflow: hidden;
+}
+.nx-meter > i {
+  display: block;
+  block-size: 100%;
+  inline-size: var(--nx-fill, 0%);
+  background: var(--inx-accent);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform var(--inx-duration-slow) var(--inx-ease-out);
+  transition-delay: var(--nx-delay, 0ms);
+}
+.is-in .nx-meter > i { transform: scaleX(1); }
+
+/* Facts strip closing the hero */
+.nx-facts {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--inx-gutter);
+  margin-block-start: var(--inx-space-10);
+  padding-block-start: var(--inx-space-6);
+  border-block-start: 1px solid var(--inx-border);
+}
+
+.nx-fact dt {
+  font-size: var(--inx-text-2xs);
+  font-weight: var(--inx-weight-semi);
+  text-transform: uppercase;
+  letter-spacing: var(--inx-tracking-caps);
+  color: var(--inx-text-muted);
+  margin-block-end: var(--inx-space-3);
+}
+.nx-fact dd {
+  margin: 0;
+  font-size: var(--inx-text-lg);
+  line-height: var(--inx-leading-tight);
+  letter-spacing: var(--inx-tracking-tight);
+  font-variant-numeric: tabular-nums;
+}
+.nx-fact p { margin: var(--inx-space-2) 0 0; font-size: var(--inx-text-xs); color: var(--inx-text-muted); }
+
+@media (max-width: 768px) {
+  .nx-facts { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: var(--inx-space-6); margin-block-start: var(--inx-space-8); }
+  /* Two lines of label height, so a wrapping label doesn't knock the figure
+     beside it out of alignment. */
+  .nx-fact dt { min-block-size: 2.6em; }
+}
+
+
+/* -----------------------------------------------------------------------------
+   MARQUEE — sectors served
+   -------------------------------------------------------------------------- */
+
+.nx-marquee {
+  display: flex;
+  overflow: hidden;
+  gap: var(--inx-space-8);
+  mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+}
+
+.nx-marquee__track {
+  display: flex;
+  flex: none;
+  gap: var(--inx-space-8);
+  padding-inline-end: var(--inx-space-8);
+  animation: nx-slide 42s linear infinite;
+}
+.nx-marquee:hover .nx-marquee__track { animation-play-state: paused; }
+
+.nx-marquee__item {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--inx-space-3);
+  white-space: nowrap;
+  font-size: var(--inx-text-sm);
+  color: var(--inx-text-subtle);
+}
+.nx-marquee__item::before {
+  content: "";
+  inline-size: 6px;
+  block-size: 6px;
+  flex: none;
+  background: var(--inx-accent);
+}
+
+@keyframes nx-slide { to { transform: translateX(-100%); } }
+
+@media (prefers-reduced-motion: reduce) {
+  .nx-marquee__track { animation: none; }
+  .nx-marquee { flex-wrap: wrap; }
+}
+
+
+/* -----------------------------------------------------------------------------
+   METRICS BAND
+   -------------------------------------------------------------------------- */
+
+.nx-metric { padding-block-start: var(--inx-space-5); border-block-start: 2px solid var(--inx-text); }
+
+.nx-metric__value {
+  font-size: clamp(2.25rem, 4vw, 3.75rem);
+  line-height: 1;
+  letter-spacing: var(--inx-tracking-display);
+  font-variant-numeric: tabular-nums;
+  margin: 0 0 var(--inx-space-3);
+}
+.nx-metric__label { font-size: var(--inx-text-xs); color: var(--inx-text-muted); margin: 0; max-inline-size: 26ch; }
+
+
+/* -----------------------------------------------------------------------------
+   COMPARISON ROWS — where operations break
+   -------------------------------------------------------------------------- */
+
+.nx-compare { border-block-start: 1px solid var(--inx-border); }
+
+.nx-compare__head,
+.nx-compare__row {
+  display: grid;
+  grid-template-columns: 168px 1fr 1fr;
+  gap: var(--inx-gutter);
+  padding-block: var(--inx-space-5);
+  border-block-end: 1px solid var(--inx-border);
+  align-items: start;
+}
+
+.nx-compare__head { padding-block: var(--inx-space-3); }
+
+.nx-compare__col {
+  font-size: var(--inx-text-2xs);
+  font-weight: var(--inx-weight-semi);
+  text-transform: uppercase;
+  letter-spacing: var(--inx-tracking-caps);
+  color: var(--inx-text-muted);
+  margin: 0;
+}
+.nx-compare__col--now { color: var(--inx-text); }
+
+.nx-compare__topic {
+  font-size: var(--inx-text-sm);
+  font-weight: var(--inx-weight-semi);
+  margin: 0;
+}
+
+.nx-compare__cell { font-size: var(--inx-text-sm); line-height: var(--inx-leading-snug); color: var(--inx-text-muted); margin: 0; }
+
+.nx-compare__cell--after {
+  color: var(--inx-text);
+  padding-inline-start: var(--inx-space-5);
+  border-inline-start: 2px solid var(--inx-accent);
+}
+
+.nx-compare__row:hover { background: var(--inx-bg-sunken); }
+
+@media (max-width: 900px) {
+  .nx-compare__head { display: none; }
+  .nx-compare__row { grid-template-columns: 1fr; gap: var(--inx-space-3); padding-block: var(--inx-space-5); }
+  .nx-compare__cell::before {
+    content: attr(data-label);
+    display: block;
+    font-size: var(--inx-text-3xs);
+    font-weight: var(--inx-weight-semi);
+    text-transform: uppercase;
+    letter-spacing: var(--inx-tracking-caps);
+    color: var(--inx-text-muted);
+    margin-block-end: var(--inx-space-2);
+  }
+  .nx-compare__row:hover { background: transparent; }
+}
+
+
+/* -----------------------------------------------------------------------------
+   SERVICE CARDS
+   Hover darkens the border and the surface — no lift, per the system.
+   -------------------------------------------------------------------------- */
+
+.nx-service {
+  display: flex;
+  flex-direction: column;
+  gap: var(--inx-space-5);
+  padding: var(--inx-space-6);
+  border: 1px solid var(--inx-border);
+  border-radius: var(--inx-radius-lg);
+  background: var(--inx-bg-raised);
+  block-size: 100%;
+  transition: border-color var(--inx-transition), background-color var(--inx-transition);
+}
+.nx-service:hover { border-color: var(--inx-text); background: var(--inx-bg-sunken); }
+
+.nx-service__top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--inx-space-4);
+  padding-block-end: var(--inx-space-5);
+  border-block-end: 1px solid var(--inx-border);
+}
+
+.nx-service__mark { inline-size: 28px; block-size: 28px; flex: none; color: var(--inx-accent); }
+
+.nx-service__title { font-size: var(--inx-text-xl); letter-spacing: var(--inx-tracking-tight); line-height: var(--inx-leading-tight); margin: 0; }
+.nx-service__desc  { font-size: var(--inx-text-sm); line-height: var(--inx-leading-normal); color: var(--inx-text-muted); margin: 0; }
+
+.nx-service__list { list-style: none; margin: auto 0 0; padding: 0; }
+.nx-service__list li {
+  padding-block: var(--inx-space-3);
+  border-block-start: 1px solid var(--inx-border);
+  font-size: var(--inx-text-xs);
+  color: var(--inx-text-subtle);
+}
+
+
+/* -----------------------------------------------------------------------------
+   PROCESS — the one genuinely sequential block, so the one that is numbered
+   -------------------------------------------------------------------------- */
+
+.nx-steps { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--inx-gutter); }
+
+.nx-step { position: relative; padding-block-start: var(--inx-space-6); }
+
+/* The connecting rule draws across as the block enters the viewport. */
+.nx-step::before {
+  content: "";
+  position: absolute;
+  inset-block-start: 0;
+  inset-inline: 0;
+  block-size: 1px;
+  background: var(--inx-border-strong);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform var(--inx-duration-slow) var(--inx-ease-out);
+  transition-delay: var(--nx-delay, 0ms);
+}
+.is-in .nx-step::before { transform: scaleX(1); }
+
+.nx-step__num {
+  display: block;
+  font-family: var(--inx-font-mono);
+  font-size: var(--inx-text-2xs);
+  letter-spacing: var(--inx-tracking-wide);
+  color: var(--inx-accent);
+  font-variant-numeric: tabular-nums;
+  margin-block-end: var(--inx-space-5);
+}
+
+.nx-step__title { font-size: var(--inx-text-lg); letter-spacing: var(--inx-tracking-tight); margin: 0 0 var(--inx-space-3); }
+.nx-step__desc  { font-size: var(--inx-text-sm); line-height: var(--inx-leading-snug); color: var(--inx-text-muted); margin: 0 0 var(--inx-space-5); }
+
+.nx-step__meta {
+  padding-block-start: var(--inx-space-3);
+  border-block-start: 1px solid var(--inx-border);
+  font-size: var(--inx-text-2xs);
+  font-weight: var(--inx-weight-semi);
+  text-transform: uppercase;
+  letter-spacing: var(--inx-tracking-caps);
+  color: var(--inx-text-muted);
+  margin: 0;
+}
+
+@media (max-width: 1024px) { .nx-steps { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: var(--inx-space-7); } }
+@media (max-width: 600px)  { .nx-steps { grid-template-columns: 1fr; } }
+
+
+/* -----------------------------------------------------------------------------
+   EVIDENCE — the engagement panel
+   -------------------------------------------------------------------------- */
+
+.nx-panel {
+  border: 1px solid var(--inx-border);
+  border-radius: var(--inx-radius-xl);
+  background: var(--inx-bg-raised);
+  overflow: hidden;
+}
+
+.nx-panel__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--inx-space-4);
+  padding: var(--inx-space-5) var(--inx-space-6);
+  border-block-end: 1px solid var(--inx-border);
+}
+
+.nx-panel__body { padding: var(--inx-space-6); }
+
+/* A four-column numeric table cannot compress below roughly 420px without
+   the last column being cut off, so it scrolls inside its own box rather
+   than forcing the page to scroll sideways. */
+.nx-scroll-x {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+.nx-scroll-x > table { min-inline-size: 420px; }
+
+/* Row headers in the evidence table are labels, not the eyebrow-styled column
+   headers the system defines, so they are reset to body treatment. */
+.nx-panel .inx-table tbody th {
+  text-transform: none;
+  letter-spacing: var(--inx-tracking-normal);
+  font-size: var(--inx-text-sm);
+  font-weight: var(--inx-weight-regular);
+  color: var(--inx-text);
+  padding: var(--inx-space-4);
+  border-block-end: 1px solid var(--inx-border);
+  white-space: normal;
+}
+.nx-panel .inx-table tbody tr:last-child th { border-block-end: 0; }
+
+.nx-quote {
+  font-size: var(--inx-text-xl);
+  line-height: var(--inx-leading-snug);
+  letter-spacing: var(--inx-tracking-tight);
+  margin: 0;
+  text-wrap: pretty;
+}
+
+.nx-quote__cite {
+  display: block;
+  margin-block-start: var(--inx-space-5);
+  padding-block-start: var(--inx-space-4);
+  border-block-start: 1px solid var(--inx-border);
+  font-size: var(--inx-text-xs);
+  font-style: normal;
+  color: var(--inx-text-muted);
+}
+
+
+/* -----------------------------------------------------------------------------
+   ACCORDION — engagement questions
+   -------------------------------------------------------------------------- */
+
+.nx-acc { border-block-start: 1px solid var(--inx-border); }
+
+.nx-acc__item { border-block-end: 1px solid var(--inx-border); }
+
+.nx-acc__btn {
+  display: flex;
+  align-items: center;
+  gap: var(--inx-space-5);
+  inline-size: 100%;
+  padding-block: var(--inx-space-5);
+  border: 0;
+  background: transparent;
+  font-family: var(--inx-font);
+  font-size: var(--inx-text-md);
+  font-weight: var(--inx-weight-regular);
+  letter-spacing: var(--inx-tracking-tight);
+  color: var(--inx-text);
+  text-align: start;
+  cursor: pointer;
+  transition: color var(--inx-transition);
+}
+.nx-acc__btn:hover { color: var(--inx-text-muted); }
+
+.nx-acc__idx {
+  flex: none;
+  font-family: var(--inx-font-mono);
+  font-size: var(--inx-text-2xs);
+  color: var(--inx-text-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.nx-acc__sign {
+  flex: none;
+  margin-inline-start: auto;
+  inline-size: 14px;
+  block-size: 14px;
+  position: relative;
+}
+.nx-acc__sign::before,
+.nx-acc__sign::after {
+  content: "";
+  position: absolute;
+  inset-block-start: 50%;
+  inset-inline-start: 0;
+  inline-size: 100%;
+  block-size: 1px;
+  background: currentColor;
+  transition: transform var(--inx-transition);
+}
+.nx-acc__sign::after { transform: rotate(90deg); }
+.nx-acc__btn[aria-expanded="true"] .nx-acc__sign::after { transform: rotate(0deg); }
+
+.nx-acc__panel {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows var(--inx-duration-slow) var(--inx-ease);
+}
+.nx-acc__panel.is-open { grid-template-rows: 1fr; }
+.nx-acc__panel > div { overflow: hidden; }
+.nx-acc__panel p {
+  margin: 0;
+  padding-block-end: var(--inx-space-6);
+  padding-inline-start: calc(var(--inx-space-5) + 24px);
+  max-inline-size: 62ch;
+  font-size: var(--inx-text-sm);
+  line-height: var(--inx-leading-normal);
+  color: var(--inx-text-muted);
+}
+
+@media (max-width: 600px) {
+  .nx-acc__panel p { padding-inline-start: 0; }
+  .nx-acc__btn { font-size: var(--inx-text-base); gap: var(--inx-space-4); }
+}
+
+
+/* -----------------------------------------------------------------------------
+   CLOSING BILLBOARD
+   -------------------------------------------------------------------------- */
+
+.nx-billboard { padding-block: var(--inx-space-11); position: relative; isolation: isolate; }
+
+.nx-billboard__title {
+  font-size: var(--inx-display-hero);
+  font-weight: var(--inx-weight-regular);
+  line-height: var(--inx-leading-display);
+  letter-spacing: var(--inx-tracking-display);
+  margin: var(--inx-space-6) 0 0;
+}
+
+.nx-billboard__close {
+  font-size: var(--inx-text-lg);
+  font-weight: var(--inx-weight-semi);
+  text-transform: uppercase;
+  letter-spacing: var(--inx-tracking-caps);
+  line-height: var(--inx-leading-snug);
+  margin: var(--inx-space-7) 0 0;
+}
+
+.nx-assure {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--inx-gutter);
+  margin-block-start: var(--inx-space-9);
+  padding-block-start: var(--inx-space-6);
+  border-block-start: 1px solid var(--inx-border);
+}
+.nx-assure p { margin: 0; font-size: var(--inx-text-xs); color: var(--inx-text-muted); }
+.nx-assure strong { display: block; font-weight: var(--inx-weight-semi); color: var(--inx-text); margin-block-end: var(--inx-space-2); }
+
+@media (max-width: 768px) {
+  .nx-billboard { padding-block: var(--inx-space-9); }
+  .nx-assure { grid-template-columns: 1fr; row-gap: var(--inx-space-5); }
+}
+
+
+/* -----------------------------------------------------------------------------
+   FOOTER
+   -------------------------------------------------------------------------- */
+
+.nx-footer { padding-block: var(--inx-space-9) var(--inx-space-6); border-block-start: 1px solid var(--inx-border); }
+
+.nx-footer__col h3 {
+  font-size: var(--inx-text-2xs);
+  font-weight: var(--inx-weight-semi);
+  text-transform: uppercase;
+  letter-spacing: var(--inx-tracking-caps);
+  color: var(--inx-text-muted);
+  margin: 0 0 var(--inx-space-5);
+}
+
+.nx-footer__col ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: var(--inx-space-3); }
+
+.nx-footer__col a {
+  font-size: var(--inx-text-sm);
+  color: var(--inx-text);
+  text-decoration: none;
+  transition: color var(--inx-transition);
+}
+.nx-footer__col a:hover { color: var(--inx-text-muted); }
+
+.nx-footer__bottom {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--inx-space-4);
+  margin-block-start: var(--inx-space-9);
+  padding-block-start: var(--inx-space-5);
+  border-block-start: 1px solid var(--inx-border);
+}
+
+.nx-footer__legal { display: flex; flex-wrap: wrap; gap: var(--inx-space-5); }
+.nx-footer__legal a { font-size: var(--inx-text-3xs); color: var(--inx-text-muted); text-decoration: none; }
+.nx-footer__legal a:hover { color: var(--inx-text); }
+
+.nx-social { display: flex; gap: var(--inx-space-2); }
+.nx-social a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  inline-size: 36px;
+  block-size: 36px;
+  border: 1px solid var(--inx-border);
+  border-radius: var(--inx-radius-full);
+  color: var(--inx-text-muted);
+  transition: border-color var(--inx-transition), color var(--inx-transition);
+}
+.nx-social a:hover { border-color: var(--inx-text); color: var(--inx-text); }
+.nx-social svg { inline-size: 15px; block-size: 15px; }
+
+
+/* -----------------------------------------------------------------------------
+   SCROLL REVEAL
+   Entrances only, on the slow duration token with a stagger. Nothing bounces,
+   nothing exceeds 360ms, and everything is visible immediately when the user
+   has asked for reduced motion.
+   -------------------------------------------------------------------------- */
+
+[data-reveal] {
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity var(--inx-duration-slow) var(--inx-ease-out),
+              transform var(--inx-duration-slow) var(--inx-ease-out);
+  transition-delay: var(--nx-delay, 0ms);
+}
+[data-reveal].is-in { opacity: 1; transform: none; }
+
+/* A hairline that draws in rather than fading */
+[data-reveal="rule"] {
+  opacity: 1;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform var(--inx-duration-slow) var(--inx-ease-out);
+  transition-delay: var(--nx-delay, 0ms);
+}
+[data-reveal="rule"].is-in { transform: scaleX(1); }
+
+/* A masked line of display type that rises into place on entry. The hero uses
+   the .nx-line/.is-ready pair instead, because it must play on load rather
+   than on scroll. */
+[data-reveal="line"] {
+  display: block;
+  overflow: hidden;
+  opacity: 1;
+  transform: none;
+}
+[data-reveal="line"] > span {
+  display: block;
+  transform: translateY(105%);
+  transition: transform var(--inx-duration-slow) var(--inx-ease-out);
+  transition-delay: var(--nx-delay, 0ms);
+}
+[data-reveal="line"].is-in > span { transform: translateY(0); }
+
+@media (prefers-reduced-motion: reduce) {
+  [data-reveal],
+  [data-reveal="rule"],
+  [data-reveal="line"] > span,
+  .nx-line > span { opacity: 1; transform: none; }
+  .nx-meter > i { transform: scaleX(1); }
+  .nx-step::before { transform: scaleX(1); }
+}
+
+
+/* -----------------------------------------------------------------------------
+   SMALL UTILITIES
+   -------------------------------------------------------------------------- */
+
+.nx-hairline { block-size: 1px; background: var(--inx-border); border: 0; margin: 0; }
+.nx-vstack   { display: flex; flex-direction: column; gap: var(--inx-space-5); }
+.nx-sticky   { position: sticky; inset-block-start: var(--inx-space-11); }
+
+@media (max-width: 1024px) { .nx-sticky { position: static; } }
+
+.nx-mono {
+  font-family: var(--inx-font-mono);
+  font-size: var(--inx-text-2xs);
+  letter-spacing: var(--inx-tracking-wide);
+  color: var(--inx-text-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.nx-visually-hidden {
+  position: absolute;
+  inline-size: 1px;
+  block-size: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}

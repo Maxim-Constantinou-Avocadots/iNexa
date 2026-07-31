@@ -1,0 +1,309 @@
+/* =============================================================================
+   iNexa Design System — Token Layer
+   Derived from: iNexa Brand Guidelines v1.0 (Avocadots Design Studio, 2026)
+
+   Tokens marked [MANUAL] come directly from the brand manual.
+   Tokens marked [DERIVED] are interpolated between approved brand colours —
+   no new hues are introduced.
+   Tokens marked [EXTENSION] are additions required for interface work that the
+   manual does not cover. These are flagged in the style guide for sign-off.
+   ========================================================================== */
+
+:root {
+
+  /* ---------------------------------------------------------------------
+     1. PALETTE — primitives
+     --------------------------------------------------------------------- */
+
+  /* [MANUAL] The six approved brand colours */
+  --inx-white:        #FFFFFF;  /* White       CMYK 0,0,0,0     */
+  --inx-platinum:     #F5F7FA;  /* Platinum    CMYK 2,1,0,2     */
+  --inx-pale-sky:     #B8D0E5;  /* Pale Sky    CMYK 20,9,0,10   */
+  --inx-blue-slate:   #5E738A;  /* Blue Slate  CMYK 32,17,0,46  */
+  --inx-ink-navy:     #141D2B;  /* Ink (light) CMYK 53,33,0,83  */
+  --inx-ink-black:    #070B14;  /* Ink (dark)  CMYK 65,45,0,92  */
+
+  /* [DERIVED] Neutral ramp. Every step sits on the line between two approved
+     colours, so hovers, borders and disabled states stay inside the palette. */
+  --inx-n-950: #070B14;  /* = Ink Black   */
+  --inx-n-900: #141D2B;  /* = Ink Navy    */
+  --inx-n-800: #243040;
+  --inx-n-700: #354456;
+  --inx-n-600: #495B6F;
+  --inx-n-500: #5E738A;  /* = Blue Slate  */
+  --inx-n-400: #8096AD;
+  --inx-n-300: #9DB4CA;
+  --inx-n-200: #B8D0E5;  /* = Pale Sky    */
+  --inx-n-100: #DAE5F1;
+  --inx-n-75:  #ECF1F7;
+  --inx-n-50:  #F5F7FA;  /* = Platinum    */
+  --inx-n-0:   #FFFFFF;  /* = White       */
+
+  /* [EXTENSION] Functional status colours. The manual defines no status
+     palette. These are tuned to the palette's low chroma and are permitted in
+     product UI only — never in marketing layouts, never near the logo.
+     No tinted background variants are provided, deliberately. A pastel fill per
+     status goes muddy against this palette and turns any stacked list into a
+     traffic light. Status is carried by a named label and a small mark instead.
+     If a tint is ever genuinely required, derive it at the point of use with
+     color-mix() rather than adding it back here. */
+  --inx-status-success:      #2A6B57;
+  --inx-status-success-dark: #63C09B;  /* for use on ink surfaces */
+
+  --inx-status-warning:      #8A6212;
+  --inx-status-warning-dark: #D9A54F;
+
+  --inx-status-danger:       #A83232;
+  --inx-status-danger-dark:  #E88A87;
+
+  --inx-status-info:         #5E738A;
+  --inx-status-info-dark:    #B8D0E5;
+
+
+  /* ---------------------------------------------------------------------
+     2. SEMANTIC COLOUR — light surface (default)
+     --------------------------------------------------------------------- */
+
+  --inx-bg:              var(--inx-n-50);
+  --inx-bg-raised:       var(--inx-n-0);
+  --inx-bg-sunken:       var(--inx-n-75);
+  --inx-bg-inverse:      var(--inx-n-950);
+
+  --inx-text:            var(--inx-n-950);   /* 19.68:1 on white  */
+  --inx-text-muted:      var(--inx-n-500);   /*  4.89:1 on white  */
+  --inx-text-subtle:     var(--inx-n-600);   /*  6.98:1 on white  */
+  --inx-text-inverse:    var(--inx-n-0);
+  --inx-text-link:       var(--inx-n-700);
+
+  --inx-border:          var(--inx-n-100);
+  --inx-border-strong:   var(--inx-n-300);
+  --inx-border-input:    var(--inx-n-300);
+
+  --inx-accent:          var(--inx-n-500);   /* Blue Slate — the working accent */
+  --inx-accent-soft:     var(--inx-n-200);   /* Pale Sky — surfaces & rules only */
+
+  /* Focus ring is surface-scoped: no single palette colour clears 3:1 on both
+     light and ink backgrounds. See the accessibility section of the guide. */
+  --inx-focus-ring:      var(--inx-n-500);
+  --inx-focus-width:     2px;
+  --inx-focus-offset:    2px;
+
+
+  /* ---------------------------------------------------------------------
+     3. TYPOGRAPHY
+     --------------------------------------------------------------------- */
+
+  /* [MANUAL] Manrope is the sole typeface. Only Regular and Semi Bold are
+     approved — do not introduce Light, Medium, Bold or ExtraBold. */
+  --inx-font: "Manrope", ui-sans-serif, system-ui, -apple-system,
+              "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --inx-font-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo,
+                   Consolas, monospace;
+
+  --inx-weight-regular: 400;   /* [MANUAL] Manrope Regular   */
+  --inx-weight-semi:    600;   /* [MANUAL] Manrope Semi Bold */
+
+  /* [DERIVED] Web scale. The manual specifies 144pt / 48pt / 18pt for print
+     and presentation. Body is carried across at 18px; the display tier maps
+     the 144pt headline to a fluid web equivalent. */
+  --inx-text-3xs:  0.6875rem;  /* 11px — legal, table micro-labels     */
+  --inx-text-2xs:  0.75rem;    /* 12px — eyebrows, badges              */
+  --inx-text-xs:   0.875rem;   /* 14px — captions, helper text, meta   */
+  --inx-text-sm:   1rem;       /* 16px — dense UI body, inputs         */
+  --inx-text-base: 1.125rem;   /* 18px — [MANUAL] body copy            */
+  --inx-text-md:   1.25rem;    /* 20px — lead paragraphs               */
+  --inx-text-lg:   1.5rem;     /* 24px — h4                            */
+  --inx-text-xl:   1.875rem;   /* 30px — h3                            */
+  --inx-text-2xl:  2.375rem;   /* 38px — h2                            */
+  --inx-text-3xl:  3rem;       /* 48px — [MANUAL] subheading, h1       */
+  --inx-text-4xl:  3.75rem;    /* 60px — section title                 */
+  --inx-text-5xl:  4.75rem;    /* 76px — display                       */
+  --inx-text-6xl:  6rem;       /* 96px — hero display                  */
+
+  /* Fluid display sizes for hero and section openers */
+  --inx-display-hero:    clamp(2.75rem, 7.5vw, 6rem);
+  --inx-display-section: clamp(2.25rem, 5vw, 3.75rem);
+
+  --inx-leading-display: 1.02;  /* mirrors the manual's title pages */
+  --inx-leading-tight:   1.12;
+  --inx-leading-snug:    1.3;
+  --inx-leading-normal:  1.6;   /* body */
+  --inx-leading-loose:   1.75;
+
+  --inx-tracking-display: -0.02em;
+  --inx-tracking-tight:   -0.01em;
+  --inx-tracking-normal:  0;
+  --inx-tracking-wide:    0.06em;
+  --inx-tracking-caps:    0.12em;  /* uppercase subheads & eyebrows */
+
+  --inx-measure:       68ch;   /* max body line length */
+  --inx-measure-tight: 46ch;
+
+
+  /* ---------------------------------------------------------------------
+     4. SPACE — [EXTENSION] 4px base grid
+     --------------------------------------------------------------------- */
+
+  --inx-space-0:   0;
+  --inx-space-1:   0.25rem;   /*  4px */
+  --inx-space-2:   0.5rem;    /*  8px */
+  --inx-space-3:   0.75rem;   /* 12px */
+  --inx-space-4:   1rem;      /* 16px */
+  --inx-space-5:   1.5rem;    /* 24px */
+  --inx-space-6:   2rem;      /* 32px */
+  --inx-space-7:   2.5rem;    /* 40px */
+  --inx-space-8:   3rem;      /* 48px */
+  --inx-space-9:   4rem;      /* 64px */
+  --inx-space-10:  6rem;      /* 96px */
+  --inx-space-11:  8rem;      /* 128px */
+
+  /* Identity geometry, measured from the supplied artwork rather than estimated.
+     [MANUAL] Clear space equals the height and width of the symbol; minimum
+     height 20px for logo, symbol and bug alike.
+     The signifier is 74.78% of the lockup's height, so clear space expressed as
+     a fraction of logo height is 0.748 — that ratio holds at any size. */
+  --inx-logo-min-height:    20px;
+  --inx-logo-height:        40px;   /* override per placement */
+  --inx-logo-aspect:        3.63;   /* 271.85 : 74.89 */
+  --inx-signifier-aspect:   1.083;  /*  93.86 : 86.66 */
+  --inx-logo-clear-ratio:   0.748;
+
+  /* Logo colours. Inline SVG reads these, so one asset serves both surfaces. */
+  --inx-logo-word: var(--inx-n-950);
+  --inx-logo-mark: var(--inx-blue-slate);
+
+
+  /* ---------------------------------------------------------------------
+     5. RADIUS — [EXTENSION]
+     Derived from the identity: the bug is a circle, the billboard CTA is a
+     full pill. Containers stay near-square to hold the manual's structure.
+     --------------------------------------------------------------------- */
+
+  --inx-radius-none: 0;
+  --inx-radius-sm:   4px;
+  --inx-radius-md:   8px;
+  --inx-radius-lg:   12px;
+  --inx-radius-xl:   20px;
+  --inx-radius-pill: 999px;
+  --inx-radius-full: 50%;
+
+
+  /* ---------------------------------------------------------------------
+     6. BORDER & ELEVATION — [EXTENSION]
+     The manual forbids effects on the identity and gradients in colour use.
+     Elevation is therefore borders-first; shadows are ink-tinted, low-spread
+     and used only for genuinely floating layers.
+     --------------------------------------------------------------------- */
+
+  --inx-border-width:       1px;
+  --inx-border-width-thick: 2px;
+  --inx-rule:               1px solid var(--inx-border);
+
+  --inx-shadow-none: none;
+  --inx-shadow-sm:   0 1px 2px rgba(7, 11, 20, 0.06);
+  --inx-shadow-md:   0 4px 12px rgba(7, 11, 20, 0.08);
+  --inx-shadow-lg:   0 12px 32px rgba(7, 11, 20, 0.12);
+  --inx-shadow-focus: 0 0 0 var(--inx-focus-width) var(--inx-focus-ring);
+
+
+  /* ---------------------------------------------------------------------
+     7. MOTION — [EXTENSION]
+     Calm and deliberate, matching the "structured" tone of voice.
+     --------------------------------------------------------------------- */
+
+  --inx-duration-fast: 120ms;
+  --inx-duration-base: 200ms;
+  --inx-duration-slow: 360ms;
+  --inx-ease:          cubic-bezier(0.2, 0, 0, 1);
+  --inx-ease-out:      cubic-bezier(0.16, 1, 0.3, 1);
+  --inx-transition:    var(--inx-duration-base) var(--inx-ease);
+
+
+  /* ---------------------------------------------------------------------
+     8. LAYOUT — [EXTENSION]
+     --------------------------------------------------------------------- */
+
+  --inx-container:       1280px;
+  --inx-container-text:  760px;
+  --inx-gutter:          var(--inx-space-5);
+  --inx-columns:         12;
+
+  --inx-bp-sm:  480px;
+  --inx-bp-md:  768px;
+  --inx-bp-lg:  1024px;
+  --inx-bp-xl:  1280px;
+  --inx-bp-2xl: 1536px;
+
+  --inx-z-base:    0;
+  --inx-z-raised:  10;
+  --inx-z-sticky:  100;
+  --inx-z-overlay: 500;
+  --inx-z-modal:   1000;
+  --inx-z-toast:   1500;
+
+  /* Control sizing — keeps buttons, inputs and selects on one rhythm */
+  --inx-control-height-sm: 36px;
+  --inx-control-height-md: 44px;   /* default — clears the 44px touch target */
+  --inx-control-height-lg: 52px;
+}
+
+
+/* =============================================================================
+   INK SURFACE
+   Apply .inx-on-ink to any dark section. Semantic tokens re-point so that
+   components need no dark-mode variants of their own.
+
+   The critical rule this encodes: Blue Slate reaches only 4.03:1 on Ink Black
+   and 3.46:1 on Ink Navy, so it cannot carry body text on dark. Pale Sky takes
+   over as secondary text (12.36:1) and Blue Slate drops back to borders and
+   large type.
+   ========================================================================== */
+
+.inx-on-ink {
+  --inx-bg:            var(--inx-n-950);
+  --inx-bg-raised:     var(--inx-n-900);
+  --inx-bg-sunken:     #04070D;
+  --inx-bg-inverse:    var(--inx-n-0);
+
+  --inx-text:          var(--inx-n-0);
+  --inx-text-muted:    var(--inx-n-200);   /* Pale Sky, not Blue Slate */
+  --inx-text-subtle:   var(--inx-n-300);
+  --inx-text-inverse:  var(--inx-n-950);
+  --inx-text-link:     var(--inx-n-200);
+
+  --inx-border:        rgba(184, 208, 229, 0.16);
+  --inx-border-strong: rgba(184, 208, 229, 0.32);
+  --inx-border-input:  rgba(184, 208, 229, 0.32);
+
+  --inx-accent:        var(--inx-n-200);
+  --inx-accent-soft:   var(--inx-n-500);
+
+  --inx-focus-ring:    var(--inx-n-200);
+
+  /* The wordmark flips to white; the signifier stays Blue Slate on both
+     surfaces (4.03:1 on Ink Black — a graphic mark, not text). */
+  --inx-logo-word: var(--inx-n-0);
+  --inx-logo-mark: var(--inx-blue-slate);
+
+  --inx-status-success: var(--inx-status-success-dark);
+  --inx-status-warning: var(--inx-status-warning-dark);
+  --inx-status-danger:  var(--inx-status-danger-dark);
+  --inx-status-info:    var(--inx-status-info-dark);
+
+  --inx-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
+  --inx-shadow-md: 0 4px 12px rgba(0, 0, 0, 0.45);
+  --inx-shadow-lg: 0 12px 32px rgba(0, 0, 0, 0.55);
+
+  background-color: var(--inx-bg);
+  color: var(--inx-text);
+}
+
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --inx-duration-fast: 1ms;
+    --inx-duration-base: 1ms;
+    --inx-duration-slow: 1ms;
+  }
+}
+

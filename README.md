@@ -1,0 +1,117 @@
+# iNexa — Homepage
+
+A production-ready homepage mockup built on the iNexa Design System v1.0.
+
+Open `index.html` in a browser. There is no build step, no framework and no
+network dependency — the typeface is embedded, so it renders identically from
+disk, from a static host, or inside an embedded preview.
+
+```
+index.html
+assets/
+  css/
+    fonts.css               Manrope, self-hosted (data URI)
+    inexa-tokens.css        Token layer, from the style guide
+    inexa-components.css    Component layer, from the style guide
+    site.css                Marketing layer for this page (nx- prefix)
+  js/
+    site.js                 Progressive enhancement only
+  fonts/
+    manrope-latin.woff2     Raw files, for production hosting
+    manrope-latin-ext.woff2
+```
+
+## The page
+
+Eight sections, plus navigation and footer.
+
+| # | Section | Surface | Does |
+|---|---------|---------|------|
+| 1 | Hero | Ink | The manual's positioning line as the headline, an operating readout panel, four credibility figures |
+| 2 | Sectors | Sunken | Who this is for, as a slow marquee |
+| 3 | Approach | Light | Five paired rows: what breaks, and what it looks like under management |
+| 4 | Services | Light | The four services as a set — deliberately unnumbered |
+| 5 | Process | Ink | Assess → Design → Implement → Manage, the one genuinely sequential block |
+| 6 | Evidence | Light | A twelve-month engagement: before/after table, quote, two figures |
+| 7 | Questions | Sunken | Five-item accordion, sticky heading column |
+| 8 | Contact | Ink | Closing billboard, the short-form promise as the closing line |
+
+**Message.** One claim, carried the whole way down: iNexa takes ownership of the
+operating layer so leadership can spend its time on growth. The hero states it,
+section 3 proves the problem is real, 4 says what is actually run, 5 removes the
+risk by showing the mechanism, 6 supplies evidence, 7 handles objections, 8 asks.
+
+## Structure
+
+The page is measured against a 12-column grid at a 1320px shell, and the column
+hairlines stay faintly visible on every section. Every block starts and ends on a
+column line. Section rhythm is 96px on desktop and 48px below 900px, exactly as
+the style guide specifies, and the three-level spacing hierarchy (section →
+block → element) is held throughout.
+
+## Motion
+
+Entrances only, driven by one `IntersectionObserver`:
+
+- Hero headline rises line by line out of an overflow mask.
+- Blocks fade and lift 18px with a 60–90ms stagger.
+- Section connector rules and the readout meters draw in with `scaleX`.
+- The figures count up once, on entry.
+- The navbar condenses into a floating ink bar past 24px of scroll, with a
+  scroll-progress hairline at the top of the viewport.
+
+Nothing runs longer than `--inx-duration-slow` (360ms) and nothing bounces —
+verified: the only transition durations present on the page are 120ms, 200ms and
+360ms. Under `prefers-reduced-motion` everything is visible immediately and the
+marquee stops. With JavaScript disabled the page is complete and readable.
+
+## Design-system compliance
+
+Checked in a real browser rather than by eye:
+
+- **Colour** — every painted colour (text, background, border, outline) resolves
+  to one of the six approved brand colours or the derived ramp. No unapproved
+  hue anywhere.
+- **Type** — Manrope only, and only weights 400 and 600 are present. The browser
+  default of bold 700 on headings is explicitly reset in `site.css`.
+- **No gradients** on any surface, per the colour misuse page. The one
+  `linear-gradient` in the file is an alpha mask on the marquee edges and
+  introduces no colour.
+- **Status colours are absent.** The guide restricts them to product UI and
+  rules them out of marketing layouts, so the page carries none.
+- **Elevation is borders-first.** Cards change border and surface on hover and
+  never lift; the only shadow is under the condensed navbar, a genuinely
+  floating layer.
+- **Numbers are used only where content is sequential** — the process stages and
+  the accordion. The four services are a set, so they are not numbered.
+- **Accessibility** — one `h1`, ordered headings, every control and SVG labelled,
+  no duplicate IDs, visible focus rings retained everywhere, skip link, the wide
+  table scrolls in its own focusable box, and no horizontal page overflow at
+  1440 / 1280 / 1024 / 768 / 390px.
+
+## Two notes on the source
+
+1. **A CSS bug in the style guide, fixed here.** In the original
+   `inexastyleguidestandalone.html`, the `[EXTENSION] Functional status colours`
+   comment closes early and leaves five lines of prose loose in the stylesheet,
+   followed by a stray `*/`. Browsers error-recover, but it can swallow the
+   declarations that follow. Corrected in `assets/css/inexa-tokens.css` — worth
+   applying to the style guide itself.
+2. **The token and component layers are otherwise verbatim.** Nothing was
+   edited, so the guide stays the single source of truth. All new work lives in
+   `site.css` under the `nx-` prefix and resolves to tokens.
+
+## Placeholder content
+
+Copy is written to be usable, but the figures, the engagement in section 6, the
+quote, the email address and the phone number are illustrative and need
+replacing with real, verifiable numbers before this goes live. The brand lines —
+the positioning line in the hero, the promise in section 8, the four service
+names — are taken from the brand manual and should not be rewritten.
+
+## Hosting
+
+For production, swap the two data URIs in `assets/css/fonts.css` back to
+`url('../fonts/manrope-latin.woff2')` so the fonts cache separately from the
+stylesheet. They are inlined here so the mockup survives being opened directly
+from disk, where browsers refuse to fetch a font over `file://`.

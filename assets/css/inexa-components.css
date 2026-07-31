@@ -1,0 +1,792 @@
+/* =============================================================================
+   iNexa Design System — Component Layer
+   Requires inexa-tokens.css to be loaded first.
+   Every value below resolves to a token. No raw hex, no magic numbers.
+   ========================================================================== */
+
+/* -----------------------------------------------------------------------------
+   BASE
+   -------------------------------------------------------------------------- */
+
+.inx {
+  font-family: var(--inx-font);
+  font-weight: var(--inx-weight-regular);
+  font-size: var(--inx-text-base);
+  line-height: var(--inx-leading-normal);
+  color: var(--inx-text);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+.inx *,
+.inx *::before,
+.inx *::after { box-sizing: border-box; }
+
+.inx :focus-visible {
+  outline: var(--inx-focus-width) solid var(--inx-focus-ring);
+  outline-offset: var(--inx-focus-offset);
+  border-radius: var(--inx-radius-sm);
+}
+
+
+/* -----------------------------------------------------------------------------
+   TYPOGRAPHY
+   Setting rules from the manual: headings Regular / Title Case,
+   subheadings Semi Bold / UPPER CASE, body Regular / Sentence case.
+   -------------------------------------------------------------------------- */
+
+.inx-display {
+  font-size: var(--inx-display-hero);
+  font-weight: var(--inx-weight-regular);
+  line-height: var(--inx-leading-display);
+  letter-spacing: var(--inx-tracking-display);
+  margin: 0;
+}
+
+.inx-display--section {
+  font-size: var(--inx-display-section);
+}
+
+.inx-h1,
+.inx-h2,
+.inx-h3,
+.inx-h4 {
+  font-weight: var(--inx-weight-regular);
+  letter-spacing: var(--inx-tracking-tight);
+  line-height: var(--inx-leading-tight);
+  margin: 0;
+  text-wrap: balance;
+}
+
+.inx-h1 { font-size: var(--inx-text-3xl); }
+.inx-h2 { font-size: var(--inx-text-2xl); }
+.inx-h3 { font-size: var(--inx-text-xl); }
+.inx-h4 { font-size: var(--inx-text-lg); line-height: var(--inx-leading-snug); }
+
+/* The manual's subheading: Semi Bold, upper case. */
+.inx-subhead {
+  font-size: var(--inx-text-lg);
+  font-weight: var(--inx-weight-semi);
+  text-transform: uppercase;
+  letter-spacing: var(--inx-tracking-caps);
+  line-height: var(--inx-leading-snug);
+  margin: 0;
+}
+
+.inx-body      { font-size: var(--inx-text-base); line-height: var(--inx-leading-normal); max-width: var(--inx-measure); margin: 0; }
+.inx-body--sm  { font-size: var(--inx-text-sm); }
+.inx-lead      { font-size: var(--inx-text-md); line-height: var(--inx-leading-snug); max-width: var(--inx-measure); margin: 0; }
+.inx-caption   { font-size: var(--inx-text-xs); line-height: var(--inx-leading-snug); color: var(--inx-text-muted); margin: 0; }
+.inx-legal     { font-size: var(--inx-text-3xs); line-height: var(--inx-leading-snug); color: var(--inx-text-muted); margin: 0; }
+
+.inx-muted  { color: var(--inx-text-muted); }
+.inx-subtle { color: var(--inx-text-subtle); }
+
+.inx-mono {
+  font-family: var(--inx-font-mono);
+  font-size: var(--inx-text-xs);
+  letter-spacing: 0;
+}
+
+
+/* -----------------------------------------------------------------------------
+   EYEBROW
+   The manual's uppercase Semi Bold subhead, reduced to label scale. It is a
+   structural device, not decoration: use it to name the section a block
+   belongs to, never to repeat the heading beneath it.
+   -------------------------------------------------------------------------- */
+
+.inx-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--inx-space-2);
+  font-size: var(--inx-text-2xs);
+  font-weight: var(--inx-weight-semi);
+  text-transform: uppercase;
+  letter-spacing: var(--inx-tracking-caps);
+  line-height: 1;
+  color: var(--inx-text-muted);
+  margin: 0;
+}
+
+.inx-eyebrow--accent { color: var(--inx-accent); }
+
+/* Rule variant — the horizontal dash that opens the billboard layout. */
+.inx-eyebrow--rule::before {
+  content: "";
+  inline-size: var(--inx-space-6);
+  block-size: 1px;
+  background: currentColor;
+  flex: none;
+}
+
+/* Numbered variant. Use only where the content is genuinely sequential. */
+.inx-eyebrow--numbered::before {
+  content: attr(data-index);
+  font-variant-numeric: tabular-nums;
+  color: var(--inx-accent);
+}
+
+
+/* -----------------------------------------------------------------------------
+   LINKS
+   -------------------------------------------------------------------------- */
+
+.inx-link {
+  color: var(--inx-text-link);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.2em;
+  transition: color var(--inx-transition), text-decoration-color var(--inx-transition);
+}
+
+.inx-link:hover { color: var(--inx-text); text-decoration-thickness: 2px; }
+
+.inx-link--quiet { text-decoration-color: var(--inx-border-strong); }
+
+
+/* -----------------------------------------------------------------------------
+   BUTTONS
+   Pill radius is taken from the "Book a Strategy Call" CTA in the manual's
+   billboard application.
+   -------------------------------------------------------------------------- */
+
+.inx-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--inx-space-2);
+  block-size: var(--inx-control-height-md);
+  padding-inline: var(--inx-space-5);
+  border: var(--inx-border-width) solid transparent;
+  border-radius: var(--inx-radius-pill);
+  font-family: var(--inx-font);
+  font-size: var(--inx-text-sm);
+  font-weight: var(--inx-weight-semi);
+  line-height: 1;
+  letter-spacing: var(--inx-tracking-normal);
+  text-decoration: none;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background-color var(--inx-transition),
+              border-color var(--inx-transition),
+              color var(--inx-transition),
+              transform var(--inx-duration-fast) var(--inx-ease);
+}
+
+.inx-btn:active { transform: translateY(1px); }
+
+.inx-btn:disabled,
+.inx-btn[aria-disabled="true"] {
+  cursor: not-allowed;
+  opacity: 0.4;
+  transform: none;
+}
+
+/* Sizes */
+.inx-btn--sm { block-size: var(--inx-control-height-sm); padding-inline: var(--inx-space-4); font-size: var(--inx-text-xs); }
+.inx-btn--lg { block-size: var(--inx-control-height-lg); padding-inline: var(--inx-space-6); font-size: var(--inx-text-base); }
+
+/* Primary — solid ink */
+.inx-btn--primary {
+  background: var(--inx-n-950);
+  color: var(--inx-n-0);
+  border-color: var(--inx-n-950);
+}
+.inx-btn--primary:hover:not(:disabled) { background: var(--inx-n-800); border-color: var(--inx-n-800); }
+
+.inx-on-ink .inx-btn--primary {
+  background: var(--inx-n-0);
+  color: var(--inx-n-950);
+  border-color: var(--inx-n-0);
+}
+.inx-on-ink .inx-btn--primary:hover:not(:disabled) { background: var(--inx-n-100); border-color: var(--inx-n-100); }
+
+/* Secondary — outlined */
+.inx-btn--secondary {
+  background: transparent;
+  color: var(--inx-text);
+  border-color: var(--inx-border-strong);
+}
+.inx-btn--secondary:hover:not(:disabled) { border-color: var(--inx-text); background: var(--inx-bg-sunken); }
+
+.inx-on-ink .inx-btn--secondary:hover:not(:disabled) { background: rgba(184, 208, 229, 0.08); }
+
+/* Tertiary — text only */
+.inx-btn--ghost {
+  background: transparent;
+  color: var(--inx-text);
+  padding-inline: var(--inx-space-3);
+}
+.inx-btn--ghost:hover:not(:disabled) { background: var(--inx-bg-sunken); }
+.inx-on-ink .inx-btn--ghost:hover:not(:disabled) { background: rgba(184, 208, 229, 0.08); }
+
+/* Destructive — product UI only */
+.inx-btn--danger {
+  background: var(--inx-status-danger);
+  color: var(--inx-n-0);
+  border-color: var(--inx-status-danger);
+}
+.inx-btn--danger:hover:not(:disabled) { filter: brightness(0.9); }
+.inx-on-ink .inx-btn--danger { color: var(--inx-n-950); }
+
+/* Full width */
+.inx-btn--block { inline-size: 100%; }
+
+/* Icon-only — keeps the 44px target */
+.inx-btn--icon {
+  inline-size: var(--inx-control-height-md);
+  padding-inline: 0;
+  border-radius: var(--inx-radius-full);
+}
+
+/* Loading */
+.inx-btn[data-loading="true"] { pointer-events: none; opacity: 0.7; }
+.inx-btn[data-loading="true"]::before {
+  content: "";
+  inline-size: 1em;
+  block-size: 1em;
+  border: 2px solid currentColor;
+  border-block-start-color: transparent;
+  border-radius: var(--inx-radius-full);
+  animation: inx-spin 700ms linear infinite;
+}
+
+@keyframes inx-spin { to { transform: rotate(360deg); } }
+
+@media (prefers-reduced-motion: reduce) {
+  .inx-btn[data-loading="true"]::before { animation-duration: 2s; }
+}
+
+
+/* -----------------------------------------------------------------------------
+   PILLS, BADGES & TAGS
+   Pill  — a static label describing state or category.
+   Tag   — a pill the user can remove.
+   Chip  — a pill the user can select (filters).
+   -------------------------------------------------------------------------- */
+
+.inx-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--inx-space-2);
+  block-size: 24px;
+  padding-inline: var(--inx-space-3);
+  border: var(--inx-border-width) solid var(--inx-border);
+  border-radius: var(--inx-radius-pill);
+  background: var(--inx-bg-sunken);
+  color: var(--inx-text-subtle);
+  font-size: var(--inx-text-2xs);
+  font-weight: var(--inx-weight-semi);
+  letter-spacing: var(--inx-tracking-wide);
+  text-transform: uppercase;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.inx-pill--lg { block-size: 32px; padding-inline: var(--inx-space-4); font-size: var(--inx-text-xs); }
+
+/* Sentence-case variant for user-generated content, where shouting is wrong */
+.inx-pill--plain {
+  text-transform: none;
+  letter-spacing: var(--inx-tracking-normal);
+  font-weight: var(--inx-weight-regular);
+}
+
+/* Status variants. The surface stays neutral and the dot carries the colour —
+   a tinted pastel fill per status reads as a generic badge set and goes muddy
+   against this palette. The word is always present, so meaning never depends
+   on the dot alone. */
+.inx-pill--success .inx-pill__dot { background: var(--inx-status-success); }
+.inx-pill--warning .inx-pill__dot { background: var(--inx-status-warning); }
+.inx-pill--danger  .inx-pill__dot { background: var(--inx-status-danger); }
+.inx-pill--info    .inx-pill__dot { background: var(--inx-status-info); }
+
+.inx-pill--success,
+.inx-pill--warning,
+.inx-pill--danger,
+.inx-pill--info { color: var(--inx-text); }
+
+.inx-pill--solid { background: var(--inx-n-950); border-color: var(--inx-n-950); color: var(--inx-n-0); }
+.inx-on-ink .inx-pill--solid { background: var(--inx-n-0); border-color: var(--inx-n-0); color: var(--inx-n-950); }
+
+/* Status dot — pairs with the pill where colour alone must not carry meaning */
+.inx-pill__dot {
+  inline-size: 6px;
+  block-size: 6px;
+  border-radius: var(--inx-radius-full);
+  background: currentColor;
+  flex: none;
+}
+
+/* Tag with remove control */
+.inx-tag { text-transform: none; letter-spacing: var(--inx-tracking-normal); font-weight: var(--inx-weight-regular); font-size: var(--inx-text-xs); block-size: 28px; }
+.inx-tag__remove {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  inline-size: 16px;
+  block-size: 16px;
+  margin-inline-end: calc(var(--inx-space-1) * -1);
+  border: 0;
+  border-radius: var(--inx-radius-full);
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  font-size: 14px;
+  line-height: 1;
+}
+.inx-tag__remove:hover { background: var(--inx-border); }
+
+/* Selectable chip */
+.inx-chip {
+  cursor: pointer;
+  background: transparent;
+  transition: background-color var(--inx-transition), border-color var(--inx-transition), color var(--inx-transition);
+}
+.inx-chip:hover { border-color: var(--inx-border-strong); }
+.inx-chip[aria-pressed="true"] {
+  background: var(--inx-n-950);
+  border-color: var(--inx-n-950);
+  color: var(--inx-n-0);
+}
+.inx-on-ink .inx-chip[aria-pressed="true"] { background: var(--inx-n-0); border-color: var(--inx-n-0); color: var(--inx-n-950); }
+
+
+/* -----------------------------------------------------------------------------
+   FORMS
+   -------------------------------------------------------------------------- */
+
+.inx-field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--inx-space-2);
+  margin-block-end: var(--inx-space-5);
+}
+
+.inx-label {
+  font-size: var(--inx-text-xs);
+  font-weight: var(--inx-weight-semi);
+  color: var(--inx-text);
+  line-height: 1.4;
+}
+
+.inx-label__optional {
+  font-weight: var(--inx-weight-regular);
+  color: var(--inx-text-muted);
+  margin-inline-start: var(--inx-space-2);
+}
+
+.inx-help {
+  font-size: var(--inx-text-xs);
+  color: var(--inx-text-muted);
+  line-height: var(--inx-leading-snug);
+}
+
+.inx-error {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--inx-space-2);
+  font-size: var(--inx-text-xs);
+  font-weight: var(--inx-weight-semi);
+  color: var(--inx-status-danger);
+  line-height: var(--inx-leading-snug);
+}
+
+.inx-input,
+.inx-textarea,
+.inx-select {
+  inline-size: 100%;
+  min-block-size: var(--inx-control-height-md);
+  padding: var(--inx-space-3) var(--inx-space-4);
+  border: var(--inx-border-width) solid var(--inx-border-input);
+  border-radius: var(--inx-radius-md);
+  background: var(--inx-bg-raised);
+  color: var(--inx-text);
+  font-family: var(--inx-font);
+  font-size: var(--inx-text-sm);
+  line-height: 1.4;
+  transition: border-color var(--inx-transition), box-shadow var(--inx-transition), background-color var(--inx-transition);
+}
+
+.inx-input::placeholder,
+.inx-textarea::placeholder { color: var(--inx-text-muted); }
+
+.inx-input:hover:not(:disabled),
+.inx-textarea:hover:not(:disabled),
+.inx-select:hover:not(:disabled) { border-color: var(--inx-text-muted); }
+
+.inx-input:focus,
+.inx-textarea:focus,
+.inx-select:focus {
+  outline: none;
+  border-color: var(--inx-focus-ring);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--inx-focus-ring) 24%, transparent);
+}
+
+.inx-input:disabled,
+.inx-textarea:disabled,
+.inx-select:disabled {
+  background: var(--inx-bg-sunken);
+  color: var(--inx-text-muted);
+  cursor: not-allowed;
+}
+
+.inx-input[readonly] { background: var(--inx-bg-sunken); }
+
+.inx-input[aria-invalid="true"],
+.inx-textarea[aria-invalid="true"],
+.inx-select[aria-invalid="true"] { border-color: var(--inx-status-danger); }
+
+.inx-input[aria-invalid="true"]:focus,
+.inx-textarea[aria-invalid="true"]:focus {
+  border-color: var(--inx-status-danger);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--inx-status-danger) 22%, transparent);
+}
+
+.inx-textarea { min-block-size: 120px; resize: vertical; }
+
+.inx-select {
+  appearance: none;
+  padding-inline-end: var(--inx-space-8);
+  /* SVG rather than the two-gradient triangle trick — the manual rules out
+     gradients in colour application, and a chevron shouldn't be an exception. */
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 8' fill='none' stroke='%235E738A' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M1 1.5L6 6.5L11 1.5'/%3E%3C/svg%3E");
+  background-position: right var(--inx-space-4) center;
+  background-size: 11px;
+  background-repeat: no-repeat;
+  cursor: pointer;
+}
+
+.inx-on-ink .inx-select {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 8' fill='none' stroke='%23B8D0E5' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M1 1.5L6 6.5L11 1.5'/%3E%3C/svg%3E");
+}
+
+/* Input with leading or trailing adornment */
+.inx-input-group { display: flex; align-items: stretch; }
+.inx-input-group .inx-input { border-start-end-radius: 0; border-end-end-radius: 0; }
+.inx-input-group__addon {
+  display: inline-flex;
+  align-items: center;
+  padding-inline: var(--inx-space-4);
+  border: var(--inx-border-width) solid var(--inx-border-input);
+  border-inline-start: 0;
+  border-start-end-radius: var(--inx-radius-md);
+  border-end-end-radius: var(--inx-radius-md);
+  background: var(--inx-bg-sunken);
+  color: var(--inx-text-muted);
+  font-size: var(--inx-text-xs);
+  white-space: nowrap;
+}
+
+/* Checkbox & radio */
+.inx-choice {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--inx-space-3);
+  cursor: pointer;
+  font-size: var(--inx-text-sm);
+  line-height: 1.4;
+  padding-block: var(--inx-space-1);
+}
+
+.inx-choice input[type="checkbox"],
+.inx-choice input[type="radio"] {
+  appearance: none;
+  flex: none;
+  inline-size: 20px;
+  block-size: 20px;
+  margin: 0;
+  border: var(--inx-border-width-thick) solid var(--inx-border-input);
+  background: var(--inx-bg-raised);
+  cursor: pointer;
+  transition: background-color var(--inx-transition), border-color var(--inx-transition);
+}
+
+.inx-choice input[type="checkbox"] { border-radius: var(--inx-radius-sm); }
+.inx-choice input[type="radio"]    { border-radius: var(--inx-radius-full); }
+
+.inx-choice input:hover:not(:disabled) { border-color: var(--inx-text-muted); }
+
+.inx-choice input[type="checkbox"]:checked {
+  background: var(--inx-n-950);
+  border-color: var(--inx-n-950);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='%23fff' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3 8.5l3.2 3.2L13 5'/%3E%3C/svg%3E");
+  background-size: 14px;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.inx-choice input[type="radio"]:checked {
+  border-color: var(--inx-n-950);
+  border-width: 6px;
+}
+
+.inx-on-ink .inx-choice input[type="checkbox"]:checked {
+  background-color: var(--inx-n-0);
+  border-color: var(--inx-n-0);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='%23070B14' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3 8.5l3.2 3.2L13 5'/%3E%3C/svg%3E");
+}
+.inx-on-ink .inx-choice input[type="radio"]:checked { border-color: var(--inx-n-0); }
+
+.inx-choice input:disabled { opacity: 0.4; cursor: not-allowed; }
+.inx-choice:has(input:disabled) { cursor: not-allowed; color: var(--inx-text-muted); }
+
+/* Switch — for settings that take effect immediately */
+.inx-switch { display: inline-flex; align-items: center; gap: var(--inx-space-3); cursor: pointer; font-size: var(--inx-text-sm); }
+.inx-switch input {
+  appearance: none;
+  position: relative;
+  flex: none;
+  inline-size: 44px;
+  block-size: 24px;
+  margin: 0;
+  border-radius: var(--inx-radius-pill);
+  background: var(--inx-n-300);
+  cursor: pointer;
+  transition: background-color var(--inx-transition);
+}
+.inx-switch input::after {
+  content: "";
+  position: absolute;
+  inset-block-start: 3px;
+  inset-inline-start: 3px;
+  inline-size: 18px;
+  block-size: 18px;
+  border-radius: var(--inx-radius-full);
+  background: var(--inx-n-0);
+  transition: transform var(--inx-transition);
+}
+.inx-switch input:checked { background: var(--inx-n-950); }
+.inx-switch input:checked::after { transform: translateX(20px); }
+.inx-on-ink .inx-switch input:checked { background: var(--inx-n-200); }
+.inx-on-ink .inx-switch input:checked::after { background: var(--inx-n-950); }
+.inx-switch input:disabled { opacity: 0.4; cursor: not-allowed; }
+
+
+/* -----------------------------------------------------------------------------
+   CARD
+   -------------------------------------------------------------------------- */
+
+.inx-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--inx-space-3);
+  padding: var(--inx-space-6);
+  border: var(--inx-border-width) solid var(--inx-border);
+  border-radius: var(--inx-radius-lg);
+  background: var(--inx-bg-raised);
+}
+
+.inx-card--flush { padding: 0; overflow: hidden; }
+.inx-card--quiet { background: transparent; }
+
+/* Hover darkens the border and the surface. No lift, no shadow: a brand built
+   on "calm control" shouldn't have its cards jumping at the cursor. */
+.inx-card--interactive {
+  cursor: pointer;
+  transition: border-color var(--inx-transition), background-color var(--inx-transition);
+}
+.inx-card--interactive:hover {
+  border-color: var(--inx-text);
+  background: var(--inx-bg-sunken);
+}
+.inx-on-ink .inx-card--interactive:hover {
+  border-color: var(--inx-accent);
+  background: var(--inx-bg-raised);
+}
+
+.inx-card__media { aspect-ratio: 4 / 3; inline-size: 100%; object-fit: cover; display: block; }
+.inx-card__body  { padding: var(--inx-space-6); display: flex; flex-direction: column; gap: var(--inx-space-3); }
+
+
+/* -----------------------------------------------------------------------------
+   ALERT
+   -------------------------------------------------------------------------- */
+
+/* Status is carried by a named label, not by a coloured wash. The surface stays
+   neutral so a page of notices doesn't turn into a traffic light. */
+
+.inx-alert {
+  padding: var(--inx-space-5);
+  border: var(--inx-border-width) solid var(--inx-border);
+  border-radius: var(--inx-radius-md);
+  background: var(--inx-bg-raised);
+  font-size: var(--inx-text-sm);
+  line-height: var(--inx-leading-snug);
+}
+
+.inx-alert__label {
+  display: flex;
+  align-items: center;
+  gap: var(--inx-space-2);
+  font-size: var(--inx-text-2xs);
+  font-weight: var(--inx-weight-semi);
+  text-transform: uppercase;
+  letter-spacing: var(--inx-tracking-caps);
+  line-height: 1;
+  color: var(--inx-text-muted);
+  margin: 0 0 var(--inx-space-4);
+}
+
+/* Small square mark — the palette's geometry, not a full-height stripe. */
+.inx-alert__label::before {
+  content: "";
+  inline-size: 7px;
+  block-size: 7px;
+  background: currentColor;
+  flex: none;
+}
+
+.inx-alert__title { font-size: var(--inx-text-sm); font-weight: var(--inx-weight-semi); color: var(--inx-text); margin: 0 0 var(--inx-space-1); }
+.inx-alert__body  { margin: 0; color: var(--inx-text-muted); max-inline-size: 60ch; }
+.inx-alert__action { margin-block-start: var(--inx-space-4); }
+
+.inx-alert--success .inx-alert__label { color: var(--inx-status-success); }
+.inx-alert--warning .inx-alert__label { color: var(--inx-status-warning); }
+.inx-alert--danger  .inx-alert__label { color: var(--inx-status-danger); }
+.inx-alert--info    .inx-alert__label { color: var(--inx-status-info); }
+
+/* Prominent — for the one notice that must stop someone. Escalates by inverting
+   to ink rather than by shouting in red. */
+.inx-alert--prominent {
+  background: var(--inx-n-950);
+  border-color: var(--inx-n-950);
+}
+.inx-alert--prominent .inx-alert__title { color: var(--inx-n-0); }
+.inx-alert--prominent .inx-alert__body  { color: var(--inx-n-200); }
+.inx-alert--prominent.inx-alert--success .inx-alert__label { color: var(--inx-status-success-dark); }
+.inx-alert--prominent.inx-alert--warning .inx-alert__label { color: var(--inx-status-warning-dark); }
+.inx-alert--prominent.inx-alert--danger  .inx-alert__label { color: var(--inx-status-danger-dark); }
+.inx-alert--prominent.inx-alert--info    .inx-alert__label { color: var(--inx-status-info-dark); }
+
+.inx-on-ink .inx-alert--prominent { background: var(--inx-n-900); border-color: var(--inx-border-strong); }
+
+
+/* -----------------------------------------------------------------------------
+   TABLE
+   -------------------------------------------------------------------------- */
+
+.inx-table { inline-size: 100%; border-collapse: collapse; font-size: var(--inx-text-sm); }
+
+.inx-table th {
+  text-align: start;
+  font-size: var(--inx-text-2xs);
+  font-weight: var(--inx-weight-semi);
+  text-transform: uppercase;
+  letter-spacing: var(--inx-tracking-caps);
+  color: var(--inx-text-muted);
+  padding: var(--inx-space-3) var(--inx-space-4);
+  border-block-end: var(--inx-border-width) solid var(--inx-border-strong);
+  white-space: nowrap;
+}
+
+.inx-table td {
+  padding: var(--inx-space-4);
+  border-block-end: var(--inx-border-width) solid var(--inx-border);
+  vertical-align: middle;
+}
+
+.inx-table tbody tr:last-child td { border-block-end: 0; }
+.inx-table--numeric td:last-child,
+.inx-table--numeric th:last-child { text-align: end; font-variant-numeric: tabular-nums; }
+
+
+/* -----------------------------------------------------------------------------
+   TABS
+   -------------------------------------------------------------------------- */
+
+.inx-tabs { display: flex; gap: var(--inx-space-6); border-block-end: var(--inx-border-width) solid var(--inx-border); }
+
+.inx-tab {
+  appearance: none;
+  border: 0;
+  background: transparent;
+  padding: var(--inx-space-3) 0;
+  margin-block-end: -1px;
+  border-block-end: var(--inx-border-width-thick) solid transparent;
+  font-family: var(--inx-font);
+  font-size: var(--inx-text-sm);
+  font-weight: var(--inx-weight-semi);
+  color: var(--inx-text-muted);
+  cursor: pointer;
+  transition: color var(--inx-transition), border-color var(--inx-transition);
+}
+
+.inx-tab:hover { color: var(--inx-text); }
+.inx-tab[aria-selected="true"] { color: var(--inx-text); border-block-end-color: var(--inx-text); }
+
+
+/* -----------------------------------------------------------------------------
+   LAYOUT HELPERS
+   -------------------------------------------------------------------------- */
+
+.inx-container { inline-size: 100%; max-inline-size: var(--inx-container); margin-inline: auto; padding-inline: var(--inx-gutter); }
+.inx-prose     { max-inline-size: var(--inx-container-text); }
+
+.inx-divider { block-size: 1px; background: var(--inx-border); border: 0; margin: 0; }
+
+.inx-stack   { display: flex; flex-direction: column; gap: var(--inx-space-4); }
+.inx-stack--sm { gap: var(--inx-space-2); }
+.inx-stack--lg { gap: var(--inx-space-6); }
+.inx-row     { display: flex; flex-wrap: wrap; align-items: center; gap: var(--inx-space-3); }
+
+.inx-grid { display: grid; gap: var(--inx-space-5); grid-template-columns: repeat(auto-fit, minmax(min(260px, 100%), 1fr)); }
+
+
+/* -----------------------------------------------------------------------------
+   IDENTITY
+   Encodes the manual's clear-space and minimum-size rules so they survive
+   implementation. Set --inx-logo-height per placement; everything else follows.
+   -------------------------------------------------------------------------- */
+
+.inx-logo {
+  display: inline-block;
+  block-size: var(--inx-logo-height);
+  min-block-size: var(--inx-logo-min-height);
+  line-height: 0;
+}
+
+.inx-logo > svg {
+  display: block;
+  block-size: 100%;
+  inline-size: auto;
+}
+
+/* Clear space: one signifier height and width on every side. Content-box so the
+   padding sits outside the artwork rather than crushing it. */
+.inx-logo--clear {
+  box-sizing: content-box;
+  padding: calc(var(--inx-logo-height) * var(--inx-logo-clear-ratio));
+}
+
+/* Standalone signifier — app icon, favicon, accent mark */
+.inx-signifier {
+  display: inline-block;
+  block-size: var(--inx-logo-height);
+  min-block-size: var(--inx-logo-min-height);
+  line-height: 0;
+}
+.inx-signifier > svg { display: block; block-size: 100%; inline-size: auto; }
+
+/* Bug — signifier reversed out of an ink disc. The mark goes to the disc's
+   opposite value, not Blue Slate: at 4.03:1 on Ink Black it would all but
+   disappear at the sizes a bug is actually used. */
+.inx-bug {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  inline-size: var(--inx-logo-height);
+  block-size: var(--inx-logo-height);
+  min-inline-size: var(--inx-logo-min-height);
+  min-block-size: var(--inx-logo-min-height);
+  border-radius: var(--inx-radius-full);
+  background: var(--inx-n-950);
+  --inx-logo-mark: var(--inx-n-0);
+}
+.inx-bug > svg { display: block; block-size: 46%; inline-size: auto; }
+.inx-on-ink .inx-bug {
+  background: var(--inx-n-0);
+  --inx-logo-mark: var(--inx-n-950);
+}
+
