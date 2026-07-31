@@ -34,20 +34,38 @@ body {
   overflow-x: hidden;
 }
 
-/* The site sits slightly wider than the system default so the 12-column rhythm
-   has room to read as a grid rather than as a text column. */
-:root { --nx-shell: 1320px; }
+/* Layout constants.
+
+   The container is deliberately narrower than the viewport allows. A wide
+   container spreads a line of text past comfortable reading length and makes
+   a page feel simultaneously empty and cramped — the single biggest thing
+   separating a considered layout from a stretched one.
+
+   --nx-measure-display caps headings and lead paragraphs independently of the
+   container, so display type breaks where it should instead of running the
+   full width. */
+:root {
+  --nx-shell: 1200px;
+  /* Optical tracking. The guide's --inx-tracking-display (-0.02em) is tuned
+     for the 38-48px heading tier; the same value reads loose at 60px and
+     above, so display type gets a slightly tighter value. Type size, not a
+     new colour or weight — the locked parts of the system are untouched. */
+  --nx-tracking-hero: -0.032em;
+  --nx-measure-display: 20ch;
+  --nx-measure-lead: 46ch;
+  --nx-gutter: var(--inx-space-6);
+}
+
+@media (max-width: 900px) {
+  :root { --nx-gutter: var(--inx-space-5); }
+}
 
 .nx-shell {
   inline-size: 100%;
   max-inline-size: var(--nx-shell);
   margin-inline: auto;
-  padding-inline: var(--inx-space-6);
+  padding-inline: var(--nx-gutter);
   position: relative;
-}
-
-@media (max-width: 768px) {
-  .nx-shell { padding-inline: var(--inx-space-5); }
 }
 
 /* Skip link */
@@ -98,37 +116,39 @@ body {
 
 /* -----------------------------------------------------------------------------
    THE GRID
-   A 12-column hairline overlay pinned to the shell. This is the structural
-   device the whole page is measured against: every block starts and ends on a
-   column line, and the lines stay faintly visible so that discipline is felt
-   rather than merely claimed.
+
+   There is deliberately no decorative column overlay. A hairline drawn across
+   the middle of a paragraph is not structure — it is noise sitting on top of
+   the content, and it measurably hurts readability. Where a rule appears on
+   this page it is a real boundary: content sits inside it with its own
+   padding, and the rule marks where one column ends and the next begins.
+
+   .nx-ruled turns any grid into that kind of ruled set. Each child gets a
+   leading hairline and enough inline padding that text never touches it.
    -------------------------------------------------------------------------- */
 
-.nx-rules {
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  pointer-events: none;
-  max-inline-size: var(--nx-shell);
-  margin-inline: auto;
-  padding-inline: var(--inx-space-6);
-  display: grid;
-  grid-template-columns: repeat(var(--inx-columns), 1fr);
-}
-
-/* Kept faint on light surfaces so the column lines register as structure
-   rather than competing with the hairlines that actually separate content. */
-.nx-rules > i {
-  display: block;
+.nx-ruled > * {
+  padding-inline-start: var(--inx-space-5);
   border-inline-start: 1px solid var(--inx-border);
-  opacity: 0.45;
 }
 
-.inx-on-ink .nx-rules > i { opacity: 1; }
-.nx-rules > i:last-child { border-inline-end: 1px solid var(--inx-border); }
+/* The first column stays flush with the container edge — an indented first
+   item would break the left margin the whole page is aligned to. */
+.nx-ruled > *:first-child {
+  padding-inline-start: 0;
+  border-inline-start: 0;
+}
 
-@media (max-width: 900px) {
-  .nx-rules { display: none; }
+@media (max-width: 1024px) {
+  /* Once the columns wrap, a leading rule points at nothing, so the rules
+     turn horizontal and separate stacked rows instead. */
+  .nx-ruled > *,
+  .nx-ruled > *:first-child {
+    padding-inline-start: 0;
+    border-inline-start: 0;
+    padding-block-start: var(--inx-space-5);
+    border-block-start: 1px solid var(--inx-border);
+  }
 }
 
 /* Grid rows: the 12-column layout primitives used throughout the page. */
@@ -192,15 +212,16 @@ body {
 .nx-head__title {
   font-size: var(--inx-display-section);
   font-weight: var(--inx-weight-regular);
-  line-height: var(--inx-leading-display);
-  letter-spacing: var(--inx-tracking-display);
+  line-height: 1.05;
+  letter-spacing: var(--nx-tracking-hero);
+  max-inline-size: var(--nx-measure-display);
   margin: 0;
   text-wrap: balance;
 }
 
 .nx-head__lead {
   font-size: var(--inx-text-md);
-  line-height: var(--inx-leading-snug);
+  line-height: 1.45;
   color: var(--inx-text-muted);
   margin: 0;
   max-inline-size: 46ch;
@@ -214,9 +235,16 @@ body {
 
 /* -----------------------------------------------------------------------------
    NAVIGATION
-   Sits transparent over the ink hero, then condenses into a floating ink bar.
-   It stays on ink at every scroll position, which is what keeps the links
-   legible over both the light and the dark sections beneath it.
+
+   A full-width bar whose contents sit in the same container as the page
+   content, so the logo's left edge lands exactly on the left edge of every
+   headline below it and the CTA's right edge on the right margin. A floating
+   centred pill cannot do that — it sets its own margins and visibly ignores
+   the grid, which is what made the previous version read as decoration
+   rather than structure.
+
+   The bar stays on ink at every scroll position so its links keep their
+   contrast over both the light and the dark sections beneath.
    -------------------------------------------------------------------------- */
 
 .nx-progress {
@@ -236,41 +264,28 @@ body {
   inset-block-start: 0;
   inset-inline: 0;
   z-index: var(--inx-z-sticky);
-  padding-block: var(--inx-space-4);
-  transition: padding-block var(--inx-duration-slow) var(--inx-ease);
+  background: transparent;
+  border-block-end: 1px solid transparent;
+  transition: background-color var(--inx-duration-slow) var(--inx-ease),
+              border-color var(--inx-duration-slow) var(--inx-ease);
 }
 
-/* The nav carries .inx-on-ink so its links stay legible over every section
-   beneath it. That class also paints a background, which the bar must not
-   have until it condenses — hence the explicit reset. */
-.nx-nav,
-.nx-nav__bar { background: transparent; }
+.nx-nav.is-stuck {
+  background: rgba(7, 11, 20, 0.82);
+  border-block-end-color: var(--inx-border);
+  -webkit-backdrop-filter: blur(16px) saturate(140%);
+  backdrop-filter: blur(16px) saturate(140%);
+}
 
 .nx-nav__bar {
   display: flex;
   align-items: center;
   gap: var(--inx-space-6);
-  block-size: 64px;
-  padding-inline: var(--inx-space-5);
-  border: 1px solid transparent;
-  border-radius: var(--inx-radius-pill);
-  transition: background-color var(--inx-duration-slow) var(--inx-ease),
-              border-color var(--inx-duration-slow) var(--inx-ease),
-              block-size var(--inx-duration-slow) var(--inx-ease),
-              box-shadow var(--inx-duration-slow) var(--inx-ease);
+  block-size: 80px;
+  transition: block-size var(--inx-duration-slow) var(--inx-ease);
 }
 
-/* Condensed state, set by script once the hero is scrolled past its threshold */
-.nx-nav.is-stuck { padding-block: var(--inx-space-3); }
-
-.nx-nav.is-stuck .nx-nav__bar {
-  block-size: 56px;
-  background: rgba(7, 11, 20, 0.86);
-  border-color: var(--inx-border-strong);
-  box-shadow: var(--inx-shadow-md);
-  -webkit-backdrop-filter: blur(14px);
-  backdrop-filter: blur(14px);
-}
+.nx-nav.is-stuck .nx-nav__bar { block-size: 64px; }
 
 .nx-nav__brand {
   display: inline-flex;
@@ -280,11 +295,13 @@ body {
   border-radius: var(--inx-radius-sm);
 }
 
+/* Links sit against the logo rather than centred in the viewport: a centred
+   group drifts off the column grid as the container width changes. */
 .nx-nav__links {
   display: flex;
   align-items: center;
   gap: var(--inx-space-1);
-  margin-inline: auto;
+  min-inline-size: 0;
 }
 
 .nx-nav__link {
@@ -292,28 +309,35 @@ body {
   display: inline-flex;
   align-items: center;
   gap: var(--inx-space-2);
-  block-size: 36px;
-  padding-inline: var(--inx-space-4);
+  block-size: 34px;
+  padding-inline: var(--inx-space-3);
   border: 0;
-  border-radius: var(--inx-radius-pill);
+  border-radius: var(--inx-radius-sm);
   background: transparent;
   font-family: var(--inx-font);
   font-size: var(--inx-text-xs);
-  font-weight: var(--inx-weight-semi);
+  font-weight: var(--inx-weight-regular);
   color: var(--inx-text-muted);
   text-decoration: none;
   cursor: pointer;
   white-space: nowrap;
-  transition: color var(--inx-transition), background-color var(--inx-transition);
+  transition: color var(--inx-transition);
 }
 
 .nx-nav__link:hover,
-.nx-nav__link[aria-expanded="true"] {
-  color: var(--inx-text);
-  background: rgba(184, 208, 229, 0.10);
-}
-
+.nx-nav__link[aria-expanded="true"],
 .nx-nav__link[aria-current="true"] { color: var(--inx-text); }
+
+/* The current section is marked by a hairline under the label, on the same
+   1px vocabulary as the rest of the page. */
+.nx-nav__link[aria-current="true"]::after {
+  content: "";
+  position: absolute;
+  inset-block-end: 2px;
+  inset-inline: var(--inx-space-3);
+  block-size: 1px;
+  background: currentColor;
+}
 
 .nx-nav__caret {
   inline-size: 9px;
@@ -323,26 +347,32 @@ body {
 }
 .nx-nav__link[aria-expanded="true"] .nx-nav__caret { transform: rotate(180deg); }
 
-.nx-nav__actions { display: flex; align-items: center; gap: var(--inx-space-3); flex: none; }
+.nx-nav__actions {
+  display: flex;
+  align-items: center;
+  gap: var(--inx-space-3);
+  flex: none;
+  margin-inline-start: auto;
+}
 
 /* Services panel -------------------------------------------------------- */
 
 .nx-menu {
   position: absolute;
   inset-block-start: calc(100% + var(--inx-space-3));
-  inset-inline-start: 50%;
-  transform: translateX(-50%) translateY(-6px);
-  inline-size: min(680px, calc(100vw - var(--inx-space-8)));
-  padding: var(--inx-space-5);
-  border: 1px solid var(--inx-border-strong);
-  border-radius: var(--inx-radius-xl);
-  background: rgba(7, 11, 20, 0.94);
+  inset-inline-start: 0;
+  inline-size: min(620px, calc(100vw - var(--inx-space-8)));
+  padding: var(--inx-space-3);
+  border: 1px solid var(--inx-border);
+  border-radius: var(--inx-radius-lg);
+  background: rgba(7, 11, 20, 0.96);
   -webkit-backdrop-filter: blur(18px);
   backdrop-filter: blur(18px);
   box-shadow: var(--inx-shadow-lg);
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
+  transform: translateY(-6px);
   transition: opacity var(--inx-transition),
               transform var(--inx-transition),
               visibility var(--inx-transition);
@@ -352,24 +382,23 @@ body {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transform: translateX(-50%) translateY(0);
+  transform: translateY(0);
 }
 
 .nx-menu__grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: var(--inx-space-2);
+  gap: 1px;
 }
 
 .nx-menu__item {
   display: block;
   padding: var(--inx-space-4);
-  border: 1px solid transparent;
-  border-radius: var(--inx-radius-lg);
+  border-radius: var(--inx-radius-md);
   text-decoration: none;
-  transition: background-color var(--inx-transition), border-color var(--inx-transition);
+  transition: background-color var(--inx-transition);
 }
-.nx-menu__item:hover { background: var(--inx-bg-raised); border-color: var(--inx-border); }
+.nx-menu__item:hover { background: rgba(184, 208, 229, 0.08); }
 
 .nx-menu__title {
   display: flex;
@@ -386,15 +415,20 @@ body {
   color: var(--inx-accent);
   font-variant-numeric: tabular-nums;
 }
-.nx-menu__desc { font-size: var(--inx-text-xs); line-height: var(--inx-leading-snug); color: var(--inx-text-muted); margin: 0; }
+.nx-menu__desc {
+  font-size: var(--inx-text-xs);
+  line-height: 1.5;
+  color: var(--inx-text-muted);
+  margin: 0;
+}
 
 .nx-menu__foot {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: var(--inx-space-4);
-  margin-block-start: var(--inx-space-4);
-  padding-block-start: var(--inx-space-4);
+  margin-block-start: var(--inx-space-3);
+  padding: var(--inx-space-4);
   border-block-start: 1px solid var(--inx-border);
   font-size: var(--inx-text-xs);
   color: var(--inx-text-muted);
@@ -410,7 +444,7 @@ body {
   position: fixed;
   inset: 0;
   z-index: var(--inx-z-overlay);
-  padding: calc(var(--inx-space-11) + var(--inx-space-2)) var(--inx-space-5) var(--inx-space-8);
+  padding-block: calc(80px + var(--inx-space-6)) var(--inx-space-8);
   background: var(--inx-n-950);
   overflow-y: auto;
   opacity: 0;
@@ -439,11 +473,13 @@ body {
 @media (max-width: 1024px) {
   .nx-nav__links,
   .nx-nav__actions .inx-btn--secondary { display: none; }
-  .nx-nav__toggle { display: inline-flex; margin-inline-start: auto; }
-  .nx-nav__actions { margin-inline-start: auto; }
+  .nx-nav__bar { gap: var(--inx-space-5); }
+  .nx-nav__toggle { display: inline-flex; }
+  .nx-nav__bar { block-size: 72px; }
+  .nx-nav.is-stuck .nx-nav__bar { block-size: 60px; }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 420px) {
   .nx-nav__actions .nx-nav__cta { display: none; }
 }
 
@@ -466,8 +502,8 @@ body {
 .nx-hero__title {
   font-size: var(--inx-display-hero);
   font-weight: var(--inx-weight-regular);
-  line-height: var(--inx-leading-display);
-  letter-spacing: var(--inx-tracking-display);
+  line-height: 1.02;
+  letter-spacing: var(--nx-tracking-hero);
   margin: var(--inx-space-6) 0 0;
 }
 
@@ -494,7 +530,7 @@ body {
 
 .nx-hero__lead {
   font-size: var(--inx-text-md);
-  line-height: var(--inx-leading-snug);
+  line-height: 1.45;
   color: var(--inx-text-muted);
   margin: var(--inx-space-6) 0 0;
   max-inline-size: 44ch;
@@ -598,8 +634,11 @@ body {
 }
 .nx-fact p { margin: var(--inx-space-2) 0 0; font-size: var(--inx-text-xs); color: var(--inx-text-muted); }
 
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
   .nx-facts { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: var(--inx-space-6); margin-block-start: var(--inx-space-8); }
+  /* The container already carries a rule; the first item must not double it. */
+  .nx-facts.nx-ruled > *:first-child,
+  .nx-facts.nx-ruled > *:nth-child(2) { border-block-start: 0; padding-block-start: 0; }
   /* Two lines of label height, so a wrapping label doesn't knock the figure
      beside it out of alignment. */
   .nx-fact dt { min-block-size: 2.6em; }
@@ -664,7 +703,7 @@ body {
   font-variant-numeric: tabular-nums;
   margin: 0 0 var(--inx-space-3);
 }
-.nx-metric__label { font-size: var(--inx-text-xs); color: var(--inx-text-muted); margin: 0; max-inline-size: 26ch; }
+.nx-metric__label { font-size: var(--inx-text-xs); line-height: 1.5; color: var(--inx-text-muted); margin: 0; max-inline-size: 26ch; }
 
 
 /* -----------------------------------------------------------------------------
@@ -701,7 +740,7 @@ body {
   margin: 0;
 }
 
-.nx-compare__cell { font-size: var(--inx-text-sm); line-height: var(--inx-leading-snug); color: var(--inx-text-muted); margin: 0; }
+.nx-compare__cell { font-size: var(--inx-text-sm); line-height: 1.5; color: var(--inx-text-muted); margin: 0; }
 
 .nx-compare__cell--after {
   color: var(--inx-text);
@@ -758,13 +797,14 @@ body {
 .nx-service__mark { inline-size: 28px; block-size: 28px; flex: none; color: var(--inx-accent); }
 
 .nx-service__title { font-size: var(--inx-text-xl); letter-spacing: var(--inx-tracking-tight); line-height: var(--inx-leading-tight); margin: 0; }
-.nx-service__desc  { font-size: var(--inx-text-sm); line-height: var(--inx-leading-normal); color: var(--inx-text-muted); margin: 0; }
+.nx-service__desc  { font-size: var(--inx-text-sm); line-height: 1.55; color: var(--inx-text-muted); margin: 0; }
 
 .nx-service__list { list-style: none; margin: auto 0 0; padding: 0; }
 .nx-service__list li {
-  padding-block: var(--inx-space-3);
+  padding-block: var(--inx-space-4);
   border-block-start: 1px solid var(--inx-border);
   font-size: var(--inx-text-xs);
+  line-height: 1.5;
   color: var(--inx-text-subtle);
 }
 
@@ -775,7 +815,13 @@ body {
 
 .nx-steps { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--inx-gutter); }
 
-.nx-step { position: relative; padding-block-start: var(--inx-space-6); }
+.nx-step {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding-block-start: var(--inx-space-6);
+  block-size: 100%;
+}
 
 /* The connecting rule draws across as the block enters the viewport. */
 .nx-step::before {
@@ -803,10 +849,11 @@ body {
 }
 
 .nx-step__title { font-size: var(--inx-text-lg); letter-spacing: var(--inx-tracking-tight); margin: 0 0 var(--inx-space-3); }
-.nx-step__desc  { font-size: var(--inx-text-sm); line-height: var(--inx-leading-snug); color: var(--inx-text-muted); margin: 0 0 var(--inx-space-5); }
+.nx-step__desc  { font-size: var(--inx-text-sm); line-height: 1.55; color: var(--inx-text-muted); margin: 0 0 var(--inx-space-5); }
 
 .nx-step__meta {
-  padding-block-start: var(--inx-space-3);
+  margin-block-start: auto;
+  padding-block-start: var(--inx-space-4);
   border-block-start: 1px solid var(--inx-border);
   font-size: var(--inx-text-2xs);
   font-weight: var(--inx-weight-semi);
@@ -973,8 +1020,8 @@ body {
 .nx-billboard__title {
   font-size: var(--inx-display-hero);
   font-weight: var(--inx-weight-regular);
-  line-height: var(--inx-leading-display);
-  letter-spacing: var(--inx-tracking-display);
+  line-height: 1.02;
+  letter-spacing: var(--nx-tracking-hero);
   margin: var(--inx-space-6) 0 0;
 }
 
@@ -995,7 +1042,7 @@ body {
   padding-block-start: var(--inx-space-6);
   border-block-start: 1px solid var(--inx-border);
 }
-.nx-assure p { margin: 0; font-size: var(--inx-text-xs); color: var(--inx-text-muted); }
+.nx-assure p { margin: 0; font-size: var(--inx-text-xs); line-height: 1.55; color: var(--inx-text-muted); }
 .nx-assure strong { display: block; font-weight: var(--inx-weight-semi); color: var(--inx-text); margin-block-end: var(--inx-space-2); }
 
 @media (max-width: 768px) {
@@ -1122,6 +1169,13 @@ body {
 .nx-sticky   { position: sticky; inset-block-start: var(--inx-space-11); }
 
 @media (max-width: 1024px) { .nx-sticky { position: static; } }
+
+/* The questions column is narrower than a full section head, so its title
+   steps down a tier rather than breaking one word per line. */
+.nx-sticky .nx-head__title {
+  font-size: clamp(2rem, 3.4vw, 2.875rem);
+  max-inline-size: 14ch;
+}
 
 .nx-mono {
   font-family: var(--inx-font-mono);

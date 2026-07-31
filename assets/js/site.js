@@ -199,6 +199,10 @@
       .map(function (link) { return document.querySelector(link.getAttribute('href')); })
       .filter(Boolean);
 
+    var clear = function () {
+      links.forEach(function (link) { link.removeAttribute('aria-current'); });
+    };
+
     var io = new IntersectionObserver(function (entries) {
       entries.forEach(function (entry) {
         if (!entry.isIntersecting) return;
@@ -209,6 +213,12 @@
     }, { rootMargin: '-45% 0px -50% 0px' });
 
     sections.forEach(function (s) { io.observe(s); });
+
+    /* While the hero still fills the screen the reader is not "in" any of the
+       tracked sections, so nothing should be marked as current. */
+    window.addEventListener('scroll', function () {
+      if (window.scrollY < window.innerHeight * 0.6) clear();
+    }, { passive: true });
   }
 
   /* ---------------------------------------------------------------------

@@ -43,11 +43,26 @@ risk by showing the mechanism, 6 supplies evidence, 7 handles objections, 8 asks
 
 ## Structure
 
-The page is measured against a 12-column grid at a 1320px shell, and the column
-hairlines stay faintly visible on every section. Every block starts and ends on a
-column line. Section rhythm is 96px on desktop and 48px below 900px, exactly as
-the style guide specifies, and the three-level spacing hierarchy (section →
-block → element) is held throughout.
+Measured against the reference the brief pointed at (oma-operator.framer.website),
+whose actual CSS gives a 1199px container, an ~809px text measure, 140% body
+leading and −0.02 to −0.06em display tracking. This page follows the same
+discipline:
+
+- **1200px container.** A wider one pushes lines past comfortable reading length
+  and makes a page feel empty and cramped at the same time.
+- **One left margin.** The navigation logo, every eyebrow, every headline, every
+  card and the footer all begin on the same x. The navbar's contents sit in the
+  same container as the page content rather than in a floating pill of its own —
+  a centred pill sets its own margins and visibly ignores the grid.
+- **No decorative column overlay.** Hairlines are boundaries, never an overlay:
+  where a rule appears, content sits inside it with its own padding
+  (`.nx-ruled`). A line drawn across the middle of a paragraph is not structure,
+  it is noise on top of content, and it measurably hurts reading.
+- **Leading is set by role.** Display type runs 1.02–1.05 with tight tracking;
+  body copy runs 1.45–1.55. Using a heading leading on multi-line body copy is
+  what makes a layout look cramped.
+- Section rhythm is 96px desktop / 48px below 900px, with the three-level
+  spacing hierarchy (section → block → element) held throughout.
 
 ## Motion
 
@@ -57,8 +72,8 @@ Entrances only, driven by one `IntersectionObserver`:
 - Blocks fade and lift 18px with a 60–90ms stagger.
 - Section connector rules and the readout meters draw in with `scaleX`.
 - The figures count up once, on entry.
-- The navbar condenses into a floating ink bar past 24px of scroll, with a
-  scroll-progress hairline at the top of the viewport.
+- The navbar shortens from 80px to 64px past 24px of scroll and picks up an ink
+  background and a hairline base, with a scroll-progress line above it.
 
 Nothing runs longer than `--inx-duration-slow` (360ms) and nothing bounces —
 verified: the only transition durations present on the page are 120ms, 200ms and
