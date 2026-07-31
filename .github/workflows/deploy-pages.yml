@@ -1,0 +1,46 @@
+name: Deploy homepage to GitHub Pages
+
+# The site is plain static files at the repository root — no build step — so
+# the workflow only packages the checkout and hands it to Pages.
+
+on:
+  push:
+    branches: [claude/inexa-premium-homepage-is2zrg]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Let a running deploy finish rather than cancelling it half-published, but
+# only ever queue one behind it.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@v4
+
+      - name: Configure Pages
+        # enablement turns Pages on via the API if it is not already enabled,
+        # so the site goes live without anyone touching repository settings.
+        uses: actions/configure-pages@v5
+        with:
+          enablement: true
+
+      - name: Upload the site
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: .
+
+      - name: Deploy
+        id: deployment
+        uses: actions/deploy-pages@v4
