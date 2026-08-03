@@ -8,6 +8,7 @@ disk, from a static host, or inside an embedded preview.
 
 ```
 index.html
+style-guide/index.html      The design system document itself
 assets/
   css/
     fonts.css               Manrope, self-hosted (data URI)
@@ -123,9 +124,20 @@ Checked in a real browser rather than by eye:
 1. **A CSS bug in the style guide, fixed here.** In the original
    `inexastyleguidestandalone.html`, the `[EXTENSION] Functional status colours`
    comment closes early and leaves five lines of prose loose in the stylesheet,
-   followed by a stray `*/`. Browsers error-recover, but it can swallow the
-   declarations that follow. Corrected in `assets/css/inexa-tokens.css` — worth
-   applying to the style guide itself.
+   followed by a stray `*/`.
+
+   Measured in a browser rather than assumed: the error costs exactly one
+   declaration — `--inx-status-success` never gets defined. The parser recovers
+   at the next semicolon, so warning, danger and info survive. The visible
+   consequence is that in the original guide the Success pill's dot computes to
+   `rgba(0,0,0,0)` — an invisible mark — and the success alert label falls back
+   to ink instead of `#2A6B57`. Both render correctly in the copies here.
+
+   Which is a small irony worth flagging to whoever owns the guide: the one
+   status whose mark disappears is the one the guide uses to argue that status
+   should be carried by a named label and a small mark rather than by colour.
+
+   Corrected in both `assets/css/inexa-tokens.css` and `style-guide/index.html`.
 2. **The token and component layers are otherwise verbatim.** Nothing was
    edited, so the guide stays the single source of truth. All new work lives in
    `site.css` under the `nx-` prefix and resolves to tokens.

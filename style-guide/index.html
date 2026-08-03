@@ -1,0 +1,2637 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>iNexa — Design System</title>
+<!-- Self-contained build: tokens + components inlined. For production use the separate CSS files and SVG assets. -->
+
+<link rel="stylesheet" href="../assets/css/fonts.css">
+
+<style>
+/* ==== inexa-tokens.css (inlined) ==== */
+/* =============================================================================
+   iNexa Design System — Token Layer
+   Derived from: iNexa Brand Guidelines v1.0 (Avocadots Design Studio, 2026)
+
+   Tokens marked [MANUAL] come directly from the brand manual.
+   Tokens marked [DERIVED] are interpolated between approved brand colours —
+   no new hues are introduced.
+   Tokens marked [EXTENSION] are additions required for interface work that the
+   manual does not cover. These are flagged in the style guide for sign-off.
+   ========================================================================== */
+
+:root {
+
+  /* ---------------------------------------------------------------------
+     1. PALETTE — primitives
+     --------------------------------------------------------------------- */
+
+  /* [MANUAL] The six approved brand colours */
+  --inx-white:        #FFFFFF;  /* White       CMYK 0,0,0,0     */
+  --inx-platinum:     #F5F7FA;  /* Platinum    CMYK 2,1,0,2     */
+  --inx-pale-sky:     #B8D0E5;  /* Pale Sky    CMYK 20,9,0,10   */
+  --inx-blue-slate:   #5E738A;  /* Blue Slate  CMYK 32,17,0,46  */
+  --inx-ink-navy:     #141D2B;  /* Ink (light) CMYK 53,33,0,83  */
+  --inx-ink-black:    #070B14;  /* Ink (dark)  CMYK 65,45,0,92  */
+
+  /* [DERIVED] Neutral ramp. Every step sits on the line between two approved
+     colours, so hovers, borders and disabled states stay inside the palette. */
+  --inx-n-950: #070B14;  /* = Ink Black   */
+  --inx-n-900: #141D2B;  /* = Ink Navy    */
+  --inx-n-800: #243040;
+  --inx-n-700: #354456;
+  --inx-n-600: #495B6F;
+  --inx-n-500: #5E738A;  /* = Blue Slate  */
+  --inx-n-400: #8096AD;
+  --inx-n-300: #9DB4CA;
+  --inx-n-200: #B8D0E5;  /* = Pale Sky    */
+  --inx-n-100: #DAE5F1;
+  --inx-n-75:  #ECF1F7;
+  --inx-n-50:  #F5F7FA;  /* = Platinum    */
+  --inx-n-0:   #FFFFFF;  /* = White       */
+
+  /* [EXTENSION] Functional status colours. The manual defines no status
+     palette. These are tuned to the palette's low chroma and are permitted in
+     product UI only — never in marketing layouts, never near the logo.
+     No tinted background variants are provided, deliberately. A pastel fill per
+     status goes muddy against this palette and turns any stacked list into a
+     traffic light. Status is carried by a named label and a small mark instead.
+     If a tint is ever genuinely required, derive it at the point of use with
+     color-mix() rather than adding it back here. */
+  --inx-status-success:      #2A6B57;
+  --inx-status-success-dark: #63C09B;  /* for use on ink surfaces */
+
+  --inx-status-warning:      #8A6212;
+  --inx-status-warning-dark: #D9A54F;
+
+  --inx-status-danger:       #A83232;
+  --inx-status-danger-dark:  #E88A87;
+
+  --inx-status-info:         #5E738A;
+  --inx-status-info-dark:    #B8D0E5;
+
+
+  /* ---------------------------------------------------------------------
+     2. SEMANTIC COLOUR — light surface (default)
+     --------------------------------------------------------------------- */
+
+  --inx-bg:              var(--inx-n-50);
+  --inx-bg-raised:       var(--inx-n-0);
+  --inx-bg-sunken:       var(--inx-n-75);
+  --inx-bg-inverse:      var(--inx-n-950);
+
+  --inx-text:            var(--inx-n-950);   /* 19.68:1 on white  */
+  --inx-text-muted:      var(--inx-n-500);   /*  4.89:1 on white  */
+  --inx-text-subtle:     var(--inx-n-600);   /*  6.98:1 on white  */
+  --inx-text-inverse:    var(--inx-n-0);
+  --inx-text-link:       var(--inx-n-700);
+
+  --inx-border:          var(--inx-n-100);
+  --inx-border-strong:   var(--inx-n-300);
+  --inx-border-input:    var(--inx-n-300);
+
+  --inx-accent:          var(--inx-n-500);   /* Blue Slate — the working accent */
+  --inx-accent-soft:     var(--inx-n-200);   /* Pale Sky — surfaces & rules only */
+
+  /* Focus ring is surface-scoped: no single palette colour clears 3:1 on both
+     light and ink backgrounds. See the accessibility section of the guide. */
+  --inx-focus-ring:      var(--inx-n-500);
+  --inx-focus-width:     2px;
+  --inx-focus-offset:    2px;
+
+
+  /* ---------------------------------------------------------------------
+     3. TYPOGRAPHY
+     --------------------------------------------------------------------- */
+
+  /* [MANUAL] Manrope is the sole typeface. Only Regular and Semi Bold are
+     approved — do not introduce Light, Medium, Bold or ExtraBold. */
+  --inx-font: "Manrope", ui-sans-serif, system-ui, -apple-system,
+              "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --inx-font-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo,
+                   Consolas, monospace;
+
+  --inx-weight-regular: 400;   /* [MANUAL] Manrope Regular   */
+  --inx-weight-semi:    600;   /* [MANUAL] Manrope Semi Bold */
+
+  /* [DERIVED] Web scale. The manual specifies 144pt / 48pt / 18pt for print
+     and presentation. Body is carried across at 18px; the display tier maps
+     the 144pt headline to a fluid web equivalent. */
+  --inx-text-3xs:  0.6875rem;  /* 11px — legal, table micro-labels     */
+  --inx-text-2xs:  0.75rem;    /* 12px — eyebrows, badges              */
+  --inx-text-xs:   0.875rem;   /* 14px — captions, helper text, meta   */
+  --inx-text-sm:   1rem;       /* 16px — dense UI body, inputs         */
+  --inx-text-base: 1.125rem;   /* 18px — [MANUAL] body copy            */
+  --inx-text-md:   1.25rem;    /* 20px — lead paragraphs               */
+  --inx-text-lg:   1.5rem;     /* 24px — h4                            */
+  --inx-text-xl:   1.875rem;   /* 30px — h3                            */
+  --inx-text-2xl:  2.375rem;   /* 38px — h2                            */
+  --inx-text-3xl:  3rem;       /* 48px — [MANUAL] subheading, h1       */
+  --inx-text-4xl:  3.75rem;    /* 60px — section title                 */
+  --inx-text-5xl:  4.75rem;    /* 76px — display                       */
+  --inx-text-6xl:  6rem;       /* 96px — hero display                  */
+
+  /* Fluid display sizes for hero and section openers */
+  --inx-display-hero:    clamp(2.75rem, 7.5vw, 6rem);
+  --inx-display-section: clamp(2.25rem, 5vw, 3.75rem);
+
+  --inx-leading-display: 1.02;  /* mirrors the manual's title pages */
+  --inx-leading-tight:   1.12;
+  --inx-leading-snug:    1.3;
+  --inx-leading-normal:  1.6;   /* body */
+  --inx-leading-loose:   1.75;
+
+  --inx-tracking-display: -0.02em;
+  --inx-tracking-tight:   -0.01em;
+  --inx-tracking-normal:  0;
+  --inx-tracking-wide:    0.06em;
+  --inx-tracking-caps:    0.12em;  /* uppercase subheads & eyebrows */
+
+  --inx-measure:       68ch;   /* max body line length */
+  --inx-measure-tight: 46ch;
+
+
+  /* ---------------------------------------------------------------------
+     4. SPACE — [EXTENSION] 4px base grid
+     --------------------------------------------------------------------- */
+
+  --inx-space-0:   0;
+  --inx-space-1:   0.25rem;   /*  4px */
+  --inx-space-2:   0.5rem;    /*  8px */
+  --inx-space-3:   0.75rem;   /* 12px */
+  --inx-space-4:   1rem;      /* 16px */
+  --inx-space-5:   1.5rem;    /* 24px */
+  --inx-space-6:   2rem;      /* 32px */
+  --inx-space-7:   2.5rem;    /* 40px */
+  --inx-space-8:   3rem;      /* 48px */
+  --inx-space-9:   4rem;      /* 64px */
+  --inx-space-10:  6rem;      /* 96px */
+  --inx-space-11:  8rem;      /* 128px */
+
+  /* Identity geometry, measured from the supplied artwork rather than estimated.
+     [MANUAL] Clear space equals the height and width of the symbol; minimum
+     height 20px for logo, symbol and bug alike.
+     The signifier is 74.78% of the lockup's height, so clear space expressed as
+     a fraction of logo height is 0.748 — that ratio holds at any size. */
+  --inx-logo-min-height:    20px;
+  --inx-logo-height:        40px;   /* override per placement */
+  --inx-logo-aspect:        3.63;   /* 271.85 : 74.89 */
+  --inx-signifier-aspect:   1.083;  /*  93.86 : 86.66 */
+  --inx-logo-clear-ratio:   0.748;
+
+  /* Logo colours. Inline SVG reads these, so one asset serves both surfaces. */
+  --inx-logo-word: var(--inx-n-950);
+  --inx-logo-mark: var(--inx-blue-slate);
+
+
+  /* ---------------------------------------------------------------------
+     5. RADIUS — [EXTENSION]
+     Derived from the identity: the bug is a circle, the billboard CTA is a
+     full pill. Containers stay near-square to hold the manual's structure.
+     --------------------------------------------------------------------- */
+
+  --inx-radius-none: 0;
+  --inx-radius-sm:   4px;
+  --inx-radius-md:   8px;
+  --inx-radius-lg:   12px;
+  --inx-radius-xl:   20px;
+  --inx-radius-pill: 999px;
+  --inx-radius-full: 50%;
+
+
+  /* ---------------------------------------------------------------------
+     6. BORDER & ELEVATION — [EXTENSION]
+     The manual forbids effects on the identity and gradients in colour use.
+     Elevation is therefore borders-first; shadows are ink-tinted, low-spread
+     and used only for genuinely floating layers.
+     --------------------------------------------------------------------- */
+
+  --inx-border-width:       1px;
+  --inx-border-width-thick: 2px;
+  --inx-rule:               1px solid var(--inx-border);
+
+  --inx-shadow-none: none;
+  --inx-shadow-sm:   0 1px 2px rgba(7, 11, 20, 0.06);
+  --inx-shadow-md:   0 4px 12px rgba(7, 11, 20, 0.08);
+  --inx-shadow-lg:   0 12px 32px rgba(7, 11, 20, 0.12);
+  --inx-shadow-focus: 0 0 0 var(--inx-focus-width) var(--inx-focus-ring);
+
+
+  /* ---------------------------------------------------------------------
+     7. MOTION — [EXTENSION]
+     Calm and deliberate, matching the "structured" tone of voice.
+     --------------------------------------------------------------------- */
+
+  --inx-duration-fast: 120ms;
+  --inx-duration-base: 200ms;
+  --inx-duration-slow: 360ms;
+  --inx-ease:          cubic-bezier(0.2, 0, 0, 1);
+  --inx-ease-out:      cubic-bezier(0.16, 1, 0.3, 1);
+  --inx-transition:    var(--inx-duration-base) var(--inx-ease);
+
+
+  /* ---------------------------------------------------------------------
+     8. LAYOUT — [EXTENSION]
+     --------------------------------------------------------------------- */
+
+  --inx-container:       1280px;
+  --inx-container-text:  760px;
+  --inx-gutter:          var(--inx-space-5);
+  --inx-columns:         12;
+
+  --inx-bp-sm:  480px;
+  --inx-bp-md:  768px;
+  --inx-bp-lg:  1024px;
+  --inx-bp-xl:  1280px;
+  --inx-bp-2xl: 1536px;
+
+  --inx-z-base:    0;
+  --inx-z-raised:  10;
+  --inx-z-sticky:  100;
+  --inx-z-overlay: 500;
+  --inx-z-modal:   1000;
+  --inx-z-toast:   1500;
+
+  /* Control sizing — keeps buttons, inputs and selects on one rhythm */
+  --inx-control-height-sm: 36px;
+  --inx-control-height-md: 44px;   /* default — clears the 44px touch target */
+  --inx-control-height-lg: 52px;
+}
+
+
+/* =============================================================================
+   INK SURFACE
+   Apply .inx-on-ink to any dark section. Semantic tokens re-point so that
+   components need no dark-mode variants of their own.
+
+   The critical rule this encodes: Blue Slate reaches only 4.03:1 on Ink Black
+   and 3.46:1 on Ink Navy, so it cannot carry body text on dark. Pale Sky takes
+   over as secondary text (12.36:1) and Blue Slate drops back to borders and
+   large type.
+   ========================================================================== */
+
+.inx-on-ink {
+  --inx-bg:            var(--inx-n-950);
+  --inx-bg-raised:     var(--inx-n-900);
+  --inx-bg-sunken:     #04070D;
+  --inx-bg-inverse:    var(--inx-n-0);
+
+  --inx-text:          var(--inx-n-0);
+  --inx-text-muted:    var(--inx-n-200);   /* Pale Sky, not Blue Slate */
+  --inx-text-subtle:   var(--inx-n-300);
+  --inx-text-inverse:  var(--inx-n-950);
+  --inx-text-link:     var(--inx-n-200);
+
+  --inx-border:        rgba(184, 208, 229, 0.16);
+  --inx-border-strong: rgba(184, 208, 229, 0.32);
+  --inx-border-input:  rgba(184, 208, 229, 0.32);
+
+  --inx-accent:        var(--inx-n-200);
+  --inx-accent-soft:   var(--inx-n-500);
+
+  --inx-focus-ring:    var(--inx-n-200);
+
+  /* The wordmark flips to white; the signifier stays Blue Slate on both
+     surfaces (4.03:1 on Ink Black — a graphic mark, not text). */
+  --inx-logo-word: var(--inx-n-0);
+  --inx-logo-mark: var(--inx-blue-slate);
+
+  --inx-status-success: var(--inx-status-success-dark);
+  --inx-status-warning: var(--inx-status-warning-dark);
+  --inx-status-danger:  var(--inx-status-danger-dark);
+  --inx-status-info:    var(--inx-status-info-dark);
+
+  --inx-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
+  --inx-shadow-md: 0 4px 12px rgba(0, 0, 0, 0.45);
+  --inx-shadow-lg: 0 12px 32px rgba(0, 0, 0, 0.55);
+
+  background-color: var(--inx-bg);
+  color: var(--inx-text);
+}
+
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --inx-duration-fast: 1ms;
+    --inx-duration-base: 1ms;
+    --inx-duration-slow: 1ms;
+  }
+}
+
+
+/* ==== inexa-components.css (inlined) ==== */
+/* =============================================================================
+   iNexa Design System — Component Layer
+   Requires inexa-tokens.css to be loaded first.
+   Every value below resolves to a token. No raw hex, no magic numbers.
+   ========================================================================== */
+
+/* -----------------------------------------------------------------------------
+   BASE
+   -------------------------------------------------------------------------- */
+
+.inx {
+  font-family: var(--inx-font);
+  font-weight: var(--inx-weight-regular);
+  font-size: var(--inx-text-base);
+  line-height: var(--inx-leading-normal);
+  color: var(--inx-text);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+.inx *,
+.inx *::before,
+.inx *::after { box-sizing: border-box; }
+
+.inx :focus-visible {
+  outline: var(--inx-focus-width) solid var(--inx-focus-ring);
+  outline-offset: var(--inx-focus-offset);
+  border-radius: var(--inx-radius-sm);
+}
+
+
+/* -----------------------------------------------------------------------------
+   TYPOGRAPHY
+   Setting rules from the manual: headings Regular / Title Case,
+   subheadings Semi Bold / UPPER CASE, body Regular / Sentence case.
+   -------------------------------------------------------------------------- */
+
+.inx-display {
+  font-size: var(--inx-display-hero);
+  font-weight: var(--inx-weight-regular);
+  line-height: var(--inx-leading-display);
+  letter-spacing: var(--inx-tracking-display);
+  margin: 0;
+}
+
+.inx-display--section {
+  font-size: var(--inx-display-section);
+}
+
+.inx-h1,
+.inx-h2,
+.inx-h3,
+.inx-h4 {
+  font-weight: var(--inx-weight-regular);
+  letter-spacing: var(--inx-tracking-tight);
+  line-height: var(--inx-leading-tight);
+  margin: 0;
+  text-wrap: balance;
+}
+
+.inx-h1 { font-size: var(--inx-text-3xl); }
+.inx-h2 { font-size: var(--inx-text-2xl); }
+.inx-h3 { font-size: var(--inx-text-xl); }
+.inx-h4 { font-size: var(--inx-text-lg); line-height: var(--inx-leading-snug); }
+
+/* The manual's subheading: Semi Bold, upper case. */
+.inx-subhead {
+  font-size: var(--inx-text-lg);
+  font-weight: var(--inx-weight-semi);
+  text-transform: uppercase;
+  letter-spacing: var(--inx-tracking-caps);
+  line-height: var(--inx-leading-snug);
+  margin: 0;
+}
+
+.inx-body      { font-size: var(--inx-text-base); line-height: var(--inx-leading-normal); max-width: var(--inx-measure); margin: 0; }
+.inx-body--sm  { font-size: var(--inx-text-sm); }
+.inx-lead      { font-size: var(--inx-text-md); line-height: var(--inx-leading-snug); max-width: var(--inx-measure); margin: 0; }
+.inx-caption   { font-size: var(--inx-text-xs); line-height: var(--inx-leading-snug); color: var(--inx-text-muted); margin: 0; }
+.inx-legal     { font-size: var(--inx-text-3xs); line-height: var(--inx-leading-snug); color: var(--inx-text-muted); margin: 0; }
+
+.inx-muted  { color: var(--inx-text-muted); }
+.inx-subtle { color: var(--inx-text-subtle); }
+
+.inx-mono {
+  font-family: var(--inx-font-mono);
+  font-size: var(--inx-text-xs);
+  letter-spacing: 0;
+}
+
+
+/* -----------------------------------------------------------------------------
+   EYEBROW
+   The manual's uppercase Semi Bold subhead, reduced to label scale. It is a
+   structural device, not decoration: use it to name the section a block
+   belongs to, never to repeat the heading beneath it.
+   -------------------------------------------------------------------------- */
+
+.inx-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--inx-space-2);
+  font-size: var(--inx-text-2xs);
+  font-weight: var(--inx-weight-semi);
+  text-transform: uppercase;
+  letter-spacing: var(--inx-tracking-caps);
+  line-height: 1;
+  color: var(--inx-text-muted);
+  margin: 0;
+}
+
+.inx-eyebrow--accent { color: var(--inx-accent); }
+
+/* Rule variant — the horizontal dash that opens the billboard layout. */
+.inx-eyebrow--rule::before {
+  content: "";
+  inline-size: var(--inx-space-6);
+  block-size: 1px;
+  background: currentColor;
+  flex: none;
+}
+
+/* Numbered variant. Use only where the content is genuinely sequential. */
+.inx-eyebrow--numbered::before {
+  content: attr(data-index);
+  font-variant-numeric: tabular-nums;
+  color: var(--inx-accent);
+}
+
+
+/* -----------------------------------------------------------------------------
+   LINKS
+   -------------------------------------------------------------------------- */
+
+.inx-link {
+  color: var(--inx-text-link);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.2em;
+  transition: color var(--inx-transition), text-decoration-color var(--inx-transition);
+}
+
+.inx-link:hover { color: var(--inx-text); text-decoration-thickness: 2px; }
+
+.inx-link--quiet { text-decoration-color: var(--inx-border-strong); }
+
+
+/* -----------------------------------------------------------------------------
+   BUTTONS
+   Pill radius is taken from the "Book a Strategy Call" CTA in the manual's
+   billboard application.
+   -------------------------------------------------------------------------- */
+
+.inx-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--inx-space-2);
+  block-size: var(--inx-control-height-md);
+  padding-inline: var(--inx-space-5);
+  border: var(--inx-border-width) solid transparent;
+  border-radius: var(--inx-radius-pill);
+  font-family: var(--inx-font);
+  font-size: var(--inx-text-sm);
+  font-weight: var(--inx-weight-semi);
+  line-height: 1;
+  letter-spacing: var(--inx-tracking-normal);
+  text-decoration: none;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background-color var(--inx-transition),
+              border-color var(--inx-transition),
+              color var(--inx-transition),
+              transform var(--inx-duration-fast) var(--inx-ease);
+}
+
+.inx-btn:active { transform: translateY(1px); }
+
+.inx-btn:disabled,
+.inx-btn[aria-disabled="true"] {
+  cursor: not-allowed;
+  opacity: 0.4;
+  transform: none;
+}
+
+/* Sizes */
+.inx-btn--sm { block-size: var(--inx-control-height-sm); padding-inline: var(--inx-space-4); font-size: var(--inx-text-xs); }
+.inx-btn--lg { block-size: var(--inx-control-height-lg); padding-inline: var(--inx-space-6); font-size: var(--inx-text-base); }
+
+/* Primary — solid ink */
+.inx-btn--primary {
+  background: var(--inx-n-950);
+  color: var(--inx-n-0);
+  border-color: var(--inx-n-950);
+}
+.inx-btn--primary:hover:not(:disabled) { background: var(--inx-n-800); border-color: var(--inx-n-800); }
+
+.inx-on-ink .inx-btn--primary {
+  background: var(--inx-n-0);
+  color: var(--inx-n-950);
+  border-color: var(--inx-n-0);
+}
+.inx-on-ink .inx-btn--primary:hover:not(:disabled) { background: var(--inx-n-100); border-color: var(--inx-n-100); }
+
+/* Secondary — outlined */
+.inx-btn--secondary {
+  background: transparent;
+  color: var(--inx-text);
+  border-color: var(--inx-border-strong);
+}
+.inx-btn--secondary:hover:not(:disabled) { border-color: var(--inx-text); background: var(--inx-bg-sunken); }
+
+.inx-on-ink .inx-btn--secondary:hover:not(:disabled) { background: rgba(184, 208, 229, 0.08); }
+
+/* Tertiary — text only */
+.inx-btn--ghost {
+  background: transparent;
+  color: var(--inx-text);
+  padding-inline: var(--inx-space-3);
+}
+.inx-btn--ghost:hover:not(:disabled) { background: var(--inx-bg-sunken); }
+.inx-on-ink .inx-btn--ghost:hover:not(:disabled) { background: rgba(184, 208, 229, 0.08); }
+
+/* Destructive — product UI only */
+.inx-btn--danger {
+  background: var(--inx-status-danger);
+  color: var(--inx-n-0);
+  border-color: var(--inx-status-danger);
+}
+.inx-btn--danger:hover:not(:disabled) { filter: brightness(0.9); }
+.inx-on-ink .inx-btn--danger { color: var(--inx-n-950); }
+
+/* Full width */
+.inx-btn--block { inline-size: 100%; }
+
+/* Icon-only — keeps the 44px target */
+.inx-btn--icon {
+  inline-size: var(--inx-control-height-md);
+  padding-inline: 0;
+  border-radius: var(--inx-radius-full);
+}
+
+/* Loading */
+.inx-btn[data-loading="true"] { pointer-events: none; opacity: 0.7; }
+.inx-btn[data-loading="true"]::before {
+  content: "";
+  inline-size: 1em;
+  block-size: 1em;
+  border: 2px solid currentColor;
+  border-block-start-color: transparent;
+  border-radius: var(--inx-radius-full);
+  animation: inx-spin 700ms linear infinite;
+}
+
+@keyframes inx-spin { to { transform: rotate(360deg); } }
+
+@media (prefers-reduced-motion: reduce) {
+  .inx-btn[data-loading="true"]::before { animation-duration: 2s; }
+}
+
+
+/* -----------------------------------------------------------------------------
+   PILLS, BADGES & TAGS
+   Pill  — a static label describing state or category.
+   Tag   — a pill the user can remove.
+   Chip  — a pill the user can select (filters).
+   -------------------------------------------------------------------------- */
+
+.inx-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--inx-space-2);
+  block-size: 24px;
+  padding-inline: var(--inx-space-3);
+  border: var(--inx-border-width) solid var(--inx-border);
+  border-radius: var(--inx-radius-pill);
+  background: var(--inx-bg-sunken);
+  color: var(--inx-text-subtle);
+  font-size: var(--inx-text-2xs);
+  font-weight: var(--inx-weight-semi);
+  letter-spacing: var(--inx-tracking-wide);
+  text-transform: uppercase;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.inx-pill--lg { block-size: 32px; padding-inline: var(--inx-space-4); font-size: var(--inx-text-xs); }
+
+/* Sentence-case variant for user-generated content, where shouting is wrong */
+.inx-pill--plain {
+  text-transform: none;
+  letter-spacing: var(--inx-tracking-normal);
+  font-weight: var(--inx-weight-regular);
+}
+
+/* Status variants. The surface stays neutral and the dot carries the colour —
+   a tinted pastel fill per status reads as a generic badge set and goes muddy
+   against this palette. The word is always present, so meaning never depends
+   on the dot alone. */
+.inx-pill--success .inx-pill__dot { background: var(--inx-status-success); }
+.inx-pill--warning .inx-pill__dot { background: var(--inx-status-warning); }
+.inx-pill--danger  .inx-pill__dot { background: var(--inx-status-danger); }
+.inx-pill--info    .inx-pill__dot { background: var(--inx-status-info); }
+
+.inx-pill--success,
+.inx-pill--warning,
+.inx-pill--danger,
+.inx-pill--info { color: var(--inx-text); }
+
+.inx-pill--solid { background: var(--inx-n-950); border-color: var(--inx-n-950); color: var(--inx-n-0); }
+.inx-on-ink .inx-pill--solid { background: var(--inx-n-0); border-color: var(--inx-n-0); color: var(--inx-n-950); }
+
+/* Status dot — pairs with the pill where colour alone must not carry meaning */
+.inx-pill__dot {
+  inline-size: 6px;
+  block-size: 6px;
+  border-radius: var(--inx-radius-full);
+  background: currentColor;
+  flex: none;
+}
+
+/* Tag with remove control */
+.inx-tag { text-transform: none; letter-spacing: var(--inx-tracking-normal); font-weight: var(--inx-weight-regular); font-size: var(--inx-text-xs); block-size: 28px; }
+.inx-tag__remove {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  inline-size: 16px;
+  block-size: 16px;
+  margin-inline-end: calc(var(--inx-space-1) * -1);
+  border: 0;
+  border-radius: var(--inx-radius-full);
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  font-size: 14px;
+  line-height: 1;
+}
+.inx-tag__remove:hover { background: var(--inx-border); }
+
+/* Selectable chip */
+.inx-chip {
+  cursor: pointer;
+  background: transparent;
+  transition: background-color var(--inx-transition), border-color var(--inx-transition), color var(--inx-transition);
+}
+.inx-chip:hover { border-color: var(--inx-border-strong); }
+.inx-chip[aria-pressed="true"] {
+  background: var(--inx-n-950);
+  border-color: var(--inx-n-950);
+  color: var(--inx-n-0);
+}
+.inx-on-ink .inx-chip[aria-pressed="true"] { background: var(--inx-n-0); border-color: var(--inx-n-0); color: var(--inx-n-950); }
+
+
+/* -----------------------------------------------------------------------------
+   FORMS
+   -------------------------------------------------------------------------- */
+
+.inx-field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--inx-space-2);
+  margin-block-end: var(--inx-space-5);
+}
+
+.inx-label {
+  font-size: var(--inx-text-xs);
+  font-weight: var(--inx-weight-semi);
+  color: var(--inx-text);
+  line-height: 1.4;
+}
+
+.inx-label__optional {
+  font-weight: var(--inx-weight-regular);
+  color: var(--inx-text-muted);
+  margin-inline-start: var(--inx-space-2);
+}
+
+.inx-help {
+  font-size: var(--inx-text-xs);
+  color: var(--inx-text-muted);
+  line-height: var(--inx-leading-snug);
+}
+
+.inx-error {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--inx-space-2);
+  font-size: var(--inx-text-xs);
+  font-weight: var(--inx-weight-semi);
+  color: var(--inx-status-danger);
+  line-height: var(--inx-leading-snug);
+}
+
+.inx-input,
+.inx-textarea,
+.inx-select {
+  inline-size: 100%;
+  min-block-size: var(--inx-control-height-md);
+  padding: var(--inx-space-3) var(--inx-space-4);
+  border: var(--inx-border-width) solid var(--inx-border-input);
+  border-radius: var(--inx-radius-md);
+  background: var(--inx-bg-raised);
+  color: var(--inx-text);
+  font-family: var(--inx-font);
+  font-size: var(--inx-text-sm);
+  line-height: 1.4;
+  transition: border-color var(--inx-transition), box-shadow var(--inx-transition), background-color var(--inx-transition);
+}
+
+.inx-input::placeholder,
+.inx-textarea::placeholder { color: var(--inx-text-muted); }
+
+.inx-input:hover:not(:disabled),
+.inx-textarea:hover:not(:disabled),
+.inx-select:hover:not(:disabled) { border-color: var(--inx-text-muted); }
+
+.inx-input:focus,
+.inx-textarea:focus,
+.inx-select:focus {
+  outline: none;
+  border-color: var(--inx-focus-ring);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--inx-focus-ring) 24%, transparent);
+}
+
+.inx-input:disabled,
+.inx-textarea:disabled,
+.inx-select:disabled {
+  background: var(--inx-bg-sunken);
+  color: var(--inx-text-muted);
+  cursor: not-allowed;
+}
+
+.inx-input[readonly] { background: var(--inx-bg-sunken); }
+
+.inx-input[aria-invalid="true"],
+.inx-textarea[aria-invalid="true"],
+.inx-select[aria-invalid="true"] { border-color: var(--inx-status-danger); }
+
+.inx-input[aria-invalid="true"]:focus,
+.inx-textarea[aria-invalid="true"]:focus {
+  border-color: var(--inx-status-danger);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--inx-status-danger) 22%, transparent);
+}
+
+.inx-textarea { min-block-size: 120px; resize: vertical; }
+
+.inx-select {
+  appearance: none;
+  padding-inline-end: var(--inx-space-8);
+  /* SVG rather than the two-gradient triangle trick — the manual rules out
+     gradients in colour application, and a chevron shouldn't be an exception. */
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 8' fill='none' stroke='%235E738A' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M1 1.5L6 6.5L11 1.5'/%3E%3C/svg%3E");
+  background-position: right var(--inx-space-4) center;
+  background-size: 11px;
+  background-repeat: no-repeat;
+  cursor: pointer;
+}
+
+.inx-on-ink .inx-select {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 8' fill='none' stroke='%23B8D0E5' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M1 1.5L6 6.5L11 1.5'/%3E%3C/svg%3E");
+}
+
+/* Input with leading or trailing adornment */
+.inx-input-group { display: flex; align-items: stretch; }
+.inx-input-group .inx-input { border-start-end-radius: 0; border-end-end-radius: 0; }
+.inx-input-group__addon {
+  display: inline-flex;
+  align-items: center;
+  padding-inline: var(--inx-space-4);
+  border: var(--inx-border-width) solid var(--inx-border-input);
+  border-inline-start: 0;
+  border-start-end-radius: var(--inx-radius-md);
+  border-end-end-radius: var(--inx-radius-md);
+  background: var(--inx-bg-sunken);
+  color: var(--inx-text-muted);
+  font-size: var(--inx-text-xs);
+  white-space: nowrap;
+}
+
+/* Checkbox & radio */
+.inx-choice {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--inx-space-3);
+  cursor: pointer;
+  font-size: var(--inx-text-sm);
+  line-height: 1.4;
+  padding-block: var(--inx-space-1);
+}
+
+.inx-choice input[type="checkbox"],
+.inx-choice input[type="radio"] {
+  appearance: none;
+  flex: none;
+  inline-size: 20px;
+  block-size: 20px;
+  margin: 0;
+  border: var(--inx-border-width-thick) solid var(--inx-border-input);
+  background: var(--inx-bg-raised);
+  cursor: pointer;
+  transition: background-color var(--inx-transition), border-color var(--inx-transition);
+}
+
+.inx-choice input[type="checkbox"] { border-radius: var(--inx-radius-sm); }
+.inx-choice input[type="radio"]    { border-radius: var(--inx-radius-full); }
+
+.inx-choice input:hover:not(:disabled) { border-color: var(--inx-text-muted); }
+
+.inx-choice input[type="checkbox"]:checked {
+  background: var(--inx-n-950);
+  border-color: var(--inx-n-950);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='%23fff' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3 8.5l3.2 3.2L13 5'/%3E%3C/svg%3E");
+  background-size: 14px;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.inx-choice input[type="radio"]:checked {
+  border-color: var(--inx-n-950);
+  border-width: 6px;
+}
+
+.inx-on-ink .inx-choice input[type="checkbox"]:checked {
+  background-color: var(--inx-n-0);
+  border-color: var(--inx-n-0);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='%23070B14' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3 8.5l3.2 3.2L13 5'/%3E%3C/svg%3E");
+}
+.inx-on-ink .inx-choice input[type="radio"]:checked { border-color: var(--inx-n-0); }
+
+.inx-choice input:disabled { opacity: 0.4; cursor: not-allowed; }
+.inx-choice:has(input:disabled) { cursor: not-allowed; color: var(--inx-text-muted); }
+
+/* Switch — for settings that take effect immediately */
+.inx-switch { display: inline-flex; align-items: center; gap: var(--inx-space-3); cursor: pointer; font-size: var(--inx-text-sm); }
+.inx-switch input {
+  appearance: none;
+  position: relative;
+  flex: none;
+  inline-size: 44px;
+  block-size: 24px;
+  margin: 0;
+  border-radius: var(--inx-radius-pill);
+  background: var(--inx-n-300);
+  cursor: pointer;
+  transition: background-color var(--inx-transition);
+}
+.inx-switch input::after {
+  content: "";
+  position: absolute;
+  inset-block-start: 3px;
+  inset-inline-start: 3px;
+  inline-size: 18px;
+  block-size: 18px;
+  border-radius: var(--inx-radius-full);
+  background: var(--inx-n-0);
+  transition: transform var(--inx-transition);
+}
+.inx-switch input:checked { background: var(--inx-n-950); }
+.inx-switch input:checked::after { transform: translateX(20px); }
+.inx-on-ink .inx-switch input:checked { background: var(--inx-n-200); }
+.inx-on-ink .inx-switch input:checked::after { background: var(--inx-n-950); }
+.inx-switch input:disabled { opacity: 0.4; cursor: not-allowed; }
+
+
+/* -----------------------------------------------------------------------------
+   CARD
+   -------------------------------------------------------------------------- */
+
+.inx-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--inx-space-3);
+  padding: var(--inx-space-6);
+  border: var(--inx-border-width) solid var(--inx-border);
+  border-radius: var(--inx-radius-lg);
+  background: var(--inx-bg-raised);
+}
+
+.inx-card--flush { padding: 0; overflow: hidden; }
+.inx-card--quiet { background: transparent; }
+
+/* Hover darkens the border and the surface. No lift, no shadow: a brand built
+   on "calm control" shouldn't have its cards jumping at the cursor. */
+.inx-card--interactive {
+  cursor: pointer;
+  transition: border-color var(--inx-transition), background-color var(--inx-transition);
+}
+.inx-card--interactive:hover {
+  border-color: var(--inx-text);
+  background: var(--inx-bg-sunken);
+}
+.inx-on-ink .inx-card--interactive:hover {
+  border-color: var(--inx-accent);
+  background: var(--inx-bg-raised);
+}
+
+.inx-card__media { aspect-ratio: 4 / 3; inline-size: 100%; object-fit: cover; display: block; }
+.inx-card__body  { padding: var(--inx-space-6); display: flex; flex-direction: column; gap: var(--inx-space-3); }
+
+
+/* -----------------------------------------------------------------------------
+   ALERT
+   -------------------------------------------------------------------------- */
+
+/* Status is carried by a named label, not by a coloured wash. The surface stays
+   neutral so a page of notices doesn't turn into a traffic light. */
+
+.inx-alert {
+  padding: var(--inx-space-5);
+  border: var(--inx-border-width) solid var(--inx-border);
+  border-radius: var(--inx-radius-md);
+  background: var(--inx-bg-raised);
+  font-size: var(--inx-text-sm);
+  line-height: var(--inx-leading-snug);
+}
+
+.inx-alert__label {
+  display: flex;
+  align-items: center;
+  gap: var(--inx-space-2);
+  font-size: var(--inx-text-2xs);
+  font-weight: var(--inx-weight-semi);
+  text-transform: uppercase;
+  letter-spacing: var(--inx-tracking-caps);
+  line-height: 1;
+  color: var(--inx-text-muted);
+  margin: 0 0 var(--inx-space-4);
+}
+
+/* Small square mark — the palette's geometry, not a full-height stripe. */
+.inx-alert__label::before {
+  content: "";
+  inline-size: 7px;
+  block-size: 7px;
+  background: currentColor;
+  flex: none;
+}
+
+.inx-alert__title { font-size: var(--inx-text-sm); font-weight: var(--inx-weight-semi); color: var(--inx-text); margin: 0 0 var(--inx-space-1); }
+.inx-alert__body  { margin: 0; color: var(--inx-text-muted); max-inline-size: 60ch; }
+.inx-alert__action { margin-block-start: var(--inx-space-4); }
+
+.inx-alert--success .inx-alert__label { color: var(--inx-status-success); }
+.inx-alert--warning .inx-alert__label { color: var(--inx-status-warning); }
+.inx-alert--danger  .inx-alert__label { color: var(--inx-status-danger); }
+.inx-alert--info    .inx-alert__label { color: var(--inx-status-info); }
+
+/* Prominent — for the one notice that must stop someone. Escalates by inverting
+   to ink rather than by shouting in red. */
+.inx-alert--prominent {
+  background: var(--inx-n-950);
+  border-color: var(--inx-n-950);
+}
+.inx-alert--prominent .inx-alert__title { color: var(--inx-n-0); }
+.inx-alert--prominent .inx-alert__body  { color: var(--inx-n-200); }
+.inx-alert--prominent.inx-alert--success .inx-alert__label { color: var(--inx-status-success-dark); }
+.inx-alert--prominent.inx-alert--warning .inx-alert__label { color: var(--inx-status-warning-dark); }
+.inx-alert--prominent.inx-alert--danger  .inx-alert__label { color: var(--inx-status-danger-dark); }
+.inx-alert--prominent.inx-alert--info    .inx-alert__label { color: var(--inx-status-info-dark); }
+
+.inx-on-ink .inx-alert--prominent { background: var(--inx-n-900); border-color: var(--inx-border-strong); }
+
+
+/* -----------------------------------------------------------------------------
+   TABLE
+   -------------------------------------------------------------------------- */
+
+.inx-table { inline-size: 100%; border-collapse: collapse; font-size: var(--inx-text-sm); }
+
+.inx-table th {
+  text-align: start;
+  font-size: var(--inx-text-2xs);
+  font-weight: var(--inx-weight-semi);
+  text-transform: uppercase;
+  letter-spacing: var(--inx-tracking-caps);
+  color: var(--inx-text-muted);
+  padding: var(--inx-space-3) var(--inx-space-4);
+  border-block-end: var(--inx-border-width) solid var(--inx-border-strong);
+  white-space: nowrap;
+}
+
+.inx-table td {
+  padding: var(--inx-space-4);
+  border-block-end: var(--inx-border-width) solid var(--inx-border);
+  vertical-align: middle;
+}
+
+.inx-table tbody tr:last-child td { border-block-end: 0; }
+.inx-table--numeric td:last-child,
+.inx-table--numeric th:last-child { text-align: end; font-variant-numeric: tabular-nums; }
+
+
+/* -----------------------------------------------------------------------------
+   TABS
+   -------------------------------------------------------------------------- */
+
+.inx-tabs { display: flex; gap: var(--inx-space-6); border-block-end: var(--inx-border-width) solid var(--inx-border); }
+
+.inx-tab {
+  appearance: none;
+  border: 0;
+  background: transparent;
+  padding: var(--inx-space-3) 0;
+  margin-block-end: -1px;
+  border-block-end: var(--inx-border-width-thick) solid transparent;
+  font-family: var(--inx-font);
+  font-size: var(--inx-text-sm);
+  font-weight: var(--inx-weight-semi);
+  color: var(--inx-text-muted);
+  cursor: pointer;
+  transition: color var(--inx-transition), border-color var(--inx-transition);
+}
+
+.inx-tab:hover { color: var(--inx-text); }
+.inx-tab[aria-selected="true"] { color: var(--inx-text); border-block-end-color: var(--inx-text); }
+
+
+/* -----------------------------------------------------------------------------
+   LAYOUT HELPERS
+   -------------------------------------------------------------------------- */
+
+.inx-container { inline-size: 100%; max-inline-size: var(--inx-container); margin-inline: auto; padding-inline: var(--inx-gutter); }
+.inx-prose     { max-inline-size: var(--inx-container-text); }
+
+.inx-divider { block-size: 1px; background: var(--inx-border); border: 0; margin: 0; }
+
+.inx-stack   { display: flex; flex-direction: column; gap: var(--inx-space-4); }
+.inx-stack--sm { gap: var(--inx-space-2); }
+.inx-stack--lg { gap: var(--inx-space-6); }
+.inx-row     { display: flex; flex-wrap: wrap; align-items: center; gap: var(--inx-space-3); }
+
+.inx-grid { display: grid; gap: var(--inx-space-5); grid-template-columns: repeat(auto-fit, minmax(min(260px, 100%), 1fr)); }
+
+
+/* -----------------------------------------------------------------------------
+   IDENTITY
+   Encodes the manual's clear-space and minimum-size rules so they survive
+   implementation. Set --inx-logo-height per placement; everything else follows.
+   -------------------------------------------------------------------------- */
+
+.inx-logo {
+  display: inline-block;
+  block-size: var(--inx-logo-height);
+  min-block-size: var(--inx-logo-min-height);
+  line-height: 0;
+}
+
+.inx-logo > svg {
+  display: block;
+  block-size: 100%;
+  inline-size: auto;
+}
+
+/* Clear space: one signifier height and width on every side. Content-box so the
+   padding sits outside the artwork rather than crushing it. */
+.inx-logo--clear {
+  box-sizing: content-box;
+  padding: calc(var(--inx-logo-height) * var(--inx-logo-clear-ratio));
+}
+
+/* Standalone signifier — app icon, favicon, accent mark */
+.inx-signifier {
+  display: inline-block;
+  block-size: var(--inx-logo-height);
+  min-block-size: var(--inx-logo-min-height);
+  line-height: 0;
+}
+.inx-signifier > svg { display: block; block-size: 100%; inline-size: auto; }
+
+/* Bug — signifier reversed out of an ink disc. The mark goes to the disc's
+   opposite value, not Blue Slate: at 4.03:1 on Ink Black it would all but
+   disappear at the sizes a bug is actually used. */
+.inx-bug {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  inline-size: var(--inx-logo-height);
+  block-size: var(--inx-logo-height);
+  min-inline-size: var(--inx-logo-min-height);
+  min-block-size: var(--inx-logo-min-height);
+  border-radius: var(--inx-radius-full);
+  background: var(--inx-n-950);
+  --inx-logo-mark: var(--inx-n-0);
+}
+.inx-bug > svg { display: block; block-size: 46%; inline-size: auto; }
+.inx-on-ink .inx-bug {
+  background: var(--inx-n-0);
+  --inx-logo-mark: var(--inx-n-950);
+}
+
+</style>
+
+<style>
+/* -----------------------------------------------------------------------------
+   Style-guide chrome only. Prefixed sg- so it never collides with the system.
+   -------------------------------------------------------------------------- */
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  font-family: var(--inx-font);
+  font-size: var(--inx-text-base);
+  line-height: var(--inx-leading-normal);
+  color: var(--inx-text);
+  background: var(--inx-bg);
+  -webkit-font-smoothing: antialiased;
+}
+
+.sg-shell { display: grid; grid-template-columns: 260px 1fr; align-items: start; }
+
+.sg-nav {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow-y: auto;
+  padding: var(--inx-space-8) var(--inx-space-5);
+  border-right: 1px solid var(--inx-border);
+  background: var(--inx-bg-raised);
+}
+.sg-nav__brand { font-size: var(--inx-text-lg); letter-spacing: -0.02em; margin: 0 0 var(--inx-space-1); }
+.sg-nav__meta { font-size: var(--inx-text-3xs); color: var(--inx-text-muted); margin: 0 0 var(--inx-space-6); }
+.sg-nav__group { margin-block-end: var(--inx-space-5); }
+.sg-nav__title {
+  font-size: var(--inx-text-3xs); font-weight: 600; text-transform: uppercase;
+  letter-spacing: var(--inx-tracking-caps); color: var(--inx-text-muted);
+  margin: 0 0 var(--inx-space-2);
+}
+.sg-nav a {
+  display: block; padding: 5px 0; font-size: var(--inx-text-xs);
+  color: var(--inx-text-subtle); text-decoration: none;
+}
+.sg-nav a:hover { color: var(--inx-text); }
+
+.sg-main { min-width: 0; }
+
+.sg-section { padding: var(--inx-space-10) var(--inx-space-8); border-block-end: 1px solid var(--inx-border); max-width: 1100px; }
+.sg-section > * + * { margin-block-start: var(--inx-space-6); }
+
+.sg-section__head { display: flex; flex-direction: column; gap: var(--inx-space-3); margin-block-end: var(--inx-space-8); }
+.sg-section__head p { max-width: 62ch; margin: 0; color: var(--inx-text-subtle); }
+
+.sg-block { margin-block-start: var(--inx-space-8); }
+.sg-block__label {
+  font-size: var(--inx-text-2xs); font-weight: 600; text-transform: uppercase;
+  letter-spacing: var(--inx-tracking-caps); color: var(--inx-text-muted);
+  padding-block-end: var(--inx-space-2); border-block-end: 1px solid var(--inx-border);
+  margin: 0 0 var(--inx-space-5);
+}
+.sg-note { font-size: var(--inx-text-xs); color: var(--inx-text-muted); max-width: 68ch; margin-block-start: var(--inx-space-3); }
+
+/* Demo surface — flat panel, no border. Nesting bordered boxes inside bordered
+   boxes is what makes a guide look machine-assembled. */
+.sg-demo {
+  padding: var(--inx-space-6);
+  border-radius: var(--inx-radius-lg);
+  background: var(--inx-bg-raised);
+}
+.sg-demo--ink { border-color: transparent; }
+
+/* Label column + content — the manual's own interior page layout
+   (Clear Space, Misuse, Principles). Used as the guide's structural spine. */
+.sg-def { border-block-start: 1px solid var(--inx-border); }
+.sg-def__row {
+  display: grid;
+  grid-template-columns: 200px 1fr;
+  gap: var(--inx-space-8);
+  padding-block: var(--inx-space-6);
+  border-block-end: 1px solid var(--inx-border);
+}
+.sg-def__label {
+  font-size: var(--inx-text-2xs); font-weight: 600; text-transform: uppercase;
+  letter-spacing: var(--inx-tracking-caps); color: var(--inx-text-muted);
+  margin: 0; padding-block-start: 6px;
+}
+.sg-def__value { min-width: 0; }
+.sg-def__value > * + * { margin-block-start: var(--inx-space-3); }
+
+/* Hero */
+.sg-hero { padding: var(--inx-space-11) var(--inx-space-8) var(--inx-space-10); }
+.sg-hero__title {
+  font-size: clamp(3rem, 9vw, 7rem); font-weight: 400; line-height: 0.98;
+  letter-spacing: -0.03em; margin: var(--inx-space-8) 0 0;
+}
+.sg-hero__facts { display: flex; flex-wrap: wrap; gap: var(--inx-space-8); margin-block-start: var(--inx-space-9); }
+.sg-hero__fact { display: flex; flex-direction: column; gap: 4px; }
+.sg-hero__fact dt { font-size: var(--inx-text-3xs); text-transform: uppercase; letter-spacing: var(--inx-tracking-caps); color: var(--inx-text-muted); }
+.sg-hero__fact dd { margin: 0; font-size: var(--inx-text-sm); }
+
+/* Swatches */
+.sg-swatches { display: grid; gap: var(--inx-space-4); grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); }
+.sg-swatch { border: 1px solid var(--inx-border); border-radius: var(--inx-radius-md); overflow: hidden; background: var(--inx-bg-raised); }
+.sg-swatch__chip { height: 96px; }
+.sg-swatch__meta { padding: var(--inx-space-3) var(--inx-space-4); }
+.sg-swatch__name { font-weight: 600; font-size: var(--inx-text-xs); margin: 0 0 2px; }
+.sg-swatch__val { font-family: var(--inx-font-mono); font-size: var(--inx-text-3xs); color: var(--inx-text-muted); margin: 0; }
+
+.sg-ramp { display: flex; border-radius: var(--inx-radius-md); overflow: hidden; border: 1px solid var(--inx-border); }
+.sg-ramp__step { flex: 1; height: 64px; display: flex; align-items: flex-end; justify-content: center; padding-bottom: 6px; font-size: 10px; font-family: var(--inx-font-mono); }
+
+.sg-proportion { display: flex; height: 120px; border-radius: var(--inx-radius-md); overflow: hidden; border: 1px solid var(--inx-border); }
+
+/* Tables */
+.sg-table { width: 100%; border-collapse: collapse; font-size: var(--inx-text-xs); }
+.sg-table th {
+  text-align: left; font-size: var(--inx-text-3xs); text-transform: uppercase;
+  letter-spacing: var(--inx-tracking-caps); color: var(--inx-text-muted);
+  padding: var(--inx-space-2) var(--inx-space-3); border-block-end: 1px solid var(--inx-border-strong);
+}
+.sg-table td { padding: var(--inx-space-3); border-block-end: 1px solid var(--inx-border); vertical-align: top; }
+.sg-table code { font-family: var(--inx-font-mono); font-size: 11px; color: var(--inx-text-subtle); }
+
+.sg-pass { color: var(--inx-status-success); font-weight: 600; }
+.sg-fail { color: var(--inx-status-danger); font-weight: 600; }
+
+/* Spec row for type specimens */
+.sg-spec { display: grid; grid-template-columns: 180px 1fr; gap: var(--inx-space-6); align-items: baseline; padding-block: var(--inx-space-5); border-block-end: 1px solid var(--inx-border); }
+.sg-spec__meta { font-size: var(--inx-text-3xs); font-family: var(--inx-font-mono); color: var(--inx-text-muted); line-height: 1.7; }
+.sg-spec__sample { min-width: 0; overflow: hidden; }
+
+/* Do / Don't — hairline rows, same label-column spine as everything else */
+.sg-rules { border-block-start: 1px solid var(--inx-border); }
+.sg-rule {
+  display: grid; grid-template-columns: 120px 1fr; gap: var(--inx-space-6);
+  padding-block: var(--inx-space-4); border-block-end: 1px solid var(--inx-border);
+}
+.sg-rule__tag {
+  font-size: var(--inx-text-3xs); font-weight: 600; text-transform: uppercase;
+  letter-spacing: var(--inx-tracking-caps); margin: 0; padding-block-start: 3px;
+}
+.sg-rule--do .sg-rule__tag { color: var(--inx-status-success); }
+.sg-rule--dont .sg-rule__tag { color: var(--inx-status-danger); }
+.sg-rule p { margin: 0; font-size: var(--inx-text-sm); color: var(--inx-text-subtle); }
+
+/* Spacing scale visual */
+.sg-space-row { display: flex; align-items: center; gap: var(--inx-space-4); padding-block: 6px; }
+.sg-space-bar { height: 14px; background: var(--inx-accent); border-radius: 2px; }
+.sg-space-label { font-family: var(--inx-font-mono); font-size: 11px; color: var(--inx-text-muted); width: 150px; flex: none; }
+
+/* Identity demos */
+.sg-logo-plate {
+  display: flex; align-items: center; justify-content: center;
+  min-height: 150px; padding: var(--inx-space-6);
+  border-radius: var(--inx-radius-lg); background: var(--inx-bg-raised);
+}
+.sg-logo-plate--ink { background: var(--inx-n-950); }
+.sg-logo-plate--white { background: #FFFFFF; }
+
+/* Clear-space diagram: the ring is the mandatory margin, flat fill so the
+   annotation never reads as a brand gradient. */
+.sg-clearspace .inx-logo--clear { background: var(--inx-n-100); }
+.sg-clearspace .inx-logo--clear > svg { background: var(--inx-bg-raised); }
+
+.sg-scale-row { display: flex; align-items: flex-end; gap: var(--inx-space-8); flex-wrap: wrap; }
+.sg-scale-item { display: flex; flex-direction: column; gap: var(--inx-space-3); align-items: flex-start; }
+
+@media (max-width: 900px) {
+  .sg-shell { grid-template-columns: 1fr; }
+  .sg-nav { position: static; height: auto; border-right: 0; border-block-end: 1px solid var(--inx-border); }
+  .sg-section { padding: var(--inx-space-8) var(--inx-space-5); }
+  .sg-hero { padding: var(--inx-space-9) var(--inx-space-5); }
+  .sg-spec { grid-template-columns: 1fr; gap: var(--inx-space-3); }
+}
+</style>
+</head>
+
+<body class="inx">
+<div class="sg-shell">
+
+  <!-- ===================== NAV ===================== -->
+  <nav class="sg-nav" aria-label="Style guide sections">
+    <span class="inx-logo" style="--inx-logo-height:22px; margin-bottom:10px">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 271.85 74.89" role="img" aria-label="iNexa">
+      <g transform="translate(-824.08,-502.56)">
+        <path fill="var(--inx-logo-mark, #5E738A)" d="M1012.73,552.24l20.01,24.66h-9.22c-.39,0-.75-.15-1.02-.42l-17-17c-2-1.99-2-5.24,0-7.24,2.06-2.07,1.81-5.58-.77-7.28-1.83-1.21-1.99-3.86-.44-5.41l18.63-18.63h9.32l-19.51,24.66c-.89.9-1.38,2.08-1.38,3.33s.49,2.44,1.38,3.33Z"/>
+        <path fill="var(--inx-logo-mark, #5E738A)" d="M999.2,552.12c2.12,1.98,2.16,5.32.13,7.36l-17,17c-.28.28-.64.42-1.03.42h-8.71l19.5-24.66c.9-.9,1.39-2.08,1.39-3.34s-.49-2.43-1.38-3.33l-20-24.67h9.82l18.62,18.62c1.71,1.71,1.4,4.11-.56,5.52-1.77,1.26-2.47,3.48-1.69,5.62.2.55.51,1.05.93,1.44Z"/>
+        <path fill="var(--inx-logo-word, #070B14)" d="M824.08,510.48v-7.92h7.92v7.92h-7.92ZM824.08,576.9v-55.99h7.92v55.99h-7.92Z"/>
+        <path fill="var(--inx-logo-word, #070B14)" d="M842.9,576.9v-55.99h45.37c2.12,0,4.07.53,5.84,1.59,1.77,1.06,3.19,2.48,4.25,4.25,1.06,1.77,1.59,3.72,1.59,5.84v44.31h-7.92v-44.31c0-1.03-.37-1.91-1.11-2.65-.74-.74-1.63-1.11-2.65-1.11h-33.6c-1.03,0-1.93.37-2.7,1.11-.77.74-1.16,1.63-1.16,2.65v44.31h-7.92Z"/>
+        <path fill="var(--inx-logo-word, #070B14)" d="M967.36,529.04c-.25-.79-.6-1.55-1.04-2.28-.01-.02-.02-.04-.04-.07-1.04-1.74-2.45-3.14-4.2-4.18-.73-.44-1.5-.79-2.28-1.04-.1-.03-.21-.07-.32-.1-1.02-.3-2.11-.45-3.24-.45h-37.76c-.48.14-.93.33-1.39.55-.33.14-.65.32-.96.51-1.77,1.06-3.19,2.47-4.25,4.25-.42.71-.76,1.44-1.02,2.21-.31.91-.49,1.86-.55,2.85v34.5c0,1.25.19,2.44.55,3.57.25.79.6,1.55,1.04,2.27,1.06,1.77,2.47,3.19,4.25,4.26.73.43,1.5.79,2.28,1.03.89.29,1.81.47,2.77.53h45.07v-7.91h-44.31c-1.03,0-1.92-.39-2.66-1.16-.21-.21-.39-.44-.53-.68v-13.65h36.92c1.32,0,2.57-.2,3.75-.61.19-.06.37-.13.55-.21.53-.21,1.04-.47,1.54-.76,1.77-1.06,3.19-2.48,4.26-4.25.92-1.55,1.44-3.24,1.56-5.05.01-.25.02-.52.02-.79v-13.26s-.01-.04-.02-.07ZM958.36,545.01c-.74.74-1.63,1.11-2.66,1.11h-36.92v-13.52c0-1.03.39-1.92,1.16-2.66.76-.73,1.67-1.11,2.7-1.11h33.59c1.03,0,1.92.38,2.66,1.11.22.22.41.45.55.7v12.1c-.08.86-.43,1.62-1.09,2.27Z"/>
+        <path fill="var(--inx-logo-word, #070B14)" d="M1095.37,529c-.25-.79-.6-1.55-1.04-2.27-1.06-1.77-2.47-3.19-4.25-4.26-.73-.43-1.5-.79-2.28-1.03-.89-.29-1.81-.47-2.77-.53h-45.07v7.91h44.31c1.03,0,1.92.39,2.66,1.16.21.21.39.44.53.68v13.65h-36.92c-1.32,0-2.57.2-3.75.61-.19.06-.37.13-.55.21-.53.21-1.04.47-1.54.76-1.77,1.06-3.19,2.48-4.26,4.25-.92,1.55-1.44,3.24-1.56,5.05-.01.25-.02.52-.02.79v13.26s.01.04.02.07c.25.79.6,1.55,1.04,2.28.01.02.02.04.04.07,1.04,1.74,2.45,3.14,4.2,4.18.73.44,1.5.79,2.28,1.04.1.03.21.07.32.1,1.02.3,2.11.45,3.24.45h37.76c.48-.14.93-.33,1.39-.55.33-.14.65-.32.96-.51,1.77-1.06,3.19-2.47,4.25-4.25.42-.71.76-1.44,1.02-2.21.31-.91.49-1.86.55-2.85v-34.5c0-1.25-.19-2.44-.55-3.57ZM1047.87,553.33c.74-.74,1.63-1.11,2.66-1.11h36.92v13.52c0,1.03-.39,1.92-1.16,2.66-.76.73-1.67,1.11-2.7,1.11h-33.59c-1.03,0-1.92-.38-2.66-1.11-.22-.22-.41-.45-.55-.7v-12.1c.08-.86.43-1.62,1.09-2.27Z"/>
+      </g>
+      </svg>
+    </span>
+    <p class="sg-nav__meta">Design System v1.0 · Web</p>
+
+    <div class="sg-nav__group">
+      <p class="sg-nav__title">Foundation</p>
+      <a href="#brand">Brand at a glance</a>
+      <a href="#identity">Identity &amp; clear space</a>
+    </div>
+    <div class="sg-nav__group">
+      <p class="sg-nav__title">Tokens</p>
+      <a href="#colour">Colour</a>
+      <a href="#contrast">Contrast &amp; pairing</a>
+      <a href="#type">Typography</a>
+      <a href="#space">Space &amp; layout</a>
+      <a href="#surface">Radius &amp; elevation</a>
+      <a href="#motion">Motion</a>
+    </div>
+    <div class="sg-nav__group">
+      <p class="sg-nav__title">Components</p>
+      <a href="#eyebrows">Eyebrows</a>
+      <a href="#buttons">Buttons</a>
+      <a href="#pills">Pills, tags &amp; chips</a>
+      <a href="#forms">Inputs &amp; forms</a>
+      <a href="#cards">Cards</a>
+      <a href="#alerts">Alerts</a>
+      <a href="#data">Tables &amp; tabs</a>
+    </div>
+    <div class="sg-nav__group">
+      <p class="sg-nav__title">Governance</p>
+      <a href="#rules">Do &amp; don't</a>
+      <a href="#extensions">Extension log</a>
+    </div>
+  </nav>
+
+  <main class="sg-main">
+
+    <!-- ===================== HERO ===================== -->
+    <header class="sg-hero inx-on-ink">
+      <span class="inx-logo" style="--inx-logo-height:30px; margin-bottom:var(--inx-space-8)">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 271.85 74.89" role="img" aria-label="iNexa">
+        <g transform="translate(-824.08,-502.56)">
+          <path fill="var(--inx-logo-mark, #5E738A)" d="M1012.73,552.24l20.01,24.66h-9.22c-.39,0-.75-.15-1.02-.42l-17-17c-2-1.99-2-5.24,0-7.24,2.06-2.07,1.81-5.58-.77-7.28-1.83-1.21-1.99-3.86-.44-5.41l18.63-18.63h9.32l-19.51,24.66c-.89.9-1.38,2.08-1.38,3.33s.49,2.44,1.38,3.33Z"/>
+          <path fill="var(--inx-logo-mark, #5E738A)" d="M999.2,552.12c2.12,1.98,2.16,5.32.13,7.36l-17,17c-.28.28-.64.42-1.03.42h-8.71l19.5-24.66c.9-.9,1.39-2.08,1.39-3.34s-.49-2.43-1.38-3.33l-20-24.67h9.82l18.62,18.62c1.71,1.71,1.4,4.11-.56,5.52-1.77,1.26-2.47,3.48-1.69,5.62.2.55.51,1.05.93,1.44Z"/>
+          <path fill="var(--inx-logo-word, #070B14)" d="M824.08,510.48v-7.92h7.92v7.92h-7.92ZM824.08,576.9v-55.99h7.92v55.99h-7.92Z"/>
+          <path fill="var(--inx-logo-word, #070B14)" d="M842.9,576.9v-55.99h45.37c2.12,0,4.07.53,5.84,1.59,1.77,1.06,3.19,2.48,4.25,4.25,1.06,1.77,1.59,3.72,1.59,5.84v44.31h-7.92v-44.31c0-1.03-.37-1.91-1.11-2.65-.74-.74-1.63-1.11-2.65-1.11h-33.6c-1.03,0-1.93.37-2.7,1.11-.77.74-1.16,1.63-1.16,2.65v44.31h-7.92Z"/>
+          <path fill="var(--inx-logo-word, #070B14)" d="M967.36,529.04c-.25-.79-.6-1.55-1.04-2.28-.01-.02-.02-.04-.04-.07-1.04-1.74-2.45-3.14-4.2-4.18-.73-.44-1.5-.79-2.28-1.04-.1-.03-.21-.07-.32-.1-1.02-.3-2.11-.45-3.24-.45h-37.76c-.48.14-.93.33-1.39.55-.33.14-.65.32-.96.51-1.77,1.06-3.19,2.47-4.25,4.25-.42.71-.76,1.44-1.02,2.21-.31.91-.49,1.86-.55,2.85v34.5c0,1.25.19,2.44.55,3.57.25.79.6,1.55,1.04,2.27,1.06,1.77,2.47,3.19,4.25,4.26.73.43,1.5.79,2.28,1.03.89.29,1.81.47,2.77.53h45.07v-7.91h-44.31c-1.03,0-1.92-.39-2.66-1.16-.21-.21-.39-.44-.53-.68v-13.65h36.92c1.32,0,2.57-.2,3.75-.61.19-.06.37-.13.55-.21.53-.21,1.04-.47,1.54-.76,1.77-1.06,3.19-2.48,4.26-4.25.92-1.55,1.44-3.24,1.56-5.05.01-.25.02-.52.02-.79v-13.26s-.01-.04-.02-.07ZM958.36,545.01c-.74.74-1.63,1.11-2.66,1.11h-36.92v-13.52c0-1.03.39-1.92,1.16-2.66.76-.73,1.67-1.11,2.7-1.11h33.59c1.03,0,1.92.38,2.66,1.11.22.22.41.45.55.7v12.1c-.08.86-.43,1.62-1.09,2.27Z"/>
+          <path fill="var(--inx-logo-word, #070B14)" d="M1095.37,529c-.25-.79-.6-1.55-1.04-2.27-1.06-1.77-2.47-3.19-4.25-4.26-.73-.43-1.5-.79-2.28-1.03-.89-.29-1.81-.47-2.77-.53h-45.07v7.91h44.31c1.03,0,1.92.39,2.66,1.16.21.21.39.44.53.68v13.65h-36.92c-1.32,0-2.57.2-3.75.61-.19.06-.37.13-.55.21-.53.21-1.04.47-1.54.76-1.77,1.06-3.19,2.48-4.26,4.25-.92,1.55-1.44,3.24-1.56,5.05-.01.25-.02.52-.02.79v13.26s.01.04.02.07c.25.79.6,1.55,1.04,2.28.01.02.02.04.04.07,1.04,1.74,2.45,3.14,4.2,4.18.73.44,1.5.79,2.28,1.04.1.03.21.07.32.1,1.02.3,2.11.45,3.24.45h37.76c.48-.14.93-.33,1.39-.55.33-.14.65-.32.96-.51,1.77-1.06,3.19-2.47,4.25-4.25.42-.71.76-1.44,1.02-2.21.31-.91.49-1.86.55-2.85v-34.5c0-1.25-.19-2.44-.55-3.57ZM1047.87,553.33c.74-.74,1.63-1.11,2.66-1.11h36.92v13.52c0,1.03-.39,1.92-1.16,2.66-.76.73-1.67,1.11-2.7,1.11h-33.59c-1.03,0-1.92-.38-2.66-1.11-.22-.22-.41-.45-.55-.7v-12.1c.08-.86.43-1.62,1.09-2.27Z"/>
+        </g>
+        </svg>
+      </span>
+      <p class="inx-eyebrow inx-eyebrow--rule">Design System · Version 1.0</p>
+      <h1 class="sg-hero__title">Operational<br>clarity, in code.</h1>
+      <p class="inx-lead inx-muted" style="margin-block-start: var(--inx-space-6);">
+        The web implementation of the iNexa brand. Every colour, size and state below
+        resolves to a token, so the identity holds together across marketing pages,
+        the product interface and anything built next.
+      </p>
+
+      <dl class="sg-hero__facts">
+        <div class="sg-hero__fact"><dt>Typeface</dt><dd>Manrope · 400 / 600</dd></div>
+        <div class="sg-hero__fact"><dt>Palette</dt><dd>6 approved colours</dd></div>
+        <div class="sg-hero__fact"><dt>Base grid</dt><dd>4px</dd></div>
+        <div class="sg-hero__fact"><dt>Body size</dt><dd>18px</dd></div>
+        <div class="sg-hero__fact"><dt>Source</dt><dd>Brand Guidelines v1.0</dd></div>
+      </dl>
+    </header>
+
+    <!-- ===================== BRAND ===================== -->
+    <section class="sg-section" id="brand">
+      <div class="sg-section__head">
+        <p class="inx-eyebrow">Foundation</p>
+        <h2 class="inx-h1">Brand at a glance</h2>
+        <p>Everything downstream is answerable to this. When a design decision is
+           genuinely ambiguous, the question to ask is whether it reads as calm,
+           structured and operationally confident.</p>
+      </div>
+
+      <div class="sg-def">
+        <div class="sg-def__row">
+          <p class="sg-def__label">Promise</p>
+          <div class="sg-def__value">
+            <p class="inx-h3">Operational clarity. Scalable growth.</p>
+            <p class="inx-caption">Short form. Use as a closing line, never as a headline.</p>
+          </div>
+        </div>
+        <div class="sg-def__row">
+          <p class="sg-def__label">Positioning line</p>
+          <div class="sg-def__value">
+            <p class="inx-h3">We run operations.<br>You scale the business.</p>
+            <p class="inx-caption">The headline pairing used across applications. Two lines, always.</p>
+          </div>
+        </div>
+        <div class="sg-def__row">
+          <p class="sg-def__label">Tone of voice</p>
+          <div class="sg-def__value">
+            <p class="inx-h3">Intelligent. Structured. Professional.</p>
+            <p class="inx-caption">Simplify operational complexity. Never add to it.</p>
+          </div>
+        </div>
+        <div class="sg-def__row">
+          <p class="sg-def__label">What the brand does</p>
+          <div class="sg-def__value">
+            <p class="inx-body">Operations management, workflow optimisation, systems
+               integration and strategic support. Four services, not four steps —
+               a client can start with any of them.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== IDENTITY ===================== -->
+    <section class="sg-section" id="identity">
+      <div class="sg-section__head">
+        <p class="inx-eyebrow">Foundation</p>
+        <h2 class="inx-h1">Identity</h2>
+        <p>Three elements: the primary lockup, the signifier and the bug. Every
+           rule below is encoded as a token, so it cannot quietly be lost between
+           the brand manual and production.</p>
+      </div>
+
+      <div class="sg-block">
+        <p class="sg-block__label">Primary lockup</p>
+        <div class="inx-grid">
+          <div class="sg-logo-plate sg-logo-plate--white">
+            <span class="inx-logo" style="--inx-logo-height:44px">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 271.85 74.89" role="img" aria-label="iNexa">
+              <g transform="translate(-824.08,-502.56)">
+                <path fill="var(--inx-logo-mark, #5E738A)" d="M1012.73,552.24l20.01,24.66h-9.22c-.39,0-.75-.15-1.02-.42l-17-17c-2-1.99-2-5.24,0-7.24,2.06-2.07,1.81-5.58-.77-7.28-1.83-1.21-1.99-3.86-.44-5.41l18.63-18.63h9.32l-19.51,24.66c-.89.9-1.38,2.08-1.38,3.33s.49,2.44,1.38,3.33Z"/>
+                <path fill="var(--inx-logo-mark, #5E738A)" d="M999.2,552.12c2.12,1.98,2.16,5.32.13,7.36l-17,17c-.28.28-.64.42-1.03.42h-8.71l19.5-24.66c.9-.9,1.39-2.08,1.39-3.34s-.49-2.43-1.38-3.33l-20-24.67h9.82l18.62,18.62c1.71,1.71,1.4,4.11-.56,5.52-1.77,1.26-2.47,3.48-1.69,5.62.2.55.51,1.05.93,1.44Z"/>
+                <path fill="var(--inx-logo-word, #070B14)" d="M824.08,510.48v-7.92h7.92v7.92h-7.92ZM824.08,576.9v-55.99h7.92v55.99h-7.92Z"/>
+                <path fill="var(--inx-logo-word, #070B14)" d="M842.9,576.9v-55.99h45.37c2.12,0,4.07.53,5.84,1.59,1.77,1.06,3.19,2.48,4.25,4.25,1.06,1.77,1.59,3.72,1.59,5.84v44.31h-7.92v-44.31c0-1.03-.37-1.91-1.11-2.65-.74-.74-1.63-1.11-2.65-1.11h-33.6c-1.03,0-1.93.37-2.7,1.11-.77.74-1.16,1.63-1.16,2.65v44.31h-7.92Z"/>
+                <path fill="var(--inx-logo-word, #070B14)" d="M967.36,529.04c-.25-.79-.6-1.55-1.04-2.28-.01-.02-.02-.04-.04-.07-1.04-1.74-2.45-3.14-4.2-4.18-.73-.44-1.5-.79-2.28-1.04-.1-.03-.21-.07-.32-.1-1.02-.3-2.11-.45-3.24-.45h-37.76c-.48.14-.93.33-1.39.55-.33.14-.65.32-.96.51-1.77,1.06-3.19,2.47-4.25,4.25-.42.71-.76,1.44-1.02,2.21-.31.91-.49,1.86-.55,2.85v34.5c0,1.25.19,2.44.55,3.57.25.79.6,1.55,1.04,2.27,1.06,1.77,2.47,3.19,4.25,4.26.73.43,1.5.79,2.28,1.03.89.29,1.81.47,2.77.53h45.07v-7.91h-44.31c-1.03,0-1.92-.39-2.66-1.16-.21-.21-.39-.44-.53-.68v-13.65h36.92c1.32,0,2.57-.2,3.75-.61.19-.06.37-.13.55-.21.53-.21,1.04-.47,1.54-.76,1.77-1.06,3.19-2.48,4.26-4.25.92-1.55,1.44-3.24,1.56-5.05.01-.25.02-.52.02-.79v-13.26s-.01-.04-.02-.07ZM958.36,545.01c-.74.74-1.63,1.11-2.66,1.11h-36.92v-13.52c0-1.03.39-1.92,1.16-2.66.76-.73,1.67-1.11,2.7-1.11h33.59c1.03,0,1.92.38,2.66,1.11.22.22.41.45.55.7v12.1c-.08.86-.43,1.62-1.09,2.27Z"/>
+                <path fill="var(--inx-logo-word, #070B14)" d="M1095.37,529c-.25-.79-.6-1.55-1.04-2.27-1.06-1.77-2.47-3.19-4.25-4.26-.73-.43-1.5-.79-2.28-1.03-.89-.29-1.81-.47-2.77-.53h-45.07v7.91h44.31c1.03,0,1.92.39,2.66,1.16.21.21.39.44.53.68v13.65h-36.92c-1.32,0-2.57.2-3.75.61-.19.06-.37.13-.55.21-.53.21-1.04.47-1.54.76-1.77,1.06-3.19,2.48-4.26,4.25-.92,1.55-1.44,3.24-1.56,5.05-.01.25-.02.52-.02.79v13.26s.01.04.02.07c.25.79.6,1.55,1.04,2.28.01.02.02.04.04.07,1.04,1.74,2.45,3.14,4.2,4.18.73.44,1.5.79,2.28,1.04.1.03.21.07.32.1,1.02.3,2.11.45,3.24.45h37.76c.48-.14.93-.33,1.39-.55.33-.14.65-.32.96-.51,1.77-1.06,3.19-2.47,4.25-4.25.42-.71.76-1.44,1.02-2.21.31-.91.49-1.86.55-2.85v-34.5c0-1.25-.19-2.44-.55-3.57ZM1047.87,553.33c.74-.74,1.63-1.11,2.66-1.11h36.92v13.52c0,1.03-.39,1.92-1.16,2.66-.76.73-1.67,1.11-2.7,1.11h-33.59c-1.03,0-1.92-.38-2.66-1.11-.22-.22-.41-.45-.55-.7v-12.1c.08-.86.43-1.62,1.09-2.27Z"/>
+              </g>
+              </svg>
+            </span>
+          </div>
+          <div class="sg-logo-plate sg-logo-plate--ink inx-on-ink">
+            <span class="inx-logo" style="--inx-logo-height:44px">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 271.85 74.89" role="img" aria-label="iNexa">
+              <g transform="translate(-824.08,-502.56)">
+                <path fill="var(--inx-logo-mark, #5E738A)" d="M1012.73,552.24l20.01,24.66h-9.22c-.39,0-.75-.15-1.02-.42l-17-17c-2-1.99-2-5.24,0-7.24,2.06-2.07,1.81-5.58-.77-7.28-1.83-1.21-1.99-3.86-.44-5.41l18.63-18.63h9.32l-19.51,24.66c-.89.9-1.38,2.08-1.38,3.33s.49,2.44,1.38,3.33Z"/>
+                <path fill="var(--inx-logo-mark, #5E738A)" d="M999.2,552.12c2.12,1.98,2.16,5.32.13,7.36l-17,17c-.28.28-.64.42-1.03.42h-8.71l19.5-24.66c.9-.9,1.39-2.08,1.39-3.34s-.49-2.43-1.38-3.33l-20-24.67h9.82l18.62,18.62c1.71,1.71,1.4,4.11-.56,5.52-1.77,1.26-2.47,3.48-1.69,5.62.2.55.51,1.05.93,1.44Z"/>
+                <path fill="var(--inx-logo-word, #070B14)" d="M824.08,510.48v-7.92h7.92v7.92h-7.92ZM824.08,576.9v-55.99h7.92v55.99h-7.92Z"/>
+                <path fill="var(--inx-logo-word, #070B14)" d="M842.9,576.9v-55.99h45.37c2.12,0,4.07.53,5.84,1.59,1.77,1.06,3.19,2.48,4.25,4.25,1.06,1.77,1.59,3.72,1.59,5.84v44.31h-7.92v-44.31c0-1.03-.37-1.91-1.11-2.65-.74-.74-1.63-1.11-2.65-1.11h-33.6c-1.03,0-1.93.37-2.7,1.11-.77.74-1.16,1.63-1.16,2.65v44.31h-7.92Z"/>
+                <path fill="var(--inx-logo-word, #070B14)" d="M967.36,529.04c-.25-.79-.6-1.55-1.04-2.28-.01-.02-.02-.04-.04-.07-1.04-1.74-2.45-3.14-4.2-4.18-.73-.44-1.5-.79-2.28-1.04-.1-.03-.21-.07-.32-.1-1.02-.3-2.11-.45-3.24-.45h-37.76c-.48.14-.93.33-1.39.55-.33.14-.65.32-.96.51-1.77,1.06-3.19,2.47-4.25,4.25-.42.71-.76,1.44-1.02,2.21-.31.91-.49,1.86-.55,2.85v34.5c0,1.25.19,2.44.55,3.57.25.79.6,1.55,1.04,2.27,1.06,1.77,2.47,3.19,4.25,4.26.73.43,1.5.79,2.28,1.03.89.29,1.81.47,2.77.53h45.07v-7.91h-44.31c-1.03,0-1.92-.39-2.66-1.16-.21-.21-.39-.44-.53-.68v-13.65h36.92c1.32,0,2.57-.2,3.75-.61.19-.06.37-.13.55-.21.53-.21,1.04-.47,1.54-.76,1.77-1.06,3.19-2.48,4.26-4.25.92-1.55,1.44-3.24,1.56-5.05.01-.25.02-.52.02-.79v-13.26s-.01-.04-.02-.07ZM958.36,545.01c-.74.74-1.63,1.11-2.66,1.11h-36.92v-13.52c0-1.03.39-1.92,1.16-2.66.76-.73,1.67-1.11,2.7-1.11h33.59c1.03,0,1.92.38,2.66,1.11.22.22.41.45.55.7v12.1c-.08.86-.43,1.62-1.09,2.27Z"/>
+                <path fill="var(--inx-logo-word, #070B14)" d="M1095.37,529c-.25-.79-.6-1.55-1.04-2.27-1.06-1.77-2.47-3.19-4.25-4.26-.73-.43-1.5-.79-2.28-1.03-.89-.29-1.81-.47-2.77-.53h-45.07v7.91h44.31c1.03,0,1.92.39,2.66,1.16.21.21.39.44.53.68v13.65h-36.92c-1.32,0-2.57.2-3.75.61-.19.06-.37.13-.55.21-.53.21-1.04.47-1.54.76-1.77,1.06-3.19,2.48-4.26,4.25-.92,1.55-1.44,3.24-1.56,5.05-.01.25-.02.52-.02.79v13.26s.01.04.02.07c.25.79.6,1.55,1.04,2.28.01.02.02.04.04.07,1.04,1.74,2.45,3.14,4.2,4.18.73.44,1.5.79,2.28,1.04.1.03.21.07.32.1,1.02.3,2.11.45,3.24.45h37.76c.48-.14.93-.33,1.39-.55.33-.14.65-.32.96-.51,1.77-1.06,3.19-2.47,4.25-4.25.42-.71.76-1.44,1.02-2.21.31-.91.49-1.86.55-2.85v-34.5c0-1.25-.19-2.44-.55-3.57ZM1047.87,553.33c.74-.74,1.63-1.11,2.66-1.11h36.92v13.52c0,1.03-.39,1.92-1.16,2.66-.76.73-1.67,1.11-2.7,1.11h-33.59c-1.03,0-1.92-.38-2.66-1.11-.22-.22-.41-.45-.55-.7v-12.1c.08-.86.43-1.62,1.09-2.27Z"/>
+              </g>
+              </svg>
+            </span>
+          </div>
+        </div>
+        <p class="sg-note">
+          One inline SVG serves both surfaces. The wordmark reads
+          <code class="inx-mono">--inx-logo-word</code> and the signifier reads
+          <code class="inx-mono">--inx-logo-mark</code>, and the ink surface
+          re-points the first to white. I checked the two supplied files against
+          each other before merging them: the dark version is a pure recolour at a
+          different scale, with no optical correction to the letterforms
+          (worst deviation 0.0003 of the lockup width), so collapsing them into one
+          asset loses nothing. The separate static files are still in the handover
+          for <code class="inx-mono">&lt;img&gt;</code>, email and favicon use, where
+          CSS variables don't reach.
+        </p>
+      </div>
+
+      <div class="sg-block">
+        <p class="sg-block__label">Signifier &amp; bug</p>
+        <div class="inx-grid">
+          <div class="sg-logo-plate sg-logo-plate--white">
+            <span class="inx-signifier" style="--inx-logo-height:56px">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 93.86 86.66" role="img" aria-label="iNexa">
+              <g transform="translate(-978.68,-510.10)">
+                <path fill="var(--inx-logo-mark, #5E738A)" d="M1041.57,558.59l30.97,38.17h-14.27c-.6,0-1.16-.23-1.59-.66l-26.31-26.31c-3.09-3.09-3.09-8.11,0-11.2,3.19-3.2,2.8-8.63-1.18-11.27-2.84-1.88-3.09-5.98-.68-8.38l28.84-28.84h14.43l-30.19,38.17c-1.38,1.39-2.14,3.21-2.14,5.16s.76,3.78,2.13,5.16Z"/>
+                <path fill="var(--inx-logo-mark, #5E738A)" d="M1020.64,558.4c3.28,3.07,3.35,8.23.2,11.39l-26.31,26.31c-.43.43-.99.66-1.59.66h-13.48l30.17-38.16c1.39-1.39,2.15-3.21,2.15-5.17s-.76-3.77-2.14-5.15l-30.96-38.18h15.19l28.82,28.82c2.64,2.64,2.17,6.37-.87,8.54-2.74,1.95-3.83,5.39-2.61,8.7.31.84.79,1.62,1.44,2.23Z"/>
+              </g>
+              </svg>
+            </span>
+          </div>
+          <div class="sg-logo-plate sg-logo-plate--white">
+            <span class="inx-bug" style="--inx-logo-height:72px">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 93.86 86.66" role="img" aria-label="iNexa">
+              <g transform="translate(-978.68,-510.10)">
+                <path fill="var(--inx-logo-mark, #5E738A)" d="M1041.57,558.59l30.97,38.17h-14.27c-.6,0-1.16-.23-1.59-.66l-26.31-26.31c-3.09-3.09-3.09-8.11,0-11.2,3.19-3.2,2.8-8.63-1.18-11.27-2.84-1.88-3.09-5.98-.68-8.38l28.84-28.84h14.43l-30.19,38.17c-1.38,1.39-2.14,3.21-2.14,5.16s.76,3.78,2.13,5.16Z"/>
+                <path fill="var(--inx-logo-mark, #5E738A)" d="M1020.64,558.4c3.28,3.07,3.35,8.23.2,11.39l-26.31,26.31c-.43.43-.99.66-1.59.66h-13.48l30.17-38.16c1.39-1.39,2.15-3.21,2.15-5.17s-.76-3.77-2.14-5.15l-30.96-38.18h15.19l28.82,28.82c2.64,2.64,2.17,6.37-.87,8.54-2.74,1.95-3.83,5.39-2.61,8.7.31.84.79,1.62,1.44,2.23Z"/>
+              </g>
+              </svg>
+            </span>
+          </div>
+          <div class="sg-logo-plate sg-logo-plate--ink inx-on-ink">
+            <span class="inx-bug" style="--inx-logo-height:72px">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 93.86 86.66" role="img" aria-label="iNexa">
+              <g transform="translate(-978.68,-510.10)">
+                <path fill="var(--inx-logo-mark, #5E738A)" d="M1041.57,558.59l30.97,38.17h-14.27c-.6,0-1.16-.23-1.59-.66l-26.31-26.31c-3.09-3.09-3.09-8.11,0-11.2,3.19-3.2,2.8-8.63-1.18-11.27-2.84-1.88-3.09-5.98-.68-8.38l28.84-28.84h14.43l-30.19,38.17c-1.38,1.39-2.14,3.21-2.14,5.16s.76,3.78,2.13,5.16Z"/>
+                <path fill="var(--inx-logo-mark, #5E738A)" d="M1020.64,558.4c3.28,3.07,3.35,8.23.2,11.39l-26.31,26.31c-.43.43-.99.66-1.59.66h-13.48l30.17-38.16c1.39-1.39,2.15-3.21,2.15-5.17s-.76-3.77-2.14-5.15l-30.96-38.18h15.19l28.82,28.82c2.64,2.64,2.17,6.37-.87,8.54-2.74,1.95-3.83,5.39-2.61,8.7.31.84.79,1.62,1.44,2.23Z"/>
+              </g>
+              </svg>
+            </span>
+          </div>
+        </div>
+        <p class="sg-note">
+          <strong>A naming mismatch worth settling:</strong> the brand manual calls
+          this element the <em>symbol</em>; the files from the branding department
+          call it the <em>signifier</em>. The system uses "signifier" because that is
+          what is written on the assets people will actually open, but the manual
+          should be amended so one word wins. The bug is the signifier reversed out
+          of an ink disc — the manual shows it, but no file was supplied, so it is
+          composed here from the signifier at 46% of the disc diameter. Confirm that
+          proportion against the original artwork.
+        </p>
+      </div>
+
+      <div class="sg-block">
+        <p class="sg-block__label">Clear space</p>
+        <div class="sg-demo sg-clearspace">
+          <span class="inx-logo inx-logo--clear" style="--inx-logo-height:48px">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 271.85 74.89" role="img" aria-label="iNexa">
+            <g transform="translate(-824.08,-502.56)">
+              <path fill="var(--inx-logo-mark, #5E738A)" d="M1012.73,552.24l20.01,24.66h-9.22c-.39,0-.75-.15-1.02-.42l-17-17c-2-1.99-2-5.24,0-7.24,2.06-2.07,1.81-5.58-.77-7.28-1.83-1.21-1.99-3.86-.44-5.41l18.63-18.63h9.32l-19.51,24.66c-.89.9-1.38,2.08-1.38,3.33s.49,2.44,1.38,3.33Z"/>
+              <path fill="var(--inx-logo-mark, #5E738A)" d="M999.2,552.12c2.12,1.98,2.16,5.32.13,7.36l-17,17c-.28.28-.64.42-1.03.42h-8.71l19.5-24.66c.9-.9,1.39-2.08,1.39-3.34s-.49-2.43-1.38-3.33l-20-24.67h9.82l18.62,18.62c1.71,1.71,1.4,4.11-.56,5.52-1.77,1.26-2.47,3.48-1.69,5.62.2.55.51,1.05.93,1.44Z"/>
+              <path fill="var(--inx-logo-word, #070B14)" d="M824.08,510.48v-7.92h7.92v7.92h-7.92ZM824.08,576.9v-55.99h7.92v55.99h-7.92Z"/>
+              <path fill="var(--inx-logo-word, #070B14)" d="M842.9,576.9v-55.99h45.37c2.12,0,4.07.53,5.84,1.59,1.77,1.06,3.19,2.48,4.25,4.25,1.06,1.77,1.59,3.72,1.59,5.84v44.31h-7.92v-44.31c0-1.03-.37-1.91-1.11-2.65-.74-.74-1.63-1.11-2.65-1.11h-33.6c-1.03,0-1.93.37-2.7,1.11-.77.74-1.16,1.63-1.16,2.65v44.31h-7.92Z"/>
+              <path fill="var(--inx-logo-word, #070B14)" d="M967.36,529.04c-.25-.79-.6-1.55-1.04-2.28-.01-.02-.02-.04-.04-.07-1.04-1.74-2.45-3.14-4.2-4.18-.73-.44-1.5-.79-2.28-1.04-.1-.03-.21-.07-.32-.1-1.02-.3-2.11-.45-3.24-.45h-37.76c-.48.14-.93.33-1.39.55-.33.14-.65.32-.96.51-1.77,1.06-3.19,2.47-4.25,4.25-.42.71-.76,1.44-1.02,2.21-.31.91-.49,1.86-.55,2.85v34.5c0,1.25.19,2.44.55,3.57.25.79.6,1.55,1.04,2.27,1.06,1.77,2.47,3.19,4.25,4.26.73.43,1.5.79,2.28,1.03.89.29,1.81.47,2.77.53h45.07v-7.91h-44.31c-1.03,0-1.92-.39-2.66-1.16-.21-.21-.39-.44-.53-.68v-13.65h36.92c1.32,0,2.57-.2,3.75-.61.19-.06.37-.13.55-.21.53-.21,1.04-.47,1.54-.76,1.77-1.06,3.19-2.48,4.26-4.25.92-1.55,1.44-3.24,1.56-5.05.01-.25.02-.52.02-.79v-13.26s-.01-.04-.02-.07ZM958.36,545.01c-.74.74-1.63,1.11-2.66,1.11h-36.92v-13.52c0-1.03.39-1.92,1.16-2.66.76-.73,1.67-1.11,2.7-1.11h33.59c1.03,0,1.92.38,2.66,1.11.22.22.41.45.55.7v12.1c-.08.86-.43,1.62-1.09,2.27Z"/>
+              <path fill="var(--inx-logo-word, #070B14)" d="M1095.37,529c-.25-.79-.6-1.55-1.04-2.27-1.06-1.77-2.47-3.19-4.25-4.26-.73-.43-1.5-.79-2.28-1.03-.89-.29-1.81-.47-2.77-.53h-45.07v7.91h44.31c1.03,0,1.92.39,2.66,1.16.21.21.39.44.53.68v13.65h-36.92c-1.32,0-2.57.2-3.75.61-.19.06-.37.13-.55.21-.53.21-1.04.47-1.54.76-1.77,1.06-3.19,2.48-4.26,4.25-.92,1.55-1.44,3.24-1.56,5.05-.01.25-.02.52-.02.79v13.26s.01.04.02.07c.25.79.6,1.55,1.04,2.28.01.02.02.04.04.07,1.04,1.74,2.45,3.14,4.2,4.18.73.44,1.5.79,2.28,1.04.1.03.21.07.32.1,1.02.3,2.11.45,3.24.45h37.76c.48-.14.93-.33,1.39-.55.33-.14.65-.32.96-.51,1.77-1.06,3.19-2.47,4.25-4.25.42-.71.76-1.44,1.02-2.21.31-.91.49-1.86.55-2.85v-34.5c0-1.25-.19-2.44-.55-3.57ZM1047.87,553.33c.74-.74,1.63-1.11,2.66-1.11h36.92v13.52c0,1.03-.39,1.92-1.16,2.66-.76.73-1.67,1.11-2.7,1.11h-33.59c-1.03,0-1.92-.38-2.66-1.11-.22-.22-.41-.45-.55-.7v-12.1c.08-.86.43-1.62,1.09-2.27Z"/>
+            </g>
+            </svg>
+          </span>
+        </div>
+        <p class="sg-note">
+          The flat ring is the mandatory clear space: one signifier height and width
+          on every side. Measured from the artwork, the signifier is
+          <strong>74.78%</strong> of the lockup's height, so clear space is
+          <code class="inx-mono">0.748 × logo height</code> — a ratio that holds at
+          any size. At a 48px logo that is a 36px margin. This is
+          <code class="inx-mono">--inx-logo-clear-ratio</code>, applied by
+          <code class="inx-mono">.inx-logo--clear</code>.
+        </p>
+      </div>
+
+      <div class="sg-block">
+        <p class="sg-block__label">Minimum size</p>
+        <div class="sg-demo sg-scale-row">
+          <div class="sg-scale-item">
+            <span class="inx-logo" style="--inx-logo-height:20px">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 271.85 74.89" role="img" aria-label="iNexa">
+              <g transform="translate(-824.08,-502.56)">
+                <path fill="var(--inx-logo-mark, #5E738A)" d="M1012.73,552.24l20.01,24.66h-9.22c-.39,0-.75-.15-1.02-.42l-17-17c-2-1.99-2-5.24,0-7.24,2.06-2.07,1.81-5.58-.77-7.28-1.83-1.21-1.99-3.86-.44-5.41l18.63-18.63h9.32l-19.51,24.66c-.89.9-1.38,2.08-1.38,3.33s.49,2.44,1.38,3.33Z"/>
+                <path fill="var(--inx-logo-mark, #5E738A)" d="M999.2,552.12c2.12,1.98,2.16,5.32.13,7.36l-17,17c-.28.28-.64.42-1.03.42h-8.71l19.5-24.66c.9-.9,1.39-2.08,1.39-3.34s-.49-2.43-1.38-3.33l-20-24.67h9.82l18.62,18.62c1.71,1.71,1.4,4.11-.56,5.52-1.77,1.26-2.47,3.48-1.69,5.62.2.55.51,1.05.93,1.44Z"/>
+                <path fill="var(--inx-logo-word, #070B14)" d="M824.08,510.48v-7.92h7.92v7.92h-7.92ZM824.08,576.9v-55.99h7.92v55.99h-7.92Z"/>
+                <path fill="var(--inx-logo-word, #070B14)" d="M842.9,576.9v-55.99h45.37c2.12,0,4.07.53,5.84,1.59,1.77,1.06,3.19,2.48,4.25,4.25,1.06,1.77,1.59,3.72,1.59,5.84v44.31h-7.92v-44.31c0-1.03-.37-1.91-1.11-2.65-.74-.74-1.63-1.11-2.65-1.11h-33.6c-1.03,0-1.93.37-2.7,1.11-.77.74-1.16,1.63-1.16,2.65v44.31h-7.92Z"/>
+                <path fill="var(--inx-logo-word, #070B14)" d="M967.36,529.04c-.25-.79-.6-1.55-1.04-2.28-.01-.02-.02-.04-.04-.07-1.04-1.74-2.45-3.14-4.2-4.18-.73-.44-1.5-.79-2.28-1.04-.1-.03-.21-.07-.32-.1-1.02-.3-2.11-.45-3.24-.45h-37.76c-.48.14-.93.33-1.39.55-.33.14-.65.32-.96.51-1.77,1.06-3.19,2.47-4.25,4.25-.42.71-.76,1.44-1.02,2.21-.31.91-.49,1.86-.55,2.85v34.5c0,1.25.19,2.44.55,3.57.25.79.6,1.55,1.04,2.27,1.06,1.77,2.47,3.19,4.25,4.26.73.43,1.5.79,2.28,1.03.89.29,1.81.47,2.77.53h45.07v-7.91h-44.31c-1.03,0-1.92-.39-2.66-1.16-.21-.21-.39-.44-.53-.68v-13.65h36.92c1.32,0,2.57-.2,3.75-.61.19-.06.37-.13.55-.21.53-.21,1.04-.47,1.54-.76,1.77-1.06,3.19-2.48,4.26-4.25.92-1.55,1.44-3.24,1.56-5.05.01-.25.02-.52.02-.79v-13.26s-.01-.04-.02-.07ZM958.36,545.01c-.74.74-1.63,1.11-2.66,1.11h-36.92v-13.52c0-1.03.39-1.92,1.16-2.66.76-.73,1.67-1.11,2.7-1.11h33.59c1.03,0,1.92.38,2.66,1.11.22.22.41.45.55.7v12.1c-.08.86-.43,1.62-1.09,2.27Z"/>
+                <path fill="var(--inx-logo-word, #070B14)" d="M1095.37,529c-.25-.79-.6-1.55-1.04-2.27-1.06-1.77-2.47-3.19-4.25-4.26-.73-.43-1.5-.79-2.28-1.03-.89-.29-1.81-.47-2.77-.53h-45.07v7.91h44.31c1.03,0,1.92.39,2.66,1.16.21.21.39.44.53.68v13.65h-36.92c-1.32,0-2.57.2-3.75.61-.19.06-.37.13-.55.21-.53.21-1.04.47-1.54.76-1.77,1.06-3.19,2.48-4.26,4.25-.92,1.55-1.44,3.24-1.56,5.05-.01.25-.02.52-.02.79v13.26s.01.04.02.07c.25.79.6,1.55,1.04,2.28.01.02.02.04.04.07,1.04,1.74,2.45,3.14,4.2,4.18.73.44,1.5.79,2.28,1.04.1.03.21.07.32.1,1.02.3,2.11.45,3.24.45h37.76c.48-.14.93-.33,1.39-.55.33-.14.65-.32.96-.51,1.77-1.06,3.19-2.47,4.25-4.25.42-.71.76-1.44,1.02-2.21.31-.91.49-1.86.55-2.85v-34.5c0-1.25-.19-2.44-.55-3.57ZM1047.87,553.33c.74-.74,1.63-1.11,2.66-1.11h36.92v13.52c0,1.03-.39,1.92-1.16,2.66-.76.73-1.67,1.11-2.7,1.11h-33.59c-1.03,0-1.92-.38-2.66-1.11-.22-.22-.41-.45-.55-.7v-12.1c.08-.86.43-1.62,1.09-2.27Z"/>
+              </g>
+              </svg>
+            </span>
+            <p class="inx-caption">Lockup at minimum<br>20px tall · 73px wide</p>
+          </div>
+          <div class="sg-scale-item">
+            <span class="inx-signifier" style="--inx-logo-height:20px">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 93.86 86.66" role="img" aria-label="iNexa">
+              <g transform="translate(-978.68,-510.10)">
+                <path fill="var(--inx-logo-mark, #5E738A)" d="M1041.57,558.59l30.97,38.17h-14.27c-.6,0-1.16-.23-1.59-.66l-26.31-26.31c-3.09-3.09-3.09-8.11,0-11.2,3.19-3.2,2.8-8.63-1.18-11.27-2.84-1.88-3.09-5.98-.68-8.38l28.84-28.84h14.43l-30.19,38.17c-1.38,1.39-2.14,3.21-2.14,5.16s.76,3.78,2.13,5.16Z"/>
+                <path fill="var(--inx-logo-mark, #5E738A)" d="M1020.64,558.4c3.28,3.07,3.35,8.23.2,11.39l-26.31,26.31c-.43.43-.99.66-1.59.66h-13.48l30.17-38.16c1.39-1.39,2.15-3.21,2.15-5.17s-.76-3.77-2.14-5.15l-30.96-38.18h15.19l28.82,28.82c2.64,2.64,2.17,6.37-.87,8.54-2.74,1.95-3.83,5.39-2.61,8.7.31.84.79,1.62,1.44,2.23Z"/>
+              </g>
+              </svg>
+            </span>
+            <p class="inx-caption">Signifier at minimum<br>20px tall · 22px wide</p>
+          </div>
+          <div class="sg-scale-item">
+            <span class="inx-bug" style="--inx-logo-height:20px">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 93.86 86.66" role="img" aria-label="iNexa">
+              <g transform="translate(-978.68,-510.10)">
+                <path fill="var(--inx-logo-mark, #5E738A)" d="M1041.57,558.59l30.97,38.17h-14.27c-.6,0-1.16-.23-1.59-.66l-26.31-26.31c-3.09-3.09-3.09-8.11,0-11.2,3.19-3.2,2.8-8.63-1.18-11.27-2.84-1.88-3.09-5.98-.68-8.38l28.84-28.84h14.43l-30.19,38.17c-1.38,1.39-2.14,3.21-2.14,5.16s.76,3.78,2.13,5.16Z"/>
+                <path fill="var(--inx-logo-mark, #5E738A)" d="M1020.64,558.4c3.28,3.07,3.35,8.23.2,11.39l-26.31,26.31c-.43.43-.99.66-1.59.66h-13.48l30.17-38.16c1.39-1.39,2.15-3.21,2.15-5.17s-.76-3.77-2.14-5.15l-30.96-38.18h15.19l28.82,28.82c2.64,2.64,2.17,6.37-.87,8.54-2.74,1.95-3.83,5.39-2.61,8.7.31.84.79,1.62,1.44,2.23Z"/>
+              </g>
+              </svg>
+            </span>
+            <p class="inx-caption">Bug at minimum<br>20px square</p>
+          </div>
+        </div>
+        <p class="sg-note">
+          The manual sets 20px as the floor for all three. Worth flagging: at 20px
+          tall the lockup is only 73px wide and the wordmark's counters start to
+          close up on standard displays. For interface use — a sticky header, a
+          mobile nav — 28px is a safer floor, and below that the signifier alone
+          does the job better than a cramped lockup.
+        </p>
+      </div>
+
+      <table class="sg-table">
+        <thead><tr><th>Element</th><th>Aspect ratio</th><th>Minimum height</th><th>Clear space</th><th>Token</th></tr></thead>
+        <tbody>
+          <tr><td>Lockup</td><td>3.63 : 1</td><td>20px</td><td>0.748 × height</td><td><code>--inx-logo-aspect</code></td></tr>
+          <tr><td>Signifier</td><td>1.083 : 1</td><td>20px</td><td>1 × its own height</td><td><code>--inx-signifier-aspect</code></td></tr>
+          <tr><td>Bug</td><td>1 : 1</td><td>20px</td><td>1 × its own diameter</td><td><code>--inx-logo-min-height</code></td></tr>
+        </tbody>
+      </table>
+
+      <div class="sg-block">
+        <p class="sg-block__label">Asset inventory</p>
+        <table class="sg-table">
+          <thead><tr><th>File</th><th>Use</th></tr></thead>
+          <tbody>
+            <tr><td><code>inexa-logo-on-light.svg</code></td><td>Ink wordmark. Light surfaces, print, email.</td></tr>
+            <tr><td><code>inexa-logo-on-dark.svg</code></td><td>White wordmark. Ink surfaces, dark email.</td></tr>
+            <tr><td><code>inexa-signifier.svg</code></td><td>Standalone mark. Favicon, app icon, accent.</td></tr>
+            <tr><td>Inline in components</td><td>Adaptive lockup, recolours from CSS variables.</td></tr>
+          </tbody>
+        </table>
+        <p class="sg-note">
+          All three are cropped to the artwork. The originals sit on a 1920 × 1080
+          artboard with the mark floating in the middle, which means roughly 96% of
+          the file is empty canvas — fine in Illustrator, but it makes the logo
+          impossible to size or align in CSS. The originals should stay in the brand
+          archive; these are the web cuts.
+        </p>
+      </div>
+
+      <p class="sg-note">
+        Contrast rule from the manual: the ink lockup goes on light surfaces, the
+        white lockup on dark. Where a background sits outside the palette, use the
+        plain black or white version — never recolour the mark to match. The
+        signifier stays Blue Slate on both surfaces; at 4.03:1 on Ink Black it would
+        fail as text, but it is a graphic mark, not something anyone has to read.
+      </p>
+    </section>
+
+    <!-- ===================== COLOUR ===================== -->
+    <section class="sg-section" id="colour">
+      <div class="sg-section__head">
+        <p class="inx-eyebrow">Tokens</p>
+        <h2 class="inx-h1">Colour</h2>
+        <p>Six approved colours. Everything else in the system is either an
+           interpolation between two of them or a flagged functional extension.</p>
+      </div>
+
+      <div class="sg-block">
+        <p class="sg-block__label">Primary palette</p>
+        <div class="sg-swatches">
+          <div class="sg-swatch"><div class="sg-swatch__chip" style="background:#070B14"></div>
+            <div class="sg-swatch__meta"><p class="sg-swatch__name">Ink Black</p>
+            <p class="sg-swatch__val">#070B14 · 7, 11, 20<br>CMYK 65, 45, 0, 92</p></div></div>
+          <div class="sg-swatch"><div class="sg-swatch__chip" style="background:#141D2B"></div>
+            <div class="sg-swatch__meta"><p class="sg-swatch__name">Ink Navy</p>
+            <p class="sg-swatch__val">#141D2B · 20, 29, 43<br>CMYK 53, 33, 0, 83</p></div></div>
+          <div class="sg-swatch"><div class="sg-swatch__chip" style="background:#5E738A"></div>
+            <div class="sg-swatch__meta"><p class="sg-swatch__name">Blue Slate</p>
+            <p class="sg-swatch__val">#5E738A · 94, 115, 138<br>CMYK 32, 17, 0, 46</p></div></div>
+          <div class="sg-swatch"><div class="sg-swatch__chip" style="background:#B8D0E5"></div>
+            <div class="sg-swatch__meta"><p class="sg-swatch__name">Pale Sky</p>
+            <p class="sg-swatch__val">#B8D0E5 · 184, 208, 229<br>CMYK 20, 9, 0, 10</p></div></div>
+          <div class="sg-swatch"><div class="sg-swatch__chip" style="background:#F5F7FA"></div>
+            <div class="sg-swatch__meta"><p class="sg-swatch__name">Platinum</p>
+            <p class="sg-swatch__val">#F5F7FA · 245, 247, 250<br>CMYK 2, 1, 0, 2</p></div></div>
+          <div class="sg-swatch"><div class="sg-swatch__chip" style="background:#FFFFFF; border-bottom:1px solid var(--inx-border)"></div>
+            <div class="sg-swatch__meta"><p class="sg-swatch__name">White</p>
+            <p class="sg-swatch__val">#FFFFFF · 255, 255, 255<br>CMYK 0, 0, 0, 0</p></div></div>
+        </div>
+        <p class="sg-note">
+          <strong>Naming change:</strong> the manual labels both #070B14 and #141D2B
+          "Ink Black". Two colours sharing a name cannot be referenced unambiguously in
+          code or in a handover conversation, so the lighter one is named
+          <strong>Ink Navy</strong> here. Worth confirming with the brand owner before
+          this propagates.
+        </p>
+      </div>
+
+      <div class="sg-block">
+        <p class="sg-block__label">Derived neutral ramp</p>
+        <div class="sg-ramp">
+          <div class="sg-ramp__step" style="background:#070B14;color:#fff">950</div>
+          <div class="sg-ramp__step" style="background:#141D2B;color:#fff">900</div>
+          <div class="sg-ramp__step" style="background:#243040;color:#fff">800</div>
+          <div class="sg-ramp__step" style="background:#354456;color:#fff">700</div>
+          <div class="sg-ramp__step" style="background:#495B6F;color:#fff">600</div>
+          <div class="sg-ramp__step" style="background:#5E738A;color:#fff">500</div>
+          <div class="sg-ramp__step" style="background:#8096AD;color:#fff">400</div>
+          <div class="sg-ramp__step" style="background:#9DB4CA">300</div>
+          <div class="sg-ramp__step" style="background:#B8D0E5">200</div>
+          <div class="sg-ramp__step" style="background:#DAE5F1">100</div>
+          <div class="sg-ramp__step" style="background:#ECF1F7">75</div>
+          <div class="sg-ramp__step" style="background:#F5F7FA">50</div>
+          <div class="sg-ramp__step" style="background:#FFFFFF">0</div>
+        </div>
+        <p class="sg-note">
+          Steps 950, 900, 500, 200, 50 and 0 <em>are</em> the approved colours. The rest
+          sit on the straight line between them, which is what makes hover, border and
+          disabled states possible without introducing an unapproved hue.
+        </p>
+      </div>
+
+      <div class="sg-block">
+        <p class="sg-block__label">Usage proportion</p>
+        <div class="sg-proportion">
+          <div style="background:#070B14; flex:32"></div>
+          <div style="background:#141D2B; flex:14"></div>
+          <div style="background:#5E738A; flex:10"></div>
+          <div style="background:#B8D0E5; flex:8"></div>
+          <div style="background:#F5F7FA; flex:20"></div>
+          <div style="background:#FFFFFF; flex:16; border-left:1px solid var(--inx-border)"></div>
+        </div>
+        <p class="sg-note">
+          Neutrals carry clarity, ink establishes authority, and the blues highlight
+          without taking over. Blue Slate and Pale Sky together should stay under
+          roughly a fifth of any composition.
+        </p>
+      </div>
+
+      <div class="sg-block">
+        <p class="sg-block__label">Functional status colours <span class="inx-pill inx-pill--warning" style="margin-left:8px">Extension</span></p>
+        <div class="inx-row">
+          <span class="inx-pill inx-pill--success"><span class="inx-pill__dot"></span>Success</span>
+          <span class="inx-pill inx-pill--warning"><span class="inx-pill__dot"></span>Warning</span>
+          <span class="inx-pill inx-pill--danger"><span class="inx-pill__dot"></span>Error</span>
+          <span class="inx-pill inx-pill--info"><span class="inx-pill__dot"></span>Info</span>
+        </div>
+        <p class="sg-note">
+          The manual defines no status palette, but a form cannot report a validation
+          error without one. These four are deliberately desaturated to sit beside the
+          brand blues, and they are restricted to functional interface use — never in a
+          marketing layout and never adjacent to the logo. Colour is always paired with
+          a label or icon, so meaning never depends on hue alone.
+        </p>
+      </div>
+    </section>
+
+    <!-- ===================== CONTRAST ===================== -->
+    <section class="sg-section" id="contrast">
+      <div class="sg-section__head">
+        <p class="inx-eyebrow">Tokens</p>
+        <h2 class="inx-h1">Contrast &amp; pairing</h2>
+        <p>Measured WCAG 2.1 ratios for every palette pair. This table settles most
+           "which blue goes on which background" arguments before they start.</p>
+      </div>
+
+      <table class="sg-table">
+        <thead>
+          <tr><th>Foreground</th><th>Background</th><th>Ratio</th><th>Body text</th><th>Large text &amp; UI</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Ink Black</td><td>White</td><td>19.68</td><td class="sg-pass">Pass AAA</td><td class="sg-pass">Pass</td></tr>
+          <tr><td>Ink Black</td><td>Platinum</td><td>18.34</td><td class="sg-pass">Pass AAA</td><td class="sg-pass">Pass</td></tr>
+          <tr><td>Blue Slate</td><td>White</td><td>4.89</td><td class="sg-pass">Pass AA</td><td class="sg-pass">Pass</td></tr>
+          <tr><td>Blue Slate</td><td>Platinum</td><td>4.56</td><td class="sg-pass">Pass AA</td><td class="sg-pass">Pass</td></tr>
+          <tr><td>White</td><td>Ink Black</td><td>19.68</td><td class="sg-pass">Pass AAA</td><td class="sg-pass">Pass</td></tr>
+          <tr><td>Pale Sky</td><td>Ink Black</td><td>12.36</td><td class="sg-pass">Pass AAA</td><td class="sg-pass">Pass</td></tr>
+          <tr><td>Pale Sky</td><td>Ink Navy</td><td>10.64</td><td class="sg-pass">Pass AAA</td><td class="sg-pass">Pass</td></tr>
+          <tr><td>Blue Slate</td><td>Ink Black</td><td>4.03</td><td class="sg-fail">Fail</td><td class="sg-pass">Pass</td></tr>
+          <tr><td>Blue Slate</td><td>Ink Navy</td><td>3.46</td><td class="sg-fail">Fail</td><td class="sg-pass">Pass</td></tr>
+          <tr><td>Pale Sky</td><td>White</td><td>1.59</td><td class="sg-fail">Fail</td><td class="sg-fail">Fail</td></tr>
+          <tr><td>Pale Sky</td><td>Blue Slate</td><td>3.07</td><td class="sg-fail">Fail</td><td class="sg-pass">Pass</td></tr>
+        </tbody>
+      </table>
+
+      <div class="inx-alert inx-alert--warning" style="margin-block-start: var(--inx-space-6)">
+        <p class="inx-alert__label">Watch this one</p>
+        <div>
+          <p class="inx-alert__title">Blue Slate cannot carry body text on dark</p>
+          <p class="inx-alert__body">
+            Blue Slate is the secondary text colour on light surfaces and fails as body
+            text on dark ones. On ink, Pale Sky takes over for secondary text and Blue
+            Slate drops back to borders, dividers and large display type. The
+            <code class="inx-mono">.inx-on-ink</code> class does this switch automatically —
+            components need no dark variants of their own.
+          </p>
+        </div>
+      </div>
+
+      <div class="sg-block">
+        <p class="sg-block__label">Approved type and colour pairings</p>
+        <div class="inx-grid">
+          <div class="sg-demo" style="background:#FFFFFF">
+            <p class="inx-h4" style="color:#070B14">Aa Ink on White</p>
+            <p class="inx-body inx-body--sm" style="color:#5E738A">Blue Slate secondary — 4.89:1</p>
+          </div>
+          <div class="sg-demo" style="background:#F5F7FA">
+            <p class="inx-h4" style="color:#070B14">Aa Ink on Platinum</p>
+            <p class="inx-body inx-body--sm" style="color:#5E738A">Blue Slate secondary — 4.56:1</p>
+          </div>
+          <div class="sg-demo sg-demo--ink inx-on-ink" style="background:#070B14">
+            <p class="inx-h4">Aa White on Ink</p>
+            <p class="inx-body inx-body--sm inx-muted">Pale Sky secondary — 12.36:1</p>
+          </div>
+          <div class="sg-demo sg-demo--ink inx-on-ink" style="background:#141D2B">
+            <p class="inx-h4">Aa White on Ink Navy</p>
+            <p class="inx-body inx-body--sm inx-muted">Pale Sky secondary — 10.64:1</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="sg-block">
+        <p class="sg-block__label">Focus ring</p>
+        <p class="sg-note" style="margin-block-start:0">
+          No single palette colour clears 3:1 against both light and ink surfaces, so
+          the focus ring is surface-scoped rather than fixed: Blue Slate on light,
+          Pale Sky on ink. It is never removed — only restyled.
+        </p>
+        <div class="inx-row" style="margin-block-start: var(--inx-space-4)">
+          <button class="inx-btn inx-btn--secondary">Tab to me (light)</button>
+          <span class="sg-demo sg-demo--ink inx-on-ink" style="padding: var(--inx-space-4)">
+            <button class="inx-btn inx-btn--secondary">Tab to me (ink)</button>
+          </span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== TYPOGRAPHY ===================== -->
+    <section class="sg-section" id="type">
+      <div class="sg-section__head">
+        <p class="inx-eyebrow">Tokens</p>
+        <h2 class="inx-h1">Typography</h2>
+        <p>Manrope only, in Regular and Semi Bold. No other weights are approved —
+           which means hierarchy has to come from size, case and space rather than
+           from reaching for Bold.</p>
+      </div>
+
+      <div class="sg-block">
+        <p class="sg-block__label">Setting rules from the manual</p>
+        <table class="sg-table">
+          <thead><tr><th>Role</th><th>Weight</th><th>Case</th><th>Manual size</th><th>Web size</th></tr></thead>
+          <tbody>
+            <tr><td>Heading</td><td>Regular 400</td><td>Title Case</td><td>144pt</td><td>Fluid, up to 96px</td></tr>
+            <tr><td>Subheading</td><td>Semi Bold 600</td><td>UPPER CASE</td><td>48pt</td><td>24–48px</td></tr>
+            <tr><td>Body</td><td>Regular 400</td><td>Sentence case</td><td>18pt</td><td>18px</td></tr>
+          </tbody>
+        </table>
+        <p class="sg-note">
+          The 144 / 48 / 18 relationship is built for print and presentation. It is
+          carried onto the web as a proportional scale rather than literally — 144pt on
+          a phone would be unusable — but body stays at 18px exactly as specified, and
+          the case rules carry across without exception.
+        </p>
+      </div>
+
+      <div class="sg-block">
+        <p class="sg-block__label">Scale</p>
+
+        <div class="sg-spec">
+          <p class="sg-spec__meta">Display / hero<br>--inx-display-hero<br>clamp(44 → 96px)<br>400 · -0.02em · 1.02</p>
+          <div class="sg-spec__sample"><p class="inx-display">We Run Operations</p></div>
+        </div>
+
+        <div class="sg-spec">
+          <p class="sg-spec__meta">Display / section<br>--inx-display-section<br>clamp(36 → 60px)<br>400 · -0.02em · 1.02</p>
+          <div class="sg-spec__sample"><p class="inx-display inx-display--section">Brand Foundation</p></div>
+        </div>
+
+        <div class="sg-spec">
+          <p class="sg-spec__meta">Heading 1<br>--inx-text-3xl<br>48px · 400 · 1.12</p>
+          <div class="sg-spec__sample"><p class="inx-h1">Systems That Scale</p></div>
+        </div>
+
+        <div class="sg-spec">
+          <p class="sg-spec__meta">Heading 2<br>--inx-text-2xl<br>38px · 400 · 1.12</p>
+          <div class="sg-spec__sample"><p class="inx-h2">Structured Execution</p></div>
+        </div>
+
+        <div class="sg-spec">
+          <p class="sg-spec__meta">Heading 3<br>--inx-text-xl<br>30px · 400 · 1.12</p>
+          <div class="sg-spec__sample"><p class="inx-h3">Operational Visibility</p></div>
+        </div>
+
+        <div class="sg-spec">
+          <p class="sg-spec__meta">Heading 4<br>--inx-text-lg<br>24px · 400 · 1.3</p>
+          <div class="sg-spec__sample"><p class="inx-h4">Workflow Optimisation</p></div>
+        </div>
+
+        <div class="sg-spec">
+          <p class="sg-spec__meta">Subheading<br>--inx-text-lg<br>24px · 600 · 0.12em</p>
+          <div class="sg-spec__sample"><p class="inx-subhead">Smarter decisions</p></div>
+        </div>
+
+        <div class="sg-spec">
+          <p class="sg-spec__meta">Lead<br>--inx-text-md<br>20px · 400 · 1.3</p>
+          <div class="sg-spec__sample"><p class="inx-lead">iNexa becomes an extension of the business, managing the operational engine behind growth.</p></div>
+        </div>
+
+        <div class="sg-spec">
+          <p class="sg-spec__meta">Body<br>--inx-text-base<br>18px · 400 · 1.6</p>
+          <div class="sg-spec__sample"><p class="inx-body">As organisations grow, complexity increases. Systems become disconnected, teams lose visibility, and everyday processes consume valuable time. Structured operational management turns that complexity back into something a leadership team can act on.</p></div>
+        </div>
+
+        <div class="sg-spec">
+          <p class="sg-spec__meta">Body small<br>--inx-text-sm<br>16px · 400 · 1.6</p>
+          <div class="sg-spec__sample"><p class="inx-body inx-body--sm">Used for dense interface areas, table cells and form controls where 18px would crowd the layout.</p></div>
+        </div>
+
+        <div class="sg-spec">
+          <p class="sg-spec__meta">Caption<br>--inx-text-xs<br>14px · 400 · 1.3</p>
+          <div class="sg-spec__sample"><p class="inx-caption">Helper text, image captions, metadata and timestamps.</p></div>
+        </div>
+
+        <div class="sg-spec">
+          <p class="sg-spec__meta">Eyebrow<br>--inx-text-2xs<br>12px · 600 · 0.12em</p>
+          <div class="sg-spec__sample"><p class="inx-eyebrow">Operational excellence</p></div>
+        </div>
+
+        <div class="sg-spec" style="border-block-end:0">
+          <p class="sg-spec__meta">Legal<br>--inx-text-3xs<br>11px · 400 · 1.3</p>
+          <div class="sg-spec__sample"><p class="inx-legal">©2026 iNexa. All rights reserved.</p></div>
+        </div>
+      </div>
+
+      <div class="sg-block">
+        <p class="sg-block__label">Measure</p>
+        <p class="inx-body">Body copy is capped at 68 characters
+          (<code class="inx-mono">--inx-measure</code>). Past that, the eye loses the
+          start of the next line and long-form pages stop feeling composed. This
+          paragraph is set at the cap so you can see where the limit falls in practice
+          at the standard 18px body size.</p>
+      </div>
+    </section>
+
+    <!-- ===================== SPACE ===================== -->
+    <section class="sg-section" id="space">
+      <div class="sg-section__head">
+        <p class="inx-eyebrow">Tokens</p>
+        <h2 class="inx-h1">Space &amp; layout</h2>
+        <p>A 4px base grid. Steps grow roughly geometrically, so there is never a
+           near-identical pair to agonise over.</p>
+      </div>
+
+      <div class="sg-demo">
+        <div class="sg-space-row"><span class="sg-space-label">--inx-space-1 · 4px</span><span class="sg-space-bar" style="width:4px"></span></div>
+        <div class="sg-space-row"><span class="sg-space-label">--inx-space-2 · 8px</span><span class="sg-space-bar" style="width:8px"></span></div>
+        <div class="sg-space-row"><span class="sg-space-label">--inx-space-3 · 12px</span><span class="sg-space-bar" style="width:12px"></span></div>
+        <div class="sg-space-row"><span class="sg-space-label">--inx-space-4 · 16px</span><span class="sg-space-bar" style="width:16px"></span></div>
+        <div class="sg-space-row"><span class="sg-space-label">--inx-space-5 · 24px</span><span class="sg-space-bar" style="width:24px"></span></div>
+        <div class="sg-space-row"><span class="sg-space-label">--inx-space-6 · 32px</span><span class="sg-space-bar" style="width:32px"></span></div>
+        <div class="sg-space-row"><span class="sg-space-label">--inx-space-7 · 40px</span><span class="sg-space-bar" style="width:40px"></span></div>
+        <div class="sg-space-row"><span class="sg-space-label">--inx-space-8 · 48px</span><span class="sg-space-bar" style="width:48px"></span></div>
+        <div class="sg-space-row"><span class="sg-space-label">--inx-space-9 · 64px</span><span class="sg-space-bar" style="width:64px"></span></div>
+        <div class="sg-space-row"><span class="sg-space-label">--inx-space-10 · 96px</span><span class="sg-space-bar" style="width:96px"></span></div>
+        <div class="sg-space-row"><span class="sg-space-label">--inx-space-11 · 128px</span><span class="sg-space-bar" style="width:128px"></span></div>
+      </div>
+
+      <div class="sg-block">
+        <p class="sg-block__label">Grid &amp; breakpoints</p>
+        <table class="sg-table">
+          <thead><tr><th>Token</th><th>Value</th><th>Use</th></tr></thead>
+          <tbody>
+            <tr><td><code>--inx-container</code></td><td>1280px</td><td>Page maximum width</td></tr>
+            <tr><td><code>--inx-container-text</code></td><td>760px</td><td>Long-form reading column</td></tr>
+            <tr><td><code>--inx-gutter</code></td><td>24px</td><td>Column gap and page inset</td></tr>
+            <tr><td><code>--inx-columns</code></td><td>12</td><td>Layout grid</td></tr>
+            <tr><td><code>--inx-bp-sm</code></td><td>480px</td><td>Large phone</td></tr>
+            <tr><td><code>--inx-bp-md</code></td><td>768px</td><td>Tablet</td></tr>
+            <tr><td><code>--inx-bp-lg</code></td><td>1024px</td><td>Small laptop</td></tr>
+            <tr><td><code>--inx-bp-xl</code></td><td>1280px</td><td>Desktop</td></tr>
+            <tr><td><code>--inx-bp-2xl</code></td><td>1536px</td><td>Wide desktop</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="sg-block">
+        <p class="sg-block__label">Section rhythm</p>
+        <p class="sg-note" style="margin-block-start:0">
+          Full-width page sections use space-10 (96px) vertical padding on desktop and
+          space-8 (48px) below 900px. Blocks inside a section separate by space-8;
+          elements inside a block by space-5. Keeping to three levels stops layouts
+          drifting apart over time.
+        </p>
+      </div>
+    </section>
+
+    <!-- ===================== SURFACE ===================== -->
+    <section class="sg-section" id="surface">
+      <div class="sg-section__head">
+        <p class="inx-eyebrow">Tokens</p>
+        <h2 class="inx-h1">Radius &amp; elevation</h2>
+        <p>Elevation is borders-first. The manual forbids effects on the identity and
+           gradients in colour use, so depth here comes from line and surface rather
+           than from glow.</p>
+      </div>
+
+      <div class="inx-grid">
+        <div class="sg-demo" style="text-align:center">
+          <div style="height:60px;background:var(--inx-n-950);border-radius:var(--inx-radius-sm);margin-bottom:12px"></div>
+          <p class="inx-caption">radius-sm · 4px<br>Inline elements, checkboxes</p>
+        </div>
+        <div class="sg-demo" style="text-align:center">
+          <div style="height:60px;background:var(--inx-n-950);border-radius:var(--inx-radius-md);margin-bottom:12px"></div>
+          <p class="inx-caption">radius-md · 8px<br>Inputs, alerts, small surfaces</p>
+        </div>
+        <div class="sg-demo" style="text-align:center">
+          <div style="height:60px;background:var(--inx-n-950);border-radius:var(--inx-radius-lg);margin-bottom:12px"></div>
+          <p class="inx-caption">radius-lg · 12px<br>Cards, panels, media</p>
+        </div>
+        <div class="sg-demo" style="text-align:center">
+          <div style="height:60px;background:var(--inx-n-950);border-radius:var(--inx-radius-pill);margin-bottom:12px"></div>
+          <p class="inx-caption">radius-pill · full<br>Buttons, pills, tags</p>
+        </div>
+      </div>
+      <p class="sg-note">
+        The pill radius is not invented — it is taken from the "Book a Strategy Call"
+        CTA in the manual's billboard application, and the circular bug is the same
+        logic at its extreme. Containers stay near-square so the structure the manual
+        cares about stays visible.
+      </p>
+
+      <div class="sg-block">
+        <p class="sg-block__label">Elevation</p>
+        <div class="inx-grid">
+          <div class="sg-demo" style="box-shadow:none"><p class="inx-caption">shadow-none<br>Default. Use a border.</p></div>
+          <div class="sg-demo" style="box-shadow:var(--inx-shadow-sm)"><p class="inx-caption">shadow-sm<br>Sticky header on scroll</p></div>
+          <div class="sg-demo" style="box-shadow:var(--inx-shadow-md)"><p class="inx-caption">shadow-md<br>Dropdowns, hover cards</p></div>
+          <div class="sg-demo" style="box-shadow:var(--inx-shadow-lg)"><p class="inx-caption">shadow-lg<br>Modals, drawers</p></div>
+        </div>
+        <p class="sg-note">Shadows are tinted with Ink Black rather than neutral grey, so they read as part of the palette.</p>
+      </div>
+    </section>
+
+    <!-- ===================== MOTION ===================== -->
+    <section class="sg-section" id="motion">
+      <div class="sg-section__head">
+        <p class="inx-eyebrow">Tokens</p>
+        <h2 class="inx-h1">Motion</h2>
+        <p>Calm and deliberate. Movement confirms an action happened; it does not
+           perform.</p>
+      </div>
+
+      <table class="sg-table">
+        <thead><tr><th>Token</th><th>Value</th><th>Use</th></tr></thead>
+        <tbody>
+          <tr><td><code>--inx-duration-fast</code></td><td>120ms</td><td>Hover, colour change, press</td></tr>
+          <tr><td><code>--inx-duration-base</code></td><td>200ms</td><td>Most transitions</td></tr>
+          <tr><td><code>--inx-duration-slow</code></td><td>360ms</td><td>Panels, drawers, reveals</td></tr>
+          <tr><td><code>--inx-ease</code></td><td>cubic-bezier(0.2, 0, 0, 1)</td><td>Default — decisive, settles quickly</td></tr>
+          <tr><td><code>--inx-ease-out</code></td><td>cubic-bezier(0.16, 1, 0.3, 1)</td><td>Entrances</td></tr>
+        </tbody>
+      </table>
+
+      <p class="sg-note">
+        No bounce, no elastic easing, nothing over 400ms. All durations collapse to
+        1ms under <code class="inx-mono">prefers-reduced-motion</code>, which is handled
+        in the token file so individual components never have to remember it.
+      </p>
+    </section>
+
+    <!-- ===================== EYEBROWS ===================== -->
+    <section class="sg-section" id="eyebrows">
+      <div class="sg-section__head">
+        <p class="inx-eyebrow">Components</p>
+        <h2 class="inx-h1">Eyebrows</h2>
+        <p>The manual's uppercase Semi Bold subheading, reduced to label scale. It
+           tells the reader where they are — so it should name the section, never
+           repeat the heading underneath it.</p>
+      </div>
+
+      <div class="sg-demo inx-stack inx-stack--lg">
+        <div>
+          <p class="inx-eyebrow">Operations management</p>
+          <p class="inx-h3" style="margin-block-start:8px">The engine behind growth</p>
+        </div>
+        <div>
+          <p class="inx-eyebrow inx-eyebrow--rule">Case study</p>
+          <p class="inx-h3" style="margin-block-start:8px">Rule variant, from the billboard layout</p>
+        </div>
+        <div>
+          <p class="inx-eyebrow inx-eyebrow--accent">Systems integration</p>
+          <p class="inx-h3" style="margin-block-start:8px">Accent variant for ink sections</p>
+        </div>
+        <div>
+          <p class="inx-eyebrow inx-eyebrow--numbered" data-index="03">Implement</p>
+          <p class="inx-h3" style="margin-block-start:8px">Numbered — sequences only</p>
+          <p class="inx-caption" style="margin-block-start:8px">Correct here: an engagement runs assess &rarr; design &rarr; implement &rarr; manage, in that order. The four services are a set, not a sequence, so they are never numbered.</p>
+        </div>
+      </div>
+
+      <div class="sg-rules" style="margin-block-start: var(--inx-space-6)">
+        <div class="sg-rule sg-rule--do"><p class="sg-rule__tag">Do</p>
+          <p>Use one eyebrow per section, naming the category the content belongs to.</p></div>
+        <div class="sg-rule sg-rule--dont"><p class="sg-rule__tag">Don't</p>
+          <p>Restate the heading in the eyebrow. Two labels saying the same thing is one too many.</p></div>
+        <div class="sg-rule sg-rule--dont"><p class="sg-rule__tag">Don't</p>
+          <p>Number things that aren't a sequence. 01 / 02 / 03 on unordered features is decoration.</p></div>
+      </div>
+    </section>
+
+    <!-- ===================== BUTTONS ===================== -->
+    <section class="sg-section" id="buttons">
+      <div class="sg-section__head">
+        <p class="inx-eyebrow">Components</p>
+        <h2 class="inx-h1">Buttons</h2>
+        <p>One primary action per view. Labels say what happens —
+           "Book a strategy call", not "Submit" — and keep the same wording through
+           the whole flow.</p>
+      </div>
+
+      <div class="sg-block">
+        <p class="sg-block__label">Hierarchy</p>
+        <div class="sg-demo inx-row">
+          <button class="inx-btn inx-btn--primary">Book a strategy call</button>
+          <button class="inx-btn inx-btn--secondary">View services</button>
+          <button class="inx-btn inx-btn--ghost">Learn more</button>
+          <button class="inx-btn inx-btn--danger">Delete workflow</button>
+        </div>
+        <p class="sg-note">Destructive styling is product-interface only. It never appears on a marketing page.</p>
+      </div>
+
+      <div class="sg-block">
+        <p class="sg-block__label">Sizes</p>
+        <div class="sg-demo inx-row">
+          <button class="inx-btn inx-btn--primary inx-btn--sm">Small · 36px</button>
+          <button class="inx-btn inx-btn--primary">Medium · 44px</button>
+          <button class="inx-btn inx-btn--primary inx-btn--lg">Large · 52px</button>
+        </div>
+        <p class="sg-note">Medium is the default and clears the 44px minimum touch target. Small is for dense toolbars only, never as a primary page action on mobile.</p>
+      </div>
+
+      <div class="sg-block">
+        <p class="sg-block__label">States</p>
+        <div class="sg-demo inx-row">
+          <button class="inx-btn inx-btn--primary">Default</button>
+          <button class="inx-btn inx-btn--primary" style="background:var(--inx-n-800);border-color:var(--inx-n-800)">Hover</button>
+          <button class="inx-btn inx-btn--primary" data-loading="true">Saving</button>
+          <button class="inx-btn inx-btn--primary" disabled>Disabled</button>
+          <button class="inx-btn inx-btn--icon inx-btn--secondary" aria-label="Next">→</button>
+          <button class="inx-btn inx-btn--secondary">With icon →</button>
+        </div>
+      </div>
+
+      <div class="sg-block">
+        <p class="sg-block__label">On ink</p>
+        <div class="sg-demo sg-demo--ink inx-on-ink inx-row">
+          <button class="inx-btn inx-btn--primary">Book a strategy call</button>
+          <button class="inx-btn inx-btn--secondary">View services</button>
+          <button class="inx-btn inx-btn--ghost">Learn more</button>
+          <button class="inx-btn inx-btn--primary" disabled>Disabled</button>
+        </div>
+        <p class="sg-note">Nothing is redefined per-variant here — the ink surface re-points the semantic tokens and the buttons follow.</p>
+      </div>
+
+      <div class="sg-block">
+        <p class="sg-block__label">Full width</p>
+        <div class="sg-demo" style="max-width:420px">
+          <button class="inx-btn inx-btn--primary inx-btn--block">Create account</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== PILLS ===================== -->
+    <section class="sg-section" id="pills">
+      <div class="sg-section__head">
+        <p class="inx-eyebrow">Components</p>
+        <h2 class="inx-h1">Pills, tags &amp; chips</h2>
+        <p>Three things that look alike and behave differently. Naming them separately
+           keeps the distinction from collapsing in code.</p>
+      </div>
+
+      <div class="sg-block">
+        <p class="sg-block__label">Pill — a static label. Not clickable.</p>
+        <div class="sg-demo inx-row">
+          <span class="inx-pill">Default</span>
+          <span class="inx-pill inx-pill--solid">Featured</span>
+          <span class="inx-pill inx-pill--success"><span class="inx-pill__dot"></span>Active</span>
+          <span class="inx-pill inx-pill--warning"><span class="inx-pill__dot"></span>Pending</span>
+          <span class="inx-pill inx-pill--danger"><span class="inx-pill__dot"></span>Blocked</span>
+          <span class="inx-pill inx-pill--info"><span class="inx-pill__dot"></span>In review</span>
+          <span class="inx-pill inx-pill--lg">Large</span>
+          <span class="inx-pill inx-pill--plain">Sentence case variant</span>
+        </div>
+        <p class="sg-note">
+          The dot exists so status never depends on colour alone. Use the plain variant
+          for anything a user typed — uppercase on user content reads as shouting.
+        </p>
+      </div>
+
+      <div class="sg-block">
+        <p class="sg-block__label">Tag — removable</p>
+        <div class="sg-demo inx-row">
+          <span class="inx-pill inx-tag">Operations<button class="inx-tag__remove" aria-label="Remove operations filter">×</button></span>
+          <span class="inx-pill inx-tag">Integrations<button class="inx-tag__remove" aria-label="Remove integrations filter">×</button></span>
+          <span class="inx-pill inx-tag">Reporting<button class="inx-tag__remove" aria-label="Remove reporting filter">×</button></span>
+        </div>
+      </div>
+
+      <div class="sg-block">
+        <p class="sg-block__label">Chip — selectable filter</p>
+        <div class="sg-demo inx-row">
+          <button class="inx-pill inx-chip" aria-pressed="true">All</button>
+          <button class="inx-pill inx-chip" aria-pressed="false">Operations</button>
+          <button class="inx-pill inx-chip" aria-pressed="false">Workflow</button>
+          <button class="inx-pill inx-chip" aria-pressed="false">Systems</button>
+          <button class="inx-pill inx-chip" aria-pressed="false">Strategy</button>
+        </div>
+        <p class="sg-note">Selection state is carried by <code class="inx-mono">aria-pressed</code>, so it is announced to screen readers rather than only shown.</p>
+      </div>
+
+      <div class="sg-block">
+        <p class="sg-block__label">On ink</p>
+        <div class="sg-demo sg-demo--ink inx-on-ink inx-row">
+          <span class="inx-pill">Default</span>
+          <span class="inx-pill inx-pill--solid">Featured</span>
+          <span class="inx-pill inx-pill--success"><span class="inx-pill__dot"></span>Active</span>
+          <span class="inx-pill inx-pill--danger"><span class="inx-pill__dot"></span>Blocked</span>
+          <button class="inx-pill inx-chip" aria-pressed="true">Selected</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== FORMS ===================== -->
+    <section class="sg-section" id="forms">
+      <div class="sg-section__head">
+        <p class="inx-eyebrow">Components</p>
+        <h2 class="inx-h1">Inputs &amp; forms</h2>
+        <p>Labels are always visible — placeholder-as-label disappears the moment
+           someone starts typing. Errors say what went wrong and how to fix it.</p>
+      </div>
+
+      <div class="inx-grid" style="align-items:start">
+        <div class="sg-demo">
+          <div class="inx-field">
+            <label class="inx-label" for="f-name">Full name</label>
+            <input class="inx-input" id="f-name" type="text" placeholder="Alex Georgiou">
+          </div>
+
+          <div class="inx-field">
+            <label class="inx-label" for="f-email">Work email</label>
+            <input class="inx-input" id="f-email" type="email" value="alex@company.com">
+            <p class="inx-help" id="f-email-help">We'll only use this to arrange the call.</p>
+          </div>
+
+          <div class="inx-field">
+            <label class="inx-label" for="f-err">Company size</label>
+            <input class="inx-input" id="f-err" type="text" value="fifty" aria-invalid="true" aria-describedby="f-err-msg">
+            <p class="inx-error" id="f-err-msg">Enter a number, for example 50.</p>
+          </div>
+
+          <div class="inx-field">
+            <label class="inx-label" for="f-site">Website<span class="inx-label__optional">Optional</span></label>
+            <div class="inx-input-group">
+              <input class="inx-input" id="f-site" type="text" placeholder="inexa">
+              <span class="inx-input-group__addon">.com</span>
+            </div>
+          </div>
+
+          <div class="inx-field">
+            <label class="inx-label" for="f-service">Service of interest</label>
+            <select class="inx-select" id="f-service">
+              <option>Operations management</option>
+              <option>Workflow optimisation</option>
+              <option>Systems integration</option>
+              <option>Strategic support</option>
+            </select>
+          </div>
+
+          <div class="inx-field">
+            <label class="inx-label" for="f-msg">What are you trying to solve?</label>
+            <textarea class="inx-textarea" id="f-msg" placeholder="A short description is enough to start."></textarea>
+          </div>
+
+          <div class="inx-field">
+            <label class="inx-label" for="f-off">Account ID</label>
+            <input class="inx-input" id="f-off" type="text" value="INX-00412" disabled>
+            <p class="inx-help">Disabled — set by the system.</p>
+          </div>
+
+          <button class="inx-btn inx-btn--primary inx-btn--block">Book a strategy call</button>
+        </div>
+
+        <div class="sg-demo">
+          <p class="sg-block__label">Choices</p>
+
+          <fieldset style="border:0;padding:0;margin:0 0 var(--inx-space-6)">
+            <legend class="inx-label" style="padding:0 0 var(--inx-space-3)">Which areas need attention?</legend>
+            <label class="inx-choice"><input type="checkbox" checked><span>Operations management</span></label>
+            <label class="inx-choice"><input type="checkbox"><span>Workflow optimisation</span></label>
+            <label class="inx-choice"><input type="checkbox"><span>Systems integration</span></label>
+            <label class="inx-choice"><input type="checkbox" disabled><span>Strategic support — enterprise only</span></label>
+          </fieldset>
+
+          <fieldset style="border:0;padding:0;margin:0 0 var(--inx-space-6)">
+            <legend class="inx-label" style="padding:0 0 var(--inx-space-3)">Team size</legend>
+            <label class="inx-choice"><input type="radio" name="size" checked><span>1–20 people</span></label>
+            <label class="inx-choice"><input type="radio" name="size"><span>21–100 people</span></label>
+            <label class="inx-choice"><input type="radio" name="size"><span>Over 100 people</span></label>
+          </fieldset>
+
+          <p class="sg-block__label">Switches</p>
+          <label class="inx-switch" style="margin-block-end:var(--inx-space-3)"><input type="checkbox" checked><span>Send weekly operations digest</span></label><br>
+          <label class="inx-switch" style="margin-block-end:var(--inx-space-3)"><input type="checkbox"><span>Notify me about system changes</span></label><br>
+          <label class="inx-switch"><input type="checkbox" disabled><span>Advanced reporting — not on this plan</span></label>
+
+          <p class="sg-note">
+            A switch takes effect immediately. A checkbox waits for the form to be
+            submitted. Using the wrong one is the most common reason a settings screen
+            feels unpredictable.
+          </p>
+        </div>
+      </div>
+
+      <div class="sg-block">
+        <p class="sg-block__label">On ink</p>
+        <div class="sg-demo sg-demo--ink inx-on-ink" style="max-width:480px">
+          <div class="inx-field">
+            <label class="inx-label" for="f-ink">Work email</label>
+            <input class="inx-input" id="f-ink" type="email" placeholder="you@company.com">
+            <p class="inx-help">Secondary text uses Pale Sky here, not Blue Slate.</p>
+          </div>
+          <label class="inx-choice"><input type="checkbox" checked><span>Keep me updated</span></label>
+        </div>
+      </div>
+
+      <div class="sg-rules" style="margin-block-start: var(--inx-space-6)">
+        <div class="sg-rule sg-rule--do"><p class="sg-rule__tag">Do</p>
+          <p>Mark optional fields. If most fields are required, marking the exceptions is less noisy than starring everything.</p></div>
+        <div class="sg-rule sg-rule--do"><p class="sg-rule__tag">Do</p>
+          <p>Write errors that name the fix: "Enter a number, for example 50."</p></div>
+        <div class="sg-rule sg-rule--dont"><p class="sg-rule__tag">Don't</p>
+          <p>Apologise in an error message, or write "Invalid input". Neither tells anyone what to do next.</p></div>
+      </div>
+    </section>
+
+    <!-- ===================== CARDS ===================== -->
+    <section class="sg-section" id="cards">
+      <div class="sg-section__head">
+        <p class="inx-eyebrow">Components</p>
+        <h2 class="inx-h1">Cards</h2>
+        <p>Bordered by default. Shadow appears on hover for interactive cards only, so
+           elevation stays meaningful.</p>
+      </div>
+
+      <div class="inx-grid">
+        <div class="inx-card">
+          <p class="inx-eyebrow">Service</p>
+          <p class="inx-h4">Operations management</p>
+          <p class="inx-body inx-body--sm inx-muted">Managing the daily functions that keep a business running efficiently.</p>
+        </div>
+        <div class="inx-card inx-card--interactive">
+          <p class="inx-eyebrow">Interactive</p>
+          <p class="inx-h4">Hover me</p>
+          <p class="inx-body inx-body--sm inx-muted">Border goes to ink and the surface deepens. Nothing moves.</p>
+        </div>
+        <div class="inx-card inx-card--quiet">
+          <p class="inx-eyebrow">Quiet</p>
+          <p class="inx-h4">No fill</p>
+          <p class="inx-body inx-body--sm inx-muted">For grids where a wall of boxes would be too heavy.</p>
+        </div>
+      </div>
+
+      <div class="sg-block">
+        <p class="sg-block__label">On ink</p>
+        <div class="sg-demo sg-demo--ink inx-on-ink">
+          <div class="inx-grid">
+            <div class="inx-card">
+              <p class="inx-eyebrow">Value</p>
+              <p class="inx-h4">Operational excellence</p>
+              <p class="inx-body inx-body--sm inx-muted">Consistent execution creates exceptional businesses.</p>
+            </div>
+            <div class="inx-card inx-card--interactive">
+              <p class="inx-eyebrow">Value</p>
+              <p class="inx-h4">Scalability</p>
+              <p class="inx-body inx-body--sm inx-muted">Designed for tomorrow's growth, not just today's needs.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== ALERTS ===================== -->
+    <section class="sg-section" id="alerts">
+      <div class="sg-section__head">
+        <p class="inx-eyebrow">Components</p>
+        <h2 class="inx-h1">Alerts</h2>
+        <p>Say what happened and what to do about it, in the interface's voice.</p>
+      </div>
+
+      <div class="inx-stack">
+        <div class="inx-alert inx-alert--success">
+          <p class="inx-alert__label">Confirmed</p>
+          <p class="inx-alert__title">Strategy call booked</p>
+          <p class="inx-alert__body">Thursday 14 August, 10:00. A calendar invitation is on its way.</p>
+        </div>
+        <div class="inx-alert inx-alert--info">
+          <p class="inx-alert__label">In progress</p>
+          <p class="inx-alert__title">Two integrations are syncing</p>
+          <p class="inx-alert__body">Reports will be incomplete until this finishes, usually within an hour.</p>
+        </div>
+        <div class="inx-alert inx-alert--warning">
+          <p class="inx-alert__label">Action needed</p>
+          <p class="inx-alert__title">Workflow has no owner</p>
+          <p class="inx-alert__body">Assign someone before the next scheduled run, or it will be skipped.</p>
+          <p class="inx-alert__action"><button class="inx-btn inx-btn--secondary inx-btn--sm">Assign owner</button></p>
+        </div>
+        <div class="inx-alert inx-alert--danger">
+          <p class="inx-alert__label">Error</p>
+          <p class="inx-alert__title">Connection to the finance system failed</p>
+          <p class="inx-alert__body">The credentials were rejected. Update them in Settings → Integrations to resume syncing.</p>
+        </div>
+      </div>
+
+      <p class="sg-note">
+        Status is named in words and marked with a small square, so it survives
+        greyscale printing and colour-blind readers without relying on hue. The
+        surface stays neutral — four notices stacked in tinted pastels turn a page
+        into a traffic light, which is the opposite of "calm, structured".
+      </p>
+
+      <div class="sg-block">
+        <p class="sg-block__label">Prominent</p>
+        <div class="inx-alert inx-alert--danger inx-alert--prominent">
+          <p class="inx-alert__label">Service interrupted</p>
+          <p class="inx-alert__title">All scheduled workflows are paused</p>
+          <p class="inx-alert__body">A provider outage is affecting job scheduling. Nothing has been lost and runs will resume automatically.</p>
+        </div>
+        <p class="sg-note">
+          For the one notice that has to stop someone. It escalates by inverting to
+          ink rather than by shouting in red — which also means a red notice keeps
+          its weight when it does appear.
+        </p>
+      </div>
+
+      <div class="sg-block">
+        <p class="sg-block__label">On ink</p>
+        <div class="sg-demo sg-demo--ink inx-on-ink inx-stack">
+          <div class="inx-alert inx-alert--success">
+            <p class="inx-alert__label">Confirmed</p>
+            <p class="inx-alert__title">Changes published</p>
+            <p class="inx-alert__body">The updated workflow is live.</p>
+          </div>
+          <div class="inx-alert inx-alert--danger">
+            <p class="inx-alert__label">Error</p>
+            <p class="inx-alert__title">Sync failed</p>
+            <p class="inx-alert__body">Update the credentials to resume.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== DATA ===================== -->
+    <section class="sg-section" id="data">
+      <div class="sg-section__head">
+        <p class="inx-eyebrow">Components</p>
+        <h2 class="inx-h1">Tables &amp; tabs</h2>
+        <p>Table headers reuse the eyebrow treatment, which ties data views back to the
+           rest of the system without a new type style.</p>
+      </div>
+
+      <div class="sg-demo">
+        <div class="inx-tabs" role="tablist" style="margin-block-end:var(--inx-space-6)">
+          <button class="inx-tab" role="tab" aria-selected="true">All workflows</button>
+          <button class="inx-tab" role="tab" aria-selected="false">Active</button>
+          <button class="inx-tab" role="tab" aria-selected="false">Needs attention</button>
+          <button class="inx-tab" role="tab" aria-selected="false">Archived</button>
+        </div>
+
+        <table class="inx-table inx-table--numeric">
+          <thead>
+            <tr><th>Workflow</th><th>Owner</th><th>Status</th><th>Runs this month</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Invoice approval</td><td>Finance</td><td><span class="inx-pill inx-pill--success"><span class="inx-pill__dot"></span>Active</span></td><td>1,284</td></tr>
+            <tr><td>Client onboarding</td><td>Operations</td><td><span class="inx-pill inx-pill--success"><span class="inx-pill__dot"></span>Active</span></td><td>96</td></tr>
+            <tr><td>Supplier review</td><td>Unassigned</td><td><span class="inx-pill inx-pill--warning"><span class="inx-pill__dot"></span>Pending</span></td><td>0</td></tr>
+            <tr><td>Quarterly reporting</td><td>Strategy</td><td><span class="inx-pill inx-pill--danger"><span class="inx-pill__dot"></span>Failed</span></td><td>3</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="sg-note">Numeric columns are right-aligned and set in tabular figures so digits line up down the column.</p>
+    </section>
+
+    <!-- ===================== RULES ===================== -->
+    <section class="sg-section" id="rules">
+      <div class="sg-section__head">
+        <p class="inx-eyebrow">Governance</p>
+        <h2 class="inx-h1">Do &amp; don't</h2>
+        <p>The manual's misuse pages, translated into rules that apply to a screen.</p>
+      </div>
+
+      <div class="sg-rules">
+        <div class="sg-rule sg-rule--dont"><p class="sg-rule__tag">Don't</p>
+          <p>Use gradients in colour application — flat fills only. See the note below on where the manual contradicts itself.</p></div>
+        <div class="sg-rule sg-rule--dont"><p class="sg-rule__tag">Don't</p>
+          <p>Set a headline in two colours. One text colour per block of copy.</p></div>
+        <div class="sg-rule sg-rule--dont"><p class="sg-rule__tag">Don't</p>
+          <p>Introduce a colour outside the palette or the derived ramp, including "just for this one badge".</p></div>
+        <div class="sg-rule sg-rule--dont"><p class="sg-rule__tag">Don't</p>
+          <p>Put the logo on a non-palette background. Use the plain black or white lockup instead.</p></div>
+        <div class="sg-rule sg-rule--dont"><p class="sg-rule__tag">Don't</p>
+          <p>Stretch, rotate, outline, recolour or add effects to the logo. Never rebuild the wordmark in Manrope.</p></div>
+        <div class="sg-rule sg-rule--dont"><p class="sg-rule__tag">Don't</p>
+          <p>Use Manrope Bold, Light or Medium. Regular and Semi Bold are the whole system.</p></div>
+        <div class="sg-rule sg-rule--do"><p class="sg-rule__tag">Do</p>
+          <p>Keep generous clear space around every identity element — one symbol height on all sides.</p></div>
+        <div class="sg-rule sg-rule--do"><p class="sg-rule__tag">Do</p>
+          <p>Let photography show real working moments: leadership, collaboration, calm control. No stock-looking handshakes, no glowing circuit boards.</p></div>
+      </div>
+
+      <div class="inx-alert inx-alert--info" style="margin-block-start: var(--inx-space-6)">
+        <p class="inx-alert__label">Open question</p>
+        <div>
+          <p class="inx-alert__title">One contradiction to resolve with the brand owner</p>
+          <p class="inx-alert__body">
+            The colour misuse page rules out gradients, but the manual's own section
+            covers, ID cards and billboard all use a deep ink-to-blue gradient
+            atmosphere. The workable reading is that the ban applies to colour
+            <em>application</em> — flat fills for type, UI surfaces and the logo — while
+            the gradient survives as a photographic background treatment. This system is
+            built to that interpretation, and no gradient appears on any component.
+            Worth getting confirmed in writing.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== EXTENSIONS ===================== -->
+    <section class="sg-section" id="extensions" style="border-block-end:0">
+      <div class="sg-section__head">
+        <p class="inx-eyebrow">Governance</p>
+        <h2 class="inx-h1">Extension log</h2>
+        <p>Everything in this system that the manual does not cover, and the reasoning
+           behind each call. Review this list with the brand owner — it is where the
+           system is most likely to need adjusting.</p>
+      </div>
+
+      <table class="sg-table">
+        <thead><tr><th>Area</th><th>What the manual says</th><th>What was added</th><th>Why</th></tr></thead>
+        <tbody>
+          <tr>
+            <td><strong>Neutral ramp</strong></td>
+            <td>Six colours, no unapproved colours</td>
+            <td>Seven interpolated steps</td>
+            <td>Hover, border and disabled states need intermediate values. Every step sits on a line between two approved colours, so no new hue enters.</td>
+          </tr>
+          <tr>
+            <td><strong>Status colours</strong></td>
+            <td>Nothing</td>
+            <td>Success, warning, error, info</td>
+            <td>A form cannot report a validation error with navy and blue alone. Kept desaturated, restricted to product UI, and always paired with a written label. No tinted background fills — status is named, not washed.</td>
+          </tr>
+          <tr>
+            <td><strong>Colour naming</strong></td>
+            <td>Two colours both named "Ink Black"</td>
+            <td>Ink Black and Ink Navy</td>
+            <td>Duplicate names cannot be referenced unambiguously in code or in conversation.</td>
+          </tr>
+          <tr>
+            <td><strong>Type scale</strong></td>
+            <td>144 / 48 / 18pt</td>
+            <td>Thirteen-step web scale</td>
+            <td>Print sizes don't map to screens directly. The ratios and case rules carry across; body stays at 18px exactly.</td>
+          </tr>
+          <tr>
+            <td><strong>Spacing</strong></td>
+            <td>Nothing beyond logo clear space</td>
+            <td>4px base grid, eleven steps</td>
+            <td>Without a shared scale, spacing drifts as soon as more than one person touches the code.</td>
+          </tr>
+          <tr>
+            <td><strong>Radius</strong></td>
+            <td>Nothing stated</td>
+            <td>Pill for controls, 8–12px for containers</td>
+            <td>Read from the identity: the billboard CTA is a pill and the bug is a circle.</td>
+          </tr>
+          <tr>
+            <td><strong>Elevation</strong></td>
+            <td>"Do not apply effects" (identity)</td>
+            <td>Borders-first, four ink-tinted shadows</td>
+            <td>Floating layers need to read as floating. Shadows are low-spread and tinted with Ink Black rather than grey.</td>
+          </tr>
+          <tr>
+            <td><strong>Interaction states</strong></td>
+            <td>Nothing</td>
+            <td>Hover, focus, active, disabled, loading, error</td>
+            <td>Undefined states are where a brand silently falls apart in production.</td>
+          </tr>
+          <tr>
+            <td><strong>Focus ring</strong></td>
+            <td>Nothing</td>
+            <td>Surface-scoped: Blue Slate on light, Pale Sky on ink</td>
+            <td>No single palette colour clears 3:1 on both surfaces.</td>
+          </tr>
+          <tr>
+            <td><strong>Motion</strong></td>
+            <td>Nothing</td>
+            <td>Three durations, two easings, reduced-motion handling</td>
+            <td>Movement should confirm actions, matching the "structured" tone. Nothing bounces.</td>
+          </tr>
+          <tr>
+            <td><strong>Layout</strong></td>
+            <td>Nothing</td>
+            <td>1280px container, 12 columns, five breakpoints</td>
+            <td>The manual is built for fixed-size artboards; the web needs a responsive frame.</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="sg-block">
+        <p class="sg-block__label">Not yet covered</p>
+        <p class="inx-body inx-body--sm">
+          Modals and drawers, toasts, pagination, breadcrumbs, tooltips, date pickers,
+          empty states, skeleton loading, and the navigation header and footer. All are
+          straightforward to add on the same tokens once the extensions above are
+          signed off.
+        </p>
+      </div>
+
+      <hr class="inx-divider" style="margin-block: var(--inx-space-8)">
+      <p class="inx-legal">
+        iNexa Design System v1.0 · Built from Brand Guidelines v1.0, Avocadots Design
+        Studio, 2026. Contrast ratios calculated to WCAG 2.1 against the published
+        palette values.
+      </p>
+    </section>
+
+  </main>
+</div>
+
+<script>
+// Minimal demo behaviour — the system itself is CSS-only.
+document.querySelectorAll('.inx-chip').forEach(function (chip) {
+  chip.addEventListener('click', function () {
+    chip.setAttribute('aria-pressed', chip.getAttribute('aria-pressed') === 'true' ? 'false' : 'true');
+  });
+});
+
+document.querySelectorAll('.inx-tabs').forEach(function (group) {
+  group.addEventListener('click', function (e) {
+    var tab = e.target.closest('.inx-tab');
+    if (!tab) return;
+    group.querySelectorAll('.inx-tab').forEach(function (t) { t.setAttribute('aria-selected', 'false'); });
+    tab.setAttribute('aria-selected', 'true');
+  });
+});
+
+document.querySelectorAll('.inx-tag__remove').forEach(function (btn) {
+  btn.addEventListener('click', function () { btn.closest('.inx-tag').remove(); });
+});
+</script>
+</body>
+</html>
