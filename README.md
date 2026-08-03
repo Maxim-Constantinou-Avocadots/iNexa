@@ -16,6 +16,7 @@ assets/
     site.css                Marketing layer for this page (nx- prefix)
   js/
     site.js                 Progressive enhancement only
+    vendor/lenis.min.js     Smooth scroll (MIT)
   fonts/
     manrope-latin.woff2     Raw files, for production hosting
     manrope-latin-ext.woff2
@@ -23,23 +24,29 @@ assets/
 
 ## The page
 
-Eight sections, plus navigation and footer.
+Fourteen sections, matching the reference page's architecture one-for-one.
 
 | # | Section | Surface | Does |
 |---|---------|---------|------|
-| 1 | Hero | Ink | The manual's positioning line as the headline, an operating readout panel, four credibility figures |
-| 2 | Sectors | Sunken | Who this is for, as a slow marquee |
-| 3 | Approach | Light | Five paired rows: what breaks, and what it looks like under management |
-| 4 | Services | Light | The four services as a set — deliberately unnumbered |
-| 5 | Process | Ink | Assess → Design → Implement → Manage, the one genuinely sequential block |
-| 6 | Evidence | Light | A twelve-month engagement: before/after table, quote, two figures |
-| 7 | Questions | Sunken | Five-item accordion, sticky heading column |
-| 8 | Contact | Ink | Closing billboard, the short-form promise as the closing line |
+| 1 | Hero | Ink | The manual's positioning line as the headline, plus an operating readout panel |
+| 2 | Why iNexa | White | Three figures and two attributed results |
+| 3 | Problem vs Solution | Sunken | Five paired rows: what breaks, and what it looks like under management |
+| 4 | Services | White | The four services as a set — deliberately unnumbered |
+| 5 | Before and After | Ink | Three measured outcomes across engagements |
+| 6 | Featured Engagement | White | A twelve-month case: before/after table, quote, two figures |
+| 7 | Industries | Sunken | Ticker plus six sector tiles |
+| 8 | Systems | White | Which categories of system we operate inside |
+| 9 | How We Work | Ink | Assess → Design → Implement → Manage, the one sequential block |
+| 10 | Testimonials | White | Three attributed results |
+| 11 | Engagement Model | Sunken | Three tiers, the recommended one inverted to ink |
+| 12 | Insights | White | Three article previews |
+| 13 | Questions | Sunken | Five-item accordion, sticky heading column |
+| 14 | Contact | Ink | Closing billboard, the short-form promise as the closing line |
 
 **Message.** One claim, carried the whole way down: iNexa takes ownership of the
-operating layer so leadership can spend its time on growth. The hero states it,
-section 3 proves the problem is real, 4 says what is actually run, 5 removes the
-risk by showing the mechanism, 6 supplies evidence, 7 handles objections, 8 asks.
+operating layer so leadership can spend its time on growth. Every section
+anchors on a measured figure rather than an adjective — the device the reference
+page uses throughout, where even its metrics are marked up as headings.
 
 ## Structure
 
@@ -66,7 +73,14 @@ discipline:
 
 ## Motion
 
-Entrances only, driven by one `IntersectionObserver`:
+**Lenis smooth scroll** (MIT, vendored at `assets/js/vendor/lenis.min.js`)
+interpolates the scroll position rather than jumping to it. It is the single
+largest contributor to how expensive a page of this kind feels. It is disabled
+entirely under `prefers-reduced-motion`, since smoothed scrolling overrides the
+operating system's own scroll physics — exactly what that preference asks us not
+to do.
+
+Everything else is entrances only, driven by one `IntersectionObserver`:
 
 - Hero headline rises line by line out of an overflow mask.
 - Blocks fade and lift 18px with a 60–90ms stagger.
@@ -116,13 +130,32 @@ Checked in a real browser rather than by eye:
    edited, so the guide stays the single source of truth. All new work lives in
    `site.css` under the `nx-` prefix and resolves to tokens.
 
-## Placeholder content
+## Placeholder content — read before publishing
 
-Copy is written to be usable, but the figures, the engagement in section 6, the
-quote, the email address and the phone number are illustrative and need
-replacing with real, verifiable numbers before this goes live. The brand lines —
-the positioning line in the hero, the promise in section 8, the four service
-names — are taken from the brand manual and should not be rewritten.
+The layout is production-ready. Several sections are **not**, because they make
+claims that only iNexa can stand behind:
+
+- **Pricing (§11).** £12,000 and £9,500/month are invented to demonstrate the
+  tier structure. The page carries a visible "figures are illustrative" note;
+  replace both before anyone sees this outside the studio.
+- **Testimonials (§2, §10) and the featured engagement (§6).** Quotes and
+  figures are written, not collected. They are attributed by role and company
+  profile rather than to named individuals, deliberately — no invented person
+  appears anywhere on the page. Replace with real, permissioned quotes.
+- **Systems (§8).** The named products are examples of what an operations
+  partner typically integrates. They are third-party trademarks and imply a
+  working capability iNexa must actually have. Confirm the list, and note that
+  naming a product is not a claim of partnership or certification.
+- **Statistics (§2, §5)** — 40+ engagements, 96% retention, 26-month average,
+  and the before/after averages — are illustrative.
+- **Insights (§12)** article titles and dates are placeholders.
+
+No third-party logos are reproduced anywhere; the systems section is a ruled
+table of names rather than a logo wall, which keeps the page clear of other
+companies' marks.
+
+The brand lines — the positioning line in the hero, the promise in §14, the four
+service names — come from the brand manual and should not be rewritten.
 
 ## Hosting
 

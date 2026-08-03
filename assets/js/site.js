@@ -270,10 +270,55 @@
     });
   }
 
+  /* ---------------------------------------------------------------------
+     SMOOTH SCROLL
+     Lenis interpolates the scroll position rather than jumping to it. It is
+     the single largest contributor to how expensive a page of this kind
+     feels, and it costs about 3KB.
+
+     It is switched off entirely under prefers-reduced-motion: smoothed
+     scrolling overrides the operating system's own scroll physics, which is
+     exactly what someone setting that preference is asking us not to do.
+     ------------------------------------------------------------------ */
+
+  function initSmoothScroll() {
+    if (reduced || typeof window.Lenis !== 'function') return null;
+
+    var lenis = new window.Lenis({
+      duration: 1.05,
+      // Matches --inx-ease-out in character: decisive, settles, never bounces.
+      easing: function (t) { return Math.min(1, 1.001 - Math.pow(2, -10 * t)); },
+      smoothWheel: true,
+      touchMultiplier: 1.6
+    });
+
+    function raf(time) {
+      lenis.raf(time);
+      requestAnimationFrame(raf);
+    }
+    requestAnimationFrame(raf);
+
+    /* Native anchor jumps and Lenis fight each other, so in-page links are
+       handed to Lenis and the fixed navigation height is offset. */
+    document.addEventListener('click', function (e) {
+      var link = e.target.closest('a[href^="#"]');
+      if (!link) return;
+      var id = link.getAttribute('href');
+      if (!id || id === '#') return;
+      var target = document.querySelector(id);
+      if (!target) return;
+      e.preventDefault();
+      lenis.scrollTo(target, { offset: -80 });
+    });
+
+    return lenis;
+  }
+
   /* ------------------------------------------------------------------ */
 
   function boot() {
     document.documentElement.classList.remove('no-js');
+    initSmoothScroll();
     initNav();
     initReveal();
     initCounters();

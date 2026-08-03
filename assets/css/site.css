@@ -28,6 +28,14 @@ html { scroll-behavior: smooth; }
   html { scroll-behavior: auto; }
 }
 
+/* Lenis drives the scroll position itself, so the browser's own smooth
+   behaviour has to stand down or the two interpolate against each other.
+   These classes are set by the library only when it is actually running. */
+html.lenis, html.lenis body { block-size: auto; }
+.lenis.lenis-smooth { scroll-behavior: auto !important; }
+.lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; }
+.lenis.lenis-stopped { overflow: hidden; }
+
 body {
   margin: 0;
   background: var(--inx-n-0);
@@ -1193,3 +1201,250 @@ body {
   clip-path: inset(50%);
   white-space: nowrap;
 }
+
+
+/* =============================================================================
+   SECTION COMPONENTS — added to match the reference page's architecture.
+
+   Every one of these is composed from the iNexa tokens: Manrope 400/600, the
+   six approved colours and the derived ramp, borders-first elevation, no
+   gradients and no effects. The reference's own devices — figures set at
+   display size, mono micro-labels, hairline-separated tiers — are reproduced
+   with this system's materials rather than with its.
+   ========================================================================== */
+
+/* -----------------------------------------------------------------------------
+   STAT — a measured figure set at display size.
+   The reference marks up its numbers as headings; the number is the argument,
+   so it gets the typographic weight of one.
+   -------------------------------------------------------------------------- */
+
+.nx-stat__value {
+  font-size: clamp(2.75rem, 5vw, 4.75rem);
+  font-weight: var(--inx-weight-regular);
+  line-height: 1;
+  letter-spacing: var(--nx-tracking-hero);
+  font-variant-numeric: tabular-nums;
+  margin: 0 0 var(--inx-space-4);
+}
+
+.nx-stat__label {
+  font-size: var(--inx-text-sm);
+  line-height: 1.5;
+  color: var(--inx-text-muted);
+  margin: 0;
+  max-inline-size: 30ch;
+}
+
+/* -----------------------------------------------------------------------------
+   QUOTE CARD — testimonials
+   -------------------------------------------------------------------------- */
+
+.nx-quote-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--inx-space-5);
+  block-size: 100%;
+  padding: var(--inx-space-6);
+  border: 1px solid var(--inx-border);
+  border-radius: var(--inx-radius-lg);
+  background: var(--inx-bg-raised);
+  transition: border-color var(--inx-transition), background-color var(--inx-transition);
+}
+.nx-quote-card:hover { border-color: var(--inx-text); background: var(--inx-bg-sunken); }
+
+.nx-quote-card__metric {
+  font-size: var(--inx-text-2xl);
+  line-height: 1;
+  letter-spacing: var(--inx-tracking-display);
+  font-variant-numeric: tabular-nums;
+  margin: 0;
+  padding-block-end: var(--inx-space-5);
+  border-block-end: 1px solid var(--inx-border);
+}
+
+.nx-quote-card__body {
+  font-size: var(--inx-text-sm);
+  line-height: 1.6;
+  color: var(--inx-text);
+  margin: 0;
+}
+
+.nx-quote-card__cite {
+  margin-block-start: auto;
+  padding-block-start: var(--inx-space-5);
+  border-block-start: 1px solid var(--inx-border);
+  font-size: var(--inx-text-xs);
+  font-style: normal;
+  color: var(--inx-text-muted);
+}
+
+/* -----------------------------------------------------------------------------
+   INDUSTRY TILE
+   -------------------------------------------------------------------------- */
+
+.nx-industry {
+  display: flex;
+  flex-direction: column;
+  gap: var(--inx-space-3);
+  padding-block: var(--inx-space-6);
+  border-block-start: 1px solid var(--inx-border);
+}
+
+.nx-industry__name {
+  font-size: var(--inx-text-lg);
+  letter-spacing: var(--inx-tracking-tight);
+  margin: 0;
+}
+
+.nx-industry__note {
+  font-size: var(--inx-text-xs);
+  line-height: 1.5;
+  color: var(--inx-text-muted);
+  margin: 0;
+}
+
+/* -----------------------------------------------------------------------------
+   TOOLS — the systems iNexa operates inside.
+   A ruled table rather than a logo wall: no third-party marks are reproduced,
+   which keeps the page clear of other companies' trademarks.
+   -------------------------------------------------------------------------- */
+
+.nx-tools { border-block-start: 1px solid var(--inx-border); }
+
+.nx-tools__row {
+  display: grid;
+  grid-template-columns: 200px 1fr;
+  gap: var(--inx-gutter);
+  align-items: baseline;
+  padding-block: var(--inx-space-5);
+  border-block-end: 1px solid var(--inx-border);
+}
+
+.nx-tools__cat {
+  font-size: var(--inx-text-2xs);
+  font-weight: var(--inx-weight-semi);
+  text-transform: uppercase;
+  letter-spacing: var(--inx-tracking-caps);
+  color: var(--inx-text-muted);
+  margin: 0;
+}
+
+.nx-tools__list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--inx-space-2) var(--inx-space-5);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.nx-tools__list li { font-size: var(--inx-text-sm); color: var(--inx-text); }
+
+@media (max-width: 768px) {
+  .nx-tools__row { grid-template-columns: 1fr; gap: var(--inx-space-3); }
+}
+
+/* -----------------------------------------------------------------------------
+   PRICING TIER
+   -------------------------------------------------------------------------- */
+
+.nx-price {
+  display: flex;
+  flex-direction: column;
+  block-size: 100%;
+  padding: var(--inx-space-6);
+  border: 1px solid var(--inx-border);
+  border-radius: var(--inx-radius-lg);
+  background: var(--inx-bg-raised);
+}
+
+/* The recommended tier escalates by inverting to ink — the same device the
+   system uses for a prominent alert — rather than by introducing a colour. */
+.nx-price--featured {
+  background: var(--inx-n-950);
+  border-color: var(--inx-n-950);
+}
+
+.nx-price__name {
+  font-size: var(--inx-text-2xs);
+  font-weight: var(--inx-weight-semi);
+  text-transform: uppercase;
+  letter-spacing: var(--inx-tracking-caps);
+  color: var(--inx-text-muted);
+  margin: 0 0 var(--inx-space-5);
+}
+
+.nx-price__figure {
+  font-size: var(--inx-text-3xl);
+  line-height: 1;
+  letter-spacing: var(--nx-tracking-hero);
+  font-variant-numeric: tabular-nums;
+  margin: 0 0 var(--inx-space-2);
+}
+
+.nx-price__unit { font-size: var(--inx-text-xs); color: var(--inx-text-muted); margin: 0 0 var(--inx-space-5); }
+
+.nx-price__desc {
+  font-size: var(--inx-text-sm);
+  line-height: 1.55;
+  color: var(--inx-text-muted);
+  margin: 0 0 var(--inx-space-6);
+  padding-block-end: var(--inx-space-6);
+  border-block-end: 1px solid var(--inx-border);
+}
+
+.nx-price__list { list-style: none; margin: 0 0 var(--inx-space-6); padding: 0; display: flex; flex-direction: column; gap: var(--inx-space-3); }
+.nx-price__list li {
+  display: flex;
+  gap: var(--inx-space-3);
+  font-size: var(--inx-text-xs);
+  line-height: 1.5;
+  color: var(--inx-text-subtle);
+}
+/* A square mark, not a tick glyph — the same geometry the alert label uses. */
+.nx-price__list li::before {
+  content: "";
+  flex: none;
+  inline-size: 6px;
+  block-size: 6px;
+  margin-block-start: 0.45em;
+  background: var(--inx-accent);
+}
+
+.nx-price__cta { margin-block-start: auto; }
+
+/* -----------------------------------------------------------------------------
+   POST — insight previews
+   -------------------------------------------------------------------------- */
+
+.nx-post {
+  display: flex;
+  flex-direction: column;
+  gap: var(--inx-space-4);
+  block-size: 100%;
+  padding-block-start: var(--inx-space-5);
+  border-block-start: 2px solid var(--inx-text);
+  text-decoration: none;
+}
+
+.nx-post__meta {
+  display: flex;
+  gap: var(--inx-space-4);
+  font-family: var(--inx-font-mono);
+  font-size: var(--inx-text-3xs);
+  letter-spacing: var(--inx-tracking-wide);
+  color: var(--inx-text-muted);
+  text-transform: uppercase;
+}
+
+.nx-post__title {
+  font-size: var(--inx-text-lg);
+  line-height: var(--inx-leading-snug);
+  letter-spacing: var(--inx-tracking-tight);
+  margin: 0;
+  transition: color var(--inx-transition);
+}
+.nx-post:hover .nx-post__title { color: var(--inx-text-muted); }
+
+.nx-post__excerpt { font-size: var(--inx-text-xs); line-height: 1.55; color: var(--inx-text-muted); margin: 0 0 var(--inx-space-4); }
+.nx-post__more { margin-block-start: auto; font-size: var(--inx-text-xs); font-weight: var(--inx-weight-semi); }
