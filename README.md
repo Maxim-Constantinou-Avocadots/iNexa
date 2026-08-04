@@ -10,7 +10,8 @@ dependency: the typeface is embedded, so the page renders identically from
 disk, from a static host, or in an embedded preview.
 
 ```
-index.html                  The homepage
+index.html                  The homepage (spec-driven build)
+previous/index.html         Frozen snapshot of the pre-spec build, for comparison
 style-guide/index.html      The design system document
 assets/
   css/
@@ -110,3 +111,7 @@ content is unavailable, marked clearly. Accordingly:
 3. The spec's photographic ink-to-blue gradient interpretation (§16) still
    needs written confirmation from the brand owner; nothing on this page
    depends on it.
+4. `previous/` is a frozen snapshot of the pre-spec build (14 sections,
+   pricing, smooth scroll), kept only so the two versions can be compared
+   side by side. It is not maintained and should be deleted once a
+   direction is chosen.
