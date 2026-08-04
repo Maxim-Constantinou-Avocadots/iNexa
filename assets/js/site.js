@@ -230,15 +230,116 @@
     });
   }
 
+  /* ---------------------------------------------------------------------
+     SMOOTH SCROLL — Lenis, approved by the client as an amendment to the
+     build spec's motion list. Disabled under prefers-reduced-motion, since
+     smoothed scrolling overrides the OS's own scroll physics.
+     ------------------------------------------------------------------ */
+
+  function initSmoothScroll() {
+    if (reduced || typeof window.Lenis !== 'function') return;
+
+    var lenis = new window.Lenis({
+      duration: 1.05,
+      easing: function (t) { return Math.min(1, 1.001 - Math.pow(2, -10 * t)); },
+      smoothWheel: true,
+      touchMultiplier: 1.6
+    });
+
+    function raf(time) {
+      lenis.raf(time);
+      requestAnimationFrame(raf);
+    }
+    requestAnimationFrame(raf);
+
+    document.addEventListener('click', function (e) {
+      var link = e.target.closest('a[href^="#"]');
+      if (!link) return;
+      var id = link.getAttribute('href');
+      if (!id || id === '#') return;
+      var target = document.querySelector(id);
+      if (!target) return;
+      e.preventDefault();
+      lenis.scrollTo(target, { offset: -80 });
+    });
+  }
+
+  /* ---------------------------------------------------------------------
+     COUNTERS — count up once on entry. Kept by client decision; the values
+     are sample figures and their sections say so in visible text.
+     ------------------------------------------------------------------ */
+
+  function initCounters() {
+    var counters = document.querySelectorAll('[data-count]');
+    if (!counters.length || !('IntersectionObserver' in window) || reduced) return;
+
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (!entry.isIntersecting) return;
+        run(entry.target);
+        io.unobserve(entry.target);
+      });
+    }, { threshold: 0.6 });
+
+    counters.forEach(function (el) { io.observe(el); });
+
+    function run(el) {
+      var target = parseFloat(el.getAttribute('data-count'));
+      var started = null;
+
+      function frame(now) {
+        if (started === null) started = now;
+        var p = Math.min((now - started) / 900, 1);
+        var eased = 1 - Math.pow(1 - p, 3);
+        el.textContent = Math.round(target * eased).toLocaleString('en-GB');
+        if (p < 1) requestAnimationFrame(frame);
+      }
+
+      requestAnimationFrame(frame);
+    }
+  }
+
+  /* ---------------------------------------------------------------------
+     FAQ ACCORDION — single-open; the markup ships open for no-JS.
+     ------------------------------------------------------------------ */
+
+  function initAccordion() {
+    document.querySelectorAll('[data-acc]').forEach(function (group) {
+      var buttons = group.querySelectorAll('.nx-acc__btn');
+
+      buttons.forEach(function (btn) {
+        var panel = document.getElementById(btn.getAttribute('aria-controls'));
+        if (!panel) return;
+        panel.classList.toggle('is-open', btn.getAttribute('aria-expanded') === 'true');
+
+        btn.addEventListener('click', function () {
+          var open = btn.getAttribute('aria-expanded') === 'true';
+          buttons.forEach(function (other) {
+            other.setAttribute('aria-expanded', 'false');
+            var p = document.getElementById(other.getAttribute('aria-controls'));
+            if (p) p.classList.remove('is-open');
+          });
+          if (!open) {
+            btn.setAttribute('aria-expanded', 'true');
+            panel.classList.add('is-open');
+          }
+        });
+      });
+    });
+  }
+
   /* ------------------------------------------------------------------ */
 
   function boot() {
     document.documentElement.classList.remove('no-js');
+    initSmoothScroll();
     initNav();
     initDrawer();
     initReveal();
     initServices();
     initTabs();
+    initAccordion();
+    initCounters();
     initSectionTracking();
 
     requestAnimationFrame(function () {

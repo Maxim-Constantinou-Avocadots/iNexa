@@ -48,56 +48,47 @@
 
 <a class="nx-skip" href="#main">Skip to content</a>
 
-<!-- ============================================================
-     HEADER — spec §11. Full-width, aligned to the 1280px container.
-     ============================================================ -->
+<!-- HEADER -->
 <header class="nx-nav inx-on-ink" data-nav>
-  <div class="nx-shell">
+  <div class="nx-shell nx-rail--quiet">
     <div class="nx-nav__bar">
-
       <a class="nx-nav__brand" href="#top" aria-label="iNexa — home">
         <span class="inx-logo" style="--inx-logo-height:28px">
           <svg viewBox="0 0 271.85 74.89" role="img" aria-label="iNexa"><use href="#inx-lockup"></use></svg>
         </span>
       </a>
-
       <nav class="nx-nav__links" aria-label="Primary">
         <a class="nx-nav__link" href="#services" data-track>Services</a>
         <a class="nx-nav__link" href="#how-we-work" data-track>How we work</a>
         <a class="nx-nav__link" href="#case-study" data-track>Case study</a>
-        <a class="nx-nav__link" href="#systems" data-track>Systems</a>
-        <a class="nx-nav__link" href="#client-experience" data-track>Client experience</a>
+        <a class="nx-nav__link" href="#pricing" data-track>Pricing</a>
+        <a class="nx-nav__link" href="#insights" data-track>Insights</a>
       </nav>
-
       <div class="nx-nav__actions">
         <a class="inx-btn inx-btn--primary nx-nav__cta" href="#contact">Book a strategy call</a>
         <button class="inx-btn inx-btn--ghost inx-btn--icon nx-nav__toggle" type="button"
                 data-drawer-toggle aria-expanded="false" aria-controls="nav-drawer" aria-label="Open menu">
-          <svg viewBox="0 0 18 12" width="18" height="12" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true">
-            <path d="M0 1h18M0 6h18M0 11h18"/>
-          </svg>
+          <svg viewBox="0 0 18 12" width="18" height="12" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><path d="M0 1h18M0 6h18M0 11h18"/></svg>
         </button>
       </div>
-
     </div>
   </div>
 </header>
 
 <div class="nx-drawer inx-on-ink" id="nav-drawer" data-drawer>
-  <div class="nx-shell">
+  <div class="nx-shell nx-rail--quiet">
     <div class="inx-row" style="justify-content:space-between; margin-block-end:var(--inx-space-6)">
       <p class="inx-eyebrow inx-eyebrow--rule">Menu</p>
       <button class="inx-btn inx-btn--ghost inx-btn--icon" type="button" data-drawer-close aria-label="Close menu">
-        <svg viewBox="0 0 14 14" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true">
-          <path d="M1 1l12 12M13 1L1 13"/>
-        </svg>
+        <svg viewBox="0 0 14 14" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><path d="M1 1l12 12M13 1L1 13"/></svg>
       </button>
     </div>
     <a class="nx-drawer__link" href="#services">Services</a>
     <a class="nx-drawer__link" href="#how-we-work">How we work</a>
     <a class="nx-drawer__link" href="#case-study">Case study</a>
-    <a class="nx-drawer__link" href="#systems">Systems</a>
-    <a class="nx-drawer__link" href="#client-experience">Client experience</a>
+    <a class="nx-drawer__link" href="#pricing">Pricing</a>
+    <a class="nx-drawer__link" href="#insights">Insights</a>
+    <a class="nx-drawer__link" href="#questions">Questions</a>
     <p style="margin-block-start:var(--inx-space-7)">
       <a class="inx-btn inx-btn--primary inx-btn--lg inx-btn--block" href="#contact">Book a strategy call</a>
     </p>
@@ -107,32 +98,23 @@
 
 <main id="main">
 
-<!-- ============================================================
-     1 · HERO — spec §13.1. Ink. Content 5 columns, interface 7.
-     ============================================================ -->
+<!-- 1 · HERO -->
 <section class="nx-hero inx-on-ink" id="top">
-  <div class="nx-shell">
+  <div class="nx-shell nx-rail">
     <p class="inx-eyebrow inx-eyebrow--accent inx-eyebrow--rule" data-reveal>Operational management</p>
 
-    <!-- The positioning pairing needs the full container at the hero token's
-         upper size, so the headline spans the shell and the 5/7 asymmetry
-         applies to the lead and the interface beneath it (spec §13.1 offers
-         both compositions). -->
     <h1 class="nx-hero__title">
       <span class="nx-line"><span style="--nx-delay:80ms">We run operations.</span></span>
       <span class="nx-line"><span style="--nx-delay:180ms">You scale the business.</span></span>
     </h1>
 
     <div class="nx-grid" style="align-items:start; margin-block-start:var(--inx-space-8)">
-
       <div class="nx-span-5">
         <div data-stagger="80">
           <p class="nx-hero__lead" data-reveal style="margin-block-start:0">
-            iNexa manages the systems, workflows and day-to-day operational
-            structure behind growing organisations, giving leadership the
-            clarity and capacity to move forward.
+            The systems, workflows and day-to-day structure behind growing
+            organisations — managed, so leadership can move forward.
           </p>
-
           <div class="nx-hero__actions" data-reveal>
             <a class="inx-btn inx-btn--primary inx-btn--lg" href="#contact">Book a strategy call</a>
             <a class="inx-btn inx-btn--secondary inx-btn--lg" href="#services">View services</a>
@@ -141,20 +123,16 @@
       </div>
 
       <div class="nx-span-7">
-        <!-- Operational overview interface, composed from the system's own
-             components. Sample content, and labelled as such. -->
         <div class="nx-ui" data-reveal>
           <div class="nx-ui__head">
             <p class="inx-eyebrow">Operational view</p>
             <span class="inx-pill">Sample</span>
           </div>
-
           <div class="inx-tabs nx-ui__tabs" role="tablist" aria-label="Operational view" data-tabs>
             <button class="inx-tab" role="tab" id="hero-t1" aria-controls="hero-p1" aria-selected="true">Overview</button>
             <button class="inx-tab" role="tab" id="hero-t2" aria-controls="hero-p2" aria-selected="false">Workflows</button>
             <button class="inx-tab" role="tab" id="hero-t3" aria-controls="hero-p3" aria-selected="false">Integrations</button>
           </div>
-
           <div class="nx-ui__body">
             <div class="nx-ui__panel" id="hero-p1" role="tabpanel" aria-labelledby="hero-t1">
               <table class="inx-table">
@@ -167,7 +145,6 @@
                 </tbody>
               </table>
             </div>
-
             <div class="nx-ui__panel" id="hero-p2" role="tabpanel" aria-labelledby="hero-t2" hidden>
               <table class="inx-table">
                 <caption class="nx-visually-hidden">Workflow status</caption>
@@ -179,7 +156,6 @@
                 </tbody>
               </table>
             </div>
-
             <div class="nx-ui__panel" id="hero-p3" role="tabpanel" aria-labelledby="hero-t3" hidden>
               <table class="inx-table">
                 <caption class="nx-visually-hidden">Integration health</caption>
@@ -192,70 +168,67 @@
               </table>
             </div>
           </div>
-
           <p class="nx-ui__foot">Weekly operating report · prepared for the leadership team</p>
         </div>
       </div>
-
     </div>
   </div>
 </section>
 
+<div class="nx-hatch nx-hatch--ink" aria-hidden="true"><div class="nx-shell nx-rail"></div></div>
 
-<!-- ============================================================
-     2 · TRUST CONTEXT — spec §13.2. Bordered grid, no invented
-     metrics: sectors and system categories, not claims.
-     ============================================================ -->
+<!-- 2 · WHY INEXA -->
 <section class="nx-section" id="trust">
-  <div class="nx-shell">
+  <div class="nx-shell nx-rail">
     <div class="nx-head">
-      <p class="inx-eyebrow" data-reveal>Built for growing organisations</p>
+      <p class="inx-eyebrow" data-reveal>Why iNexa</p>
       <div class="nx-grid">
         <div class="nx-span-7">
-          <h2 class="nx-head__title" data-reveal>Operational structure for organisations that have outgrown informal ways of working.</h2>
+          <h2 class="nx-head__title" data-reveal>An operational partner, not another adviser.</h2>
         </div>
         <div class="nx-span-5">
           <p class="nx-head__lead" data-reveal>
-            iNexa works with operationally complex organisations across sectors
-            where consistent execution carries real cost — and inside the
-            systems those organisations already run.
+            We take ownership of the operating layer and report on it every
+            week — which is why partnerships run in years.
           </p>
         </div>
       </div>
     </div>
 
-    <div class="nx-cells nx-trust" data-stagger="50">
-      <div data-reveal><span class="nx-trust__cat">Sector</span><p>Professional services</p></div>
-      <div data-reveal><span class="nx-trust__cat">Sector</span><p>Logistics &amp; distribution</p></div>
-      <div data-reveal><span class="nx-trust__cat">Sector</span><p>Healthcare groups</p></div>
-      <div data-reveal><span class="nx-trust__cat">Sector</span><p>Manufacturing</p></div>
-      <div data-reveal><span class="nx-trust__cat">Systems</span><p>Finance &amp; ERP</p></div>
-      <div data-reveal><span class="nx-trust__cat">Systems</span><p>CRM &amp; revenue</p></div>
-      <div data-reveal><span class="nx-trust__cat">Systems</span><p>Projects &amp; workflow</p></div>
-      <div data-reveal><span class="nx-trust__cat">Systems</span><p>Reporting &amp; BI</p></div>
+    <div class="nx-grid" data-stagger="70">
+      <div class="nx-span-4" data-reveal>
+        <div class="nx-stat">
+          <p class="nx-stat__value"><span data-count="40">40</span>+</p>
+          <p class="nx-stat__label">Operating engagements run end to end.</p>
+        </div>
+      </div>
+      <div class="nx-span-4" data-reveal>
+        <div class="nx-stat">
+          <p class="nx-stat__value"><span data-count="96">96</span>%</p>
+          <p class="nx-stat__label">Of clients still with us after the first year.</p>
+        </div>
+      </div>
+      <div class="nx-span-4" data-reveal>
+        <div class="nx-stat">
+          <p class="nx-stat__value"><span data-count="26">26</span> mo</p>
+          <p class="nx-stat__label">Average partnership length.</p>
+        </div>
+      </div>
     </div>
+    <p class="inx-caption" style="margin-block-start:var(--inx-space-5)" data-reveal>Sample figures — to be verified before launch.</p>
   </div>
 </section>
 
+<div class="nx-hatch" aria-hidden="true"><div class="nx-shell nx-rail"></div></div>
 
-<!-- ============================================================
-     3 · OPERATIONAL CHALLENGE — spec §13.3. Platinum. Unnumbered
-     shared-border challenge cells.
-     ============================================================ -->
+<!-- 3 · CHALLENGE -->
 <section class="nx-section" id="challenge" style="background:var(--inx-bg-sunken)">
-  <div class="nx-shell">
+  <div class="nx-shell nx-rail">
     <div class="nx-head">
       <p class="inx-eyebrow" data-reveal>The operational challenge</p>
       <div class="nx-grid">
         <div class="nx-span-7">
           <h2 class="nx-head__title" data-reveal>Growth creates complexity before it creates clarity.</h2>
-        </div>
-        <div class="nx-span-5">
-          <p class="nx-head__lead" data-reveal>
-            As organisations grow, systems multiply, ownership blurs and
-            everyday coordination absorbs the people who should be making
-            decisions. The pressure is structural, not personal.
-          </p>
         </div>
       </div>
     </div>
@@ -263,37 +236,29 @@
     <div class="nx-cells nx-challenge" data-stagger="60">
       <div data-reveal>
         <h3>Disconnected systems</h3>
-        <p>Tools operate in isolation, and the gaps between them are bridged by
-           hand — exports, re-keying and spreadsheets that only one person
-           understands.</p>
+        <p>Tools operate in isolation, bridged by exports and re-keying.</p>
       </div>
       <div data-reveal>
         <h3>Limited visibility</h3>
-        <p>Information is fragmented across teams, so the operational picture
-           arrives late, partially, and differently depending on who assembled
-           it.</p>
+        <p>The operational picture arrives late, and differently each time.</p>
       </div>
       <div data-reveal>
         <h3>Manual workflows</h3>
-        <p>Processes depend on memory and follow-up rather than structure. Work
-           is repeated, hand-offs stall, and quality varies with workload.</p>
+        <p>Processes depend on memory and follow-up rather than structure.</p>
       </div>
       <div data-reveal>
         <h3>Leadership bottlenecks</h3>
-        <p>Decisions queue behind the people holding the operational detail,
-           and leadership time is spent coordinating rather than directing.</p>
+        <p>Decisions queue behind whoever holds the operational detail.</p>
       </div>
     </div>
   </div>
 </section>
 
+<div class="nx-hatch nx-hatch--sunken" aria-hidden="true"><div class="nx-shell nx-rail"></div></div>
 
-<!-- ============================================================
-     4 · SERVICES — spec §13.4. Vertical rail + active panel on
-     desktop; accordion below 1024px. Not numbered.
-     ============================================================ -->
+<!-- 4 · SERVICES -->
 <section class="nx-section" id="services">
-  <div class="nx-shell">
+  <div class="nx-shell nx-rail">
     <div class="nx-head">
       <p class="inx-eyebrow" data-reveal>Services</p>
       <div class="nx-grid">
@@ -301,150 +266,62 @@
           <h2 class="nx-head__title" data-reveal>The operational structure behind sustainable growth.</h2>
         </div>
         <div class="nx-span-5">
-          <p class="nx-head__lead" data-reveal>
-            Four services, not four steps. Each stands on its own, and an
-            engagement can begin with any of them.
-          </p>
+          <p class="nx-head__lead" data-reveal>Four services, not four steps. Start with any one of them.</p>
         </div>
       </div>
     </div>
 
-    <div class="nx-svc" data-svc data-reveal>
-
-      <div class="nx-svc__item">
-        <h3 style="display:contents">
-          <button class="nx-svc__tab" type="button" id="svc-t1" aria-controls="svc-p1" aria-expanded="true">
-            Operations management <span class="nx-svc__sign" aria-hidden="true"></span>
-          </button>
-        </h3>
-        <div class="nx-svc__panel" id="svc-p1" role="region" aria-labelledby="svc-t1">
-          <p class="nx-svc__desc">
-            Ongoing ownership of the day-to-day operational structure — the
-            routines, the hand-offs and the reporting — so execution stays
-            consistent while the organisation grows.
-          </p>
-          <ul class="nx-svc__list">
-            <li>Day-to-day operational coordination</li>
-            <li>Process ownership</li>
-            <li>Performance visibility</li>
-            <li>Cross-functional alignment</li>
-            <li>Ongoing operational control</li>
-          </ul>
-          <div class="nx-mini">
-            <div class="nx-mini__row"><span>Operating rhythm</span><span class="inx-pill inx-pill--success"><span class="inx-pill__dot"></span>Weekly</span></div>
-            <div class="nx-mini__row"><span>Process ownership</span><span class="inx-pill inx-pill--success"><span class="inx-pill__dot"></span>Named</span></div>
-            <div class="nx-mini__row"><span>Leadership reporting</span><span class="inx-pill inx-pill--info"><span class="inx-pill__dot"></span>Scheduled</span></div>
-          </div>
-          <p class="nx-svc__cta"><a class="inx-link" href="#contact">Discuss operations management on a strategy call</a></p>
+    <div class="nx-cells nx-challenge" data-stagger="70">
+      <div data-reveal>
+        <h3>Operations management</h3>
+        <p>Ongoing ownership of the routines, hand-offs and reporting.</p>
+        <div class="nx-mini" style="margin-block-start:var(--inx-space-5)">
+          <div class="nx-mini__row"><span>Operating rhythm</span><span class="inx-pill inx-pill--success"><span class="inx-pill__dot"></span>Weekly</span></div>
+          <div class="nx-mini__row"><span>Process ownership</span><span class="inx-pill inx-pill--success"><span class="inx-pill__dot"></span>Named</span></div>
+          <div class="nx-mini__row"><span>Leadership reporting</span><span class="inx-pill inx-pill--info"><span class="inx-pill__dot"></span>Scheduled</span></div>
         </div>
       </div>
-
-      <div class="nx-svc__item">
-        <h3 style="display:contents">
-          <button class="nx-svc__tab" type="button" id="svc-t2" aria-controls="svc-p2" aria-expanded="false">
-            Workflow optimisation <span class="nx-svc__sign" aria-hidden="true"></span>
-          </button>
-        </h3>
-        <div class="nx-svc__panel" id="svc-p2" role="region" aria-labelledby="svc-t2">
-          <p class="nx-svc__desc">
-            Workflows mapped as they actually run, simplified before anything
-            is automated, and documented so they survive the people who built
-            them.
-          </p>
-          <ul class="nx-svc__list">
-            <li>Workflow mapping</li>
-            <li>Bottleneck identification</li>
-            <li>Process simplification</li>
-            <li>Automation opportunities</li>
-            <li>Standard operating procedures</li>
-          </ul>
-          <div class="nx-mini">
-            <div class="nx-mini__row"><span>Current-state map</span><span class="inx-pill inx-pill--success"><span class="inx-pill__dot"></span>Complete</span></div>
-            <div class="nx-mini__row"><span>Bottleneck review</span><span class="inx-pill inx-pill--info"><span class="inx-pill__dot"></span>In progress</span></div>
-            <div class="nx-mini__row"><span>Procedures</span><span class="inx-pill"><span class="inx-pill__dot"></span>Drafting</span></div>
-          </div>
-          <p class="nx-svc__cta"><a class="inx-link" href="#contact">Discuss workflow optimisation on a strategy call</a></p>
+      <div data-reveal>
+        <h3>Workflow optimisation</h3>
+        <p>Workflows mapped, simplified, then documented — before automation.</p>
+        <div class="nx-mini" style="margin-block-start:var(--inx-space-5)">
+          <div class="nx-mini__row"><span>Current-state map</span><span class="inx-pill inx-pill--success"><span class="inx-pill__dot"></span>Complete</span></div>
+          <div class="nx-mini__row"><span>Bottleneck review</span><span class="inx-pill inx-pill--info"><span class="inx-pill__dot"></span>In progress</span></div>
+          <div class="nx-mini__row"><span>Procedures</span><span class="inx-pill"><span class="inx-pill__dot"></span>Drafting</span></div>
         </div>
       </div>
-
-      <div class="nx-svc__item">
-        <h3 style="display:contents">
-          <button class="nx-svc__tab" type="button" id="svc-t3" aria-controls="svc-p3" aria-expanded="false">
-            Systems integration <span class="nx-svc__sign" aria-hidden="true"></span>
-          </button>
-        </h3>
-        <div class="nx-svc__panel" id="svc-p3" role="region" aria-labelledby="svc-t3">
-          <p class="nx-svc__desc">
-            The systems an organisation already runs, connected so information
-            moves without re-keying — and one place where the operational
-            picture is complete.
-          </p>
-          <ul class="nx-svc__list">
-            <li>System connection planning</li>
-            <li>Information flow design</li>
-            <li>Tool consolidation</li>
-            <li>Data consistency</li>
-            <li>Implementation coordination</li>
-          </ul>
-          <div class="nx-mini">
-            <div class="nx-mini__row"><span>Finance ↔ operations</span><span class="inx-pill inx-pill--success"><span class="inx-pill__dot"></span>Connected</span></div>
-            <div class="nx-mini__row"><span>CRM ↔ operations</span><span class="inx-pill inx-pill--success"><span class="inx-pill__dot"></span>Connected</span></div>
-            <div class="nx-mini__row"><span>Projects ↔ operations</span><span class="inx-pill inx-pill--info"><span class="inx-pill__dot"></span>Planned</span></div>
-          </div>
-          <p class="nx-svc__cta"><a class="inx-link" href="#contact">Discuss systems integration on a strategy call</a></p>
+      <div data-reveal>
+        <h3>Systems integration</h3>
+        <p>The tools you already run, connected into one operating picture.</p>
+        <div class="nx-mini" style="margin-block-start:var(--inx-space-5)">
+          <div class="nx-mini__row"><span>Finance ↔ operations</span><span class="inx-pill inx-pill--success"><span class="inx-pill__dot"></span>Connected</span></div>
+          <div class="nx-mini__row"><span>CRM ↔ operations</span><span class="inx-pill inx-pill--success"><span class="inx-pill__dot"></span>Connected</span></div>
+          <div class="nx-mini__row"><span>Projects ↔ operations</span><span class="inx-pill inx-pill--info"><span class="inx-pill__dot"></span>Planned</span></div>
         </div>
       </div>
-
-      <div class="nx-svc__item">
-        <h3 style="display:contents">
-          <button class="nx-svc__tab" type="button" id="svc-t4" aria-controls="svc-p4" aria-expanded="false">
-            Strategic support <span class="nx-svc__sign" aria-hidden="true"></span>
-          </button>
-        </h3>
-        <div class="nx-svc__panel" id="svc-p4" role="region" aria-labelledby="svc-t4">
-          <p class="nx-svc__desc">
-            Operational planning and decision support grounded in the day-to-day
-            reality of the business, so growth plans are built on how the work
-            actually runs.
-          </p>
-          <ul class="nx-svc__list">
-            <li>Operational planning</li>
-            <li>Leadership decision support</li>
-            <li>Growth readiness</li>
-            <li>Performance priorities</li>
-            <li>Change implementation</li>
-          </ul>
-          <div class="nx-mini">
-            <div class="nx-mini__row"><span>Operating model review</span><span class="inx-pill inx-pill--success"><span class="inx-pill__dot"></span>Current</span></div>
-            <div class="nx-mini__row"><span>Capacity planning</span><span class="inx-pill inx-pill--info"><span class="inx-pill__dot"></span>Quarterly</span></div>
-            <div class="nx-mini__row"><span>Priority review</span><span class="inx-pill inx-pill--info"><span class="inx-pill__dot"></span>Monthly</span></div>
-          </div>
-          <p class="nx-svc__cta"><a class="inx-link" href="#contact">Discuss strategic support on a strategy call</a></p>
+      <div data-reveal>
+        <h3>Strategic support</h3>
+        <p>Planning and decision support grounded in how the work actually runs.</p>
+        <div class="nx-mini" style="margin-block-start:var(--inx-space-5)">
+          <div class="nx-mini__row"><span>Operating model review</span><span class="inx-pill inx-pill--success"><span class="inx-pill__dot"></span>Current</span></div>
+          <div class="nx-mini__row"><span>Capacity planning</span><span class="inx-pill inx-pill--info"><span class="inx-pill__dot"></span>Quarterly</span></div>
+          <div class="nx-mini__row"><span>Priority review</span><span class="inx-pill inx-pill--info"><span class="inx-pill__dot"></span>Monthly</span></div>
         </div>
       </div>
-
     </div>
   </div>
 </section>
 
+<div class="nx-hatch" aria-hidden="true"><div class="nx-shell nx-rail"></div></div>
 
-<!-- ============================================================
-     5 · OPERATIONAL TRANSFORMATION — spec §13.5. Ink.
-     ============================================================ -->
+<!-- 5 · TRANSFORMATION -->
 <section class="nx-section inx-on-ink" id="transformation">
-  <div class="nx-shell">
+  <div class="nx-shell nx-rail">
     <div class="nx-head">
       <p class="inx-eyebrow inx-eyebrow--accent" data-reveal>Operational transformation</p>
       <div class="nx-grid">
         <div class="nx-span-7">
           <h2 class="nx-head__title" data-reveal>What changes when operations become structured.</h2>
-        </div>
-        <div class="nx-span-5">
-          <p class="nx-head__lead" data-reveal>
-            The shift is the same in every engagement: from operations that
-            depend on individual effort to operations that are owned,
-            documented and visible.
-          </p>
         </div>
       </div>
     </div>
@@ -457,57 +334,51 @@
       </div>
       <div class="nx-compare__row" data-reveal>
         <p class="nx-compare__topic">Ownership</p>
-        <p class="nx-compare__cell" data-label="Before iNexa">Responsibilities are spread across teams.</p>
-        <p class="nx-compare__cell nx-compare__cell--after" data-label="With iNexa">Clear operational ownership and accountability.</p>
+        <p class="nx-compare__cell" data-label="Before iNexa">Spread across teams.</p>
+        <p class="nx-compare__cell nx-compare__cell--after" data-label="With iNexa">Clear ownership and accountability.</p>
       </div>
       <div class="nx-compare__row" data-reveal>
         <p class="nx-compare__topic">Workflow</p>
-        <p class="nx-compare__cell" data-label="Before iNexa">Processes depend on memory and manual follow-up.</p>
-        <p class="nx-compare__cell nx-compare__cell--after" data-label="With iNexa">Documented and repeatable workflows.</p>
+        <p class="nx-compare__cell" data-label="Before iNexa">Memory and manual follow-up.</p>
+        <p class="nx-compare__cell nx-compare__cell--after" data-label="With iNexa">Documented and repeatable.</p>
       </div>
       <div class="nx-compare__row" data-reveal>
         <p class="nx-compare__topic">Visibility</p>
-        <p class="nx-compare__cell" data-label="Before iNexa">Information is fragmented.</p>
-        <p class="nx-compare__cell nx-compare__cell--after" data-label="With iNexa">Leadership has a shared operational view.</p>
+        <p class="nx-compare__cell" data-label="Before iNexa">Fragmented information.</p>
+        <p class="nx-compare__cell nx-compare__cell--after" data-label="With iNexa">One shared operational view.</p>
       </div>
       <div class="nx-compare__row" data-reveal>
         <p class="nx-compare__topic">Systems</p>
-        <p class="nx-compare__cell" data-label="Before iNexa">Tools operate in isolation.</p>
-        <p class="nx-compare__cell nx-compare__cell--after" data-label="With iNexa">Systems exchange the information teams need.</p>
+        <p class="nx-compare__cell" data-label="Before iNexa">Tools in isolation.</p>
+        <p class="nx-compare__cell nx-compare__cell--after" data-label="With iNexa">Systems exchange what teams need.</p>
       </div>
       <div class="nx-compare__row" data-reveal>
         <p class="nx-compare__topic">Decisions</p>
         <p class="nx-compare__cell" data-label="Before iNexa">Problems surface late.</p>
-        <p class="nx-compare__cell nx-compare__cell--after" data-label="With iNexa">Risks and priorities are visible earlier.</p>
+        <p class="nx-compare__cell nx-compare__cell--after" data-label="With iNexa">Risks visible earlier.</p>
       </div>
       <div class="nx-compare__row" data-reveal>
         <p class="nx-compare__topic">Scale</p>
-        <p class="nx-compare__cell" data-label="Before iNexa">Growth adds operational pressure.</p>
-        <p class="nx-compare__cell nx-compare__cell--after" data-label="With iNexa">Structure supports increased complexity.</p>
+        <p class="nx-compare__cell" data-label="Before iNexa">Growth adds pressure.</p>
+        <p class="nx-compare__cell nx-compare__cell--after" data-label="With iNexa">Structure absorbs complexity.</p>
       </div>
     </div>
   </div>
 </section>
 
+<div class="nx-hatch nx-hatch--ink" aria-hidden="true"><div class="nx-shell nx-rail"></div></div>
 
-<!-- ============================================================
-     6 · HOW WE WORK — spec §13.6. Platinum. A real sequence,
-     so numbered.
-     ============================================================ -->
+<!-- 6 · HOW WE WORK -->
 <section class="nx-section" id="how-we-work" style="background:var(--inx-bg-sunken)">
-  <div class="nx-shell">
+  <div class="nx-shell nx-rail">
     <div class="nx-head">
       <p class="inx-eyebrow" data-reveal>How we work</p>
       <div class="nx-grid">
         <div class="nx-span-7">
-          <h2 class="nx-head__title" data-reveal>A structured engagement from assessment to ongoing management.</h2>
+          <h2 class="nx-head__title" data-reveal>From assessment to ongoing management.</h2>
         </div>
         <div class="nx-span-5">
-          <p class="nx-head__lead" data-reveal>
-            The same four stages every time, each with a defined output. You
-            know what is happening and what you receive before the next stage
-            begins.
-          </p>
+          <p class="nx-head__lead" data-reveal>Four stages, each with a defined output.</p>
         </div>
       </div>
     </div>
@@ -516,21 +387,19 @@
       <div class="nx-step" data-reveal>
         <span class="nx-step__num">Step 01</span>
         <h3 class="nx-step__title">Assess</h3>
-        <p class="nx-step__desc">Understand how the organisation actually runs today, and where structure is missing.</p>
+        <p class="nx-step__desc">How the organisation actually runs today.</p>
         <ul class="nx-step__out">
           <li>Operational review</li>
           <li>Process mapping</li>
-          <li>System inventory</li>
           <li>Priority assessment</li>
         </ul>
       </div>
       <div class="nx-step" data-reveal>
         <span class="nx-step__num">Step 02</span>
         <h3 class="nx-step__title">Design</h3>
-        <p class="nx-step__desc">Define the operating structure the next stage of growth requires, in writing.</p>
+        <p class="nx-step__desc">The operating structure growth requires, in writing.</p>
         <ul class="nx-step__out">
           <li>Operating model</li>
-          <li>Workflow structure</li>
           <li>Integration plan</li>
           <li>Implementation roadmap</li>
         </ul>
@@ -538,49 +407,37 @@
       <div class="nx-step" data-reveal>
         <span class="nx-step__num">Step 03</span>
         <h3 class="nx-step__title">Implement</h3>
-        <p class="nx-step__desc">Put the structure in place alongside the team, without stopping the business to do it.</p>
+        <p class="nx-step__desc">Structure in place, without stopping the business.</p>
         <ul class="nx-step__out">
           <li>Process rollout</li>
           <li>System configuration</li>
           <li>Team enablement</li>
-          <li>Documentation</li>
         </ul>
       </div>
       <div class="nx-step" data-reveal>
         <span class="nx-step__num">Step 04</span>
         <h3 class="nx-step__title">Manage</h3>
-        <p class="nx-step__desc">Run and improve the operational structure as an ongoing partnership.</p>
+        <p class="nx-step__desc">Run and improve, as an ongoing partnership.</p>
         <ul class="nx-step__out">
           <li>Ongoing oversight</li>
           <li>Reporting</li>
           <li>Continuous improvement</li>
-          <li>Strategic support</li>
         </ul>
       </div>
     </div>
   </div>
 </section>
 
+<div class="nx-hatch nx-hatch--sunken" aria-hidden="true"><div class="nx-shell nx-rail"></div></div>
 
-<!-- ============================================================
-     7 · FEATURED CASE STUDY — spec §13.7. Editorial cell grid.
-     Content is sample material, marked as such, pending a
-     verified client story.
-     ============================================================ -->
+<!-- 7 · CASE STUDY -->
 <section class="nx-section" id="case-study">
-  <div class="nx-shell">
+  <div class="nx-shell nx-rail">
     <div class="nx-head">
       <p class="inx-eyebrow" data-reveal>Case study</p>
       <div class="nx-grid">
         <div class="nx-span-7">
           <h2 class="nx-head__title" data-reveal>Creating operational visibility across a growing organisation.</h2>
-        </div>
-        <div class="nx-span-5">
-          <p class="nx-head__lead" data-reveal>
-            A representative engagement, shown with sample figures. It will be
-            replaced by a verified client story, with permissioned data, before
-            launch.
-          </p>
         </div>
       </div>
     </div>
@@ -588,7 +445,7 @@
     <div class="nx-cells nx-case" data-reveal>
       <div class="nx-case__intro">
         <div class="inx-row" style="justify-content:space-between">
-          <h3>A distribution group replaces coordination effort with operational structure.</h3>
+          <h3>A distribution group replaces coordination effort with structure.</h3>
           <span class="inx-pill">Sample engagement</span>
         </div>
       </div>
@@ -598,33 +455,26 @@
           <div><dt>Client</dt><dd>Confidential distribution group</dd></div>
           <div><dt>Sector</dt><dd>Logistics &amp; distribution</dd></div>
           <div><dt>Scale</dt><dd>Multi-site, 100–200 people</dd></div>
-          <div><dt>Systems</dt><dd>Finance, CRM, warehouse, reporting</dd></div>
           <div><dt>Services</dt><dd>Operations management, systems integration</dd></div>
         </dl>
       </div>
 
       <div class="nx-case__body">
         <h4>Challenge</h4>
-        <p>
-          Order volume had grown faster than the operating structure beneath it.
-          Reporting was assembled by hand from disconnected systems, processes
-          lived with individuals rather than in documentation, and leadership
-          time was increasingly spent coordinating rather than deciding.
-        </p>
+        <p>Order volume outgrew the structure beneath it: hand-assembled
+           reporting, processes held by individuals, leadership time spent
+           coordinating.</p>
         <h4>Approach</h4>
-        <p>
-          iNexa assessed the operating model, documented and assigned ownership
-          for the core workflows, connected the finance, CRM and warehouse
-          systems into a single operational view, and took ongoing
-          responsibility for the operating rhythm and the weekly report.
-        </p>
+        <p>Documented ownership for core workflows, connected finance, CRM and
+           warehouse into one view, and took on the operating rhythm and the
+           weekly report.</p>
       </div>
 
       <div class="nx-case__kpis">
-        <p class="inx-eyebrow" style="margin-block-end:var(--inx-space-4)">Outcomes · sample figures</p>
-        <div class="nx-kpi"><strong>Days, not weeks</strong><span>to produce a complete operational picture</span></div>
+        <p class="inx-eyebrow" style="margin-block-end:var(--inx-space-4)">Outcomes · sample</p>
+        <div class="nx-kpi"><strong>Days, not weeks</strong><span>to a complete operational picture</span></div>
         <div class="nx-kpi"><strong>Named owners</strong><span>for every recurring process</span></div>
-        <div class="nx-kpi"><strong>One view</strong><span>of orders, capacity and cost across sites</span></div>
+        <div class="nx-kpi"><strong>One view</strong><span>of orders, capacity and cost</span></div>
       </div>
 
       <div class="nx-case__media">
@@ -649,8 +499,7 @@
 
       <div class="nx-case__quote">
         <blockquote>
-          “The operating report replaced a week of chasing. Leadership meetings
-          now start from the same picture, and the picture is current.”
+          “The operating report replaced a week of chasing.”
           <cite>Sample quotation — to be replaced with a permissioned client quote</cite>
         </blockquote>
       </div>
@@ -658,25 +507,43 @@
   </div>
 </section>
 
+<div class="nx-hatch" aria-hidden="true"><div class="nx-shell nx-rail"></div></div>
 
-<!-- ============================================================
-     8 · SYSTEMS VIEW — spec §13.8. Ink. The approved-component
-     alternative: tabs and tables instead of a decorative map.
-     ============================================================ -->
-<section class="nx-section inx-on-ink" id="systems">
-  <div class="nx-shell">
+<!-- 8 · INDUSTRIES -->
+<section class="nx-section" id="industries" style="background:var(--inx-bg-sunken)">
+  <div class="nx-shell nx-rail">
     <div class="nx-head">
-      <p class="inx-eyebrow inx-eyebrow--accent" data-reveal>Systems integration</p>
+      <p class="inx-eyebrow" data-reveal>Industries</p>
+      <div class="nx-grid">
+        <div class="nx-span-7">
+          <h2 class="nx-head__title" data-reveal>Where structure pays for itself fastest.</h2>
+        </div>
+      </div>
+    </div>
+
+    <div class="nx-cells nx-trust" data-stagger="50">
+      <div data-reveal><span class="nx-trust__cat">Sector</span><p>Professional services</p></div>
+      <div data-reveal><span class="nx-trust__cat">Sector</span><p>Logistics &amp; distribution</p></div>
+      <div data-reveal><span class="nx-trust__cat">Sector</span><p>Healthcare groups</p></div>
+      <div data-reveal><span class="nx-trust__cat">Sector</span><p>Manufacturing</p></div>
+      <div data-reveal><span class="nx-trust__cat">Sector</span><p>Financial services</p></div>
+      <div data-reveal><span class="nx-trust__cat">Sector</span><p>Construction</p></div>
+      <div data-reveal><span class="nx-trust__cat">Sector</span><p>Technology</p></div>
+      <div data-reveal><span class="nx-trust__cat">Sector</span><p>Multi-site retail</p></div>
+    </div>
+  </div>
+</section>
+
+<div class="nx-hatch nx-hatch--sunken" aria-hidden="true"><div class="nx-shell nx-rail"></div></div>
+
+<!-- 9 · SYSTEMS -->
+<section class="nx-section" id="systems">
+  <div class="nx-shell nx-rail">
+    <div class="nx-head">
+      <p class="inx-eyebrow" data-reveal>Systems integration</p>
       <div class="nx-grid">
         <div class="nx-span-7">
           <h2 class="nx-head__title" data-reveal>Connected systems create a clearer operating picture.</h2>
-        </div>
-        <div class="nx-span-5">
-          <p class="nx-head__lead" data-reveal>
-            iNexa connects the tools an organisation already runs into one
-            operational view — rather than adding another disconnected layer
-            on top of them.
-          </p>
         </div>
       </div>
     </div>
@@ -686,26 +553,23 @@
         <p class="inx-eyebrow">Operational view</p>
         <span class="inx-pill">Sample</span>
       </div>
-
       <div class="inx-tabs nx-ui__tabs" role="tablist" aria-label="Systems view" data-tabs>
         <button class="inx-tab" role="tab" id="sys-t1" aria-controls="sys-p1" aria-selected="true">Active integrations</button>
         <button class="inx-tab" role="tab" id="sys-t2" aria-controls="sys-p2" aria-selected="false">Information ownership</button>
       </div>
-
       <div class="nx-ui__body nx-scroll-x" tabindex="0" role="group" aria-label="Systems tables, scrollable">
         <div class="nx-ui__panel" id="sys-p1" role="tabpanel" aria-labelledby="sys-t1">
           <table class="inx-table">
             <caption class="nx-visually-hidden">Active integrations and what they exchange</caption>
             <thead><tr><th scope="col">Connection</th><th scope="col">Information exchanged</th><th scope="col">Status</th></tr></thead>
             <tbody>
-              <tr><td>Finance ↔ operational view</td><td>Invoices, payments, cost by area</td><td><span class="inx-pill inx-pill--success"><span class="inx-pill__dot"></span>Connected</span></td></tr>
-              <tr><td>CRM ↔ operational view</td><td>Clients, pipeline, commitments</td><td><span class="inx-pill inx-pill--success"><span class="inx-pill__dot"></span>Connected</span></td></tr>
+              <tr><td>Finance ↔ operational view</td><td>Invoices, payments, cost</td><td><span class="inx-pill inx-pill--success"><span class="inx-pill__dot"></span>Connected</span></td></tr>
+              <tr><td>CRM ↔ operational view</td><td>Clients, pipeline</td><td><span class="inx-pill inx-pill--success"><span class="inx-pill__dot"></span>Connected</span></td></tr>
               <tr><td>Projects ↔ operational view</td><td>Delivery status, capacity</td><td><span class="inx-pill inx-pill--success"><span class="inx-pill__dot"></span>Connected</span></td></tr>
               <tr><td>Support ↔ operational view</td><td>Tickets, response measures</td><td><span class="inx-pill inx-pill--info"><span class="inx-pill__dot"></span>Scheduled</span></td></tr>
             </tbody>
           </table>
         </div>
-
         <div class="nx-ui__panel" id="sys-p2" role="tabpanel" aria-labelledby="sys-t2" hidden>
           <table class="inx-table">
             <caption class="nx-visually-hidden">Which system owns which information</caption>
@@ -719,59 +583,221 @@
           </table>
         </div>
       </div>
-
       <p class="nx-ui__foot">One number for one thing, wherever in the business you ask.</p>
     </div>
   </div>
 </section>
 
+<div class="nx-hatch" aria-hidden="true"><div class="nx-shell nx-rail"></div></div>
 
-<!-- ============================================================
-     9 · CLIENT EXPERIENCE — spec §13.9. Asymmetrical quote grid.
-     Sample material, marked, pending permissioned quotes.
-     ============================================================ -->
-<section class="nx-section" id="client-experience">
-  <div class="nx-shell">
+<!-- 10 · TESTIMONIALS -->
+<section class="nx-section inx-on-ink" id="client-experience">
+  <div class="nx-shell nx-rail">
     <div class="nx-head">
-      <p class="inx-eyebrow" data-reveal>Client experience</p>
+      <p class="inx-eyebrow inx-eyebrow--accent" data-reveal>Client experience</p>
       <div class="nx-grid">
         <div class="nx-span-7">
-          <h2 class="nx-head__title" data-reveal>What working with an operational partner feels like.</h2>
+          <h2 class="nx-head__title" data-reveal>What clients notice first.</h2>
         </div>
         <div class="nx-span-5">
-          <p class="nx-head__lead" data-reveal>
-            Sample quotations, attributed by role only. They will be replaced
-            with permissioned client statements before launch.
-          </p>
+          <p class="nx-head__lead" data-reveal>Sample quotations, attributed by role. Replaced with permissioned statements before launch.</p>
         </div>
       </div>
     </div>
 
-    <div class="nx-grid" data-stagger="80">
-      <div class="nx-span-7" data-reveal>
-        <figure class="nx-panel" style="margin:0; block-size:100%">
-          <blockquote class="nx-quote-lg">
-            “We stopped needing a meeting to find out what had happened. The
-            operating report told us, and it was right.”
-            <cite>Chief operating officer · distribution group — sample quotation</cite>
-          </blockquote>
-        </figure>
+    <div class="nx-cells" style="grid-template-columns:repeat(3,minmax(0,1fr))" data-stagger="70">
+      <figure class="nx-tcard" style="margin:0" data-reveal>
+        <p class="nx-tcard__metric">The weekly report</p>
+        <blockquote>“We stopped needing a meeting to find out what had happened.”</blockquote>
+        <cite>Chief operating officer · distribution group</cite>
+      </figure>
+      <figure class="nx-tcard" style="margin:0" data-reveal>
+        <p class="nx-tcard__metric">Continuity</p>
+        <blockquote>“When our operations manager moved on, nothing broke.”</blockquote>
+        <cite>Managing director · professional services</cite>
+      </figure>
+      <figure class="nx-tcard" style="margin:0" data-reveal>
+        <p class="nx-tcard__metric">Ownership</p>
+        <blockquote>“They are in the operating meeting every week and own the numbers they present.”</blockquote>
+        <cite>Operations director · healthcare group</cite>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<div class="nx-hatch nx-hatch--ink" aria-hidden="true"><div class="nx-shell nx-rail"></div></div>
+
+<!-- 11 · PRICING -->
+<section class="nx-section" id="pricing" style="background:var(--inx-bg-sunken)">
+  <div class="nx-shell nx-rail">
+    <div class="nx-head">
+      <p class="inx-eyebrow" data-reveal>Engagement model</p>
+      <div class="nx-grid">
+        <div class="nx-span-7">
+          <h2 class="nx-head__title" data-reveal>Priced against scope, not against hours.</h2>
+        </div>
+        <div class="nx-span-5">
+          <p class="nx-head__lead" data-reveal>The diagnostic is a fixed fee, quoted before it starts.</p>
+        </div>
       </div>
+    </div>
+
+    <div class="nx-cells" style="grid-template-columns:repeat(3,minmax(0,1fr))" data-stagger="80">
+      <div class="nx-price" data-reveal>
+        <p class="nx-price__name">Operating diagnostic</p>
+        <p class="nx-price__figure">£12,000</p>
+        <p class="nx-price__unit">Fixed fee · two weeks</p>
+        <ul class="nx-price__list">
+          <li>End-to-end process map</li>
+          <li>Cycle-time and cost analysis</li>
+          <li>Prioritised findings</li>
+          <li>Board-ready written diagnostic</li>
+        </ul>
+        <p class="nx-price__cta"><a class="inx-btn inx-btn--secondary inx-btn--block" href="#contact">Book a strategy call</a></p>
+      </div>
+      <div class="nx-price nx-price--featured inx-on-ink" data-reveal>
+        <p class="nx-price__name">Managed operations</p>
+        <p class="nx-price__figure">£9,500</p>
+        <p class="nx-price__unit">Per month · minimum twelve months</p>
+        <ul class="nx-price__list">
+          <li>Named operating lead, embedded</li>
+          <li>Weekly operating report</li>
+          <li>Integration build and monitoring</li>
+          <li>Quarterly operating-model review</li>
+        </ul>
+        <p class="nx-price__cta"><a class="inx-btn inx-btn--primary inx-btn--block" href="#contact">Book a strategy call</a></p>
+      </div>
+      <div class="nx-price" data-reveal>
+        <p class="nx-price__name">Group &amp; multi-site</p>
+        <p class="nx-price__figure">Custom</p>
+        <p class="nx-price__unit">Scoped per entity</p>
+        <ul class="nx-price__list">
+          <li>Operating model across entities</li>
+          <li>Consolidated group reporting</li>
+          <li>Post-acquisition integration</li>
+          <li>Dedicated team, defined escalation</li>
+        </ul>
+        <p class="nx-price__cta"><a class="inx-btn inx-btn--secondary inx-btn--block" href="#contact">Book a strategy call</a></p>
+      </div>
+    </div>
+    <p class="inx-caption" style="margin-block-start:var(--inx-space-5)" data-reveal>
+      Figures are illustrative and exclude VAT. Final scope and fee are confirmed in writing.
+    </p>
+  </div>
+</section>
+
+<div class="nx-hatch nx-hatch--sunken" aria-hidden="true"><div class="nx-shell nx-rail"></div></div>
+
+<!-- 12 · INSIGHTS -->
+<section class="nx-section" id="insights">
+  <div class="nx-shell nx-rail">
+    <div class="nx-head">
+      <p class="inx-eyebrow" data-reveal>Insights</p>
+      <div class="nx-grid">
+        <div class="nx-span-7">
+          <h2 class="nx-head__title" data-reveal>Notes from inside other people's operations.</h2>
+        </div>
+      </div>
+    </div>
+
+    <div class="nx-cells" style="grid-template-columns:repeat(3,minmax(0,1fr))" data-stagger="70">
+      <a class="nx-post" href="#insights" data-reveal>
+        <p class="nx-post__meta"><span>12 Jun 2026</span><span>Operating model</span></p>
+        <h3 class="nx-post__title">Why automating a broken process makes it worse</h3>
+        <span class="nx-post__more inx-link">Read the note</span>
+      </a>
+      <a class="nx-post" href="#insights" data-reveal>
+        <p class="nx-post__meta"><span>28 May 2026</span><span>Reporting</span></p>
+        <h3 class="nx-post__title">The month-end close is an operations problem</h3>
+        <span class="nx-post__more inx-link">Read the note</span>
+      </a>
+      <a class="nx-post" href="#insights" data-reveal>
+        <p class="nx-post__meta"><span>09 May 2026</span><span>Scale</span></p>
+        <h3 class="nx-post__title">What actually breaks between fifty and two hundred people</h3>
+        <span class="nx-post__more inx-link">Read the note</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<div class="nx-hatch" aria-hidden="true"><div class="nx-shell nx-rail"></div></div>
+
+<!-- 13 · QUESTIONS -->
+<section class="nx-section" id="questions" style="background:var(--inx-bg-sunken)">
+  <div class="nx-shell nx-rail">
+    <div class="nx-grid">
       <div class="nx-span-5">
-        <div class="nx-vstack">
-          <figure class="nx-panel nx-panel--quiet" style="margin:0">
-            <blockquote class="nx-quote-sm">
-              “When our operations manager moved on, nothing broke. That was
-              the moment the structure proved itself.”
-              <cite>Managing director · professional services firm — sample quotation</cite>
-            </blockquote>
-          </figure>
-          <div class="nx-panel nx-panel--quiet" data-reveal>
-            <p class="nx-fact">
-              <strong>References on request</strong>
-              Client references are arranged directly, on a like-for-like
-              basis — an operations leader speaking to an operations leader.
-            </p>
+        <div class="nx-head" style="margin-block-end:0">
+          <p class="inx-eyebrow" data-reveal>Before you ask</p>
+          <h2 class="nx-head__title" data-reveal>The five questions we always get.</h2>
+          <p style="margin-block-start:var(--inx-space-6)" data-reveal>
+            <a class="inx-btn inx-btn--secondary" href="#contact">Ask us directly</a>
+          </p>
+        </div>
+      </div>
+
+      <div class="nx-span-7">
+        <div class="nx-acc" data-acc>
+          <div class="nx-acc__item">
+            <h3 style="margin:0">
+              <button class="nx-acc__btn" type="button" id="q1-btn" aria-expanded="true" aria-controls="q1">
+                Are you replacing our operations team?
+                <span class="nx-acc__sign" aria-hidden="true"></span>
+              </button>
+            </h3>
+            <div class="nx-acc__panel is-open" id="q1" role="region" aria-labelledby="q1-btn">
+              <div><p>No. We own the operating layer around your team — structure,
+              standards, reporting and systems — so the people you have stop
+              spending their week on coordination.</p></div>
+            </div>
+          </div>
+          <div class="nx-acc__item">
+            <h3 style="margin:0">
+              <button class="nx-acc__btn" type="button" id="q2-btn" aria-expanded="false" aria-controls="q2">
+                How quickly does anything change?
+                <span class="nx-acc__sign" aria-hidden="true"></span>
+              </button>
+            </h3>
+            <div class="nx-acc__panel" id="q2" role="region" aria-labelledby="q2-btn">
+              <div><p>The diagnostic takes two weeks and usually surfaces immediate
+              fixes. The designed operating layer is typically live by week ten.</p></div>
+            </div>
+          </div>
+          <div class="nx-acc__item">
+            <h3 style="margin:0">
+              <button class="nx-acc__btn" type="button" id="q3-btn" aria-expanded="false" aria-controls="q3">
+                Do we have to change our systems?
+                <span class="nx-acc__sign" aria-hidden="true"></span>
+              </button>
+            </h3>
+            <div class="nx-acc__panel" id="q3" role="region" aria-labelledby="q3-btn">
+              <div><p>Rarely. Most operational problems are ownership and hand-off
+              problems. We start by integrating what you already run.</p></div>
+            </div>
+          </div>
+          <div class="nx-acc__item">
+            <h3 style="margin:0">
+              <button class="nx-acc__btn" type="button" id="q4-btn" aria-expanded="false" aria-controls="q4">
+                How is the work governed?
+                <span class="nx-acc__sign" aria-hidden="true"></span>
+              </button>
+            </h3>
+            <div class="nx-acc__panel" id="q4" role="region" aria-labelledby="q4-btn">
+              <div><p>Fixed scope per stage, named owners on both sides, a written
+              deliverable each time, and a weekly operating report once live.</p></div>
+            </div>
+          </div>
+          <div class="nx-acc__item">
+            <h3 style="margin:0">
+              <button class="nx-acc__btn" type="button" id="q5-btn" aria-expanded="false" aria-controls="q5">
+                What does an engagement cost?
+                <span class="nx-acc__sign" aria-hidden="true"></span>
+              </button>
+            </h3>
+            <div class="nx-acc__panel" id="q5" role="region" aria-labelledby="q5-btn">
+              <div><p>A fixed-fee diagnostic, then a monthly retainer sized to the
+              operating layer we run. No percentages, no open-ended day rates.</p></div>
+            </div>
           </div>
         </div>
       </div>
@@ -779,29 +805,22 @@
   </div>
 </section>
 
+<div class="nx-hatch nx-hatch--sunken" aria-hidden="true"><div class="nx-shell nx-rail"></div></div>
 
-<!-- ============================================================
-     10 · STRATEGY CALL CTA — spec §13.10. Ink. The brand promise
-     closes the page; it is never the headline.
-     ============================================================ -->
+<!-- 14 · CTA -->
 <section class="nx-cta inx-on-ink" id="contact">
-  <div class="nx-shell">
+  <div class="nx-shell nx-rail">
     <p class="inx-eyebrow inx-eyebrow--accent inx-eyebrow--rule" data-reveal>Start with clarity</p>
-
     <h2 class="nx-cta__title" data-reveal>Build the operational structure your next stage of growth requires.</h2>
-
     <div data-stagger="80">
       <p class="nx-head__lead" style="margin-block-start:var(--inx-space-5)" data-reveal>
-        On a strategy call we review the operational pressure points holding
-        the business back, identify where structure is missing, and determine
-        the right place to begin.
+        Ninety minutes on the operational pressure points holding the business
+        back — and the right place to begin.
       </p>
-
       <div class="nx-hero__actions" data-reveal>
         <a class="inx-btn inx-btn--primary inx-btn--lg" href="mailto:hello@inexa.com">Book a strategy call</a>
         <a class="inx-btn inx-btn--secondary inx-btn--lg" href="mailto:hello@inexa.com">hello@inexa.com</a>
       </div>
-
       <p class="nx-cta__close" data-reveal>Operational clarity. Scalable growth.</p>
     </div>
   </div>
@@ -810,24 +829,19 @@
 </main>
 
 
-<!-- ============================================================
-     FOOTER — spec §14. Ink Black.
-     ============================================================ -->
+<!-- FOOTER -->
 <footer class="nx-footer inx-on-ink">
-  <div class="nx-shell">
+  <div class="nx-shell nx-rail--quiet">
     <div class="nx-grid">
-
       <div class="nx-span-4 nx-footer__col">
         <span class="inx-logo" style="--inx-logo-height:32px">
           <svg viewBox="0 0 271.85 74.89" role="img" aria-label="iNexa"><use href="#inx-lockup"></use></svg>
         </span>
         <p class="inx-body inx-body--sm inx-muted" style="margin-block-start:var(--inx-space-6); max-inline-size:34ch">
           An operational management partner for growing organisations.
-          We run operations. You scale the business.
         </p>
         <p class="nx-footer__promise">Operational clarity. Scalable growth.</p>
       </div>
-
       <div class="nx-span-3 nx-footer__col">
         <h3>Services</h3>
         <ul>
@@ -837,17 +851,15 @@
           <li><a href="#services">Strategic support</a></li>
         </ul>
       </div>
-
       <div class="nx-span-2 nx-footer__col" style="grid-column:span 2">
         <h3>Company</h3>
         <ul>
           <li><a href="#how-we-work">How we work</a></li>
           <li><a href="#case-study">Case study</a></li>
-          <li><a href="#systems">Systems</a></li>
-          <li><a href="#client-experience">Client experience</a></li>
+          <li><a href="#pricing">Pricing</a></li>
+          <li><a href="#insights">Insights</a></li>
         </ul>
       </div>
-
       <div class="nx-span-3 nx-footer__col">
         <h3>Contact</h3>
         <ul>
@@ -856,9 +868,7 @@
           <li><a href="#contact">Book a strategy call</a></li>
         </ul>
       </div>
-
     </div>
-
     <div class="nx-footer__bottom">
       <p class="inx-legal">©2026 iNexa. All rights reserved.</p>
       <div class="nx-footer__legal">
@@ -871,6 +881,7 @@
   </div>
 </footer>
 
+<script src="assets/js/vendor/lenis.min.js" defer></script>
 <script src="assets/js/site.js" defer></script>
 </body>
 </html>

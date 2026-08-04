@@ -23,36 +23,50 @@ assets/
   fonts/*.woff2             Raw font files, for production hosting
 ```
 
-## Homepage sequence — spec §12, followed exactly
+## Homepage sequence
 
-1. **Hero** (Ink) — the two-line positioning pairing, one colour, with an
-   operational-view interface built from the system's own tabs, tables and
-   pills. Content and interface sit in the spec's 5/7 asymmetry.
-2. **Trust context** — bordered grid of sectors and system categories.
-   No metrics, because none are verified yet.
-3. **Operational challenge** (Platinum) — four shared-border cells,
-   deliberately unnumbered.
-4. **Services** — vertical tab rail with a large active panel on desktop;
-   the same DOM is an accordion below 1024px. Not numbered: a set, not a
-   sequence. Responsibilities per service are the spec's own lists.
-5. **Operational transformation** (Ink) — Before iNexa / With iNexa, the
-   spec's six rows verbatim.
-6. **How we work** (Platinum) — Assess → Design → Implement → Manage,
-   numbered because it is a real sequence, with the spec's outputs.
-7. **Featured case study** — the spec's editorial cell grid: headline,
-   client data, challenge and approach, outcomes, interface, quotation.
-8. **Systems view** (Ink) — the spec's approved-component alternative to a
-   systems map: tabs over integration and ownership tables.
-9. **Client experience** — asymmetrical quote grid: one large quotation,
-   one smaller, one supporting fact.
-10. **Strategy call CTA** (Ink) — spec copy; the brand promise closes the
-    page and is never the headline.
+Fourteen sections. The build-spec sequence, with pricing, industries,
+insights and the FAQ retained by client decision.
 
-**There is deliberately no pricing section.** Spec §12: a consultancy site
-does not inherit a SaaS pricing table from the reference.
+Hero · Why iNexa · Operational challenge · Services · Operational
+transformation · How we work · Case study · Industries · Systems view ·
+Client experience · Engagement model · Insights · Questions · Strategy-call
+CTA · Footer.
 
-**One CTA phrase throughout:** "Book a strategy call", exactly as the spec
-requires. Secondary actions vary only where their destination differs.
+**One CTA phrase throughout:** "Book a strategy call".
+
+## The page frame
+
+The reference's structural signature, rebuilt with flat palette fills:
+
+- **Rails.** Continuous vertical rules at the container edges. Every section
+  carries its own pair via `.nx-rail`, so the border token re-points on ink
+  surfaces automatically while all pairs sit at the same x and read as one
+  frame. Header, footer and drawer use `.nx-rail--quiet` — the same inset
+  without the rules, plus 1px to compensate for the rail's own border.
+  Verified: every content left edge on the page measures to exactly 129px
+  at 1440.
+- **Hatch bands.** Diagonal-hatch separators between sections, drawn from an
+  SVG of flat 1px lines in a ramp colour (`n-100` on light, `n-800` on ink)
+  — no gradient function, the same reasoning the design system used for its
+  select chevron. Bounded top and bottom by hairlines so the band reads as
+  part of the frame rather than a texture leak.
+
+## Amendments to the build spec, approved by the client
+
+The MD's motion list does not cover these; they are kept deliberately and
+should be added to the spec:
+
+1. **Lenis smooth scroll** — the largest single contributor to the premium
+   feel. Disabled entirely under `prefers-reduced-motion`.
+2. **Number counters** on the Why iNexa figures. The section carries a
+   visible "sample figures" caption until the numbers are verified.
+3. **Pricing section retained.** The MD advises against it for a
+   consultancy; kept by client decision. Figures are illustrative and say so
+   on the page.
+
+Dropped as the MD requires: the marquee (continuous decorative movement).
+Headlines are sentence case throughout, per the MD.
 
 ## Spec rules that changed this build
 
@@ -61,11 +75,8 @@ requires. Secondary actions vary only where their destination differs.
 - **No blur on the stuck header** (§11.2) — solid ink surface, visible
   border, shadow-sm.
 - **Motion** (§9): opacity reveals with a ≤12px entrance, tab-panel fades,
-  drawer and accordion transitions. Nothing else. The previous build's
-  smooth-scroll library, marquee, scroll-progress bar and number counters
-  were all removed — they sit outside the spec's approved-motion list
-  (continuous decorative movement is prohibited, and counters are reserved
-  for real metrics, which we do not yet have).
+  drawer and accordion transitions, plus the two approved amendments above.
+  No marquee, no scroll-progress bar, nothing over 360ms.
 - **Functional status colours appear only inside interface mockups**, always
   with a written label (§5.4). Verified structurally: all 27 status pills sit
   inside `.nx-ui` / `.nx-mini` interface panels, none in marketing copy.

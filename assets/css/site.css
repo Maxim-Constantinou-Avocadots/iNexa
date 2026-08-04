@@ -913,3 +913,264 @@ body {
   clip-path: inset(50%);
   white-space: nowrap;
 }
+
+
+/* =============================================================================
+   PAGE FRAME — the reference's structural signature, rebuilt with flat
+   palette fills. Two devices:
+
+   1. RAILS: continuous vertical rules at the container edges. Each section
+      carries its own pair via .nx-rail, so the border token re-points on ink
+      surfaces automatically and the rails still read as one continuous frame
+      because every pair sits at the same x.
+
+   2. HATCH BANDS: diagonal-hatch separators between sections. The pattern is
+      an SVG of flat 1px lines in a ramp colour — no gradient function, per
+      the same reasoning the design system used for its select chevron.
+   ========================================================================== */
+
+/* The inset every framed element shares. Kept in one variable so the header,
+   the footer and every section agree on where content starts. */
+:root { --nx-rail-pad: var(--inx-space-8); }
+
+@media (max-width: 900px) {
+  :root { --nx-rail-pad: var(--inx-space-5); }
+}
+
+.nx-rail {
+  border-inline: 1px solid var(--inx-border);
+  padding-inline: var(--nx-rail-pad);
+}
+
+/* Header and footer sit outside the frame but must still align to it: the
+   inset without the rules. Otherwise the logo starts 25px left of every
+   headline below it. */
+/* +1px accounts for the rail's own border, so the quiet variant's content
+   lands on exactly the same x as content inside a ruled section. */
+.nx-rail--quiet { padding-inline: calc(var(--nx-rail-pad) + 1px); }
+
+/* The hatch band. Height on the spacing scale; hairlines top and bottom so
+   the band reads as a bounded element of the frame rather than a texture
+   leak. Light and ink variants use ramp colours (n-100 / n-800). */
+.nx-hatch { border-block: 1px solid var(--inx-border); }
+
+.nx-hatch > .nx-shell {
+  block-size: var(--inx-space-7);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M-2 10L10 -2M-6 6L6 -6M2 14L14 2' stroke='%23DAE5F1' stroke-width='1'/%3E%3C/svg%3E");
+}
+
+.nx-hatch--ink {
+  background: var(--inx-n-950);
+}
+.nx-hatch--ink > .nx-shell {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M-2 10L10 -2M-6 6L6 -6M2 14L14 2' stroke='%23243040' stroke-width='1'/%3E%3C/svg%3E");
+}
+.nx-hatch--ink { border-color: rgba(184, 208, 229, 0.16); }
+
+/* Sunken variant so the band can carry the Platinum surface through */
+.nx-hatch--sunken { background: var(--inx-bg-sunken); }
+
+
+/* -----------------------------------------------------------------------------
+   STAT — a counted figure at display size, with its label. Figures are
+   sample values until verified; the section carries a visible note.
+   -------------------------------------------------------------------------- */
+
+.nx-stat { padding-block-start: var(--inx-space-4); border-block-start: 2px solid var(--inx-text); }
+
+.nx-stat__value {
+  font-size: clamp(2.375rem, 4vw, 3.75rem);
+  line-height: 1;
+  letter-spacing: var(--inx-tracking-display);
+  font-variant-numeric: tabular-nums;
+  margin: 0 0 var(--inx-space-3);
+}
+
+.nx-stat__label {
+  font-size: var(--inx-text-xs);
+  line-height: 1.5;
+  color: var(--inx-text-muted);
+  margin: 0;
+  max-inline-size: 26ch;
+}
+
+
+/* -----------------------------------------------------------------------------
+   COMPACT QUOTE CARD — metric first, one-line quote, role attribution.
+   -------------------------------------------------------------------------- */
+
+.nx-tcard {
+  display: flex;
+  flex-direction: column;
+  gap: var(--inx-space-4);
+  block-size: 100%;
+  padding: var(--inx-space-6);
+  background: var(--inx-bg);
+}
+
+.nx-tcard__metric {
+  font-size: var(--inx-text-xl);
+  line-height: 1.1;
+  letter-spacing: var(--inx-tracking-tight);
+  font-variant-numeric: tabular-nums;
+  margin: 0;
+  padding-block-end: var(--inx-space-4);
+  border-block-end: 1px solid var(--inx-border);
+}
+
+.nx-tcard blockquote {
+  font-size: var(--inx-text-sm);
+  line-height: var(--inx-leading-normal);
+  color: var(--inx-text-subtle);
+  margin: 0;
+}
+
+.nx-tcard cite {
+  margin-block-start: auto;
+  font-size: var(--inx-text-xs);
+  font-style: normal;
+  color: var(--inx-text-muted);
+}
+
+
+/* -----------------------------------------------------------------------------
+   PRICING TIER — kept by client decision; figures marked illustrative.
+   -------------------------------------------------------------------------- */
+
+.nx-price { display: flex; flex-direction: column; padding: var(--inx-space-6); background: var(--inx-bg); }
+
+.nx-price--featured.inx-on-ink { background: var(--inx-n-950); }
+
+.nx-price__name {
+  font-size: var(--inx-text-2xs);
+  font-weight: var(--inx-weight-semi);
+  text-transform: uppercase;
+  letter-spacing: var(--inx-tracking-caps);
+  color: var(--inx-text-muted);
+  margin: 0 0 var(--inx-space-5);
+}
+
+.nx-price__figure {
+  font-size: var(--inx-text-2xl);
+  line-height: 1;
+  letter-spacing: var(--inx-tracking-display);
+  font-variant-numeric: tabular-nums;
+  margin: 0 0 var(--inx-space-2);
+}
+
+.nx-price__unit { font-size: var(--inx-text-xs); color: var(--inx-text-muted); margin: 0 0 var(--inx-space-5); }
+
+.nx-price__list { list-style: none; margin: 0 0 var(--inx-space-6); padding: 0; }
+.nx-price__list li {
+  padding-block: var(--inx-space-3);
+  border-block-start: 1px solid var(--inx-border);
+  font-size: var(--inx-text-xs);
+  line-height: 1.5;
+  color: var(--inx-text-subtle);
+}
+
+.nx-price__cta { margin-block-start: auto; }
+
+
+/* -----------------------------------------------------------------------------
+   INSIGHT PREVIEW — meta, title, nothing else.
+   -------------------------------------------------------------------------- */
+
+.nx-post {
+  display: flex;
+  flex-direction: column;
+  gap: var(--inx-space-3);
+  block-size: 100%;
+  padding: var(--inx-space-6);
+  background: var(--inx-bg);
+  text-decoration: none;
+}
+
+.nx-post__meta {
+  display: flex;
+  gap: var(--inx-space-4);
+  font-size: var(--inx-text-3xs);
+  font-weight: var(--inx-weight-semi);
+  letter-spacing: var(--inx-tracking-caps);
+  text-transform: uppercase;
+  color: var(--inx-text-muted);
+}
+
+.nx-post__title {
+  font-size: var(--inx-text-lg);
+  line-height: var(--inx-leading-snug);
+  letter-spacing: var(--inx-tracking-tight);
+  margin: 0;
+  transition: color var(--inx-transition);
+}
+.nx-post:hover .nx-post__title { color: var(--inx-text-muted); }
+
+.nx-post__more { margin-block-start: auto; font-size: var(--inx-text-xs); font-weight: var(--inx-weight-semi); }
+
+
+/* -----------------------------------------------------------------------------
+   FAQ ACCORDION
+   -------------------------------------------------------------------------- */
+
+.nx-acc { border-block-start: 1px solid var(--inx-border); }
+.nx-acc__item { border-block-end: 1px solid var(--inx-border); }
+
+.nx-acc__btn {
+  display: flex;
+  align-items: center;
+  gap: var(--inx-space-5);
+  inline-size: 100%;
+  padding-block: var(--inx-space-5);
+  border: 0;
+  background: transparent;
+  font-family: var(--inx-font);
+  font-size: var(--inx-text-md);
+  font-weight: var(--inx-weight-regular);
+  letter-spacing: var(--inx-tracking-tight);
+  color: var(--inx-text);
+  text-align: start;
+  cursor: pointer;
+  transition: color var(--inx-transition);
+}
+.nx-acc__btn:hover { color: var(--inx-text-muted); }
+
+.nx-acc__sign { flex: none; margin-inline-start: auto; inline-size: 14px; block-size: 14px; position: relative; }
+.nx-acc__sign::before,
+.nx-acc__sign::after {
+  content: "";
+  position: absolute;
+  inset-block-start: 50%;
+  inset-inline-start: 0;
+  inline-size: 100%;
+  block-size: 1px;
+  background: currentColor;
+  transition: transform var(--inx-transition);
+}
+.nx-acc__sign::after { transform: rotate(90deg); }
+.nx-acc__btn[aria-expanded="true"] .nx-acc__sign::after { transform: rotate(0deg); }
+
+.nx-acc__panel {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows var(--inx-duration-slow) var(--inx-ease);
+}
+.nx-acc__panel.is-open { grid-template-rows: 1fr; }
+.nx-acc__panel > div { overflow: hidden; }
+.nx-acc__panel p {
+  margin: 0;
+  padding-block-end: var(--inx-space-6);
+  max-inline-size: 62ch;
+  font-size: var(--inx-text-sm);
+  line-height: var(--inx-leading-normal);
+  color: var(--inx-text-muted);
+}
+
+
+/* -----------------------------------------------------------------------------
+   LENIS — approved as an amendment to the build spec by the client.
+   Off entirely under prefers-reduced-motion.
+   -------------------------------------------------------------------------- */
+
+html.lenis, html.lenis body { block-size: auto; }
+.lenis.lenis-smooth { scroll-behavior: auto !important; }
+.lenis.lenis-stopped { overflow: hidden; }
