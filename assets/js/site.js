@@ -1,25 +1,27 @@
 /* =============================================================================
    iNexa — site behaviour
+   Built to the website build specification's motion rules: opacity reveals
+   with a vertical entrance of no more than 12px, tab-panel fades, drawer and
+   accordion transitions. Nothing exceeds the slow duration token, nothing
+   loops, and nothing drives the scroll position.
 
-   Progressive enhancement only. With JavaScript disabled the page is still
-   complete and readable: the reveal styles are removed by the no-js guard at
-   the top, the accordion panels fall back to open, and every link still works.
+   Progressive enhancement only: with JavaScript disabled the page is complete
+   and readable — reveals are neutralised by the no-js guard, every service
+   panel is open, and all navigation links still work.
    ========================================================================== */
 
 (function () {
   'use strict';
 
   var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var desktop = window.matchMedia('(min-width: 1024px)');
 
   /* ---------------------------------------------------------------------
      SCROLL REVEAL
-     One observer for the whole page. Elements declare their own stagger
-     through data-stagger on a parent; the delay is written to a custom
-     property so the duration and easing stay in the token layer.
      ------------------------------------------------------------------ */
 
   function initReveal() {
-    var targets = document.querySelectorAll('[data-reveal], [data-reveal-group]');
+    var targets = document.querySelectorAll('[data-reveal]');
 
     document.querySelectorAll('[data-stagger]').forEach(function (group) {
       var step = parseInt(group.getAttribute('data-stagger'), 10) || 60;
@@ -39,78 +41,21 @@
         entry.target.classList.add('is-in');
         io.unobserve(entry.target);
       });
-    }, { rootMargin: '0px 0px -12% 0px', threshold: 0.12 });
+    }, { rootMargin: '0px 0px -10% 0px', threshold: 0.1 });
 
     targets.forEach(function (el) { io.observe(el); });
   }
 
   /* ---------------------------------------------------------------------
-     COUNTERS
-     Numbers count up once, on entry. The prefix/suffix stay in the markup
-     so the real value is present for search engines and screen readers.
-     ------------------------------------------------------------------ */
-
-  function initCounters() {
-    var counters = document.querySelectorAll('[data-count]');
-    if (!counters.length) return;
-
-    if (!('IntersectionObserver' in window) || reduced) return;
-
-    var io = new IntersectionObserver(function (entries) {
-      entries.forEach(function (entry) {
-        if (!entry.isIntersecting) return;
-        run(entry.target);
-        io.unobserve(entry.target);
-      });
-    }, { threshold: 0.6 });
-
-    counters.forEach(function (el) { io.observe(el); });
-
-    function run(el) {
-      var target = parseFloat(el.getAttribute('data-count'));
-      var decimals = parseInt(el.getAttribute('data-decimals'), 10) || 0;
-      var started = null;
-      var duration = 900;
-
-      function frame(now) {
-        if (started === null) started = now;
-        var p = Math.min((now - started) / duration, 1);
-        // Matches --inx-ease-out in feel: decisive, settles without bouncing.
-        var eased = 1 - Math.pow(1 - p, 3);
-        el.textContent = (target * eased).toLocaleString('en-GB', {
-          minimumFractionDigits: decimals,
-          maximumFractionDigits: decimals
-        });
-        if (p < 1) requestAnimationFrame(frame);
-      }
-
-      requestAnimationFrame(frame);
-    }
-  }
-
-  /* ---------------------------------------------------------------------
-     NAVIGATION
+     NAVIGATION — solid surface after scroll; no blur (spec §11.2)
      ------------------------------------------------------------------ */
 
   function initNav() {
     var nav = document.querySelector('[data-nav]');
-    var progress = document.querySelector('[data-progress]');
-    var toggle = document.querySelector('[data-drawer-toggle]');
-    var drawer = document.querySelector('[data-drawer]');
-    var menuBtn = document.querySelector('[data-menu-toggle]');
-    var menu = document.querySelector('[data-menu]');
     var ticking = false;
 
     function onScroll() {
-      var y = window.scrollY || window.pageYOffset;
-
-      if (nav) nav.classList.toggle('is-stuck', y > 24);
-
-      if (progress) {
-        var max = document.documentElement.scrollHeight - window.innerHeight;
-        progress.style.transform = 'scaleX(' + (max > 0 ? Math.min(y / max, 1) : 0) + ')';
-      }
-
+      if (nav) nav.classList.toggle('is-stuck', (window.scrollY || 0) > 24);
       ticking = false;
     }
 
@@ -121,74 +66,44 @@
     }, { passive: true });
 
     onScroll();
-
-    /* Services panel — click to open, so it is reachable by keyboard and
-       usable on touch. Escape and outside-click both close it. */
-    if (menuBtn && menu) {
-      var closeMenu = function () {
-        menu.classList.remove('is-open');
-        menuBtn.setAttribute('aria-expanded', 'false');
-      };
-
-      menuBtn.addEventListener('click', function (e) {
-        e.stopPropagation();
-        var open = menuBtn.getAttribute('aria-expanded') === 'true';
-        menu.classList.toggle('is-open', !open);
-        menuBtn.setAttribute('aria-expanded', String(!open));
-      });
-
-      document.addEventListener('click', function (e) {
-        if (!menu.contains(e.target) && e.target !== menuBtn) closeMenu();
-      });
-
-      document.addEventListener('keydown', function (e) {
-        if (e.key === 'Escape') { closeMenu(); menuBtn.focus(); }
-      });
-
-      menu.addEventListener('click', function (e) {
-        if (e.target.closest('a')) closeMenu();
-      });
-    }
-
-    /* Mobile drawer. The drawer sits above the navigation, so it carries its
-       own close control rather than relying on the button that opened it. */
-    var toggles = document.querySelectorAll('[data-drawer-toggle]');
-
-    if (toggles.length && drawer) {
-      var setDrawer = function (open) {
-        drawer.classList.toggle('is-open', open);
-        toggles.forEach(function (btn) { btn.setAttribute('aria-expanded', String(open)); });
-        document.body.style.overflow = open ? 'hidden' : '';
-        if (open) {
-          var first = drawer.querySelector('[data-drawer-close]');
-          if (first) first.focus();
-        } else if (toggle) {
-          toggle.focus();
-        }
-      };
-
-      toggles.forEach(function (btn) {
-        btn.addEventListener('click', function () {
-          setDrawer(btn.getAttribute('aria-expanded') !== 'true');
-        });
-      });
-
-      var closeBtn = drawer.querySelector('[data-drawer-close]');
-      if (closeBtn) closeBtn.addEventListener('click', function () { setDrawer(false); });
-
-      drawer.addEventListener('click', function (e) {
-        if (e.target.closest('a')) setDrawer(false);
-      });
-
-      document.addEventListener('keydown', function (e) {
-        if (e.key === 'Escape' && drawer.classList.contains('is-open')) setDrawer(false);
-      });
-    }
   }
 
   /* ---------------------------------------------------------------------
-     SECTION TRACKING
-     Marks the current section in the navbar as the page scrolls.
+     MOBILE DRAWER
+     ------------------------------------------------------------------ */
+
+  function initDrawer() {
+    var drawer = document.querySelector('[data-drawer]');
+    var toggles = document.querySelectorAll('[data-drawer-toggle]');
+    if (!drawer || !toggles.length) return;
+
+    function setDrawer(open) {
+      drawer.classList.toggle('is-open', open);
+      toggles.forEach(function (btn) { btn.setAttribute('aria-expanded', String(open)); });
+      document.body.style.overflow = open ? 'hidden' : '';
+    }
+
+    toggles.forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        setDrawer(btn.getAttribute('aria-expanded') !== 'true');
+      });
+    });
+
+    var closeBtn = drawer.querySelector('[data-drawer-close]');
+    if (closeBtn) closeBtn.addEventListener('click', function () { setDrawer(false); });
+
+    drawer.addEventListener('click', function (e) {
+      if (e.target.closest('a')) setDrawer(false);
+    });
+
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && drawer.classList.contains('is-open')) setDrawer(false);
+    });
+  }
+
+  /* ---------------------------------------------------------------------
+     SECTION TRACKING — marks the current section in the header.
+     The marker is an underline: position, not colour alone.
      ------------------------------------------------------------------ */
 
   function initSectionTracking() {
@@ -199,10 +114,6 @@
       .map(function (link) { return document.querySelector(link.getAttribute('href')); })
       .filter(Boolean);
 
-    var clear = function () {
-      links.forEach(function (link) { link.removeAttribute('aria-current'); });
-    };
-
     var io = new IntersectionObserver(function (entries) {
       entries.forEach(function (entry) {
         if (!entry.isIntersecting) return;
@@ -210,123 +121,126 @@
           link.setAttribute('aria-current', String(link.getAttribute('href') === '#' + entry.target.id));
         });
       });
-    }, { rootMargin: '-45% 0px -50% 0px' });
+    }, { rootMargin: '-40% 0px -55% 0px' });
 
     sections.forEach(function (s) { io.observe(s); });
 
-    /* While the hero still fills the screen the reader is not "in" any of the
-       tracked sections, so nothing should be marked as current. */
     window.addEventListener('scroll', function () {
-      if (window.scrollY < window.innerHeight * 0.6) clear();
+      if ((window.scrollY || 0) < window.innerHeight * 0.5) {
+        links.forEach(function (link) { link.removeAttribute('aria-current'); });
+      }
     }, { passive: true });
   }
 
   /* ---------------------------------------------------------------------
-     ACCORDION
+     SERVICES — one DOM, two behaviours (spec §13.4).
+     Desktop: a vertical rail where exactly one panel is open, tab-style.
+     Below 1024px: an accordion where the open item can also be closed.
+     Disclosure semantics (aria-expanded + region) work for both.
      ------------------------------------------------------------------ */
 
-  function initAccordion() {
-    document.querySelectorAll('[data-acc]').forEach(function (group) {
-      var buttons = group.querySelectorAll('.nx-acc__btn');
+  function initServices() {
+    document.querySelectorAll('[data-svc]').forEach(function (group) {
+      var tabs = Array.prototype.slice.call(group.querySelectorAll('.nx-svc__tab'));
 
-      buttons.forEach(function (btn) {
-        var panel = document.getElementById(btn.getAttribute('aria-controls'));
-        if (!panel) return;
+      function panelOf(tab) {
+        return document.getElementById(tab.getAttribute('aria-controls'));
+      }
 
-        // Collapse everything first — the markup ships open for the no-JS case.
-        var startOpen = btn.getAttribute('aria-expanded') === 'true';
-        panel.classList.toggle('is-open', startOpen);
+      function open(tab) {
+        tabs.forEach(function (other) {
+          var on = other === tab;
+          other.setAttribute('aria-expanded', String(on));
+          var p = panelOf(other);
+          if (p) p.hidden = !on;
+        });
+      }
 
-        btn.addEventListener('click', function () {
-          var open = btn.getAttribute('aria-expanded') === 'true';
+      function collapse(tab) {
+        tab.setAttribute('aria-expanded', 'false');
+        var p = panelOf(tab);
+        if (p) p.hidden = true;
+      }
 
-          buttons.forEach(function (other) {
-            var otherPanel = document.getElementById(other.getAttribute('aria-controls'));
-            other.setAttribute('aria-expanded', 'false');
-            if (otherPanel) otherPanel.classList.remove('is-open');
-          });
+      tabs.forEach(function (tab, i) {
+        tab.addEventListener('click', function () {
+          var isOpen = tab.getAttribute('aria-expanded') === 'true';
+          if (isOpen && !desktop.matches) { collapse(tab); return; }
+          open(tab);
+        });
 
-          if (!open) {
-            btn.setAttribute('aria-expanded', 'true');
-            panel.classList.add('is-open');
-          }
+        /* Arrow-key movement along the rail (spec §19). */
+        tab.addEventListener('keydown', function (e) {
+          var d = e.key === 'ArrowDown' || e.key === 'ArrowRight' ? 1 :
+                  e.key === 'ArrowUp'   || e.key === 'ArrowLeft'  ? -1 : 0;
+          if (!d) return;
+          e.preventDefault();
+          var next = tabs[(i + d + tabs.length) % tabs.length];
+          next.focus();
+          if (desktop.matches) open(next);
         });
       });
+
+      /* The markup ships fully open for the no-JS case; collapse to the
+         first service once behaviour is attached. */
+      open(tabs[0]);
+
+      /* Returning to desktop must never leave everything closed. */
+      var onChange = function () {
+        if (desktop.matches && !tabs.some(function (t) { return t.getAttribute('aria-expanded') === 'true'; })) {
+          open(tabs[0]);
+        }
+      };
+      if (desktop.addEventListener) desktop.addEventListener('change', onChange);
     });
   }
 
   /* ---------------------------------------------------------------------
-     MARQUEE
-     Duplicates the track so the loop has no visible seam.
+     TABS — the operational interface mockups (hero, systems view).
+     Approved tab-panel fade; aria-selected carries the state.
      ------------------------------------------------------------------ */
 
-  function initMarquee() {
-    document.querySelectorAll('[data-marquee]').forEach(function (el) {
-      var track = el.querySelector('.nx-marquee__track');
-      if (!track || reduced) return;
-      var clone = track.cloneNode(true);
-      clone.setAttribute('aria-hidden', 'true');
-      el.appendChild(clone);
+  function initTabs() {
+    document.querySelectorAll('[data-tabs]').forEach(function (group) {
+      var tabs = Array.prototype.slice.call(group.querySelectorAll('[role="tab"]'));
+
+      function select(tab) {
+        tabs.forEach(function (other) {
+          var on = other === tab;
+          other.setAttribute('aria-selected', String(on));
+          other.setAttribute('tabindex', on ? '0' : '-1');
+          var p = document.getElementById(other.getAttribute('aria-controls'));
+          if (p) p.hidden = !on;
+        });
+      }
+
+      tabs.forEach(function (tab, i) {
+        tab.addEventListener('click', function () { select(tab); });
+        tab.addEventListener('keydown', function (e) {
+          var d = e.key === 'ArrowRight' ? 1 : e.key === 'ArrowLeft' ? -1 : 0;
+          if (!d) return;
+          e.preventDefault();
+          var next = tabs[(i + d + tabs.length) % tabs.length];
+          next.focus();
+          select(next);
+        });
+      });
+
+      select(tabs[0]);
     });
-  }
-
-  /* ---------------------------------------------------------------------
-     SMOOTH SCROLL
-     Lenis interpolates the scroll position rather than jumping to it. It is
-     the single largest contributor to how expensive a page of this kind
-     feels, and it costs about 3KB.
-
-     It is switched off entirely under prefers-reduced-motion: smoothed
-     scrolling overrides the operating system's own scroll physics, which is
-     exactly what someone setting that preference is asking us not to do.
-     ------------------------------------------------------------------ */
-
-  function initSmoothScroll() {
-    if (reduced || typeof window.Lenis !== 'function') return null;
-
-    var lenis = new window.Lenis({
-      duration: 1.05,
-      // Matches --inx-ease-out in character: decisive, settles, never bounces.
-      easing: function (t) { return Math.min(1, 1.001 - Math.pow(2, -10 * t)); },
-      smoothWheel: true,
-      touchMultiplier: 1.6
-    });
-
-    function raf(time) {
-      lenis.raf(time);
-      requestAnimationFrame(raf);
-    }
-    requestAnimationFrame(raf);
-
-    /* Native anchor jumps and Lenis fight each other, so in-page links are
-       handed to Lenis and the fixed navigation height is offset. */
-    document.addEventListener('click', function (e) {
-      var link = e.target.closest('a[href^="#"]');
-      if (!link) return;
-      var id = link.getAttribute('href');
-      if (!id || id === '#') return;
-      var target = document.querySelector(id);
-      if (!target) return;
-      e.preventDefault();
-      lenis.scrollTo(target, { offset: -80 });
-    });
-
-    return lenis;
   }
 
   /* ------------------------------------------------------------------ */
 
   function boot() {
     document.documentElement.classList.remove('no-js');
-    initSmoothScroll();
     initNav();
+    initDrawer();
     initReveal();
-    initCounters();
-    initAccordion();
-    initMarquee();
+    initServices();
+    initTabs();
     initSectionTracking();
 
-    // Releases the hero's masked headline once styles have settled.
     requestAnimationFrame(function () {
       document.body.classList.add('is-ready');
     });
