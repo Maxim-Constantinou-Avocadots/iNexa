@@ -44,6 +44,24 @@
       <path fill="var(--inx-logo-mark, #5E738A)" d="M1020.64,558.4c3.28,3.07,3.35,8.23.2,11.39l-26.31,26.31c-.43.43-.99.66-1.59.66h-13.48l30.17-38.16c1.39-1.39,2.15-3.21,2.15-5.17s-.76-3.77-2.14-5.15l-30.96-38.18h15.19l28.82,28.82c2.64,2.64,2.17,6.37-.87,8.54-2.74,1.95-3.83,5.39-2.61,8.7.31.84.79,1.62,1.44,2.23Z"/>
     </g>
   </symbol>
+
+  <!-- Icon set: 24px grid, 1.5 stroke, round caps. Line only — no fills, so
+       an icon can never introduce a second colour. -->
+  <symbol id="i-grid" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></symbol>
+  <symbol id="i-flow" viewBox="0 0 24 24"><path d="M3 8h9M17 8h4M3 16h4M12 16h9"/><circle cx="14.5" cy="8" r="2.4"/><circle cx="9.5" cy="16" r="2.4"/></symbol>
+  <symbol id="i-nodes" viewBox="0 0 24 24"><circle cx="12" cy="12" r="2.4"/><circle cx="12" cy="3.6" r="2.1"/><circle cx="4.8" cy="19.6" r="2.1"/><circle cx="19.2" cy="19.6" r="2.1"/><path d="M12 5.7v3.9M10.1 13.6l-3.6 4.2M13.9 13.6l3.6 4.2"/></symbol>
+  <symbol id="i-chart" viewBox="0 0 24 24"><path d="M3 21h18"/><path d="M4 21V10M9.5 21V4M15 21v-7M20.5 21V8"/></symbol>
+  <symbol id="i-unlink" viewBox="0 0 24 24"><path d="M9.5 14.5L7 17a3.5 3.5 0 01-5-5l2.5-2.5"/><path d="M14.5 9.5L17 7a3.5 3.5 0 015 5l-2.5 2.5"/><path d="M4 4l2 2M20 20l-2-2M12 3v2M3 12h2"/></symbol>
+  <symbol id="i-eye" viewBox="0 0 24 24"><path d="M3.5 12s3.4-5.8 8.5-5.8c1.6 0 3 .55 4.2 1.3M20.5 12s-1.1 1.9-3 3.5"/><path d="M9.9 9.9a3 3 0 004.2 4.2"/><path d="M4 4l16 16"/><path d="M12.6 17.75c-4.6-.3-7.7-4.5-8.4-5.75"/></symbol>
+  <symbol id="i-repeat" viewBox="0 0 24 24"><path d="M4 8h13a3 3 0 013 3v1"/><path d="M20 16H7a3 3 0 01-3-3v-1"/><path d="M17 5l3 3-3 3M7 19l-3-3 3-3"/></symbol>
+  <symbol id="i-hourglass" viewBox="0 0 24 24"><path d="M7 3h10M7 21h10"/><path d="M7 3c0 4 5 5.5 5 9s-5 5-5 9M17 3c0 4-5 5.5-5 9s5 5 5 9"/></symbol>
+  <symbol id="i-search" viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.2 15.2L21 21"/></symbol>
+  <symbol id="i-draft" viewBox="0 0 24 24"><path d="M5 3h9l5 5v13a1 1 0 01-1 1H5a1 1 0 01-1-1V4a1 1 0 011-1z"/><path d="M14 3v5h5M8 13h8M8 17h5"/></symbol>
+  <symbol id="i-build" viewBox="0 0 24 24"><path d="M3 20h18"/><path d="M6 20V9l6-4 6 4v11"/><path d="M10 20v-5h4v5"/></symbol>
+  <symbol id="i-pulse" viewBox="0 0 24 24"><path d="M2 12h4l3-8 5 16 3-8h5"/></symbol>
+  <symbol id="i-arrow-right" viewBox="0 0 24 24"><path d="M4 12h15M13 6l6 6-6 6"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="M4 12.5l5 5L20 6.5"/></symbol>
+  <symbol id="i-linkedin" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M7 10v7M7 7v.01M11.5 17v-4a2.5 2.5 0 015 0v4"/><path d="M11.5 10v7"/></symbol>
 </svg>
 
 <a class="nx-skip" href="#main">Skip to content</a>
@@ -99,7 +117,7 @@
 <main id="main">
 
 <!-- 1 · HERO -->
-<section class="nx-hero inx-on-ink" id="top">
+<section class="nx-hero inx-on-ink nx-atmos" id="top">
   <div class="nx-shell nx-rail">
     <p class="inx-eyebrow inx-eyebrow--accent inx-eyebrow--rule" data-reveal>Operational management</p>
 
@@ -116,60 +134,21 @@
             organisations — managed, so leadership can move forward.
           </p>
           <div class="nx-hero__actions" data-reveal>
-            <a class="inx-btn inx-btn--primary inx-btn--lg" href="#contact">Book a strategy call</a>
+            <a class="inx-btn inx-btn--primary inx-btn--lg" href="#contact">Book a strategy call <svg class="nx-icon nx-icon--sm" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-arrow-right"></use></svg></a>
             <a class="inx-btn inx-btn--secondary inx-btn--lg" href="#services">View services</a>
           </div>
         </div>
       </div>
 
       <div class="nx-span-7">
-        <div class="nx-ui" data-reveal>
-          <div class="nx-ui__head">
-            <p class="inx-eyebrow">Operational view</p>
-            <span class="inx-pill">Sample</span>
-          </div>
-          <div class="inx-tabs nx-ui__tabs" role="tablist" aria-label="Operational view" data-tabs>
-            <button class="inx-tab" role="tab" id="hero-t1" aria-controls="hero-p1" aria-selected="true">Overview</button>
-            <button class="inx-tab" role="tab" id="hero-t2" aria-controls="hero-p2" aria-selected="false">Workflows</button>
-            <button class="inx-tab" role="tab" id="hero-t3" aria-controls="hero-p3" aria-selected="false">Integrations</button>
-          </div>
-          <div class="nx-ui__body">
-            <div class="nx-ui__panel" id="hero-p1" role="tabpanel" aria-labelledby="hero-t1">
-              <table class="inx-table">
-                <caption class="nx-visually-hidden">Operational overview by business area</caption>
-                <thead><tr><th scope="col">Business area</th><th scope="col">Owner</th><th scope="col">Status</th></tr></thead>
-                <tbody>
-                  <tr><td>Order processing</td><td>Operations</td><td><span class="inx-pill inx-pill--success"><span class="inx-pill__dot"></span>On track</span></td></tr>
-                  <tr><td>Month-end close</td><td>Finance</td><td><span class="inx-pill inx-pill--success"><span class="inx-pill__dot"></span>On track</span></td></tr>
-                  <tr><td>Supplier onboarding</td><td>Procurement</td><td><span class="inx-pill inx-pill--warning"><span class="inx-pill__dot"></span>Needs owner</span></td></tr>
-                </tbody>
-              </table>
-            </div>
-            <div class="nx-ui__panel" id="hero-p2" role="tabpanel" aria-labelledby="hero-t2" hidden>
-              <table class="inx-table">
-                <caption class="nx-visually-hidden">Workflow status</caption>
-                <thead><tr><th scope="col">Workflow</th><th scope="col">State</th><th scope="col">Status</th></tr></thead>
-                <tbody>
-                  <tr><td>Client onboarding</td><td>Documented · owned</td><td><span class="inx-pill inx-pill--success"><span class="inx-pill__dot"></span>Active</span></td></tr>
-                  <tr><td>Invoice approval</td><td>Documented · owned</td><td><span class="inx-pill inx-pill--success"><span class="inx-pill__dot"></span>Active</span></td></tr>
-                  <tr><td>Quarterly reporting</td><td>In design</td><td><span class="inx-pill inx-pill--info"><span class="inx-pill__dot"></span>In progress</span></td></tr>
-                </tbody>
-              </table>
-            </div>
-            <div class="nx-ui__panel" id="hero-p3" role="tabpanel" aria-labelledby="hero-t3" hidden>
-              <table class="inx-table">
-                <caption class="nx-visually-hidden">Integration health</caption>
-                <thead><tr><th scope="col">Connection</th><th scope="col">Exchanges</th><th scope="col">Status</th></tr></thead>
-                <tbody>
-                  <tr><td>Finance ↔ operational view</td><td>Invoices, payments</td><td><span class="inx-pill inx-pill--success"><span class="inx-pill__dot"></span>Connected</span></td></tr>
-                  <tr><td>CRM ↔ operational view</td><td>Clients, pipeline</td><td><span class="inx-pill inx-pill--success"><span class="inx-pill__dot"></span>Connected</span></td></tr>
-                  <tr><td>Projects ↔ operational view</td><td>Delivery status</td><td><span class="inx-pill inx-pill--info"><span class="inx-pill__dot"></span>Scheduled</span></td></tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-          <p class="nx-ui__foot">Weekly operating report · prepared for the leadership team</p>
-        </div>
+        <!-- Photography principle 1: Executive Leadership (Brand Guidelines
+             p37). The billboard application (p47) sets this composition —
+             ink panel left, photograph right. -->
+        <figure class="nx-photo nx-photo--hero" data-reveal style="margin:0">
+          <img src="assets/img/leadership.jpg" width="1400" height="1000"
+               alt="Leadership team reviewing work together in an open office">
+          <figcaption class="nx-photo__tag">Executive leadership</figcaption>
+        </figure>
       </div>
     </div>
   </div>
@@ -235,18 +214,22 @@
 
     <div class="nx-cells nx-challenge" data-stagger="60">
       <div data-reveal>
+        <span class="nx-icon-well"><svg class="nx-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-unlink"></use></svg></span>
         <h3>Disconnected systems</h3>
         <p>Tools operate in isolation, bridged by exports and re-keying.</p>
       </div>
       <div data-reveal>
+        <span class="nx-icon-well"><svg class="nx-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-eye"></use></svg></span>
         <h3>Limited visibility</h3>
         <p>The operational picture arrives late, and differently each time.</p>
       </div>
       <div data-reveal>
+        <span class="nx-icon-well"><svg class="nx-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-repeat"></use></svg></span>
         <h3>Manual workflows</h3>
         <p>Processes depend on memory and follow-up rather than structure.</p>
       </div>
       <div data-reveal>
+        <span class="nx-icon-well"><svg class="nx-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-hourglass"></use></svg></span>
         <h3>Leadership bottlenecks</h3>
         <p>Decisions queue behind whoever holds the operational detail.</p>
       </div>
@@ -273,6 +256,7 @@
 
     <div class="nx-cells nx-challenge" data-stagger="70">
       <div data-reveal>
+        <span class="nx-icon-well"><svg class="nx-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-grid"></use></svg></span>
         <h3>Operations management</h3>
         <p>Ongoing ownership of the routines, hand-offs and reporting.</p>
         <div class="nx-mini" style="margin-block-start:var(--inx-space-5)">
@@ -282,6 +266,7 @@
         </div>
       </div>
       <div data-reveal>
+        <span class="nx-icon-well"><svg class="nx-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-flow"></use></svg></span>
         <h3>Workflow optimisation</h3>
         <p>Workflows mapped, simplified, then documented — before automation.</p>
         <div class="nx-mini" style="margin-block-start:var(--inx-space-5)">
@@ -291,6 +276,7 @@
         </div>
       </div>
       <div data-reveal>
+        <span class="nx-icon-well"><svg class="nx-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-nodes"></use></svg></span>
         <h3>Systems integration</h3>
         <p>The tools you already run, connected into one operating picture.</p>
         <div class="nx-mini" style="margin-block-start:var(--inx-space-5)">
@@ -300,6 +286,7 @@
         </div>
       </div>
       <div data-reveal>
+        <span class="nx-icon-well"><svg class="nx-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-chart"></use></svg></span>
         <h3>Strategic support</h3>
         <p>Planning and decision support grounded in how the work actually runs.</p>
         <div class="nx-mini" style="margin-block-start:var(--inx-space-5)">
@@ -383,45 +370,56 @@
       </div>
     </div>
 
+    <div class="nx-grid" style="margin-block-end:var(--inx-space-8)">
+      <div class="nx-span-12">
+        <!-- Photography principle 3: Operational Confidence (p39). -->
+        <figure class="nx-photo" style="margin:0; aspect-ratio:21/6" data-reveal>
+          <img src="assets/img/operations.jpg" width="1200" height="900" loading="lazy"
+               alt="A team working with focus in a calm, organised office">
+          <figcaption class="nx-photo__tag">Operational confidence</figcaption>
+        </figure>
+      </div>
+    </div>
+
     <div class="nx-steps" data-stagger="70">
       <div class="nx-step" data-reveal>
-        <span class="nx-step__num">Step 01</span>
+        <span class="nx-step__head"><svg class="nx-icon nx-icon--sm" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-search"></use></svg><span class="nx-step__num">Step 01</span></span>
         <h3 class="nx-step__title">Assess</h3>
         <p class="nx-step__desc">How the organisation actually runs today.</p>
         <ul class="nx-step__out">
-          <li>Operational review</li>
-          <li>Process mapping</li>
-          <li>Priority assessment</li>
+          <li><span class="nx-list-icon"><svg class="nx-icon nx-icon--sm" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-check"></use></svg><span>Operational review</span></span></li>
+          <li><span class="nx-list-icon"><svg class="nx-icon nx-icon--sm" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-check"></use></svg><span>Process mapping</span></span></li>
+          <li><span class="nx-list-icon"><svg class="nx-icon nx-icon--sm" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-check"></use></svg><span>Priority assessment</span></span></li>
         </ul>
       </div>
       <div class="nx-step" data-reveal>
-        <span class="nx-step__num">Step 02</span>
+        <span class="nx-step__head"><svg class="nx-icon nx-icon--sm" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-draft"></use></svg><span class="nx-step__num">Step 02</span></span>
         <h3 class="nx-step__title">Design</h3>
         <p class="nx-step__desc">The operating structure growth requires, in writing.</p>
         <ul class="nx-step__out">
-          <li>Operating model</li>
-          <li>Integration plan</li>
-          <li>Implementation roadmap</li>
+          <li><span class="nx-list-icon"><svg class="nx-icon nx-icon--sm" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-check"></use></svg><span>Operating model</span></span></li>
+          <li><span class="nx-list-icon"><svg class="nx-icon nx-icon--sm" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-check"></use></svg><span>Integration plan</span></span></li>
+          <li><span class="nx-list-icon"><svg class="nx-icon nx-icon--sm" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-check"></use></svg><span>Implementation roadmap</span></span></li>
         </ul>
       </div>
       <div class="nx-step" data-reveal>
-        <span class="nx-step__num">Step 03</span>
+        <span class="nx-step__head"><svg class="nx-icon nx-icon--sm" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-build"></use></svg><span class="nx-step__num">Step 03</span></span>
         <h3 class="nx-step__title">Implement</h3>
         <p class="nx-step__desc">Structure in place, without stopping the business.</p>
         <ul class="nx-step__out">
-          <li>Process rollout</li>
-          <li>System configuration</li>
-          <li>Team enablement</li>
+          <li><span class="nx-list-icon"><svg class="nx-icon nx-icon--sm" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-check"></use></svg><span>Process rollout</span></span></li>
+          <li><span class="nx-list-icon"><svg class="nx-icon nx-icon--sm" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-check"></use></svg><span>System configuration</span></span></li>
+          <li><span class="nx-list-icon"><svg class="nx-icon nx-icon--sm" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-check"></use></svg><span>Team enablement</span></span></li>
         </ul>
       </div>
       <div class="nx-step" data-reveal>
-        <span class="nx-step__num">Step 04</span>
+        <span class="nx-step__head"><svg class="nx-icon nx-icon--sm" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-pulse"></use></svg><span class="nx-step__num">Step 04</span></span>
         <h3 class="nx-step__title">Manage</h3>
         <p class="nx-step__desc">Run and improve, as an ongoing partnership.</p>
         <ul class="nx-step__out">
-          <li>Ongoing oversight</li>
-          <li>Reporting</li>
-          <li>Continuous improvement</li>
+          <li><span class="nx-list-icon"><svg class="nx-icon nx-icon--sm" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-check"></use></svg><span>Ongoing oversight</span></span></li>
+          <li><span class="nx-list-icon"><svg class="nx-icon nx-icon--sm" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-check"></use></svg><span>Reporting</span></span></li>
+          <li><span class="nx-list-icon"><svg class="nx-icon nx-icon--sm" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-check"></use></svg><span>Continuous improvement</span></span></li>
         </ul>
       </div>
     </div>
@@ -478,6 +476,12 @@
       </div>
 
       <div class="nx-case__media">
+        <!-- Photography principle 2: Meaningful Collaboration (p38). -->
+        <figure class="nx-photo nx-photo--wide" style="margin:0 0 var(--inx-space-5)">
+          <img src="assets/img/collaboration.jpg" width="1200" height="900" loading="lazy"
+               alt="Two colleagues working through a problem together at a desk">
+          <figcaption class="nx-photo__tag">Meaningful collaboration</figcaption>
+        </figure>
         <div class="nx-ui">
           <div class="nx-ui__head">
             <p class="inx-eyebrow">Operational view</p>
@@ -648,10 +652,10 @@
         <p class="nx-price__figure">£12,000</p>
         <p class="nx-price__unit">Fixed fee · two weeks</p>
         <ul class="nx-price__list">
-          <li>End-to-end process map</li>
-          <li>Cycle-time and cost analysis</li>
-          <li>Prioritised findings</li>
-          <li>Board-ready written diagnostic</li>
+          <li><span class="nx-list-icon"><svg class="nx-icon nx-icon--sm" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-check"></use></svg><span>End-to-end process map</span></span></li>
+          <li><span class="nx-list-icon"><svg class="nx-icon nx-icon--sm" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-check"></use></svg><span>Cycle-time and cost analysis</span></span></li>
+          <li><span class="nx-list-icon"><svg class="nx-icon nx-icon--sm" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-check"></use></svg><span>Prioritised findings</span></span></li>
+          <li><span class="nx-list-icon"><svg class="nx-icon nx-icon--sm" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-check"></use></svg><span>Board-ready written diagnostic</span></span></li>
         </ul>
         <p class="nx-price__cta"><a class="inx-btn inx-btn--secondary inx-btn--block" href="#contact">Book a strategy call</a></p>
       </div>
@@ -660,10 +664,10 @@
         <p class="nx-price__figure">£9,500</p>
         <p class="nx-price__unit">Per month · minimum twelve months</p>
         <ul class="nx-price__list">
-          <li>Named operating lead, embedded</li>
-          <li>Weekly operating report</li>
-          <li>Integration build and monitoring</li>
-          <li>Quarterly operating-model review</li>
+          <li><span class="nx-list-icon"><svg class="nx-icon nx-icon--sm" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-check"></use></svg><span>Named operating lead, embedded</span></span></li>
+          <li><span class="nx-list-icon"><svg class="nx-icon nx-icon--sm" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-check"></use></svg><span>Weekly operating report</span></span></li>
+          <li><span class="nx-list-icon"><svg class="nx-icon nx-icon--sm" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-check"></use></svg><span>Integration build and monitoring</span></span></li>
+          <li><span class="nx-list-icon"><svg class="nx-icon nx-icon--sm" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-check"></use></svg><span>Quarterly operating-model review</span></span></li>
         </ul>
         <p class="nx-price__cta"><a class="inx-btn inx-btn--primary inx-btn--block" href="#contact">Book a strategy call</a></p>
       </div>
@@ -672,10 +676,10 @@
         <p class="nx-price__figure">Custom</p>
         <p class="nx-price__unit">Scoped per entity</p>
         <ul class="nx-price__list">
-          <li>Operating model across entities</li>
-          <li>Consolidated group reporting</li>
-          <li>Post-acquisition integration</li>
-          <li>Dedicated team, defined escalation</li>
+          <li><span class="nx-list-icon"><svg class="nx-icon nx-icon--sm" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-check"></use></svg><span>Operating model across entities</span></span></li>
+          <li><span class="nx-list-icon"><svg class="nx-icon nx-icon--sm" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-check"></use></svg><span>Consolidated group reporting</span></span></li>
+          <li><span class="nx-list-icon"><svg class="nx-icon nx-icon--sm" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-check"></use></svg><span>Post-acquisition integration</span></span></li>
+          <li><span class="nx-list-icon"><svg class="nx-icon nx-icon--sm" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-check"></use></svg><span>Dedicated team, defined escalation</span></span></li>
         </ul>
         <p class="nx-price__cta"><a class="inx-btn inx-btn--secondary inx-btn--block" href="#contact">Book a strategy call</a></p>
       </div>
@@ -704,17 +708,17 @@
       <a class="nx-post" href="#insights" data-reveal>
         <p class="nx-post__meta"><span>12 Jun 2026</span><span>Operating model</span></p>
         <h3 class="nx-post__title">Why automating a broken process makes it worse</h3>
-        <span class="nx-post__more inx-link">Read the note</span>
+        <span class="nx-post__more inx-link">Read the note <svg class="nx-icon nx-icon--sm" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-arrow-right"></use></svg></span>
       </a>
       <a class="nx-post" href="#insights" data-reveal>
         <p class="nx-post__meta"><span>28 May 2026</span><span>Reporting</span></p>
         <h3 class="nx-post__title">The month-end close is an operations problem</h3>
-        <span class="nx-post__more inx-link">Read the note</span>
+        <span class="nx-post__more inx-link">Read the note <svg class="nx-icon nx-icon--sm" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-arrow-right"></use></svg></span>
       </a>
       <a class="nx-post" href="#insights" data-reveal>
         <p class="nx-post__meta"><span>09 May 2026</span><span>Scale</span></p>
         <h3 class="nx-post__title">What actually breaks between fifty and two hundred people</h3>
-        <span class="nx-post__more inx-link">Read the note</span>
+        <span class="nx-post__more inx-link">Read the note <svg class="nx-icon nx-icon--sm" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-arrow-right"></use></svg></span>
       </a>
     </div>
   </div>
@@ -808,7 +812,7 @@
 <div class="nx-hatch nx-hatch--sunken" aria-hidden="true"><div class="nx-shell nx-rail"></div></div>
 
 <!-- 14 · CTA -->
-<section class="nx-cta inx-on-ink" id="contact">
+<section class="nx-cta inx-on-ink nx-atmos" id="contact">
   <div class="nx-shell nx-rail">
     <p class="inx-eyebrow inx-eyebrow--accent inx-eyebrow--rule" data-reveal>Start with clarity</p>
     <h2 class="nx-cta__title" data-reveal>Build the operational structure your next stage of growth requires.</h2>
@@ -818,7 +822,7 @@
         back — and the right place to begin.
       </p>
       <div class="nx-hero__actions" data-reveal>
-        <a class="inx-btn inx-btn--primary inx-btn--lg" href="mailto:hello@inexa.com">Book a strategy call</a>
+        <a class="inx-btn inx-btn--primary inx-btn--lg" href="mailto:hello@inexa.com">Book a strategy call <svg class="nx-icon nx-icon--sm" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-arrow-right"></use></svg></a>
         <a class="inx-btn inx-btn--secondary inx-btn--lg" href="mailto:hello@inexa.com">hello@inexa.com</a>
       </div>
       <p class="nx-cta__close" data-reveal>Operational clarity. Scalable growth.</p>
@@ -864,7 +868,7 @@
         <h3>Contact</h3>
         <ul>
           <li><a href="mailto:hello@inexa.com">hello@inexa.com</a></li>
-          <li><a href="#" aria-disabled="true">LinkedIn</a></li>
+          <li><a href="#" aria-disabled="true"><span class="nx-list-icon"><svg class="nx-icon nx-icon--sm" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-linkedin"></use></svg><span>LinkedIn</span></span></a></li>
           <li><a href="#contact">Book a strategy call</a></li>
         </ul>
       </div>

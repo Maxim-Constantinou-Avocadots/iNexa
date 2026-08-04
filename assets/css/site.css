@@ -1174,3 +1174,158 @@ body {
 html.lenis, html.lenis body { block-size: auto; }
 .lenis.lenis-smooth { scroll-behavior: auto !important; }
 .lenis.lenis-stopped { overflow: hidden; }
+
+
+/* =============================================================================
+   BRAND ATMOSPHERE, PHOTOGRAPHY AND ICONS
+   Added after reviewing Brand Guidelines v1.0 (50pp).
+
+   On gradients: the colour-misuse page (p28) rules out gradients, and that
+   rule is honoured — nothing here puts a gradient on type, a button, a card,
+   a table, a form control or the logo. But the manual's own artwork uses an
+   ink-to-blue atmosphere on every section-divider page (pp1, 4, 13, 22, 29,
+   34, 40, 45, 50), on the ID cards (p49) and behind the billboard (p47). The
+   ban therefore reads as colour *application*; the atmosphere is a background
+   treatment. assets/img/atmosphere.jpg is that exact artwork, lifted from the
+   manual rather than reinvented.
+   ========================================================================== */
+
+/* -----------------------------------------------------------------------------
+   ATMOSPHERE — the ink-to-blue background treatment.
+   Sits behind content at low opacity, never inside a component.
+   -------------------------------------------------------------------------- */
+
+/* The watermark is inset past the right edge by design, so the container
+   must clip it — otherwise it extends the document's scroll width. */
+.nx-atmos { position: relative; overflow: hidden; }
+
+.nx-atmos::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background-image: url("../img/atmosphere.jpg");
+  background-size: cover;
+  background-position: center 80%;
+  opacity: 0.85;
+  pointer-events: none;
+}
+
+/* The signifier, enlarged as a watermark — the device the ID cards use.
+   Flat fill, no effects, well under the contrast of anything above it. */
+.nx-atmos::after {
+  content: "";
+  position: absolute;
+  inset-block: 0;
+  inset-inline-end: -6%;
+  inline-size: 46%;
+  z-index: -1;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 93.86 86.66'%3E%3Cg transform='translate(-978.68,-510.10)' fill='none' stroke='%235E738A' stroke-width='0.75'%3E%3Cpath d='M1041.57,558.59l30.97,38.17h-14.27c-.6,0-1.16-.23-1.59-.66l-26.31-26.31c-3.09-3.09-3.09-8.11,0-11.2,3.19-3.2,2.8-8.63-1.18-11.27-2.84-1.88-3.09-5.98-.68-8.38l28.84-28.84h14.43l-30.19,38.17c-1.38,1.39-2.14,3.21-2.14,5.16s.76,3.78,2.13,5.16Z'/%3E%3Cpath d='M1020.64,558.4c3.28,3.07,3.35,8.23.2,11.39l-26.31,26.31c-.43.43-.99.66-1.59.66h-13.48l30.17-38.16c1.39-1.39,2.15-3.21,2.15-5.17s-.76-3.77-2.14-5.15l-30.96-38.18h15.19l28.82,28.82c2.64,2.64,2.17,6.37-.87,8.54-2.74,1.95-3.83,5.39-2.61,8.7.31.84.79,1.62,1.44,2.23Z'/%3E%3C/g%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  opacity: 0.18;
+  pointer-events: none;
+}
+
+@media (max-width: 900px) { .nx-atmos::after { display: none; } }
+
+
+/* -----------------------------------------------------------------------------
+   PHOTOGRAPHY — the manual's three principles (pp37–39).
+   Framed, never bled to the viewport edge, so the page frame still governs.
+   -------------------------------------------------------------------------- */
+
+.nx-photo {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--inx-radius-lg);
+  background: var(--inx-bg-sunken);
+}
+
+.nx-photo > img {
+  display: block;
+  inline-size: 100%;
+  block-size: 100%;
+  object-fit: cover;
+}
+
+.nx-photo--hero { aspect-ratio: 7 / 5; }
+.nx-photo--wide { aspect-ratio: 16 / 9; }
+.nx-photo--tall { aspect-ratio: 4 / 5; }
+
+/* Caption strip: names the principle the image is working to. */
+.nx-photo__tag {
+  position: absolute;
+  inset-block-end: var(--inx-space-4);
+  inset-inline-start: var(--inx-space-4);
+  padding: var(--inx-space-2) var(--inx-space-4);
+  border-radius: var(--inx-radius-pill);
+  background: rgba(7, 11, 20, 0.72);
+  color: var(--inx-n-0);
+  font-size: var(--inx-text-3xs);
+  font-weight: var(--inx-weight-semi);
+  text-transform: uppercase;
+  letter-spacing: var(--inx-tracking-caps);
+}
+
+
+/* -----------------------------------------------------------------------------
+   ICONS — 24px grid, 1.5 stroke, currentColor, round caps and joins.
+   Line only: no fills, no duotone, nothing that would read as another colour.
+   -------------------------------------------------------------------------- */
+
+.nx-icon {
+  inline-size: 24px;
+  block-size: 24px;
+  flex: none;
+  stroke: currentColor;
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  fill: none;
+}
+
+.nx-icon--lg { inline-size: 32px; block-size: 32px; stroke-width: 1.25; }
+.nx-icon--sm { inline-size: 18px; block-size: 18px; }
+
+/* Icon sitting in a bordered well — used at the head of a cell. */
+.nx-icon-well {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  inline-size: 48px;
+  block-size: 48px;
+  margin-block-end: var(--inx-space-5);
+  border: 1px solid var(--inx-border);
+  border-radius: var(--inx-radius-md);
+  color: var(--inx-accent);
+}
+
+/* Inline icon ahead of a list row */
+.nx-list-icon {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--inx-space-3);
+}
+.nx-list-icon .nx-icon { margin-block-start: 1px; color: var(--inx-accent); }
+
+/* Icon inside a button, allowed 4px of travel on hover (spec §9.2) */
+.inx-btn .nx-icon--sm { transition: transform var(--inx-duration-fast) var(--inx-ease); }
+.inx-btn:hover .nx-icon--sm { transform: translateX(4px); }
+
+/* Step head: icon and step number on one baseline. */
+.nx-step__head {
+  display: flex;
+  align-items: center;
+  gap: var(--inx-space-3);
+  margin-block-end: var(--inx-space-5);
+  color: var(--inx-accent);
+}
+.nx-step__head .nx-step__num { margin-block-end: 0; }
+
+/* Tick-led list rows keep their hairline separation. */
+.nx-step__out li,
+.nx-price__list li { display: block; }
+.nx-price__list .nx-list-icon .nx-icon,
+.nx-step__out .nx-list-icon .nx-icon { color: var(--inx-accent); }

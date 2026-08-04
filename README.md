@@ -52,6 +52,48 @@ The reference's structural signature, rebuilt with flat palette fills:
   select chevron. Bounded top and bottom by hairlines so the band reads as
   part of the frame rather than a texture leak.
 
+## Imagery, icons and the brand atmosphere
+
+Sourced from **Brand Guidelines v1.0 (50pp)**, not invented.
+
+**Photography** — the manual's three principles (pp36–39), lifted from the
+document itself and re-encoded for web:
+
+| Image | Principle | Where |
+|---|---|---|
+| `leadership.jpg` | Executive Leadership (p37) | Hero, right column |
+| `collaboration.jpg` | Meaningful Collaboration (p38) | Case study |
+| `operations.jpg` | Operational Confidence (p39) | How we work |
+
+The hero composition — ink panel left, photograph right — is taken from the
+billboard application on p47. Total image weight 384KB; the two below the
+fold are lazy-loaded.
+
+**The atmosphere.** `atmosphere.jpg` is the manual's own ink-to-blue
+artwork, used on every section-divider page (pp1, 4, 13, 22, 29, 34, 40, 45,
+50), on the ID cards (p49) and behind the billboard (p47). It sits behind
+the hero and the closing CTA, with the signifier enlarged as a watermark —
+the device the ID cards use.
+
+**On the gradient question.** The colour-misuse page (p28) lists "Do not use
+gradients", and that rule is kept: nothing on this site puts a gradient on
+type, a button, a card, a table, a form control or the logo. The manual's
+own artwork nonetheless uses the ink-to-blue atmosphere throughout, so the
+ban reads as governing colour *application*, not background treatment —
+exactly the interpretation the style guide flagged and the build spec (§16)
+asked to have confirmed. **This is now settled by the client's request for
+gradients and should be written into the guidelines**, since the misuse page
+currently contradicts the applications section.
+
+Contrast was measured against the rendered atmosphere rather than assumed:
+Pale Sky reads 12.55:1 behind the hero lead and 8.26:1 at the brightest
+sampled point — both far above the 4.5:1 floor.
+
+**Icons.** A 15-mark set on a 24px grid, 1.5 stroke, round caps, drawn as
+`<symbol>` and referenced with `<use>`. Line only, `currentColor` — an icon
+can never introduce a second colour. Every one is `aria-hidden`, since each
+sits beside a text label.
+
 ## Amendments to the build spec, approved by the client
 
 The MD's motion list does not cover these; they are kept deliberately and
