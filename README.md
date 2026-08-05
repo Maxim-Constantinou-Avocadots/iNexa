@@ -73,9 +73,14 @@ section-divider page (pp1, 4, 13, 22, 29, 34, 40, 45, 50), on the ID cards
 `radial-gradient`s rather than a raster, so it stays sharp at any viewport
 and costs nothing to download. Four variants: `--nx-atmos-hero` (lit from
 below), `--nx-atmos-cta` (lit from above), `--nx-atmos-band` (quieter,
-mid-page) and `--nx-atmos-light` (Platinum wash). The signifier is enlarged
-behind the hero and the closing CTA as a watermark — the device the ID cards
-use.
+mid-page) and `--nx-atmos-light` (Platinum wash).
+
+The ID cards' enlarged-signifier watermark (p49) was tried behind these
+sections and removed: the cards have no page frame, but this site does, and
+the mark's diagonals crossed the rails and hatch bands at arbitrary angles.
+Two structural systems competing for the same space read as noise, not
+depth. The signifier keeps its jobs in the header lockup and the dashboard
+chrome, where it sits at a legible size.
 
 **The hero.** Title, lead and buttons are a centred stack, with the
 operational dashboard below them — the whole composition on one vertical

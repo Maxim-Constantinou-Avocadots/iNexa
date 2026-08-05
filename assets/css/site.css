@@ -1250,25 +1250,13 @@ html.lenis, html.lenis body { block-size: auto; }
 .nx-atmos--band::before  { background: var(--nx-atmos-band); }
 .nx-atmos--light::before { background: var(--nx-atmos-light); }
 
-/* The signifier, enlarged as a watermark — the device the ID cards use. */
-.nx-atmos::after {
-  content: "";
-  position: absolute;
-  inset-block: -8%;
-  inset-inline-end: -8%;
-  inline-size: 52%;
-  z-index: -1;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 93.86 86.66'%3E%3Cg transform='translate(-978.68,-510.10)' fill='none' stroke='%235E738A' stroke-width='0.6'%3E%3Cpath d='M1041.57,558.59l30.97,38.17h-14.27c-.6,0-1.16-.23-1.59-.66l-26.31-26.31c-3.09-3.09-3.09-8.11,0-11.2,3.19-3.2,2.8-8.63-1.18-11.27-2.84-1.88-3.09-5.98-.68-8.38l28.84-28.84h14.43l-30.19,38.17c-1.38,1.39-2.14,3.21-2.14,5.16s.76,3.78,2.13,5.16Z'/%3E%3Cpath d='M1020.64,558.4c3.28,3.07,3.35,8.23.2,11.39l-26.31,26.31c-.43.43-.99.66-1.59.66h-13.48l30.17-38.16c1.39-1.39,2.15-3.21,2.15-5.17s-.76-3.77-2.14-5.15l-30.96-38.18h15.19l28.82,28.82c2.64,2.64,2.17,6.37-.87,8.54-2.74,1.95-3.83,5.39-2.61,8.7.31.84.79,1.62,1.44,2.23Z'/%3E%3C/g%3E%3C/svg%3E");
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: contain;
-  opacity: 0.16;
-  pointer-events: none;
-}
-
-.nx-atmos--light::after { opacity: 0.10; }
-
-@media (max-width: 900px) { .nx-atmos::after { display: none; } }
+/* No watermark here. The signifier was enlarged behind these sections — the
+   device the ID cards use — but the ID cards have no page frame to collide
+   with. On the site the mark's diagonals crossed the rails and the hatch
+   bands at arbitrary angles, and two structural systems fighting over the
+   same space read as noise rather than depth. The gradient carries the
+   atmosphere on its own; the signifier keeps its jobs in the header lockup
+   and the dashboard chrome, where it sits at a legible size. */
 
 
 /* -----------------------------------------------------------------------------
