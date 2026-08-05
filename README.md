@@ -61,19 +61,29 @@ document itself and re-encoded for web:
 
 | Image | Principle | Where |
 |---|---|---|
-| `leadership.jpg` | Executive Leadership (p37) | Hero, right column |
+| `leadership.jpg` | Executive Leadership (p37) | Why iNexa, full-bleed band |
 | `collaboration.jpg` | Meaningful Collaboration (p38) | Case study |
 | `operations.jpg` | Operational Confidence (p39) | How we work |
 
-The hero composition — ink panel left, photograph right — is taken from the
-billboard application on p47. Total image weight 384KB; the two below the
-fold are lazy-loaded.
+Total image weight 384KB; all three sit below the fold and are lazy-loaded.
 
-**The atmosphere.** `atmosphere.jpg` is the manual's own ink-to-blue
-artwork, used on every section-divider page (pp1, 4, 13, 22, 29, 34, 40, 45,
-50), on the ID cards (p49) and behind the billboard (p47). It sits behind
-the hero and the closing CTA, with the signifier enlarged as a watermark —
-the device the ID cards use.
+**The atmosphere.** The manual's ink-to-blue artwork — used on every
+section-divider page (pp1, 4, 13, 22, 29, 34, 40, 45, 50), on the ID cards
+(p49) and behind the billboard (p47) — is rebuilt as layered CSS
+`radial-gradient`s rather than a raster, so it stays sharp at any viewport
+and costs nothing to download. Four variants: `--nx-atmos-hero` (lit from
+below), `--nx-atmos-cta` (lit from above), `--nx-atmos-band` (quieter,
+mid-page) and `--nx-atmos-light` (Platinum wash). The signifier is enlarged
+behind the hero and the closing CTA as a watermark — the device the ID cards
+use.
+
+**The hero.** Title, lead and buttons are a centred stack, with the
+operational dashboard below them — the whole composition on one vertical
+axis. The dashboard is measured, not guessed: it sheds detail in steps as
+the viewport shortens (chart below 820px tall, side rail below 1024px wide,
+the aside and the table on phones, the figure meters on short phones) so
+that the next section is always reachable within 1.4 screens. Verified
+across thirteen viewports from 1920×1080 down to 360×640.
 
 **On the gradient question.** The colour-misuse page (p28) lists "Do not use
 gradients", and that rule is kept: nothing on this site puts a gradient on
@@ -86,8 +96,8 @@ gradients and should be written into the guidelines**, since the misuse page
 currently contradicts the applications section.
 
 Contrast was measured against the rendered atmosphere rather than assumed:
-Pale Sky reads 12.55:1 behind the hero lead and 8.26:1 at the brightest
-sampled point — both far above the 4.5:1 floor.
+Pale Sky never falls below 10.64:1 anywhere over the gradient — far above
+the 4.5:1 floor.
 
 **Icons.** A 15-mark set on a 24px grid, 1.5 stroke, round caps, drawn as
 `<symbol>` and referenced with `<use>`. Line only, `currentColor` — an icon

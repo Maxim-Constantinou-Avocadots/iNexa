@@ -296,12 +296,12 @@ body {
 .nx-hero {
   position: relative;
   isolation: isolate;
-  padding-block: calc(var(--inx-space-11) + var(--inx-space-8)) var(--inx-space-10);
+  padding-block: calc(80px + var(--inx-space-8)) var(--inx-space-7);
   overflow: hidden;
 }
 
 @media (max-width: 900px) {
-  .nx-hero { padding-block: calc(var(--inx-space-10) + var(--inx-space-6)) var(--inx-space-8); }
+  .nx-hero { padding-block: calc(72px + var(--inx-space-7)) var(--inx-space-7); }
 }
 
 .nx-hero__title {
@@ -309,7 +309,7 @@ body {
   font-weight: var(--inx-weight-regular);
   line-height: var(--inx-leading-display);
   letter-spacing: var(--inx-tracking-display);
-  margin: var(--inx-space-5) 0 0;
+  margin: var(--inx-space-4) 0 0;
 }
 
 /* Masked line reveal. Extra room below the mask stops descender cropping. */
@@ -331,7 +331,7 @@ body {
   font-size: var(--inx-text-md);
   line-height: var(--inx-leading-snug);
   color: var(--inx-text-muted);
-  margin: var(--inx-space-5) 0 0;
+  margin: var(--inx-space-4) 0 0;
   max-inline-size: var(--inx-measure);
 }
 
@@ -339,7 +339,7 @@ body {
   display: flex;
   flex-wrap: wrap;
   gap: var(--inx-space-3);
-  margin-block-start: var(--inx-space-7);
+  margin-block-start: var(--inx-space-6);
 }
 
 
@@ -1400,7 +1400,7 @@ html.lenis, html.lenis body { block-size: auto; }
    ========================================================================== */
 
 .nx-dash {
-  margin-block-start: var(--inx-space-10);
+  margin-block-start: var(--inx-space-7);
   border: 1px solid var(--inx-border-strong);
   border-radius: var(--inx-radius-lg);
   background: var(--inx-n-900);
@@ -1415,7 +1415,7 @@ html.lenis, html.lenis body { block-size: auto; }
   display: flex;
   align-items: center;
   gap: var(--inx-space-4);
-  padding: var(--inx-space-4) var(--inx-space-5);
+  padding: var(--inx-space-3) var(--inx-space-4);
   border-block-end: 1px solid var(--inx-border);
   background: var(--inx-n-950);
 }
@@ -1434,7 +1434,7 @@ html.lenis, html.lenis body { block-size: auto; }
 
 .nx-dash__rail {
   border-inline-end: 1px solid var(--inx-border);
-  padding: var(--inx-space-4);
+  padding: var(--inx-space-3);
   display: flex;
   flex-direction: column;
   gap: 2px;
@@ -1444,7 +1444,7 @@ html.lenis, html.lenis body { block-size: auto; }
   display: flex;
   align-items: center;
   gap: var(--inx-space-3);
-  padding: var(--inx-space-3);
+  padding: var(--inx-space-2) var(--inx-space-3);
   border-radius: var(--inx-radius-sm);
   font-size: var(--inx-text-xs);
   color: var(--inx-text-muted);
@@ -1461,11 +1461,11 @@ html.lenis, html.lenis body { block-size: auto; }
   border-block-start: 1px solid var(--inx-border);
 }
 
-.nx-dash__main { padding: var(--inx-space-5); min-inline-size: 0; }
+.nx-dash__main { padding: var(--inx-space-4); min-inline-size: 0; }
 
 .nx-dash__aside {
   border-inline-start: 1px solid var(--inx-border);
-  padding: var(--inx-space-5);
+  padding: var(--inx-space-4);
 }
 
 /* KPI tiles -------------------------------------------------------------- */
@@ -1478,21 +1478,21 @@ html.lenis, html.lenis body { block-size: auto; }
   border: 1px solid var(--inx-border);
   border-radius: var(--inx-radius-md);
   overflow: hidden;
-  margin-block-end: var(--inx-space-5);
+  margin-block-end: var(--inx-space-4);
 }
 
-.nx-kpi-tile { background: var(--inx-n-900); padding: var(--inx-space-4); }
+.nx-kpi-tile { background: var(--inx-n-900); padding: var(--inx-space-3); }
 .nx-kpi-tile dt {
   font-size: var(--inx-text-3xs);
   font-weight: var(--inx-weight-semi);
   text-transform: uppercase;
   letter-spacing: var(--inx-tracking-caps);
   color: var(--inx-text-muted);
-  margin-block-end: var(--inx-space-3);
+  margin-block-end: var(--inx-space-2);
 }
 .nx-kpi-tile dd {
   margin: 0;
-  font-size: var(--inx-text-xl);
+  font-size: var(--inx-text-md);
   line-height: 1;
   letter-spacing: var(--inx-tracking-display);
   font-variant-numeric: tabular-nums;
@@ -1524,12 +1524,13 @@ html.lenis, html.lenis body { block-size: auto; }
   align-items: center;
   justify-content: space-between;
   gap: var(--inx-space-4);
+  white-space: nowrap;
   font-size: var(--inx-text-3xs);
   font-weight: var(--inx-weight-semi);
   text-transform: uppercase;
   letter-spacing: var(--inx-tracking-caps);
   color: var(--inx-text-muted);
-  margin: 0 0 var(--inx-space-4);
+  margin: 0 0 var(--inx-space-3);
 }
 
 /* Table ------------------------------------------------------------------ */
@@ -1546,7 +1547,7 @@ html.lenis, html.lenis body { block-size: auto; }
   border-block-end: 1px solid var(--inx-border);
 }
 .nx-dash td {
-  padding: var(--inx-space-3);
+  padding: var(--inx-space-2) var(--inx-space-3);
   border-block-end: 1px solid var(--inx-border);
   color: var(--inx-text);
 }
@@ -1557,9 +1558,9 @@ html.lenis, html.lenis body { block-size: auto; }
 .nx-chart {
   display: flex;
   align-items: flex-end;
-  gap: 6px;
-  block-size: 84px;
-  padding-block-start: var(--inx-space-3);
+  gap: 5px;
+  block-size: 44px;
+  padding-block-start: var(--inx-space-2);
 }
 .nx-chart > i {
   flex: 1;
@@ -1582,7 +1583,7 @@ html.lenis, html.lenis body { block-size: auto; }
 
 /* Aside feed ------------------------------------------------------------- */
 
-.nx-feed { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: var(--inx-space-4); }
+.nx-feed { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: var(--inx-space-3); }
 .nx-feed li { display: flex; gap: var(--inx-space-3); font-size: var(--inx-text-3xs); line-height: 1.5; }
 .nx-feed .nx-dot {
   inline-size: 6px; block-size: 6px; flex: none;
@@ -1601,7 +1602,106 @@ html.lenis, html.lenis body { block-size: auto; }
   .nx-dash__kpis { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 
-@media (max-width: 600px) {
-  .nx-dash__kpis { grid-template-columns: minmax(0, 1fr); }
-  .nx-dash__main, .nx-dash__aside { padding: var(--inx-space-4); }
+/* Spec §18: "Simplify operational mockups" on smaller screens. The panel
+   sheds detail in two steps rather than one, so each screen size keeps as
+   much of the argument as it has room for.
+
+   Tablet and below: the nav rail is meaningless once the panel is a single
+   column, and the chart is the most expendable mark. Figures, table and
+   integration feed stay. */
+@media (max-width: 1023px) {
+  .nx-dash__rail,
+  .nx-dash .nx-chart,
+  .nx-dash .nx-chart-axis,
+  .nx-dash__chart-label { display: none; }
+  .nx-dash__main { padding: var(--inx-space-4); }
+  .nx-dash__bar { padding: var(--inx-space-3); }
+}
+
+
+/* -----------------------------------------------------------------------------
+   HERO — height-aware compaction.
+
+   A hero of fixed height is 1.3 screens on a laptop and 1.7 on a short
+   display, which is what made the next section hard to reach. These queries
+   key off viewport *height*, not width, so the hero stays close to one screen
+   wherever it is opened.
+
+   The headline still resolves inside the token's sanctioned 44–96px range —
+   the range is simply read against available height as well as width, rather
+   than width alone.
+   -------------------------------------------------------------------------- */
+
+@media (min-width: 768px) and (max-height: 900px) {
+  .nx-hero { padding-block: calc(80px + var(--inx-space-6)) var(--inx-space-6); }
+  .nx-hero__title { font-size: clamp(2.75rem, min(7.5vw, 8.4vh), 6rem); }
+  .nx-dash { margin-block-start: var(--inx-space-6); }
+}
+
+@media (min-width: 768px) and (max-height: 820px) {
+  /* The chart is the most expendable element: the KPI tiles and the table
+     already carry the argument. */
+  .nx-dash .nx-chart,
+  .nx-dash .nx-chart-axis,
+  .nx-dash__chart-label { display: none; }
+  .nx-kpi-tile { padding: var(--inx-space-2) var(--inx-space-3); }
+  .nx-hero__lead { margin-block-start: var(--inx-space-3); }
+  .nx-hero__actions { margin-block-start: var(--inx-space-5); }
+}
+
+/* Phones: the dashboard is already reduced to figures plus table, so the
+   remaining saving is in the hero frame itself. */
+@media (max-width: 767px) {
+  .nx-hero { padding-block: calc(72px + var(--inx-space-6)) var(--inx-space-6); }
+  .nx-dash { margin-block-start: var(--inx-space-6); }
+}
+
+/* Phones: the KPI tiles read fine two-up, but stacking them 2×2 costs 205px
+   and the table another 215px. A single row of four compact figures carries
+   the same information in a third of the height, and the table's detail is
+   repeated in full further down the page. */
+/* Phones: only the four figures remain. The table's detail is repeated in
+   full further down the page, so nothing is lost. */
+@media (max-width: 767px) {
+  .nx-dash__aside { display: none; }
+  .nx-dash__kpis {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    margin-block-end: 0;
+  }
+  .nx-kpi-tile dd { font-size: var(--inx-text-base); }
+  .nx-dash__main > .nx-dash__label,
+  .nx-dash__main > table { display: none; }
+
+  /* Both hero buttons go full width and stack, which is the spec's own
+     mobile guidance and removes the ragged two-row wrap. */
+  .nx-hero__actions { flex-direction: column; align-items: stretch; }
+  .nx-hero__actions .inx-btn { inline-size: 100%; }
+  .nx-hero__lead { font-size: var(--inx-text-base); }
+}
+
+
+/* Short phones. The headline stays inside its token range and the lead keeps
+   its body leading; the saving comes from the frame, the gaps around it, and
+   the figures shedding their meters — the meter is a second encoding of a
+   number that is already written out, so removing it loses no information. */
+@media (max-width: 767px) and (max-height: 720px) {
+  .nx-hero { padding-block: calc(72px + var(--inx-space-5)) var(--inx-space-4); }
+  .nx-hero__title { margin-block-start: var(--inx-space-3); }
+  .nx-hero__lead { margin-block-start: var(--inx-space-3); }
+  .nx-hero__actions { margin-block-start: var(--inx-space-4); gap: var(--inx-space-2); }
+  .nx-dash { margin-block-start: var(--inx-space-5); }
+  .nx-dash__bar { padding: var(--inx-space-2) var(--inx-space-3); }
+  .nx-dash__main { padding: var(--inx-space-3); }
+  .nx-kpi-tile { padding: var(--inx-space-2) var(--inx-space-3); }
+  .nx-kpi-tile dt { margin-block-end: var(--inx-space-1); }
+  .nx-kpi-tile .nx-bar { display: none; }
+}
+
+/* The narrowest phones. The chrome bar's status pill wraps to a second line
+   below ~400px, which costs more height than the pill is worth here — the
+   same status is stated in words inside the page. */
+@media (max-width: 400px) and (max-height: 720px) {
+  .nx-dash__bar-right { display: none; }
+  .nx-dash { margin-block-start: var(--inx-space-4); }
+  .nx-hero { padding-block-end: var(--inx-space-3); }
 }

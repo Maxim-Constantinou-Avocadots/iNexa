@@ -149,7 +149,7 @@
 
       <div class="nx-dash__bar">
         <span class="inx-signifier nx-dash__mark" aria-hidden="true">
-          <svg viewBox="0 0 93.86 86.66"><use href="#inx-signifier"></use></svg>
+          <svg viewBox="0 0 93.86 86.66" aria-hidden="true"><use href="#inx-signifier"></use></svg>
         </span>
         <span>
           <p class="nx-dash__title">Operational view</p>
@@ -206,12 +206,11 @@
             <tbody>
               <tr><td>Order processing</td><td>Operations</td><td>2 days</td><td><span class="inx-pill inx-pill--success"><span class="inx-pill__dot"></span>On track</span></td></tr>
               <tr><td>Month-end close</td><td>Finance</td><td>3 days</td><td><span class="inx-pill inx-pill--success"><span class="inx-pill__dot"></span>On track</span></td></tr>
-              <tr><td>Client onboarding</td><td>Delivery</td><td>5 days</td><td><span class="inx-pill inx-pill--success"><span class="inx-pill__dot"></span>On track</span></td></tr>
               <tr><td>Supplier onboarding</td><td>Unassigned</td><td>—</td><td><span class="inx-pill inx-pill--warning"><span class="inx-pill__dot"></span>Needs owner</span></td></tr>
             </tbody>
           </table>
 
-          <p class="nx-dash__label" style="margin-block:var(--inx-space-5) 0">Manual touchpoints remaining <span>Rolling 12 weeks</span></p>
+          <p class="nx-dash__label nx-dash__chart-label" style="margin-block:var(--inx-space-4) 0">Manual touchpoints remaining <span>Rolling 12 weeks</span></p>
           <div class="nx-chart" role="img" aria-label="Manual touchpoints remaining, falling steadily from week 23 to week 34">
             <i style="--nx-h:88%; --nx-delay:60ms"></i>
             <i style="--nx-h:82%; --nx-delay:90ms"></i>
@@ -238,11 +237,6 @@
             <li><span class="nx-dot" aria-hidden="true"></span><span><strong>Support ↔ operations</strong>Scheduled for week 35</span></li>
           </ul>
 
-          <p class="nx-dash__label" style="margin-block:var(--inx-space-6) var(--inx-space-4)">This week</p>
-          <ul class="nx-feed">
-            <li><span class="nx-dot" aria-hidden="true"></span><span><strong>Supplier onboarding</strong>Owner to be assigned before the next run</span></li>
-            <li><span class="nx-dot" aria-hidden="true"></span><span><strong>Quarterly reporting</strong>Moved from design into implementation</span></li>
-          </ul>
         </aside>
 
       </div>
