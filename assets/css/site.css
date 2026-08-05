@@ -1186,17 +1186,55 @@ html.lenis, html.lenis body { block-size: auto; }
    ink-to-blue atmosphere on every section-divider page (pp1, 4, 13, 22, 29,
    34, 40, 45, 50), on the ID cards (p49) and behind the billboard (p47). The
    ban therefore reads as colour *application*; the atmosphere is a background
-   treatment. assets/img/atmosphere.jpg is that exact artwork, lifted from the
-   manual rather than reinvented.
+   treatment.
+
+   The atmosphere is built as CSS colour stops rather than as the manual's
+   JPEG. A raster cannot stay sharp across viewport sizes or on a high-density
+   display, and it cannot re-point when the surface changes; the gradients
+   below are resolution-independent and drawn from the palette directly.
    ========================================================================== */
 
 /* -----------------------------------------------------------------------------
-   ATMOSPHERE — the ink-to-blue background treatment.
-   Sits behind content at low opacity, never inside a component.
+   ATMOSPHERE — real CSS gradients, not a raster.
+
+   Drawn only from the six approved colours, so no unapproved hue can enter:
+   Ink Black #070B14, Ink Navy #141D2B, Blue Slate #5E738A, Pale Sky #B8D0E5.
+   Resolution-independent, so it stays sharp at any viewport and on any
+   display — the previous JPEG could not.
+
+   These are background treatments only. Nothing here paints a gradient on
+   type, a button, a card, a table, a form control or the logo.
    -------------------------------------------------------------------------- */
 
-/* The watermark is inset past the right edge by design, so the container
-   must clip it — otherwise it extends the document's scroll width. */
+:root {
+  /* Hero: ink at the top, navy at the foot, with a Blue Slate glow rising
+     from bottom-centre and a Pale Sky core inside it — the structure of the
+     manual's own divider artwork, rebuilt in colour stops. */
+  --nx-atmos-hero:
+    radial-gradient(88% 62% at 50% 104%, rgba(184, 208, 229, 0.20) 0%, rgba(184, 208, 229, 0) 58%),
+    radial-gradient(130% 88% at 50% 110%, rgba(94, 115, 138, 0.52) 0%, rgba(94, 115, 138, 0) 62%),
+    radial-gradient(80% 60% at 12% 0%, rgba(20, 29, 43, 0.9) 0%, rgba(20, 29, 43, 0) 55%),
+    linear-gradient(180deg, #070B14 0%, #090F1B 42%, #101827 100%);
+
+  /* Closing CTA: the same family, lit from the top so the two ink moments
+     bookend the page without repeating exactly. */
+  --nx-atmos-cta:
+    radial-gradient(90% 70% at 78% -10%, rgba(94, 115, 138, 0.42) 0%, rgba(94, 115, 138, 0) 60%),
+    radial-gradient(70% 55% at 78% -4%, rgba(184, 208, 229, 0.16) 0%, rgba(184, 208, 229, 0) 55%),
+    linear-gradient(180deg, #0B111C 0%, #070B14 100%);
+
+  /* Mid-page ink band: quieter, so it reads as a surface rather than a moment. */
+  --nx-atmos-band:
+    radial-gradient(100% 70% at 50% 100%, rgba(94, 115, 138, 0.24) 0%, rgba(94, 115, 138, 0) 60%),
+    linear-gradient(180deg, #070B14 0%, #0C121E 100%);
+
+  /* Light surfaces: a Platinum-to-white wash that lifts a section off the
+     page without introducing a tint. */
+  --nx-atmos-light:
+    radial-gradient(70% 50% at 50% 0%, rgba(184, 208, 229, 0.28) 0%, rgba(184, 208, 229, 0) 55%),
+    linear-gradient(180deg, #F5F7FA 0%, #FFFFFF 62%);
+}
+
 .nx-atmos { position: relative; overflow: hidden; }
 
 .nx-atmos::before {
@@ -1204,29 +1242,31 @@ html.lenis, html.lenis body { block-size: auto; }
   position: absolute;
   inset: 0;
   z-index: -1;
-  background-image: url("../img/atmosphere.jpg");
-  background-size: cover;
-  background-position: center 80%;
-  opacity: 0.85;
+  background: var(--nx-atmos-hero);
   pointer-events: none;
 }
 
-/* The signifier, enlarged as a watermark — the device the ID cards use.
-   Flat fill, no effects, well under the contrast of anything above it. */
+.nx-atmos--cta::before   { background: var(--nx-atmos-cta); }
+.nx-atmos--band::before  { background: var(--nx-atmos-band); }
+.nx-atmos--light::before { background: var(--nx-atmos-light); }
+
+/* The signifier, enlarged as a watermark — the device the ID cards use. */
 .nx-atmos::after {
   content: "";
   position: absolute;
-  inset-block: 0;
-  inset-inline-end: -6%;
-  inline-size: 46%;
+  inset-block: -8%;
+  inset-inline-end: -8%;
+  inline-size: 52%;
   z-index: -1;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 93.86 86.66'%3E%3Cg transform='translate(-978.68,-510.10)' fill='none' stroke='%235E738A' stroke-width='0.75'%3E%3Cpath d='M1041.57,558.59l30.97,38.17h-14.27c-.6,0-1.16-.23-1.59-.66l-26.31-26.31c-3.09-3.09-3.09-8.11,0-11.2,3.19-3.2,2.8-8.63-1.18-11.27-2.84-1.88-3.09-5.98-.68-8.38l28.84-28.84h14.43l-30.19,38.17c-1.38,1.39-2.14,3.21-2.14,5.16s.76,3.78,2.13,5.16Z'/%3E%3Cpath d='M1020.64,558.4c3.28,3.07,3.35,8.23.2,11.39l-26.31,26.31c-.43.43-.99.66-1.59.66h-13.48l30.17-38.16c1.39-1.39,2.15-3.21,2.15-5.17s-.76-3.77-2.14-5.15l-30.96-38.18h15.19l28.82,28.82c2.64,2.64,2.17,6.37-.87,8.54-2.74,1.95-3.83,5.39-2.61,8.7.31.84.79,1.62,1.44,2.23Z'/%3E%3C/g%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 93.86 86.66'%3E%3Cg transform='translate(-978.68,-510.10)' fill='none' stroke='%235E738A' stroke-width='0.6'%3E%3Cpath d='M1041.57,558.59l30.97,38.17h-14.27c-.6,0-1.16-.23-1.59-.66l-26.31-26.31c-3.09-3.09-3.09-8.11,0-11.2,3.19-3.2,2.8-8.63-1.18-11.27-2.84-1.88-3.09-5.98-.68-8.38l28.84-28.84h14.43l-30.19,38.17c-1.38,1.39-2.14,3.21-2.14,5.16s.76,3.78,2.13,5.16Z'/%3E%3Cpath d='M1020.64,558.4c3.28,3.07,3.35,8.23.2,11.39l-26.31,26.31c-.43.43-.99.66-1.59.66h-13.48l30.17-38.16c1.39-1.39,2.15-3.21,2.15-5.17s-.76-3.77-2.14-5.15l-30.96-38.18h15.19l28.82,28.82c2.64,2.64,2.17,6.37-.87,8.54-2.74,1.95-3.83,5.39-2.61,8.7.31.84.79,1.62,1.44,2.23Z'/%3E%3C/g%3E%3C/svg%3E");
   background-repeat: no-repeat;
   background-position: center;
   background-size: contain;
-  opacity: 0.18;
+  opacity: 0.16;
   pointer-events: none;
 }
+
+.nx-atmos--light::after { opacity: 0.10; }
 
 @media (max-width: 900px) { .nx-atmos::after { display: none; } }
 
@@ -1329,3 +1369,239 @@ html.lenis, html.lenis body { block-size: auto; }
 .nx-price__list li { display: block; }
 .nx-price__list .nx-list-icon .nx-icon,
 .nx-step__out .nx-list-icon .nx-icon { color: var(--inx-accent); }
+
+
+/* =============================================================================
+   HERO — centred stack, dashboard beneath.
+   ========================================================================== */
+
+.nx-hero--center { text-align: center; }
+
+.nx-hero--center .nx-hero__title,
+.nx-hero--center .nx-hero__lead { margin-inline: auto; }
+
+.nx-hero--center .inx-eyebrow { justify-content: center; }
+
+.nx-hero--center .nx-hero__lead {
+  max-inline-size: 58ch;
+  text-wrap: pretty;
+}
+
+.nx-hero--center .nx-hero__actions { justify-content: center; }
+
+.nx-hero__stack { max-inline-size: 1000px; margin-inline: auto; }
+
+
+/* =============================================================================
+   OPERATIONAL DASHBOARD
+   The hero's product moment. Built entirely from the design system's
+   materials — Manrope 400/600, the approved palette, borders-first depth,
+   flat fills on every data mark. Sample data, labelled as such.
+   ========================================================================== */
+
+.nx-dash {
+  margin-block-start: var(--inx-space-10);
+  border: 1px solid var(--inx-border-strong);
+  border-radius: var(--inx-radius-lg);
+  background: var(--inx-n-900);
+  box-shadow: var(--inx-shadow-lg);
+  overflow: hidden;
+  text-align: start;
+}
+
+/* Chrome bar ------------------------------------------------------------- */
+
+.nx-dash__bar {
+  display: flex;
+  align-items: center;
+  gap: var(--inx-space-4);
+  padding: var(--inx-space-4) var(--inx-space-5);
+  border-block-end: 1px solid var(--inx-border);
+  background: var(--inx-n-950);
+}
+
+.nx-dash__mark { inline-size: 20px; block-size: 20px; flex: none; }
+.nx-dash__title { font-size: var(--inx-text-xs); font-weight: var(--inx-weight-semi); margin: 0; }
+.nx-dash__sub { font-size: var(--inx-text-3xs); color: var(--inx-text-muted); margin: 0; }
+.nx-dash__bar-right { margin-inline-start: auto; display: flex; align-items: center; gap: var(--inx-space-3); }
+
+/* Body layout ------------------------------------------------------------ */
+
+.nx-dash__body {
+  display: grid;
+  grid-template-columns: 200px minmax(0, 1fr) 260px;
+}
+
+.nx-dash__rail {
+  border-inline-end: 1px solid var(--inx-border);
+  padding: var(--inx-space-4);
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.nx-dash__nav {
+  display: flex;
+  align-items: center;
+  gap: var(--inx-space-3);
+  padding: var(--inx-space-3);
+  border-radius: var(--inx-radius-sm);
+  font-size: var(--inx-text-xs);
+  color: var(--inx-text-muted);
+}
+.nx-dash__nav .nx-icon { inline-size: 15px; block-size: 15px; }
+.nx-dash__nav[data-on] { background: var(--inx-n-800); color: var(--inx-text); }
+
+.nx-dash__rail-note {
+  margin-block-start: auto;
+  padding: var(--inx-space-3);
+  font-size: var(--inx-text-3xs);
+  line-height: 1.5;
+  color: var(--inx-text-muted);
+  border-block-start: 1px solid var(--inx-border);
+}
+
+.nx-dash__main { padding: var(--inx-space-5); min-inline-size: 0; }
+
+.nx-dash__aside {
+  border-inline-start: 1px solid var(--inx-border);
+  padding: var(--inx-space-5);
+}
+
+/* KPI tiles -------------------------------------------------------------- */
+
+.nx-dash__kpis {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 1px;
+  background: var(--inx-border);
+  border: 1px solid var(--inx-border);
+  border-radius: var(--inx-radius-md);
+  overflow: hidden;
+  margin-block-end: var(--inx-space-5);
+}
+
+.nx-kpi-tile { background: var(--inx-n-900); padding: var(--inx-space-4); }
+.nx-kpi-tile dt {
+  font-size: var(--inx-text-3xs);
+  font-weight: var(--inx-weight-semi);
+  text-transform: uppercase;
+  letter-spacing: var(--inx-tracking-caps);
+  color: var(--inx-text-muted);
+  margin-block-end: var(--inx-space-3);
+}
+.nx-kpi-tile dd {
+  margin: 0;
+  font-size: var(--inx-text-xl);
+  line-height: 1;
+  letter-spacing: var(--inx-tracking-display);
+  font-variant-numeric: tabular-nums;
+}
+.nx-kpi-tile dd small { font-size: var(--inx-text-xs); color: var(--inx-text-muted); letter-spacing: 0; }
+
+/* Meter under a tile — flat fill, no gradient on the mark itself. */
+.nx-kpi-tile .nx-bar {
+  margin-block-start: var(--inx-space-3);
+  block-size: 2px;
+  background: var(--inx-n-800);
+  border-radius: var(--inx-radius-pill);
+  overflow: hidden;
+}
+.nx-kpi-tile .nx-bar > i {
+  display: block;
+  block-size: 100%;
+  background: var(--inx-accent);
+  transform: scaleX(var(--nx-fill, 0));
+  transform-origin: left;
+  transition: transform var(--inx-duration-slow) var(--inx-ease-out);
+  transition-delay: var(--nx-delay, 0ms);
+}
+.is-in .nx-kpi-tile .nx-bar > i { transform: scaleX(var(--nx-fill, 0)); }
+
+/* Section label inside the dashboard */
+.nx-dash__label {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--inx-space-4);
+  font-size: var(--inx-text-3xs);
+  font-weight: var(--inx-weight-semi);
+  text-transform: uppercase;
+  letter-spacing: var(--inx-tracking-caps);
+  color: var(--inx-text-muted);
+  margin: 0 0 var(--inx-space-4);
+}
+
+/* Table ------------------------------------------------------------------ */
+
+.nx-dash table { inline-size: 100%; border-collapse: collapse; font-size: var(--inx-text-xs); }
+.nx-dash th {
+  text-align: start;
+  font-size: var(--inx-text-3xs);
+  font-weight: var(--inx-weight-semi);
+  text-transform: uppercase;
+  letter-spacing: var(--inx-tracking-caps);
+  color: var(--inx-text-muted);
+  padding: 0 var(--inx-space-3) var(--inx-space-3);
+  border-block-end: 1px solid var(--inx-border);
+}
+.nx-dash td {
+  padding: var(--inx-space-3);
+  border-block-end: 1px solid var(--inx-border);
+  color: var(--inx-text);
+}
+.nx-dash tbody tr:last-child td { border-block-end: 0; }
+.nx-dash td:last-child, .nx-dash th:last-child { text-align: end; }
+
+/* Column chart — flat bars, one per period. */
+.nx-chart {
+  display: flex;
+  align-items: flex-end;
+  gap: 6px;
+  block-size: 84px;
+  padding-block-start: var(--inx-space-3);
+}
+.nx-chart > i {
+  flex: 1;
+  background: var(--inx-n-700);
+  border-radius: 2px 2px 0 0;
+  block-size: var(--nx-h, 20%);
+  transition: block-size var(--inx-duration-slow) var(--inx-ease-out);
+  transition-delay: var(--nx-delay, 0ms);
+}
+.nx-chart > i[data-peak] { background: var(--inx-accent); }
+
+.nx-chart-axis {
+  display: flex;
+  justify-content: space-between;
+  margin-block-start: var(--inx-space-2);
+  font-size: 9px;
+  letter-spacing: var(--inx-tracking-wide);
+  color: var(--inx-text-muted);
+}
+
+/* Aside feed ------------------------------------------------------------- */
+
+.nx-feed { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: var(--inx-space-4); }
+.nx-feed li { display: flex; gap: var(--inx-space-3); font-size: var(--inx-text-3xs); line-height: 1.5; }
+.nx-feed .nx-dot {
+  inline-size: 6px; block-size: 6px; flex: none;
+  margin-block-start: 5px;
+  border-radius: var(--inx-radius-full);
+  background: var(--inx-accent);
+}
+.nx-feed strong { display: block; font-weight: var(--inx-weight-semi); color: var(--inx-text); }
+.nx-feed span { color: var(--inx-text-muted); }
+
+@media (max-width: 1023px) {
+  .nx-dash__body { grid-template-columns: minmax(0, 1fr); }
+  .nx-dash__rail { flex-direction: row; overflow-x: auto; border-inline-end: 0; border-block-end: 1px solid var(--inx-border); }
+  .nx-dash__rail-note { display: none; }
+  .nx-dash__aside { border-inline-start: 0; border-block-start: 1px solid var(--inx-border); }
+  .nx-dash__kpis { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (max-width: 600px) {
+  .nx-dash__kpis { grid-template-columns: minmax(0, 1fr); }
+  .nx-dash__main, .nx-dash__aside { padding: var(--inx-space-4); }
+}
