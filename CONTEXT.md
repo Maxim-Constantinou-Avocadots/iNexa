@@ -93,8 +93,9 @@ correction at some point in this build.
   structurally, not by eye.
 
 **Components**
-- **Sharp corners — every corner radius is 0.** This supersedes the design
-  system's pill buttons and rounded cards, by client direction. See §5.
+- **Sharp corners — every corner radius is 0**, in the design system itself.
+  Supersedes the original pill buttons and rounded cards, by client direction.
+  The only round shapes left are the spinner ring and the radio input. See §5.
 - Borders before shadows. Motion under 400ms.
 - **Services are never numbered** — they are a set. **Process steps are
   numbered** — they are a real sequence.
@@ -134,7 +135,7 @@ assets/
     fonts.css               Manrope, self-hosted, inlined as data URIs (54KB)
     inexa-tokens.css        Token layer — verbatim from the style guide
     inexa-components.css    Component layer — verbatim from the style guide
-    site.css                Marketing layer, nx- prefix — 1722 lines
+    site.css                Marketing layer, nx- prefix — 1704 lines
   js/
     site.js                 Progressive enhancement only — 355 lines
     vendor/lenis.min.js     Lenis 1.3.19, MIT, 17KB
@@ -166,21 +167,21 @@ Each section is preceded by a hatch band. **One CTA phrase throughout:
 
 | Line ≈ | Block |
 |---|---|
-| 13 | **Corners — the radius scale, re-pointed to 0** |
-| 40 | Page frame, base type |
-| 93 | Section rhythm (96px desktop / 48px below 900) |
-| 112 | Grid — 12 col, 24px gap |
-| 189 | Navigation |
-| 320 | Hero (original left/right layout rules) |
-| 374 | `.nx-ui` operational interface |
-| 486 | Services rail / accordion |
-| 649 | Process steps |
-| 946 | **Page frame — rails and hatch bands** |
-| 1207 | **Brand atmosphere, photography, icons** |
-| 1225 | Atmosphere gradient tokens |
-| 1390 | **Hero — centred stack** |
-| 1411 | **Operational dashboard** |
-| 1624+ | Responsive + height-aware compaction |
+| 13 | Corners — points at the token layer, no override here |
+| 22 | Page frame, base type |
+| 75 | Section rhythm (96px desktop / 48px below 900) |
+| 98 | Grid — 12 col, 24px gap |
+| 171 | Navigation |
+| 302 | Hero (original left/right layout rules) |
+| 361 | `.nx-ui` operational interface |
+| 468 | Services rail / accordion |
+| 631 | Process steps |
+| 928 | **Page frame — rails and hatch bands** |
+| 1189 | **Brand atmosphere, photography, icons** |
+| 1207 | Atmosphere gradient tokens |
+| 1372 | **Hero — centred stack** |
+| 1393 | **Operational dashboard** |
+| 1620+ | Responsive + height-aware compaction |
 
 ---
 
@@ -226,19 +227,33 @@ The eyebrow is a flex row, so centring it centres *rule + text as a group*,
 pushing the words right of the page axis. It stays on the left-aligned
 eyebrows (drawer "Menu", CTA); it must not go back on the hero.
 
-**Sharp corners everywhere.** The client asked for no rounded corners at all.
-Rather than edit the extracted token layer, `site.css` re-points the corner
-scale to 0 at `:root` — `--inx-radius-sm/md/lg/xl/pill` — so every component
-that resolves through a token squares off in one place and the extracted layers
-still match the style guide verbatim. `--inx-radius-full` is left at 50%: it
-draws circles, not corners, and squaring it would break the button spinner ring
-and make a radio input indistinguishable from a checkbox. The circular shapes
-that actually appear on this page — icon-only buttons and the 6px status and
-feed dots — are squared individually, as is the one hardcoded curve on the
-chart bars. Verified in the browser: no element or pseudo-element on the page
-paints a non-zero radius, drawer and tab panels included. **The style guide at
-`style-guide/index.html` still documents the pill radius** and now contradicts
-the site — raise it with the brand owner (§8).
+**Sharp corners everywhere — a design-system change, not a site override.**
+The client asked for no rounded corners at all. The first attempt re-pointed the
+scale to 0 in `site.css` only; that left the style guide — which carries its own
+inline copy of the CSS and does not link the extracted files — still drawing
+pills. The change now lives at source: `--inx-radius-sm/md/lg/xl/pill` are all
+`0` in `inexa-tokens.css`, the five component circles that were rounded
+rectangles are squared in `inexa-components.css` (icon-only button, status pill
+dot, tag remove, switch knob, logo bug), and the style guide's inline block was
+regenerated from both files.
+
+`--inx-radius-full` survives at 50% in exactly two places, and it is not a
+corner — it draws a circle where the circle IS the meaning: the button loading
+spinner, a rotating ring, and the radio input, whose round shape is what
+separates it from a checkbox. **Never use it to round a rectangle.**
+
+The `nx-` layer's own curves are squared in `site.css`: the feed dot and the
+hardcoded `2px` on the chart bars.
+
+Verified in the browser at 1440×900 with hidden panels forced visible, on both
+pages: the homepage paints no non-zero radius anywhere; the style guide paints
+three, and all three are the intended circles — two radio inputs, the spinner
+ring, and the swatch that documents `radius-full` itself.
+
+**Note the sync invariant:** `style-guide/index.html` lines 12–1126 are
+`inexa-tokens.css` + `inexa-components.css` concatenated byte-for-byte, under
+two marker comments. Change the files, then regenerate the block — never edit
+one side alone.
 
 **Hero is a centred stack with the dashboard beneath** — client's explicit
 structure request.
@@ -368,9 +383,10 @@ placeholder, and the build spec forbids inventing replacements:
 
 **For the brand owner.**
 1. The gradient contradiction (§3) should be written into the guidelines.
-2. The corner scale is now 0 across the site (§5). The design system still
-   specifies pill buttons and rounded cards; the two documents disagree until
-   the style guide is updated and the token layer re-extracted.
+2. The corner scale is now 0 in the design system itself, and the style guide
+   documents it (§5). The client's master copy of the design system still
+   specifies pill buttons and rounded cards — this repo's copy has diverged
+   from it deliberately, and the master should be brought in line.
 3. Lenis, counters and the retained pricing section should be added to the
    build spec's approved list.
 4. The style guide's status-colour comment bug is fixed in this repo's copy —

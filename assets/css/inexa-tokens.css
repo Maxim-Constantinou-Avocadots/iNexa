@@ -175,16 +175,24 @@
 
   /* ---------------------------------------------------------------------
      5. RADIUS — [EXTENSION]
-     Derived from the identity: the bug is a circle, the billboard CTA is a
-     full pill. Containers stay near-square to hold the manual's structure.
+     [CLIENT] Every corner is sharp. The scale is kept as named steps rather
+     than deleted so no component has to be rewritten, and so a future
+     direction can restore a scale in one place — but every step is 0, and
+     nothing in this system may reintroduce a corner radius locally.
+
+     --inx-radius-full is the one survivor at 50%, and it is not a corner: it
+     draws a circle. It is reserved for the two places where the circle IS the
+     meaning — the button loading spinner, which is a rotating ring, and the
+     radio input, whose round shape is what separates it from a checkbox.
+     Do not use it to round a rectangle.
      --------------------------------------------------------------------- */
 
   --inx-radius-none: 0;
-  --inx-radius-sm:   4px;
-  --inx-radius-md:   8px;
-  --inx-radius-lg:   12px;
-  --inx-radius-xl:   20px;
-  --inx-radius-pill: 999px;
+  --inx-radius-sm:   0;
+  --inx-radius-md:   0;
+  --inx-radius-lg:   0;
+  --inx-radius-xl:   0;
+  --inx-radius-pill: 0;
   --inx-radius-full: 50%;
 
 
