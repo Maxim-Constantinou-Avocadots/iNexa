@@ -125,7 +125,7 @@ stops contradicting the applications section. Flag this to the brand owner.
 ## 4. File map
 
 ```
-index.html                  The homepage — 988 lines, 14 sections
+index.html                  The homepage — 1074 lines, 14 sections
 CONTEXT.md                  This file
 README.md                   What the site is, and the placeholder register
 style-guide/index.html      The design system document (deployed)
@@ -135,9 +135,9 @@ assets/
     fonts.css               Manrope, self-hosted, inlined as data URIs (54KB)
     inexa-tokens.css        Token layer — verbatim from the style guide
     inexa-components.css    Component layer — verbatim from the style guide
-    site.css                Marketing layer, nx- prefix — 1704 lines
+    site.css                Marketing layer, nx- prefix — 2011 lines
   js/
-    site.js                 Progressive enhancement only — 355 lines
+    site.js                 Progressive enhancement only — 417 lines
     vendor/lenis.min.js     Lenis 1.3.19, MIT, 17KB
   img/                      leadership 146KB · collaboration 99KB · operations 108KB
   fonts/*.woff2             Raw font files, for production hosting
@@ -181,7 +181,8 @@ Each section is preceded by a hatch band. **One CTA phrase throughout:
 | 1207 | Atmosphere gradient tokens |
 | 1372 | **Hero — centred stack** |
 | 1393 | **Operational dashboard** |
-| 1620+ | Responsive + height-aware compaction |
+| 1630 | **The plot — SVG path, HTML everything else** |
+| 1897+ | Responsive + height-aware compaction |
 
 ---
 
@@ -258,16 +259,51 @@ one side alone.
 **Hero is a centred stack with the dashboard beneath** — client's explicit
 structure request.
 
+**The operational dashboard is a real chart, not a decoration.** The draft was
+twelve flex-boxed `<i>` bars with no axis, no grid and no hover. It now carries
+a KPI strip with a named comparison on each figure, a plotted 12-week series,
+the business-areas table and an integration-health column.
+
+Two rules govern its data colour, and both come from the brand rather than from
+taste. **One sequential hue** — Pale Sky over Blue Slate — because there is one
+series and identity is not in question; there is no categorical palette here and
+none should be introduced. **The status palette is reserved for state** and
+always ships beside a written word ("On track", "Needs owner", "Synced"), so
+colour never carries meaning alone.
+
+*Meters only where the figure is genuinely part-to-whole.* The draft put a
+progress meter under "Reporting cycle · Daily", which encodes nothing. Only
+"214 / 220" keeps one; the other tiles carry a named delta instead.
+
+**The plot is SVG for the data path and HTML for everything else** — grid,
+axis labels, markers, tooltip. The panel is only ~478px wide inside the 1000px
+hero stack, so a viewBox scaled to fit rendered axis text at 5px. Scaling the
+plot must not scale the typography. The line holds a true 2px via
+`vector-effect="non-scaling-stroke"`; no circle is drawn in SVG, so
+`preserveAspectRatio="none"` distorts nothing. Three traps, all hit once:
+`hidden` is not honoured on SVG children, `SVGElement` has no `.hidden`
+property, and a unitless `--nx-x` is invalid in a length context — each
+silently puts a mark at the origin instead of erroring.
+
 **The dashboard sheds detail as the viewport shortens.** Each step removes a
 *second encoding* of something already stated, never information:
 
 | Breakpoint | Dropped | Why it costs nothing |
 |---|---|---|
-| ≤820px tall | Trend chart + axis | Its figure is in the KPI row |
-| ≤1024px wide | Side rail | Nothing it lists is a control |
+| ≤1023px wide | Side rail | Nothing it lists is a control |
+| ≤1023px wide | The plot; panel goes flat | The figure beside it says "412 → 132 per week" |
+| ≤1023px wide | Aside activity list | Integration health already carries system state |
+| ≤820px tall | The plot, and the aside's activity list | As above |
+| ≤768px tall | Nothing — density only | Frame padding and block gaps carry no information |
 | ≤767px wide | Aside + table | Both repeated in full further down the page |
-| ≤720px tall | Figure meters | They restate numbers written beside them |
+| ≤720px tall | Figure meters, panel heading | They restate what is written beside them |
 | ≤400px wide | Chrome status pill | Wraps to a second line |
+
+**The body is a grid, so its row height is the tallest COLUMN.** Trimming the
+main column alone changes nothing while the aside still runs long — that is
+why the aside's activity list is the first thing to go at short heights. This
+cost an hour the first time; check `.nx-dash__aside` before touching anything
+else when `herofit.js` fails.
 
 The headline and lead are **not** levers — the headline must stay in its token
 range, the lead must keep body leading.

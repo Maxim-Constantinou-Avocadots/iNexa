@@ -1391,15 +1391,21 @@ html.lenis, html.lenis body { block-size: auto; }
 
 /* =============================================================================
    OPERATIONAL DASHBOARD
-   The hero's product moment. Built entirely from the design system's
-   materials — Manrope 400/600, the approved palette, borders-first depth,
+   The hero's product moment, and the only interface on the page dense enough
+   to carry a real chart. Built entirely from the design system's materials —
+   Manrope 400/600, the approved palette, borders-first depth, sharp corners,
    flat fills on every data mark. Sample data, labelled as such.
+
+   Data-colour discipline: ONE sequential hue (Pale Sky over Blue Slate) for
+   magnitude, because there is one series and identity is not in question. The
+   status palette is reserved for state and always ships beside a written word
+   — "On track", "Needs owner", "Synced" — so colour never carries meaning on
+   its own. No categorical palette exists here, and none should be introduced.
    ========================================================================== */
 
 .nx-dash {
   margin-block-start: var(--inx-space-7);
   border: 1px solid var(--inx-border-strong);
-  border-radius: var(--inx-radius-lg);
   background: var(--inx-n-900);
   box-shadow: var(--inx-shadow-lg);
   overflow: hidden;
@@ -1418,15 +1424,37 @@ html.lenis, html.lenis body { block-size: auto; }
 }
 
 .nx-dash__mark { inline-size: 20px; block-size: 20px; flex: none; }
+.nx-dash__id { min-inline-size: 0; }
 .nx-dash__title { font-size: var(--inx-text-xs); font-weight: var(--inx-weight-semi); margin: 0; }
 .nx-dash__sub { font-size: var(--inx-text-3xs); color: var(--inx-text-muted); margin: 0; }
-.nx-dash__bar-right { margin-inline-start: auto; display: flex; align-items: center; gap: var(--inx-space-3); }
+.nx-dash__bar-right {
+  margin-inline-start: auto;
+  display: flex;
+  align-items: center;
+  gap: var(--inx-space-3);
+}
+
+/* Period segment — one filter row, above everything it scopes. */
+.nx-seg {
+  display: flex;
+  border: 1px solid var(--inx-border);
+}
+.nx-seg__opt {
+  padding: 5px var(--inx-space-3);
+  font-size: var(--inx-text-3xs);
+  font-weight: var(--inx-weight-semi);
+  letter-spacing: var(--inx-tracking-wide);
+  color: var(--inx-text-muted);
+  border-inline-start: 1px solid var(--inx-border);
+}
+.nx-seg__opt:first-child { border-inline-start: 0; }
+.nx-seg__opt[data-on] { background: var(--inx-n-800); color: var(--inx-text); }
 
 /* Body layout ------------------------------------------------------------ */
 
 .nx-dash__body {
   display: grid;
-  grid-template-columns: 200px minmax(0, 1fr) 260px;
+  grid-template-columns: 196px minmax(0, 1fr) 248px;
 }
 
 .nx-dash__rail {
@@ -1442,12 +1470,17 @@ html.lenis, html.lenis body { block-size: auto; }
   align-items: center;
   gap: var(--inx-space-3);
   padding: var(--inx-space-2) var(--inx-space-3);
-  border-radius: var(--inx-radius-sm);
   font-size: var(--inx-text-xs);
   color: var(--inx-text-muted);
+  border-inline-start: 2px solid transparent;
 }
 .nx-dash__nav .nx-icon { inline-size: 15px; block-size: 15px; }
-.nx-dash__nav[data-on] { background: var(--inx-n-800); color: var(--inx-text); }
+.nx-dash__nav[data-on] {
+  background: var(--inx-n-800);
+  border-inline-start-color: var(--inx-accent);
+  color: var(--inx-text);
+  font-weight: var(--inx-weight-semi);
+}
 
 .nx-dash__rail-note {
   margin-block-start: auto;
@@ -1463,22 +1496,26 @@ html.lenis, html.lenis body { block-size: auto; }
 .nx-dash__aside {
   border-inline-start: 1px solid var(--inx-border);
   padding: var(--inx-space-4);
+  display: flex;
+  flex-direction: column;
 }
 
 /* KPI tiles -------------------------------------------------------------- */
 
 .nx-dash__kpis {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 1px;
   background: var(--inx-border);
   border: 1px solid var(--inx-border);
-  border-radius: var(--inx-radius-md);
-  overflow: hidden;
-  margin-block-end: var(--inx-space-4);
+  margin: 0 0 var(--inx-space-4);
 }
 
-.nx-kpi-tile { background: var(--inx-n-900); padding: var(--inx-space-3); }
+.nx-kpi-tile {
+  background: var(--inx-n-900);
+  padding: var(--inx-space-3) var(--inx-space-4);
+  min-inline-size: 0;
+}
 .nx-kpi-tile dt {
   font-size: var(--inx-text-3xs);
   font-weight: var(--inx-weight-semi);
@@ -1489,36 +1526,50 @@ html.lenis, html.lenis body { block-size: auto; }
 }
 .nx-kpi-tile dd {
   margin: 0;
-  font-size: var(--inx-text-md);
-  line-height: 1;
+  font-size: var(--inx-text-lg);
+  line-height: 1.1;
   letter-spacing: var(--inx-tracking-display);
-  font-variant-numeric: tabular-nums;
 }
-.nx-kpi-tile dd small { font-size: var(--inx-text-xs); color: var(--inx-text-muted); letter-spacing: 0; }
+.nx-kpi-tile dd small {
+  font-size: var(--inx-text-xs);
+  color: var(--inx-text-muted);
+  letter-spacing: 0;
+}
 
-/* Meter under a tile — flat fill, no gradient on the mark itself. */
-.nx-kpi-tile .nx-bar {
+/* Delta and qualifier — a named comparison, never a bare arrow. */
+.nx-kpi-tile__delta {
+  margin: var(--inx-space-3) 0 0;
+  font-size: var(--inx-text-3xs);
+  line-height: 1.4;
+  color: var(--inx-text-muted);
+}
+.nx-kpi-tile__delta[data-dir="up"] { color: var(--inx-status-success); }
+.nx-kpi-tile__delta span { color: var(--inx-text-muted); }
+
+/* Meter — only where the figure is genuinely part-to-whole. The track is a
+   lighter step of the same ramp, so state reads across the whole bar. */
+.nx-bar {
   margin-block-start: var(--inx-space-3);
   block-size: 2px;
-  background: var(--inx-n-800);
-  border-radius: var(--inx-radius-pill);
+  background: var(--inx-n-700);
   overflow: hidden;
 }
-.nx-kpi-tile .nx-bar > i {
+.nx-bar > i {
   display: block;
   block-size: 100%;
   background: var(--inx-accent);
-  transform: scaleX(var(--nx-fill, 0));
+  transform: scaleX(0);
   transform-origin: left;
   transition: transform var(--inx-duration-slow) var(--inx-ease-out);
   transition-delay: var(--nx-delay, 0ms);
 }
-.is-in .nx-kpi-tile .nx-bar > i { transform: scaleX(var(--nx-fill, 0)); }
+.is-in .nx-bar > i { transform: scaleX(var(--nx-fill, 0)); }
+.no-js .nx-bar > i { transform: scaleX(var(--nx-fill, 0)); }
 
 /* Section label inside the dashboard */
 .nx-dash__label {
   display: flex;
-  align-items: center;
+  align-items: baseline;
   justify-content: space-between;
   gap: var(--inx-space-4);
   white-space: nowrap;
@@ -1528,6 +1579,196 @@ html.lenis, html.lenis body { block-size: auto; }
   letter-spacing: var(--inx-tracking-caps);
   color: var(--inx-text-muted);
   margin: 0 0 var(--inx-space-3);
+}
+.nx-dash__label span {
+  font-weight: var(--inx-weight-regular);
+  letter-spacing: var(--inx-tracking-wide);
+}
+
+/* Chart panel ------------------------------------------------------------ */
+
+.nx-panel {
+  border: 1px solid var(--inx-border);
+  padding: var(--inx-space-4);
+  margin-block-end: var(--inx-space-4);
+}
+
+/* The stat sits BESIDE the plot, not above it. Stacking them cost ~70px of
+   hero height for no gain — and the hero has a height budget (herofit.js:
+   the next section must be reachable inside 1.4 screens). */
+.nx-panel__row {
+  display: grid;
+  grid-template-columns: 168px minmax(0, 1fr);
+  gap: var(--inx-space-5);
+  align-items: center;
+}
+
+/* Hero figure — exactly one per view, in the same sans as everything else,
+   with proportional figures: tabular digits read loose at display size. */
+.nx-figure { min-inline-size: 0; }
+.nx-figure__value {
+  margin: 0;
+  font-size: var(--inx-text-2xl);
+  font-weight: var(--inx-weight-regular);
+  line-height: 1;
+  letter-spacing: var(--inx-tracking-display);
+  color: var(--inx-text);
+}
+.nx-figure__value small {
+  font-size: var(--inx-text-md);
+  color: var(--inx-text-muted);
+  letter-spacing: 0;
+}
+.nx-figure__note {
+  margin: var(--inx-space-2) 0 0;
+  font-size: var(--inx-text-3xs);
+  line-height: 1.45;
+  color: var(--inx-text-muted);
+}
+.nx-figure__note span { display: block; }
+
+/* Plot ------------------------------------------------------------------- */
+
+/* Only the data path is SVG. Grid, axis labels, markers and tooltip are HTML,
+   so they wear the real type tokens and stay crisp at any container width.
+   The panel is ~478px wide inside the 1000px hero stack — a viewBox scaled to
+   fit that would have rendered axis text at 5px. Scaling the plot must not
+   scale the typography. */
+
+/* Positioned: the tooltip is absolutely placed against this box. */
+.nx-plot { position: relative; min-inline-size: 0; }
+
+.nx-plot__frame {
+  position: relative;
+  block-size: 132px;
+  padding-inline-start: 30px;   /* room for the y-axis labels */
+}
+
+/* Grid — hairline, solid, one step off the surface. Never dashed. */
+.nx-plot__grid > span {
+  position: absolute;
+  inset-inline: 30px 0;
+  inset-block-start: var(--nx-y);
+  block-size: 0;
+}
+.nx-plot__grid i {
+  display: block;
+  block-size: 1px;
+  background: var(--inx-n-800);
+}
+.nx-plot__grid em {
+  position: absolute;
+  inset-inline-end: 100%;
+  inset-block-start: 50%;
+  transform: translateY(-50%);
+  padding-inline-end: 8px;
+  font-style: normal;
+  font-size: 10px;
+  font-variant-numeric: tabular-nums;
+  color: var(--inx-n-400);
+}
+
+/* preserveAspectRatio="none" stretches the path to the frame; the stroke is
+   held at a true 2px by vector-effect, and no circle is drawn in SVG — the
+   end marker is an HTML box, so nothing distorts. */
+.nx-plot__svg {
+  position: absolute;
+  inset: 0 0 0 30px;
+  inline-size: calc(100% - 30px);
+  block-size: 100%;
+}
+.nx-plot__area { fill: var(--inx-accent); opacity: 0.10; }
+.nx-plot__line {
+  fill: none;
+  stroke: var(--inx-accent);
+  stroke-width: 2;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+}
+
+/* Markers live in a wrapper that spans exactly the plot area, so their
+   percentages resolve against the plot rather than the frame's padding box.
+   Positioning them against the padded frame put every marker at the origin. */
+.nx-plot__marks {
+  position: absolute;
+  inset: 0 0 0 30px;
+}
+
+/* End marker and hover dot carry a 2px surface ring so they stay legible
+   where they cross the line. Square, like everything else. */
+.nx-plot__end,
+.nx-plot__hover {
+  position: absolute;
+  inline-size: 8px;
+  block-size: 8px;
+  margin: -4px 0 0 -4px;
+  inset-block-start: var(--nx-y);
+  inset-inline-start: var(--nx-x);
+  background: var(--inx-accent);
+  box-shadow: 0 0 0 2px var(--inx-n-900);
+}
+.nx-plot__cross {
+  position: absolute;
+  inline-size: 1px;
+  inset-block: 0;
+  inset-inline-start: var(--nx-x);
+  background: var(--inx-n-700);
+}
+.nx-plot__cross[hidden],
+.nx-plot__hover[hidden] { display: none; }
+
+/* Hit targets are full-height columns, so landing on a value never needs
+   precision — the 2px line is never the target. */
+.nx-plot__hits {
+  position: absolute;
+  inset: 0 0 0 30px;
+  display: flex;
+}
+.nx-plot__hits > span { flex: 1; }
+
+.nx-plot__axis {
+  position: relative;
+  margin: var(--inx-space-2) 0 0 30px;
+  block-size: 12px;
+  font-size: 10px;
+  letter-spacing: 0.04em;
+  color: var(--inx-n-400);
+}
+.nx-plot__axis > span {
+  position: absolute;
+  inset-block-start: 0;
+  inset-inline-start: var(--nx-x);
+  transform: translateX(-50%);
+  white-space: nowrap;
+}
+.nx-plot__axis > span:first-child { transform: none; }
+.nx-plot__axis > span:last-child { transform: translateX(-100%); }
+
+/* Tooltip enhances, never gates — every value is also in the table twin. */
+.nx-plot__tip {
+  position: absolute;
+  inset-block-start: 0;
+  transform: translate(-50%, calc(-100% - 10px));
+  padding: var(--inx-space-2) var(--inx-space-3);
+  border: 1px solid var(--inx-border-strong);
+  background: var(--inx-n-950);
+  font-size: var(--inx-text-3xs);
+  line-height: 1.35;
+  white-space: nowrap;
+  pointer-events: none;
+  z-index: 2;
+}
+.nx-plot__tip-w {
+  display: block;
+  color: var(--inx-text-muted);
+  letter-spacing: var(--inx-tracking-wide);
+  text-transform: uppercase;
+}
+.nx-plot__tip-v {
+  display: block;
+  font-weight: var(--inx-weight-semi);
+  font-variant-numeric: tabular-nums;
+  color: var(--inx-text);
 }
 
 /* Table ------------------------------------------------------------------ */
@@ -1550,69 +1791,105 @@ html.lenis, html.lenis body { block-size: auto; }
 }
 .nx-dash tbody tr:last-child td { border-block-end: 0; }
 .nx-dash td:last-child, .nx-dash th:last-child { text-align: end; }
-
-/* Column chart — flat bars, one per period. */
-.nx-chart {
-  display: flex;
-  align-items: flex-end;
-  gap: 5px;
-  block-size: 44px;
-  padding-block-start: var(--inx-space-2);
-}
-.nx-chart > i {
-  flex: 1;
-  background: var(--inx-n-700);
-  border-radius: 0;
-  block-size: var(--nx-h, 20%);
-  transition: block-size var(--inx-duration-slow) var(--inx-ease-out);
-  transition-delay: var(--nx-delay, 0ms);
-}
-.nx-chart > i[data-peak] { background: var(--inx-accent); }
-
-.nx-chart-axis {
-  display: flex;
-  justify-content: space-between;
-  margin-block-start: var(--inx-space-2);
-  font-size: 9px;
-  letter-spacing: var(--inx-tracking-wide);
-  color: var(--inx-text-muted);
-}
+/* tabular-nums only where numbers align vertically — never on a hero figure. */
+.nx-dash .nx-num { font-variant-numeric: tabular-nums; color: var(--inx-text-muted); }
+.nx-dash__table tbody tr { transition: background-color var(--inx-duration-fast) var(--inx-ease); }
+.nx-dash__table tbody tr:hover { background: var(--inx-n-800); }
 
 /* Aside feed ------------------------------------------------------------- */
 
-.nx-feed { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: var(--inx-space-3); }
-.nx-feed li { display: flex; gap: var(--inx-space-3); font-size: var(--inx-text-3xs); line-height: 1.5; }
+.nx-feed { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: var(--inx-space-4); }
+.nx-feed li { display: grid; gap: 3px; font-size: var(--inx-text-3xs); line-height: 1.45; }
+
+/* State is a word first and a colour second — the brand allows functional
+   colour inside an interface mockup only when a label sits beside it. */
+.nx-feed__state {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 10px;
+  font-weight: var(--inx-weight-semi);
+  text-transform: uppercase;
+  letter-spacing: var(--inx-tracking-caps);
+  color: var(--inx-status-success);
+}
+.nx-feed__state[data-state="due"] { color: var(--inx-status-info); }
 .nx-feed .nx-dot {
   inline-size: 6px; block-size: 6px; flex: none;
-  margin-block-start: 5px;
-  border-radius: 0;
-  background: var(--inx-accent);
+  background: currentColor;
 }
-.nx-feed strong { display: block; font-weight: var(--inx-weight-semi); color: var(--inx-text); }
-.nx-feed span { color: var(--inx-text-muted); }
+.nx-feed strong { font-weight: var(--inx-weight-semi); color: var(--inx-text); }
+.nx-feed__meta { color: var(--inx-text-muted); }
+
+.nx-dash__activity {
+  margin-block-start: var(--inx-space-5);
+  padding-block-start: var(--inx-space-4);
+  border-block-start: 1px solid var(--inx-border);
+}
+.nx-dash__activity ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: var(--inx-space-3); }
+.nx-dash__activity li {
+  display: grid;
+  grid-template-columns: 44px minmax(0, 1fr);
+  gap: var(--inx-space-3);
+  font-size: var(--inx-text-3xs);
+  line-height: 1.45;
+  color: var(--inx-text-muted);
+}
+.nx-dash__activity time {
+  font-variant-numeric: tabular-nums;
+  color: var(--inx-n-400);
+}
+
+.nx-dash__aside-foot {
+  margin-block-start: auto;
+  padding-block-start: var(--inx-space-4);
+  border-block-start: 1px solid var(--inx-border);
+}
+.nx-dash__aside-foot .nx-dash__label { margin-block-end: 0; }
+
+/* Responsive ------------------------------------------------------------- */
 
 @media (max-width: 1023px) {
   .nx-dash__body { grid-template-columns: minmax(0, 1fr); }
-  .nx-dash__rail { flex-direction: row; overflow-x: auto; border-inline-end: 0; border-block-end: 1px solid var(--inx-border); }
-  .nx-dash__rail-note { display: none; }
   .nx-dash__aside { border-inline-start: 0; border-block-start: 1px solid var(--inx-border); }
-  .nx-dash__kpis { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .nx-dash__kpis { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .nx-dash__bar-right .nx-seg { display: none; }
 }
 
 /* Spec §18: "Simplify operational mockups" on smaller screens. The panel
-   sheds detail in two steps rather than one, so each screen size keeps as
-   much of the argument as it has room for.
-
-   Tablet and below: the nav rail is meaningless once the panel is a single
-   column, and the chart is the most expendable mark. Figures, table and
-   integration feed stay. */
+   sheds detail in steps rather than all at once, and each step removes a
+   SECOND encoding of something already stated — never information. */
 @media (max-width: 1023px) {
-  .nx-dash__rail,
-  .nx-dash .nx-chart,
-  .nx-dash .nx-chart-axis,
-  .nx-dash__chart-label { display: none; }
+  .nx-dash__rail { display: none; }
   .nx-dash__main { padding: var(--inx-space-4); }
   .nx-dash__bar { padding: var(--inx-space-3); }
+
+  /* The plot goes, the figure stays. "412 → 132 per week" is the same fact
+     written out, so this drops a second encoding, never the information.
+     With the plot gone the panel collapses to one line — a stat strip, not a
+     chart card missing its chart. */
+  .nx-plot { display: none; }
+  .nx-panel__row { grid-template-columns: minmax(0, 1fr); }
+  .nx-panel { padding: var(--inx-space-3) var(--inx-space-4); }
+  .nx-figure { display: flex; align-items: baseline; gap: var(--inx-space-4); }
+  .nx-figure__value { font-size: var(--inx-text-lg); }
+  .nx-figure__value small { font-size: var(--inx-text-sm); }
+  .nx-figure__note { margin: 0; }
+  .nx-figure__note span { display: inline; }
+  .nx-figure__note span + span::before { content: " · "; }
+
+  /* Once the aside stacks BELOW the main column its height is added to the
+     page instead of being absorbed by the grid row, so the supplementary
+     activity list goes — integration health already carries system state. */
+  .nx-dash__activity { display: none; }
+  .nx-feed { gap: var(--inx-space-3); }
+}
+
+@media (max-width: 767px) {
+  .nx-dash__kpis { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .nx-dash__kpis .nx-kpi-tile:last-child { display: none; }
+  .nx-figure { display: block; }
+  .nx-figure__note { margin-block-start: var(--inx-space-2); }
 }
 
 
@@ -1636,14 +1913,41 @@ html.lenis, html.lenis body { block-size: auto; }
 }
 
 @media (min-width: 768px) and (max-height: 820px) {
-  /* The chart is the most expendable element: the KPI tiles and the table
-     already carry the argument. */
-  .nx-dash .nx-chart,
-  .nx-dash .nx-chart-axis,
-  .nx-dash__chart-label { display: none; }
+  /* The plot is the most expendable mark: the figure beside it states the
+     same change in words, and the KPI tiles and table carry the rest.
+     (These selectors track .nx-plot / .nx-panel — the retired .nx-chart
+     classes silently stopped matching when the chart was rebuilt.) */
+  .nx-dash .nx-plot { display: none; }
+  .nx-dash .nx-panel__row { grid-template-columns: minmax(0, 1fr); }
+  .nx-dash .nx-panel { padding: var(--inx-space-3) var(--inx-space-4); }
+  .nx-dash .nx-figure { display: flex; align-items: baseline; gap: var(--inx-space-4); }
+  .nx-dash .nx-figure__value { font-size: var(--inx-text-lg); }
+  .nx-dash .nx-figure__value small { font-size: var(--inx-text-sm); }
+  .nx-dash .nx-figure__note { margin: 0; }
+  .nx-dash .nx-figure__note span { display: inline; }
+  .nx-dash .nx-figure__note span + span::before { content: " · "; }
+  .nx-dash { margin-block-start: var(--inx-space-5); }
+  .nx-dash td { padding: 5px var(--inx-space-3); }
+  .nx-dash th { padding-block-end: var(--inx-space-2); }
+
+  /* The body is a grid: its row height is the TALLEST column, so trimming
+     the main column alone changes nothing while the aside still runs long.
+     The activity list is the supplementary column's expendable half. */
+  .nx-dash__activity { display: none; }
   .nx-kpi-tile { padding: var(--inx-space-2) var(--inx-space-3); }
   .nx-hero__lead { margin-block-start: var(--inx-space-3); }
   .nx-hero__actions { margin-block-start: var(--inx-space-5); }
+}
+
+/* Short displays, second step. Nothing is dropped here — the panel keeps its
+   figure and the table keeps its rows. The remaining saving is pure density:
+   the frame's own padding and the gaps between blocks, which is the cheapest
+   height on the page because it carries no information at all. */
+@media (min-width: 768px) and (max-height: 768px) {
+  .nx-dash__main { padding: var(--inx-space-3); }
+  .nx-dash__aside { padding: var(--inx-space-3); }
+  .nx-dash__kpis { margin-block-end: var(--inx-space-3); }
+  .nx-panel { margin-block-end: var(--inx-space-3); }
 }
 
 /* Phones: the dashboard is already reduced to figures plus table, so the
@@ -1667,7 +1971,7 @@ html.lenis, html.lenis body { block-size: auto; }
   }
   .nx-kpi-tile dd { font-size: var(--inx-text-base); }
   .nx-dash__main > .nx-dash__label,
-  .nx-dash__main > table { display: none; }
+  .nx-dash__main > .nx-dash__table { display: none; }
 
   /* Both hero buttons go full width and stack, which is the spec's own
      mobile guidance and removes the ragged two-row wrap. */
@@ -1692,6 +1996,9 @@ html.lenis, html.lenis body { block-size: auto; }
   .nx-kpi-tile { padding: var(--inx-space-2) var(--inx-space-3); }
   .nx-kpi-tile dt { margin-block-end: var(--inx-space-1); }
   .nx-kpi-tile .nx-bar { display: none; }
+  /* The panel's own heading restates the figure sitting directly beneath it. */
+  .nx-panel > .nx-dash__label { display: none; }
+  .nx-panel { padding: var(--inx-space-2) var(--inx-space-3); }
 }
 
 /* The narrowest phones. The chrome bar's status pill wraps to a second line

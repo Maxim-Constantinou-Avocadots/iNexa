@@ -145,17 +145,22 @@
     <!-- Operational dashboard. Built from the design system's own materials:
          Manrope 400/600, approved palette, borders-first depth, flat fills on
          every data mark. Sample data, labelled in the chrome. -->
-    <div class="nx-dash" data-reveal>
+     <div class="nx-dash" data-reveal>
 
       <div class="nx-dash__bar">
         <span class="inx-signifier nx-dash__mark" aria-hidden="true">
           <svg viewBox="0 0 93.86 86.66" aria-hidden="true"><use href="#inx-signifier"></use></svg>
         </span>
-        <span>
+        <span class="nx-dash__id">
           <p class="nx-dash__title">Operational view</p>
           <p class="nx-dash__sub">Distribution client · week 34</p>
         </span>
         <span class="nx-dash__bar-right">
+          <span class="nx-seg" role="group" aria-label="Reporting period (illustrative)">
+            <span class="nx-seg__opt">4w</span>
+            <span class="nx-seg__opt" data-on>12w</span>
+            <span class="nx-seg__opt">YTD</span>
+          </span>
           <span class="inx-pill">Sample data</span>
         </span>
       </div>
@@ -177,66 +182,147 @@
             <div class="nx-kpi-tile">
               <dt>Processes documented</dt>
               <dd>214<small> / 220</small></dd>
-              <div class="nx-bar"><i style="--nx-fill:0.97; --nx-delay:120ms"></i></div>
+              <div class="nx-bar" role="img" aria-label="214 of 220 documented, 97 per cent">
+                <i style="--nx-fill:0.97; --nx-delay:120ms"></i>
+              </div>
             </div>
             <div class="nx-kpi-tile">
               <dt>Workflows live</dt>
               <dd>68</dd>
-              <div class="nx-bar"><i style="--nx-fill:0.74; --nx-delay:200ms"></i></div>
-            </div>
-            <div class="nx-kpi-tile">
-              <dt>Manual touchpoints</dt>
-              <dd>−68<small>%</small></dd>
-              <div class="nx-bar"><i style="--nx-fill:0.68; --nx-delay:280ms"></i></div>
+              <p class="nx-kpi-tile__delta" data-dir="up">+12<span> vs week 30</span></p>
             </div>
             <div class="nx-kpi-tile">
               <dt>Reporting cycle</dt>
               <dd>Daily</dd>
-              <div class="nx-bar"><i style="--nx-fill:1; --nx-delay:360ms"></i></div>
+              <p class="nx-kpi-tile__delta">Was weekly</p>
             </div>
           </dl>
 
+          <section class="nx-panel" aria-labelledby="nx-plot-head">
+            <p class="nx-dash__label" id="nx-plot-head">Manual touchpoints <span>Per week · rolling 12</span></p>
+
+            <div class="nx-panel__row">
+              <div class="nx-figure">
+                <p class="nx-figure__value">−68<small>%</small></p>
+                <p class="nx-figure__note"><span>Since week 23</span><span>412 → 132 per week</span></p>
+              </div>
+
+              <div class="nx-plot">
+                <div class="nx-plot__frame">
+                  <div class="nx-plot__grid" aria-hidden="true">
+                    <span style="--nx-y:0%"><i></i><em>450</em></span>
+                    <span style="--nx-y:33.333%"><i></i><em>300</em></span>
+                    <span style="--nx-y:66.667%"><i></i><em>150</em></span>
+                    <span style="--nx-y:100%"><i></i><em>0</em></span>
+                  </div>
+                  <svg class="nx-plot__svg" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+                    <path class="nx-plot__area" d="M 0 8.444 L 9.091 14.444 L 18.182 17.778 L 27.273 27.111 L 36.364 31.333 L 45.455 36.444 L 54.545 45.778 L 63.636 51.111 L 72.727 57.333 L 81.818 62.444 L 90.909 65.556 L 100 70.667 L 100 100 L 0 100 Z"/>
+                    <path class="nx-plot__line" d="M 0 8.444 L 9.091 14.444 L 18.182 17.778 L 27.273 27.111 L 36.364 31.333 L 45.455 36.444 L 54.545 45.778 L 63.636 51.111 L 72.727 57.333 L 81.818 62.444 L 90.909 65.556 L 100 70.667" vector-effect="non-scaling-stroke"/>
+                  </svg>
+                  <div class="nx-plot__marks" aria-hidden="true">
+                    <span class="nx-plot__cross" hidden></span>
+                    <span class="nx-plot__end" style="--nx-x:100%; --nx-y:70.667%"></span>
+                    <span class="nx-plot__hover" hidden></span>
+                  </div>
+                  <div class="nx-plot__hits" aria-hidden="true">
+                    <span data-x="0" data-y="8.444" data-week="23" data-value="412"></span>
+                    <span data-x="9.091" data-y="14.444" data-week="24" data-value="385"></span>
+                    <span data-x="18.182" data-y="17.778" data-week="25" data-value="370"></span>
+                    <span data-x="27.273" data-y="27.111" data-week="26" data-value="328"></span>
+                    <span data-x="36.364" data-y="31.333" data-week="27" data-value="309"></span>
+                    <span data-x="45.455" data-y="36.444" data-week="28" data-value="286"></span>
+                    <span data-x="54.545" data-y="45.778" data-week="29" data-value="244"></span>
+                    <span data-x="63.636" data-y="51.111" data-week="30" data-value="220"></span>
+                    <span data-x="72.727" data-y="57.333" data-week="31" data-value="192"></span>
+                    <span data-x="81.818" data-y="62.444" data-week="32" data-value="169"></span>
+                    <span data-x="90.909" data-y="65.556" data-week="33" data-value="155"></span>
+                    <span data-x="100" data-y="70.667" data-week="34" data-value="132"></span>
+                  </div>
+                </div>
+                <p class="nx-plot__axis" aria-hidden="true">
+                  <span style="--nx-x:0%">WK 23</span>
+                  <span style="--nx-x:36.364%">WK 27</span>
+                  <span style="--nx-x:72.727%">WK 31</span>
+                  <span style="--nx-x:100%">WK 34</span>
+                </p>
+                <div class="nx-plot__tip" hidden aria-hidden="true"><span class="nx-plot__tip-w"></span><span class="nx-plot__tip-v"></span></div>
+              </div>
+            </div>
+
+            <table class="nx-visually-hidden">
+              <caption>Manual touchpoints per week, weeks 23 to 34. Sample data.</caption>
+              <thead><tr><th scope="col">Week</th><th scope="col">Touchpoints</th></tr></thead>
+              <tbody>
+                <tr><th scope="row">Week 23</th><td>412</td></tr>
+                <tr><th scope="row">Week 24</th><td>385</td></tr>
+                <tr><th scope="row">Week 25</th><td>370</td></tr>
+                <tr><th scope="row">Week 26</th><td>328</td></tr>
+                <tr><th scope="row">Week 27</th><td>309</td></tr>
+                <tr><th scope="row">Week 28</th><td>286</td></tr>
+                <tr><th scope="row">Week 29</th><td>244</td></tr>
+                <tr><th scope="row">Week 30</th><td>220</td></tr>
+                <tr><th scope="row">Week 31</th><td>192</td></tr>
+                <tr><th scope="row">Week 32</th><td>169</td></tr>
+                <tr><th scope="row">Week 33</th><td>155</td></tr>
+                <tr><th scope="row">Week 34</th><td>132</td></tr>
+              </tbody>
+            </table>
+          </section>
+
           <p class="nx-dash__label">Business areas <span>Owner · cycle · status</span></p>
 
-          <table>
+          <table class="nx-dash__table">
             <caption class="nx-visually-hidden">Business areas with their owner, cycle time and status</caption>
             <thead>
               <tr><th scope="col">Area</th><th scope="col">Owner</th><th scope="col">Cycle</th><th scope="col">Status</th></tr>
             </thead>
             <tbody>
-              <tr><td>Order processing</td><td>Operations</td><td>2 days</td><td><span class="inx-pill inx-pill--success"><span class="inx-pill__dot"></span>On track</span></td></tr>
-              <tr><td>Month-end close</td><td>Finance</td><td>3 days</td><td><span class="inx-pill inx-pill--success"><span class="inx-pill__dot"></span>On track</span></td></tr>
-              <tr><td>Supplier onboarding</td><td>Unassigned</td><td>—</td><td><span class="inx-pill inx-pill--warning"><span class="inx-pill__dot"></span>Needs owner</span></td></tr>
+              <tr><td>Order processing</td><td>Operations</td><td class="nx-num">2 days</td><td><span class="inx-pill inx-pill--success"><span class="inx-pill__dot"></span>On track</span></td></tr>
+              <tr><td>Month-end close</td><td>Finance</td><td class="nx-num">3 days</td><td><span class="inx-pill inx-pill--success"><span class="inx-pill__dot"></span>On track</span></td></tr>
+              <tr><td>Supplier onboarding</td><td>Unassigned</td><td class="nx-num">—</td><td><span class="inx-pill inx-pill--warning"><span class="inx-pill__dot"></span>Needs owner</span></td></tr>
             </tbody>
           </table>
-
-          <p class="nx-dash__label nx-dash__chart-label" style="margin-block:var(--inx-space-4) 0">Manual touchpoints remaining <span>Rolling 12 weeks</span></p>
-          <div class="nx-chart" role="img" aria-label="Manual touchpoints remaining, falling steadily from week 23 to week 34">
-            <i style="--nx-h:88%; --nx-delay:60ms"></i>
-            <i style="--nx-h:82%; --nx-delay:90ms"></i>
-            <i style="--nx-h:79%; --nx-delay:120ms"></i>
-            <i style="--nx-h:70%; --nx-delay:150ms"></i>
-            <i style="--nx-h:66%; --nx-delay:180ms"></i>
-            <i style="--nx-h:61%; --nx-delay:210ms"></i>
-            <i style="--nx-h:52%; --nx-delay:240ms"></i>
-            <i style="--nx-h:47%; --nx-delay:270ms"></i>
-            <i style="--nx-h:41%; --nx-delay:300ms"></i>
-            <i style="--nx-h:36%; --nx-delay:330ms"></i>
-            <i style="--nx-h:33%; --nx-delay:360ms"></i>
-            <i style="--nx-h:28%; --nx-delay:390ms" data-peak></i>
-          </div>
-          <p class="nx-chart-axis"><span>WEEK 23</span><span>WEEK 34</span></p>
         </div>
 
         <aside class="nx-dash__aside">
           <p class="nx-dash__label">Integration health</p>
           <ul class="nx-feed">
-            <li><span class="nx-dot" aria-hidden="true"></span><span><strong>Finance ↔ operations</strong>Invoices and cost synced 4 min ago</span></li>
-            <li><span class="nx-dot" aria-hidden="true"></span><span><strong>CRM ↔ operations</strong>Clients and pipeline synced 11 min ago</span></li>
-            <li><span class="nx-dot" aria-hidden="true"></span><span><strong>Projects ↔ operations</strong>Delivery status synced 26 min ago</span></li>
-            <li><span class="nx-dot" aria-hidden="true"></span><span><strong>Support ↔ operations</strong>Scheduled for week 35</span></li>
+            <li>
+              <span class="nx-feed__state" data-state="ok"><span class="nx-dot" aria-hidden="true"></span>Synced</span>
+              <strong>Finance ↔ operations</strong>
+              <span class="nx-feed__meta">Invoices and cost · 4 min ago</span>
+            </li>
+            <li>
+              <span class="nx-feed__state" data-state="ok"><span class="nx-dot" aria-hidden="true"></span>Synced</span>
+              <strong>CRM ↔ operations</strong>
+              <span class="nx-feed__meta">Clients and pipeline · 11 min ago</span>
+            </li>
+            <li>
+              <span class="nx-feed__state" data-state="ok"><span class="nx-dot" aria-hidden="true"></span>Synced</span>
+              <strong>Projects ↔ operations</strong>
+              <span class="nx-feed__meta">Delivery status · 26 min ago</span>
+            </li>
+            <li>
+              <span class="nx-feed__state" data-state="due"><span class="nx-dot" aria-hidden="true"></span>Scheduled</span>
+              <strong>Support ↔ operations</strong>
+              <span class="nx-feed__meta">Connects in week 35</span>
+            </li>
           </ul>
 
+          <div class="nx-dash__activity">
+            <p class="nx-dash__label">Recent activity</p>
+            <ul>
+              <li><time datetime="PT9M">09:14</time><span><strong>Cycle time recalculated</strong> for order processing</span></li>
+              <li><time datetime="PT52M">08:31</time><span><strong>Week 34 report</strong> issued to leadership</span></li>
+              <li><time datetime="PT3H">06:05</time><span><strong>Two exceptions cleared</strong> in month-end close</span></li>
+            </ul>
+          </div>
+          <div class="nx-dash__aside-foot">
+            <p class="nx-dash__label">Systems connected <span>3 / 4</span></p>
+            <div class="nx-bar" role="img" aria-label="3 of 4 systems connected">
+              <i style="--nx-fill:0.75; --nx-delay:440ms"></i>
+            </div>
+          </div>
         </aside>
 
       </div>

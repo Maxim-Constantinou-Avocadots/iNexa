@@ -330,6 +330,67 @@
 
   /* ------------------------------------------------------------------ */
 
+  /* ---------------------------------------------------------------------
+     PLOT HOVER
+     The tooltip enhances the chart; it never gates it. Every value is also
+     in the visually-hidden table twin beside the plot, the endpoint is
+     directly labelled, and the axis carries the rest — so a reader with no
+     pointer, no JavaScript or a screen reader loses nothing.
+
+     Hit targets are full-height column rects, not the 2px line, so landing
+     on a value never requires precision.
+     ------------------------------------------------------------------ */
+
+  function initPlot() {
+    var plot = document.querySelector('.nx-plot');
+    if (!plot) return;
+
+    var frame = plot.querySelector('.nx-plot__frame');
+    var tip = plot.querySelector('.nx-plot__tip');
+    var cross = plot.querySelector('.nx-plot__cross');
+    var dot = plot.querySelector('.nx-plot__hover');
+    var hits = plot.querySelectorAll('.nx-plot__hits > span');
+    if (!frame || !tip || !cross || !dot || !hits.length) return;
+
+    function show(hit) {
+      var x = hit.getAttribute('data-x');
+      var y = hit.getAttribute('data-y');
+
+      /* data-x / data-y are unitless numbers; without the unit the custom
+         property is invalid in a length context and the mark snaps to 0. */
+      cross.style.setProperty('--nx-x', x + '%');
+      cross.hidden = false;
+
+      dot.style.setProperty('--nx-x', x + '%');
+      dot.style.setProperty('--nx-y', y + '%');
+      dot.hidden = false;
+
+      tip.querySelector('.nx-plot__tip-w').textContent =
+        'Week ' + hit.getAttribute('data-week');
+      tip.querySelector('.nx-plot__tip-v').textContent =
+        hit.getAttribute('data-value') + ' touchpoints';
+      tip.hidden = false;
+
+      /* The tip is positioned against the frame, whose plot area starts
+         30px in from the left for the y-axis labels. */
+      var inset = 30;
+      var w = frame.clientWidth - inset;
+      tip.style.left = (inset + (parseFloat(x) / 100) * w) + 'px';
+      tip.style.top = ((parseFloat(y) / 100) * frame.clientHeight) + 'px';
+    }
+
+    function hide() {
+      tip.hidden = true;
+      cross.hidden = true;
+      dot.hidden = true;
+    }
+
+    Array.prototype.forEach.call(hits, function (hit) {
+      hit.addEventListener('mouseenter', function () { show(hit); });
+    });
+    plot.addEventListener('mouseleave', hide);
+  }
+
   function boot() {
     document.documentElement.classList.remove('no-js');
     initSmoothScroll();
@@ -340,6 +401,7 @@
     initTabs();
     initAccordion();
     initCounters();
+    initPlot();
     initSectionTracking();
 
     requestAnimationFrame(function () {
