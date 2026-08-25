@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 42" width="1920" height="42" preserveAspectRatio="xMidYMid slice">
+  <!-- iNexa section separator — ink variant, for an Ink Black section.
+
+       preserveAspectRatio="slice" makes this behave like background-size:cover:
+       it scales UNIFORMLY and crops the overflow, so the dots stay perfect
+       circles at any width. Place it at 42px tall and the dots render at
+       exactly their intended size; taller boxes scale the whole field up.
+       For a field that never scales at all, tile separator-tile-ink.svg as a
+       repeating background instead. -->
+  <defs>
+    <pattern id="nx-dots-ink" width="8" height="8" patternUnits="userSpaceOnUse">
+      <circle cx="2" cy="2" r="1.1" fill="#243040"/>
+      <circle cx="6" cy="6" r="1.1" fill="#243040"/>
+    </pattern>
+  </defs>
+
+  <rect width="1920" height="42" fill="#070B14"/>
+  <rect width="1920" height="42" fill="url(#nx-dots-ink)"/>
+  <rect x="0" y="0"  width="1920" height="1" fill="#B8D0E5" fill-opacity="0.16"/>
+  <rect x="0" y="41" width="1920" height="1" fill="#B8D0E5" fill-opacity="0.16"/>
+</svg>

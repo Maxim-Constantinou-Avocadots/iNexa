@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="8" height="8" viewBox="0 0 8 8">
+  <!-- iNexa separator pattern tile — light variant, for a white section. 8x8, two dots on opposite
+       diagonals. Use as a repeating background:
+         background-image: url("separator-tile-light.svg");
+         background-repeat: repeat;   background-size: 8px 8px; -->
+  <circle cx="2" cy="2" r="1.1" fill="#DAE5F1"/>
+  <circle cx="6" cy="6" r="1.1" fill="#DAE5F1"/>
+</svg>

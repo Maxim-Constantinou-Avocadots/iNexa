@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">
+  <!-- iNexa section separator — light variant, for a white section, FLUID version.
+
+       No viewBox, so one user unit stays one CSS pixel: the dot field tiles
+       to fill the box at any width AND any height, and never scales.
+
+       This form has no intrinsic size. Chromium sizes it to the element and
+       renders 1:1 (verified), but browsers are not consistent here — others
+       may fall back to 300x150 and stretch it. Use it INLINE in your HTML
+       (Wix Studio: Embed Code -> Embed HTML), inside a wrapper sized however
+       you like, where the behaviour is dependable. For an <img>, a CSS
+       background, or a Wix image upload, use separator-band-light.svg. -->
+  <defs>
+    <pattern id="nx-dots-light-fluid" width="8" height="8" patternUnits="userSpaceOnUse">
+      <circle cx="2" cy="2" r="1.1" fill="#DAE5F1"/>
+      <circle cx="6" cy="6" r="1.1" fill="#DAE5F1"/>
+    </pattern>
+  </defs>
+
+  <rect width="100%" height="100%" fill="none"/>
+  <rect width="100%" height="100%" fill="url(#nx-dots-light-fluid)"/>
+  <rect x="0" y="0" width="100%" height="1" fill="#DAE5F1"/>
+  <rect x="0" y="100%" width="100%" height="1" transform="translate(0,-1)" fill="#DAE5F1"/>
+</svg>
