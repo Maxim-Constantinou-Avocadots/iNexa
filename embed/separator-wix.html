@@ -1,0 +1,33 @@
+<!-- iNexa section separator — paste into Wix Studio:
+     Add → Embed Code → Embed HTML → Code.
+     Set the element to 100% width and 42px height. -->
+<style>
+  #inexa-sep {
+    /* ---- COLOURS: keep ONE line of each pair, delete the other ---- */
+    --band: #070B14;                        /* INK  — dark section  */
+    --line: rgba(184, 208, 229, 0.16);      /* INK  — hairline      */
+    --dots: #243040;                        /* INK  — dot colour    */
+
+    /* --band: #FFFFFF;   --line: #DAE5F1;   --dots: #DAE5F1;   LIGHT */
+    /* --band: #F5F7FA;   --line: #DAE5F1;   --dots: #DAE5F1;   PLATINUM */
+
+    /* ---- PATTERN ---- */
+    --tile: 8px;    /* spacing between dots */
+    --dot:  1.1px;  /* dot radius           */
+
+    position: absolute;
+    inset: 0;
+    box-sizing: border-box;
+    background-color: var(--band);
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    background-image:
+      radial-gradient(circle, var(--dots) calc(var(--dot) - 0.35px), transparent var(--dot)),
+      radial-gradient(circle, var(--dots) calc(var(--dot) - 0.35px), transparent var(--dot));
+    background-size: var(--tile) var(--tile);
+    background-position: 0 0, calc(var(--tile) / 2) calc(var(--tile) / 2);
+  }
+  html, body { margin: 0; padding: 0; height: 100%; overflow: hidden; }
+</style>
+
+<div id="inexa-sep" role="presentation" aria-hidden="true"></div>
