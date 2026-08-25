@@ -9,8 +9,14 @@ Open `index.html` in a browser. No build step, no framework, no network
 dependency: the typeface is embedded, so the page renders identically from
 disk, from a static host, or in an embedded preview.
 
+**Picking this up in a new session?** Read `CONTEXT.md` first — it carries the
+decisions, the rejected approaches and the open items, which is the part that
+is expensive to rediscover.
+
 ```
 index.html                  The homepage (spec-driven build)
+CONTEXT.md                  Handoff document — why the build is the way it is
+tools/                      Browser-measured verification harness
 previous/index.html         Frozen snapshot of the pre-spec build, for comparison
 style-guide/index.html      The design system document
 assets/
@@ -135,8 +141,9 @@ Headlines are sentence case throughout, per the MD.
   drawer and accordion transitions, plus the two approved amendments above.
   No marquee, no scroll-progress bar, nothing over 360ms.
 - **Functional status colours appear only inside interface mockups**, always
-  with a written label (§5.4). Verified structurally: all 27 status pills sit
-  inside `.nx-ui` / `.nx-mini` interface panels, none in marketing copy.
+  with a written label (§5.4). Verified structurally: all 21 status-variant
+  pills sit inside `.nx-ui` / `.nx-mini` / `.nx-dash` interface panels, none
+  in marketing copy.
 - The spec's global reduced-motion override (§9.4) is included verbatim.
 
 ## Verified in a real browser

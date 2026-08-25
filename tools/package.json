@@ -1,0 +1,19 @@
+{
+  "name": "inexa-verification",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Browser-measured checks for the iNexa homepage. Not part of the site.",
+  "scripts": {
+    "overflow": "node overflow.js",
+    "palette": "node palette.js",
+    "audit": "node audit.js",
+    "navfit": "node navfit.js",
+    "align": "node align.js",
+    "behaviour": "node behaviour.js",
+    "herofit": "node herofit.js",
+    "all": "node overflow.js && node palette.js && node audit.js && node navfit.js && node align.js && node behaviour.js && node herofit.js"
+  },
+  "devDependencies": {
+    "playwright": "^1.62.1"
+  }
+}
