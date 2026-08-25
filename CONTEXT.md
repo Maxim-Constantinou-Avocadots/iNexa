@@ -93,7 +93,9 @@ correction at some point in this build.
   structurally, not by eye.
 
 **Components**
-- Pill-shaped buttons. Borders before shadows. Motion under 400ms.
+- **Sharp corners — every corner radius is 0.** This supersedes the design
+  system's pill buttons and rounded cards, by client direction. See §5.
+- Borders before shadows. Motion under 400ms.
 - **Services are never numbered** — they are a set. **Process steps are
   numbered** — they are a real sequence.
 
@@ -132,7 +134,7 @@ assets/
     fonts.css               Manrope, self-hosted, inlined as data URIs (54KB)
     inexa-tokens.css        Token layer — verbatim from the style guide
     inexa-components.css    Component layer — verbatim from the style guide
-    site.css                Marketing layer, nx- prefix — 1695 lines
+    site.css                Marketing layer, nx- prefix — 1722 lines
   js/
     site.js                 Progressive enhancement only — 355 lines
     vendor/lenis.min.js     Lenis 1.3.19, MIT, 17KB
@@ -164,20 +166,21 @@ Each section is preceded by a hatch band. **One CTA phrase throughout:
 
 | Line ≈ | Block |
 |---|---|
-| 13 | Page frame, base type |
-| 66 | Section rhythm (96px desktop / 48px below 900) |
-| 85 | Grid — 12 col, 24px gap |
-| 162 | Navigation |
-| 293 | Hero (original left/right layout rules) |
-| 347 | `.nx-ui` operational interface |
-| 459 | Services rail / accordion |
-| 622 | Process steps |
-| 919 | **Page frame — rails and hatch bands** |
-| 1180 | **Brand atmosphere, photography, icons** |
-| 1198 | Atmosphere gradient tokens |
-| 1362 | **Hero — centred stack** |
-| 1384 | **Operational dashboard** |
-| 1597+ | Responsive + height-aware compaction |
+| 13 | **Corners — the radius scale, re-pointed to 0** |
+| 40 | Page frame, base type |
+| 93 | Section rhythm (96px desktop / 48px below 900) |
+| 112 | Grid — 12 col, 24px gap |
+| 189 | Navigation |
+| 320 | Hero (original left/right layout rules) |
+| 374 | `.nx-ui` operational interface |
+| 486 | Services rail / accordion |
+| 649 | Process steps |
+| 946 | **Page frame — rails and hatch bands** |
+| 1207 | **Brand atmosphere, photography, icons** |
+| 1225 | Atmosphere gradient tokens |
+| 1390 | **Hero — centred stack** |
+| 1411 | **Operational dashboard** |
+| 1624+ | Responsive + height-aware compaction |
 
 ---
 
@@ -222,6 +225,20 @@ horizontal overflow at ≥1024px and needed its own overflow containment.*
 The eyebrow is a flex row, so centring it centres *rule + text as a group*,
 pushing the words right of the page axis. It stays on the left-aligned
 eyebrows (drawer "Menu", CTA); it must not go back on the hero.
+
+**Sharp corners everywhere.** The client asked for no rounded corners at all.
+Rather than edit the extracted token layer, `site.css` re-points the corner
+scale to 0 at `:root` — `--inx-radius-sm/md/lg/xl/pill` — so every component
+that resolves through a token squares off in one place and the extracted layers
+still match the style guide verbatim. `--inx-radius-full` is left at 50%: it
+draws circles, not corners, and squaring it would break the button spinner ring
+and make a radio input indistinguishable from a checkbox. The circular shapes
+that actually appear on this page — icon-only buttons and the 6px status and
+feed dots — are squared individually, as is the one hardcoded curve on the
+chart bars. Verified in the browser: no element or pseudo-element on the page
+paints a non-zero radius, drawer and tab panels included. **The style guide at
+`style-guide/index.html` still documents the pill radius** and now contradicts
+the site — raise it with the brand owner (§8).
 
 **Hero is a centred stack with the dashboard beneath** — client's explicit
 structure request.
@@ -351,9 +368,12 @@ placeholder, and the build spec forbids inventing replacements:
 
 **For the brand owner.**
 1. The gradient contradiction (§3) should be written into the guidelines.
-2. Lenis, counters and the retained pricing section should be added to the
+2. The corner scale is now 0 across the site (§5). The design system still
+   specifies pill buttons and rounded cards; the two documents disagree until
+   the style guide is updated and the token layer re-extracted.
+3. Lenis, counters and the retained pricing section should be added to the
    build spec's approved list.
-3. The style guide's status-colour comment bug is fixed in this repo's copy —
+4. The style guide's status-colour comment bug is fixed in this repo's copy —
    the client's master document still has it.
 
 **Housekeeping.**

@@ -10,6 +10,33 @@
    ========================================================================== */
 
 /* -----------------------------------------------------------------------------
+   CORNERS
+   -------------------------------------------------------------------------- */
+
+/* [CLIENT] No rounded corners anywhere — every corner is sharp. The corner
+   scale is re-pointed to 0 here rather than edited in inexa-tokens.css, so the
+   extracted token layer still matches the style guide verbatim (see CONTEXT.md
+   §4, layer discipline). Everything that resolves through these tokens squares
+   off in one place: buttons, cards, inputs, pills, tags, panels, tabs.
+
+   --inx-radius-full is deliberately untouched. It draws circles — the button
+   spinner ring and the radio input — not corners; squaring those would break
+   the spinner and make a radio indistinguishable from a checkbox. The circular
+   shapes that DO appear on this page are squared individually below. */
+:root {
+  --inx-radius-sm:   0;
+  --inx-radius-md:   0;
+  --inx-radius-lg:   0;
+  --inx-radius-xl:   0;
+  --inx-radius-pill: 0;
+}
+
+/* Circles on this page, squared to match. Icon-only buttons become squares of
+   the same 44px target; status and feed dots become 6px squares. */
+.inx-btn--icon { border-radius: 0; }
+.inx-pill__dot { border-radius: 0; }
+
+/* -----------------------------------------------------------------------------
    PAGE FRAME
    -------------------------------------------------------------------------- */
 
@@ -1553,7 +1580,7 @@ html.lenis, html.lenis body { block-size: auto; }
 .nx-chart > i {
   flex: 1;
   background: var(--inx-n-700);
-  border-radius: 2px 2px 0 0;
+  border-radius: 0;
   block-size: var(--nx-h, 20%);
   transition: block-size var(--inx-duration-slow) var(--inx-ease-out);
   transition-delay: var(--nx-delay, 0ms);
@@ -1576,7 +1603,7 @@ html.lenis, html.lenis body { block-size: auto; }
 .nx-feed .nx-dot {
   inline-size: 6px; block-size: 6px; flex: none;
   margin-block-start: 5px;
-  border-radius: var(--inx-radius-full);
+  border-radius: 0;
   background: var(--inx-accent);
 }
 .nx-feed strong { display: block; font-weight: var(--inx-weight-semi); color: var(--inx-text); }
