@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>iNexa separator</title>
+<style>
+  /* ===========================================================================
+     iNexa — section separator band, for a Wix Studio HTML embed.
+
+     Fills 100% of whatever box Wix gives it, at any width and any height.
+     The dot field is a repeating background, so it never stretches or blurs —
+     the dots stay the same size and simply tile to fit.
+
+     ---------------------------------------------------------------------
+     TO CHANGE THE VARIANT  — edit the one line marked [VARIANT] below.
+       ink      dark navy band, for use on an Ink Black section
+       light    transparent band, for use on a white section
+       sunken   Platinum band, for use on a light-grey section
+     ---------------------------------------------------------------------
+     ========================================================================= */
+
+  :root {
+    /* Approved iNexa palette — do not substitute other colours. */
+    --ink-black:  #070B14;
+    --ink-navy:   #141D2B;
+    --n-800:      #243040;
+    --n-100:      #DAE5F1;
+    --platinum:   #F5F7FA;
+
+    /* Dot field geometry. Tile is 8px; two dots per tile on opposite
+       diagonals. Raise --tile for a sparser field, --dot for heavier dots. */
+    --tile: 8px;
+    --dot:  1.1px;
+
+    /* Rails — the vertical hairlines at the container edges. Set
+       --rail-width to 0 to switch them off entirely. */
+    --rail-max:   1280px;   /* container width the rails sit at */
+    --rail-inset: 48px;     /* space between rail and dot field */
+    --rail-width: 1px;
+  }
+
+  /* --- [VARIANT] ---------------------------------------------------------
+     Keep exactly ONE of these three blocks uncommented. */
+
+  /* INK — dark band */
+  :root {
+    --band-bg:     var(--ink-black);
+    --hairline:    rgba(184, 208, 229, 0.16);
+    --dot-colour:  var(--n-800);
+  }
+
+  /* LIGHT — transparent band on white
+  :root {
+    --band-bg:     transparent;
+    --hairline:    var(--n-100);
+    --dot-colour:  var(--n-100);
+  }
+  */
+
+  /* SUNKEN — Platinum band
+  :root {
+    --band-bg:     var(--platinum);
+    --hairline:    var(--n-100);
+    --dot-colour:  var(--n-100);
+  }
+  */
+
+  /* --- End of the parts you edit ---------------------------------------- */
+
+  * { box-sizing: border-box; }
+
+  html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;          /* no scrollbars inside the embed */
+  }
+
+  body { background: var(--band-bg); }
+
+  /* The band. Hairlines top and bottom so it reads as a bounded element
+     rather than a texture leak, exactly as it does on the site. */
+  .band {
+    height: 100%;
+    border-top: 1px solid var(--hairline);
+    border-bottom: 1px solid var(--hairline);
+    display: flex;
+    justify-content: center;
+  }
+
+  /* The dot field, held to the container width with a rail on each edge. */
+  .band__inner {
+    width: 100%;
+    max-width: var(--rail-max);
+    padding-inline: var(--rail-inset);
+    border-inline: var(--rail-width) solid var(--hairline);
+
+    /* Two dots per tile, on opposite diagonals. A single centred dot reads
+       as a sparse grid at this band height; a full grid reads as noise. */
+    background-image:
+      radial-gradient(circle, var(--dot-colour) calc(var(--dot) - 0.35px), transparent var(--dot)),
+      radial-gradient(circle, var(--dot-colour) calc(var(--dot) - 0.35px), transparent var(--dot));
+    background-size: var(--tile) var(--tile);
+    background-position:
+      0 0,
+      calc(var(--tile) / 2) calc(var(--tile) / 2);
+  }
+
+  /* Narrow embeds: pull the rail inset in so the dot field keeps its width. */
+  @media (max-width: 900px) {
+    :root { --rail-inset: 24px; }
+  }
+</style>
+</head>
+<body>
+  <div class="band" role="presentation" aria-hidden="true">
+    <div class="band__inner"></div>
+  </div>
+</body>
+</html>
