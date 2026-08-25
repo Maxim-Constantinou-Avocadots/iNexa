@@ -160,7 +160,9 @@ Industries (`#industries`) · Systems view (`#systems`) ·
 Client experience (`#client-experience`) · Engagement model (`#pricing`) ·
 Insights (`#insights`) · Questions (`#questions`) · CTA (`#contact`) · Footer.
 
-Each section is preceded by a hatch band. **One CTA phrase throughout:
+Each section is preceded by a separator band — a dot field since the
+client asked for dots over the original diagonal hatch. The class is still
+`.nx-hatch` in all 13 places. **One CTA phrase throughout:
 "Book a strategy call".**
 
 ### `site.css` landmarks
@@ -214,6 +216,15 @@ bit blurry" — because it *was* an image. It is now four layered
 `radial-gradient` sets (`--nx-atmos-hero`, `--nx-atmos-cta`, `--nx-atmos-band`,
 `--nx-atmos-light`) drawn only from approved colours. Resolution-independent
 and free to download.
+
+**Separators are dots, not lines.** The bands between sections were a diagonal
+hatch — three 1px rules per 8px tile — and are now two dots per 8px tile on
+opposite diagonals. A single centred dot read as a sparse grid at this band
+height; a full grid read as noise. The dots stay round: a dot has no corners,
+so this is not the case the zeroed corner scale governs. Both variants keep
+their ramp colours (`n-100` light, `n-800` ink), so the palette check is
+unaffected. The class name `.nx-hatch` was left alone rather than renaming 13
+elements in the markup for a texture change.
 
 **No signifier watermark.** The enlarged mark from the ID cards (p49) was tried
 behind the atmosphere sections and removed at the client's request: the cards

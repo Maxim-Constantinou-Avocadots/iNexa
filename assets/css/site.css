@@ -933,9 +933,11 @@ body {
       surfaces automatically and the rails still read as one continuous frame
       because every pair sits at the same x.
 
-   2. HATCH BANDS: diagonal-hatch separators between sections. The pattern is
-      an SVG of flat 1px lines in a ramp colour — no gradient function, per
-      the same reasoning the design system used for its select chevron.
+   2. SEPARATOR BANDS: dot-field separators between sections. The pattern is
+      an SVG of flat dots in a ramp colour — no gradient function, per the
+      same reasoning the design system used for its select chevron. It was a
+      diagonal hatch until the client asked for dots; the class name is kept
+      so the 13 bands in the markup do not all have to be renamed.
    ========================================================================== */
 
 /* The inset every framed element shares. Kept in one variable so the header,
@@ -958,21 +960,26 @@ body {
    lands on exactly the same x as content inside a ruled section. */
 .nx-rail--quiet { padding-inline: calc(var(--nx-rail-pad) + 1px); }
 
-/* The hatch band. Height on the spacing scale; hairlines top and bottom so
-   the band reads as a bounded element of the frame rather than a texture
-   leak. Light and ink variants use ramp colours (n-100 / n-800). */
+/* The separator band. Height on the spacing scale; hairlines top and bottom
+   so the band reads as a bounded element of the frame rather than a texture
+   leak. Light and ink variants use ramp colours (n-100 / n-800).
+
+   [CLIENT] Dots, not lines. Two dots per 8px tile on opposite diagonals: a
+   single centred dot read as a sparse grid at this band height, and a full
+   grid read as noise. Dots stay round — a dot has no corners, so this is not
+   the rounded-corner case the corner scale governs (§CORNERS). */
 .nx-hatch { border-block: 1px solid var(--inx-border); }
 
 .nx-hatch > .nx-shell {
   block-size: var(--inx-space-7);
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M-2 10L10 -2M-6 6L6 -6M2 14L14 2' stroke='%23DAE5F1' stroke-width='1'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Ccircle cx='2' cy='2' r='1.1' fill='%23DAE5F1'/%3E%3Ccircle cx='6' cy='6' r='1.1' fill='%23DAE5F1'/%3E%3C/svg%3E");
 }
 
 .nx-hatch--ink {
   background: var(--inx-n-950);
 }
 .nx-hatch--ink > .nx-shell {
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M-2 10L10 -2M-6 6L6 -6M2 14L14 2' stroke='%23243040' stroke-width='1'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Ccircle cx='2' cy='2' r='1.1' fill='%23243040'/%3E%3Ccircle cx='6' cy='6' r='1.1' fill='%23243040'/%3E%3C/svg%3E");
 }
 .nx-hatch--ink { border-color: rgba(184, 208, 229, 0.16); }
 
