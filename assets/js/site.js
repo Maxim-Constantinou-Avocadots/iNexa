@@ -209,11 +209,8 @@
   /* ---------------------------------------------------------------------
      TABS — approved tab-panel fade; aria-selected carries the state.
 
-     NOTE: no markup currently uses [data-tabs]. The systems section was the
-     last consumer and is now an always-visible integration map. This is kept
-     because .inx-tabs is a documented component of the design system, so the
-     next section that needs tabs should not have to reimplement the
-     behaviour — it no-ops when there is nothing to bind.
+     Used by the FAQ page's topic rail. Handles click, both arrow-key pairs,
+     roving tabindex and the aria-selected/hidden pairing.
      ------------------------------------------------------------------ */
 
   function initTabs() {
@@ -233,7 +230,11 @@
       tabs.forEach(function (tab, i) {
         tab.addEventListener('click', function () { select(tab); });
         tab.addEventListener('keydown', function (e) {
-          var d = e.key === 'ArrowRight' ? 1 : e.key === 'ArrowLeft' ? -1 : 0;
+          /* Both key pairs, so the same component serves a horizontal strip
+             and a vertical rail — the FAQ topic list is vertical, where
+             Up/Down is what a keyboard user will reach for. */
+          var d = (e.key === 'ArrowRight' || e.key === 'ArrowDown') ? 1
+                : (e.key === 'ArrowLeft'  || e.key === 'ArrowUp')   ? -1 : 0;
           if (!d) return;
           e.preventDefault();
           var next = tabs[(i + d + tabs.length) % tabs.length];

@@ -128,6 +128,7 @@ stops contradicting the applications section. Flag this to the brand owner.
 index.html                  The homepage — 1059 lines, 14 sections
 case-study/index.html       The case study detail page
 contact/index.html          The contact page — the site's only form
+faq/index.html              The FAQ page — 6 topics, 25 answers, tabbed
 CONTEXT.md                  This file
 README.md                   What the site is, and the placeholder register
 style-guide/index.html      The design system document (deployed)
@@ -357,6 +358,32 @@ menu button had `aria-controls="nav-drawer"` pointing at nothing and opened
 nothing. And the header/drawer are duplicated across three pages now: a nav
 change means editing all three. If a fourth page appears, that duplication is
 the thing to fix first.
+
+**The FAQ page is a tablist, and the hero is shared with contact.** The client
+asked for "a multistate box where depending on the button we click that box
+appears", so a reader never scrolls a wall of questions. That is a tablist —
+and `.inx-tabs` / `initTabs` already existed: the systems section was its last
+consumer before becoming a map, so this **reuses** the behaviour instead of
+adding a second implementation. `initTabs` gained ArrowUp/ArrowDown, since
+this rail runs vertically and that is the key a keyboard user reaches for; it
+still handles Left/Right, so a horizontal strip works unchanged.
+
+The hero is deliberately the *same construction* as the contact hero — ink
+band, eyebrow, h1, lead, three-cell strip, all under `.nx-contact-hero`. The
+two sub-page heroes share one class on purpose: change one and change both.
+
+Two things worth knowing:
+- `.nx-faq__stage` has `min-block-size: 520px`. Without it the box changes
+  height as topics switch and throws the page around under the reader.
+- The rail's separators are **borders on the buttons**, not the 1px-gap-over-a
+  coloured-ground trick used elsewhere in the system. The rail is taller than
+  its buttons, so that ground showed through as a solid blue block under the
+  last topic.
+
+**Nav:** the header CTA now points at `/contact/` rather than the homepage
+anchor, which freed the nav slot that FAQ took. The bar stays at six items and
+`navfit.js` passes at all ten widths on all four pages. Contact remains in the
+drawer and the footer.
 
 **No signifier watermark.** The enlarged mark from the ID cards (p49) was tried
 behind the atmosphere sections and removed at the client's request: the cards

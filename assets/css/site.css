@@ -2719,3 +2719,184 @@ html.lenis, html.lenis body { block-size: auto; }
   .nx-form { padding: var(--inx-space-5); }
   .nx-contact-hero__out { grid-template-columns: minmax(0, 1fr); }
 }
+
+
+/* -----------------------------------------------------------------------------
+   FAQ PAGE — /faq/. The topic box.
+
+   [CLIENT] "A multistate box where depending on the button we click that box
+   appears" — so the reader never scrolls a wall of questions to find one.
+   That is a tablist, and .inx-tabs / initTabs already existed in the system:
+   the systems section was its last consumer before becoming a map, so this
+   reuses the behaviour rather than adding a second implementation. initTabs
+   gained ArrowUp/ArrowDown for this rail, since it runs vertically.
+
+   The hero above is deliberately the same construction as the contact hero
+   (.nx-contact-hero) — ink band, eyebrow, h1, lead, three-cell strip — so the
+   two sub-pages read as a pair.
+   -------------------------------------------------------------------------- */
+
+.nx-faq {
+  border: 1px solid var(--inx-border-strong);
+  background: var(--inx-bg-raised);
+}
+
+.nx-faq__bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--inx-space-4);
+  flex-wrap: wrap;
+  padding: var(--inx-space-4) var(--inx-space-5);
+  border-block-end: 1px solid var(--inx-border);
+  background: var(--inx-bg-sunken);
+}
+
+.nx-faq__body {
+  display: grid;
+  grid-template-columns: 272px minmax(0, 1fr);
+}
+
+/* The rail. Separators are borders on the buttons, NOT the 1px-gap-over-a
+   coloured-ground trick used elsewhere: the rail is taller than its buttons,
+   so that ground showed through as a solid blue block under the last topic. */
+.nx-faq__rail {
+  display: grid;
+  align-content: start;
+  background: var(--inx-bg-raised);
+  border-inline-end: 1px solid var(--inx-border);
+}
+.nx-topic + .nx-topic { border-block-start: 1px solid var(--inx-border); }
+
+.nx-topic {
+  display: grid;
+  grid-template-columns: 20px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: var(--inx-space-3);
+  inline-size: 100%;
+  padding: var(--inx-space-4) var(--inx-space-5);
+  border: 0;
+  border-inline-start: 2px solid transparent;
+  background: var(--inx-bg-raised);
+  font-family: var(--inx-font);
+  font-size: var(--inx-text-sm);
+  font-weight: var(--inx-weight-semi);
+  color: var(--inx-text-muted);
+  text-align: start;
+  cursor: pointer;
+  transition:
+    background-color var(--inx-duration-base) var(--inx-ease),
+    color var(--inx-duration-base) var(--inx-ease),
+    border-color var(--inx-duration-base) var(--inx-ease);
+}
+.nx-topic .nx-icon { inline-size: 18px; block-size: 18px; }
+.nx-topic:hover { background: var(--inx-bg); color: var(--inx-text); }
+
+.nx-topic[aria-selected="true"] {
+  background: var(--inx-n-950);
+  border-inline-start-color: var(--inx-accent-soft);
+  color: var(--inx-n-0);
+}
+
+/* The count sits quiet until its topic is the live one. */
+.nx-topic__n {
+  font-size: var(--inx-text-3xs);
+  font-weight: var(--inx-weight-regular);
+  font-variant-numeric: tabular-nums;
+  color: var(--inx-text-muted);
+}
+.nx-topic[aria-selected="true"] .nx-topic__n { color: var(--inx-n-300); }
+
+/* The stage. min-block-size stops the box changing height as topics switch,
+   which otherwise throws the page around under the reader. */
+.nx-faq__stage {
+  padding: var(--inx-space-6);
+  min-block-size: 520px;
+}
+
+.nx-faq__panel[hidden] { display: none; }
+
+/* Panels fade in rather than snapping — the approved tab-panel fade. */
+.nx-faq__panel {
+  animation: nx-faq-in var(--inx-duration-base) var(--inx-ease-out) both;
+}
+@media (prefers-reduced-motion: reduce) {
+  .nx-faq__panel { animation: none; }
+}
+@keyframes nx-faq-in {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: none; }
+}
+
+.nx-faq__panel-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--inx-space-4);
+  margin: 0 0 var(--inx-space-5);
+  padding-block-end: var(--inx-space-4);
+  border-block-end: 1px solid var(--inx-border);
+  font-size: var(--inx-text-2xs);
+  font-weight: var(--inx-weight-semi);
+  text-transform: uppercase;
+  letter-spacing: var(--inx-tracking-caps);
+  color: var(--inx-text);
+}
+.nx-faq__panel-head span {
+  font-weight: var(--inx-weight-regular);
+  letter-spacing: var(--inx-tracking-wide);
+  color: var(--inx-text-muted);
+}
+
+.nx-qa { margin-block-end: var(--inx-space-6); }
+.nx-qa:last-child { margin-block-end: 0; }
+.nx-qa__q {
+  margin: 0 0 var(--inx-space-3);
+  font-size: var(--inx-text-md);
+  font-weight: var(--inx-weight-semi);
+  line-height: var(--inx-leading-snug);
+  letter-spacing: var(--inx-tracking-tight);
+}
+.nx-qa__a {
+  margin: 0;
+  font-size: var(--inx-text-sm);
+  line-height: var(--inx-leading-relaxed);
+  color: var(--inx-text-subtle);
+  max-inline-size: var(--inx-measure);
+  text-wrap: pretty;
+}
+
+.nx-faq__foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--inx-space-5);
+  flex-wrap: wrap;
+  padding: var(--inx-space-5);
+  border-block-start: 1px solid var(--inx-border);
+  background: var(--inx-bg-sunken);
+}
+.nx-faq__foot p { margin: 0; font-size: var(--inx-text-sm); color: var(--inx-text-subtle); }
+
+@media (max-width: 900px) {
+  /* The rail turns into a horizontal scroller above the stage, so the box
+     keeps working when there is no room for a column beside it. */
+  .nx-faq__body { grid-template-columns: minmax(0, 1fr); }
+  .nx-faq__rail {
+    grid-auto-flow: column;
+    grid-auto-columns: max-content;
+    overflow-x: auto;
+    border-inline-end: 0;
+    border-block-end: 1px solid var(--inx-border);
+  }
+  .nx-topic + .nx-topic { border-block-start: 0; border-inline-start: 1px solid var(--inx-border); }
+  .nx-topic {
+    grid-template-columns: 18px max-content auto;
+    border-inline-start: 0;
+    border-block-end: 2px solid transparent;
+    white-space: nowrap;
+    padding: var(--inx-space-3) var(--inx-space-4);
+  }
+  .nx-topic[aria-selected="true"] { border-block-end-color: var(--inx-accent-soft); }
+  .nx-faq__stage { padding: var(--inx-space-5); min-block-size: 0; }
+}
