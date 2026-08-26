@@ -125,7 +125,8 @@ stops contradicting the applications section. Flag this to the brand owner.
 ## 4. File map
 
 ```
-index.html                  The homepage — 1095 lines, 14 sections
+index.html                  The homepage — 1059 lines, 14 sections
+case-study/index.html       The case study detail page (first sub-page)
 CONTEXT.md                  This file
 README.md                   What the site is, and the placeholder register
 style-guide/index.html      The design system document (deployed)
@@ -255,6 +256,38 @@ cell and lifts its surface to `n-900`.
 Lesson worth keeping: on this brand "premium" has meant *surface and density*,
 not restraint. The sparse editorial version was the more tasteful drawing and
 the wrong answer.
+
+**The case study is a feature panel plus a real page.** The homepage section
+stacked six full-width cells — intro, meta, prose, KPIs, a photo AND a sample
+report table, then a quote — and ran to **1877px, the tallest section on the
+page by 650px**. Two of those cells were restatements: the operational table
+appears twice more (hero dashboard, systems section), and the
+challenge/approach prose is detail-page material, not shop window.
+
+The homepage now carries one feature panel — photo bleeding down the left, the
+claim and its proof on the right, outcomes as a hairline-gapped strip across
+the full width, and a button through to the study. **1065px, down 43%.**
+
+`case-study/index.html` is the destination, and the first real sub-page in the
+build. It reuses the homepage's sprite, header and footer verbatim so they
+cannot drift, and links `../assets/css/*` — no duplicated CSS.
+
+Three traps when adding another sub-page:
+1. Rewriting `href="#..."` to `href="../index.html#..."` also hits
+   `<use href="#inx-lockup">` inside the header — which silently breaks the
+   logo. Rewrite anchors only.
+2. `site.js` fed nav hrefs straight to `querySelector`, which throws on
+   `../index.html#services`. `initSectionTracking` now takes the fragment and
+   only when the href is a bare one; without that the whole script dies and
+   every reveal stays invisible.
+3. `.inx-eyebrow` is `inline-flex`, so an `inline-flex` element above it
+   shares its line.
+
+**`<strong>` defaults to weight 700.** The variable font is declared
+`400 600`, so a stray 700 clamps to 600 and looks correct while being wrong.
+The dashboard's activity list shipped with three of them for several commits.
+`tools/audit.js` reports it in `fontWeights` — read that field, not just the
+PASS lines.
 
 **No signifier watermark.** The enlarged mark from the ID cards (p49) was tried
 behind the atmosphere sections and removed at the client's request: the cards

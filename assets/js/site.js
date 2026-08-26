@@ -110,9 +110,20 @@
     var links = Array.prototype.slice.call(document.querySelectorAll('[data-track]'));
     if (!links.length || !('IntersectionObserver' in window)) return;
 
+    /* A [data-track] link is only an in-page anchor on the homepage; on a
+       sub-page the same nav points at ../index.html#section, which is not a
+       valid selector and threw here. Take the fragment, and only when the
+       href is a bare fragment to begin with. */
     var sections = links
-      .map(function (link) { return document.querySelector(link.getAttribute('href')); })
+      .map(function (link) {
+        var href = link.getAttribute('href') || '';
+        return href.charAt(0) === '#' && href.length > 1
+          ? document.getElementById(href.slice(1))
+          : null;
+      })
       .filter(Boolean);
+
+    if (!sections.length) return;
 
     var io = new IntersectionObserver(function (entries) {
       entries.forEach(function (entry) {

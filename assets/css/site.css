@@ -800,71 +800,229 @@ body {
 
 
 /* -----------------------------------------------------------------------------
-   FEATURED CASE STUDY — spec §13.7: modular editorial grid of shared cells.
+   FEATURED CASE STUDY — spec §13.7.
+
+   [CLIENT] The previous build stacked six full-width cells — intro, meta,
+   prose, KPIs, a photo AND a sample report table, then a quote — and ran to
+   1877px, the tallest section on the page by 650px. Two of those cells were
+   restatements: the operational table appears twice more (hero dashboard and
+   the systems section), and the challenge/approach prose belongs on the
+   detail page, not the shop window.
+
+   It is now one feature panel: photo bleeding down the left, the claim and
+   its proof on the right, outcomes as a hairline-gapped strip beneath, and a
+   button through to the full study.
    -------------------------------------------------------------------------- */
 
-.nx-case { grid-template-columns: repeat(12, minmax(0, 1fr)); }
+.nx-feature {
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  border: 1px solid var(--inx-border);
+  background: var(--inx-bg-raised);
+  overflow: hidden;
+}
 
-.nx-case > * { padding: var(--inx-space-6); }
+/* Media — a bleed, not a stacked figure. The photo fills its half of the
+   panel's first row at whatever height the body sets, instead of setting the
+   height itself. Spanning both rows squeezed the outcomes into half the
+   width and left the photo absurdly tall. */
+.nx-feature__media {
+  position: relative;
+  min-block-size: 320px;
+  background: var(--inx-n-900);
+}
+.nx-feature__media img {
+  position: absolute;
+  inset: 0;
+  inline-size: 100%;
+  block-size: 100%;
+  object-fit: cover;
+}
+.nx-feature__tag {
+  position: absolute;
+  inset-block-end: 0;
+  inset-inline-start: 0;
+  padding: var(--inx-space-3) var(--inx-space-4);
+  background: var(--inx-n-950);
+  color: var(--inx-n-0);
+  font-size: var(--inx-text-3xs);
+  font-weight: var(--inx-weight-semi);
+  text-transform: uppercase;
+  letter-spacing: var(--inx-tracking-caps);
+}
 
-.nx-case__intro { grid-column: span 12; }
-.nx-case__meta  { grid-column: span 4; }
-.nx-case__body  { grid-column: span 8; }
-.nx-case__kpis  { grid-column: span 4; }
-.nx-case__media { grid-column: span 8; }
-.nx-case__quote { grid-column: span 12; }
+.nx-feature__body {
+  padding: var(--inx-space-7);
+  border-inline-start: 1px solid var(--inx-border);
+  min-inline-size: 0;
+}
 
-.nx-case h3 { font-size: var(--inx-text-xl); letter-spacing: var(--inx-tracking-tight); line-height: var(--inx-leading-tight); margin: 0; max-inline-size: 30ch; }
+.nx-feature__flag { margin-block-end: var(--inx-space-5); }
 
-.nx-case dl { margin: 0; display: flex; flex-direction: column; gap: var(--inx-space-4); }
-.nx-case dt {
-  font-size: var(--inx-text-2xs);
+.nx-feature__title {
+  margin: 0 0 var(--inx-space-5);
+  font-size: var(--inx-text-xl);
+  line-height: var(--inx-leading-tight);
+  letter-spacing: var(--inx-tracking-tight);
+  text-wrap: pretty;
+}
+
+/* Meta reads as a spec strip, not a definition list stacked down the page. */
+.nx-feature__meta {
+  margin: 0 0 var(--inx-space-5);
+  padding-block: var(--inx-space-5);
+  border-block: 1px solid var(--inx-border);
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--inx-space-4);
+}
+.nx-feature__meta dt {
+  font-size: var(--inx-text-3xs);
+  font-weight: var(--inx-weight-semi);
+  text-transform: uppercase;
+  letter-spacing: var(--inx-tracking-caps);
+  color: var(--inx-text-muted);
+  margin-block-end: var(--inx-space-2);
+}
+.nx-feature__meta dd { margin: 0; font-size: var(--inx-text-xs); line-height: var(--inx-leading-snug); }
+
+.nx-feature__quote {
+  margin: 0 0 var(--inx-space-5);
+  font-size: var(--inx-text-md);
+  line-height: var(--inx-leading-snug);
+  letter-spacing: var(--inx-tracking-tight);
+  text-wrap: pretty;
+}
+.nx-feature__quote cite {
+  display: block;
+  margin-block-start: var(--inx-space-3);
+  font-size: var(--inx-text-3xs);
+  font-style: normal;
+  color: var(--inx-text-muted);
+}
+
+.nx-feature__cta .nx-icon { inline-size: 18px; block-size: 18px; transition: transform var(--inx-duration-base) var(--inx-ease); }
+.nx-feature__cta:hover .nx-icon { transform: translateX(3px); }
+
+/* Outcomes — the dashboard's hairline-gapped construction, so the proof
+   reads as instrument output rather than four more paragraphs. */
+.nx-feature__out {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-column: 1 / -1;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 1px;
+  background: var(--inx-border);
+  border-block-start: 1px solid var(--inx-border);
+}
+.nx-feature__out li {
+  padding: var(--inx-space-5);
+  background: var(--inx-bg-raised);
+  opacity: 0;
+  transform: translateY(8px);
+  transition:
+    opacity var(--inx-duration-slow) var(--inx-ease-out),
+    transform var(--inx-duration-slow) var(--inx-ease-out);
+  transition-delay: var(--nx-delay, 0ms);
+}
+.nx-feature__out li.is-in,
+.no-js .nx-feature__out li { opacity: 1; transform: none; }
+.nx-feature__out strong {
+  display: block;
+  margin-block-end: var(--inx-space-2);
+  text-wrap: balance;
+  font-size: var(--inx-text-lg);
+  font-weight: var(--inx-weight-regular);
+  line-height: 1.1;
+  letter-spacing: var(--inx-tracking-display);
+}
+.nx-feature__out span { font-size: var(--inx-text-3xs); line-height: var(--inx-leading-normal); color: var(--inx-text-muted); }
+
+@media (max-width: 1023px) {
+  .nx-feature { grid-template-columns: minmax(0, 1fr); }
+  .nx-feature__media { grid-row: auto; min-block-size: 260px; }
+  .nx-feature__body { border-inline-start: 0; padding: var(--inx-space-6); }
+  .nx-feature__out { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (max-width: 600px) {
+  .nx-feature__meta { grid-template-columns: minmax(0, 1fr); gap: var(--inx-space-3); }
+  .nx-feature__out { grid-template-columns: minmax(0, 1fr); }
+  .nx-feature__body { padding: var(--inx-space-5); }
+}
+
+
+/* -----------------------------------------------------------------------------
+   CASE STUDY PAGE — /case-study/. Uses the site's own components throughout;
+   only the few page-specific arrangements live here.
+   -------------------------------------------------------------------------- */
+
+/* Block-level: .inx-eyebrow is inline-flex, so an inline-flex back link
+   above it shared the same line. */
+.nx-case-hero__back {
+  display: flex;
+  inline-size: fit-content;
+  align-items: center;
+  gap: var(--inx-space-2);
+  margin-block-end: var(--inx-space-6);
+  font-size: var(--inx-text-xs);
+}
+.nx-case-hero .nx-head__lead {
+  margin-block-start: var(--inx-space-5);
+  font-size: var(--inx-text-md);
+  color: var(--inx-text-muted);
+  max-inline-size: var(--inx-measure);
+}
+.nx-case-hero__out { margin-block-start: var(--inx-space-7); }
+.nx-case-hero .nx-feature__out li { background: var(--inx-n-950); }
+
+.nx-case-facts {
+  border: 1px solid var(--inx-border);
+  padding: var(--inx-space-5);
+  position: sticky;
+  inset-block-start: 104px;
+}
+.nx-case-facts dl { margin: var(--inx-space-5) 0 0; display: flex; flex-direction: column; gap: var(--inx-space-4); }
+.nx-case-facts dt {
+  font-size: var(--inx-text-3xs);
   font-weight: var(--inx-weight-semi);
   text-transform: uppercase;
   letter-spacing: var(--inx-tracking-caps);
   color: var(--inx-text-muted);
   margin-block-end: var(--inx-space-1);
 }
-.nx-case dd { margin: 0; font-size: var(--inx-text-sm); }
+.nx-case-facts dd { margin: 0; font-size: var(--inx-text-sm); line-height: var(--inx-leading-snug); }
 
-.nx-case__body h4 {
+.nx-prose h2 {
   font-size: var(--inx-text-2xs);
   font-weight: var(--inx-weight-semi);
   text-transform: uppercase;
   letter-spacing: var(--inx-tracking-caps);
   color: var(--inx-text-muted);
-  margin: 0 0 var(--inx-space-3);
+  margin: var(--inx-space-7) 0 var(--inx-space-4);
 }
-.nx-case__body p {
-  font-size: var(--inx-text-sm);
-  line-height: var(--inx-leading-normal);
-  color: var(--inx-text-subtle);
-  margin: 0 0 var(--inx-space-5);
+.nx-prose h2:first-child { margin-block-start: 0; }
+.nx-prose p {
+  margin: 0 0 var(--inx-space-4);
   max-inline-size: var(--inx-measure);
+  line-height: var(--inx-leading-relaxed);
 }
-.nx-case__body p:last-child { margin-block-end: 0; }
 
-.nx-kpi { padding-block: var(--inx-space-4); border-block-start: 1px solid var(--inx-border); }
-.nx-kpi:first-of-type { border-block-start: 0; padding-block-start: 0; }
-.nx-kpi strong {
-  display: block;
-  font-size: var(--inx-text-2xl);
-  font-weight: var(--inx-weight-regular);
-  letter-spacing: var(--inx-tracking-display);
-  line-height: 1.1;
-  font-variant-numeric: tabular-nums;
-}
-.nx-kpi span { font-size: var(--inx-text-xs); color: var(--inx-text-muted); }
+.nx-case-photo { margin: var(--inx-space-7) 0 0; }
 
-.nx-case__quote blockquote {
+.nx-case-quote {
+  margin: var(--inx-space-7) 0 0;
+  padding-block-start: var(--inx-space-6);
+  border-block-start: 1px solid var(--inx-border);
   font-size: var(--inx-text-xl);
   line-height: var(--inx-leading-snug);
   letter-spacing: var(--inx-tracking-tight);
-  margin: 0;
   max-inline-size: 46ch;
   text-wrap: pretty;
 }
-.nx-case__quote cite {
+.nx-case-quote cite {
   display: block;
   margin-block-start: var(--inx-space-4);
   font-size: var(--inx-text-xs);
@@ -872,8 +1030,8 @@ body {
   color: var(--inx-text-muted);
 }
 
-@media (max-width: 900px) {
-  .nx-case__meta, .nx-case__body, .nx-case__kpis, .nx-case__media { grid-column: span 12; }
+@media (max-width: 1023px) {
+  .nx-case-facts { position: static; margin-block-end: var(--inx-space-6); }
 }
 
 
@@ -1966,6 +2124,10 @@ html.lenis, html.lenis body { block-size: auto; }
   font-variant-numeric: tabular-nums;
   color: var(--inx-n-400);
 }
+/* <strong> defaults to 700, which is not an approved weight — the variable
+   font clamps it to 600 so it looks right while being wrong. Every <strong>
+   on the page needs an explicit weight. */
+.nx-dash__activity strong { font-weight: var(--inx-weight-semi); color: var(--inx-text); }
 
 .nx-dash__aside-foot {
   margin-block-start: auto;
