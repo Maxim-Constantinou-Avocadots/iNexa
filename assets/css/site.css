@@ -421,24 +421,107 @@ body {
    TRUST CONTEXT — spec §13.2: bordered horizontal grid, no invented metrics.
    -------------------------------------------------------------------------- */
 
-.nx-trust { grid-template-columns: repeat(4, minmax(0, 1fr)); }
-.nx-trust > * {
-  padding: var(--inx-space-5);
-  font-size: var(--inx-text-sm);
-  line-height: var(--inx-leading-snug);
-}
-.nx-trust p { margin: 0; }
-.nx-trust .nx-trust__cat {
-  display: block;
-  font-size: var(--inx-text-2xs);
-  font-weight: var(--inx-weight-semi);
-  text-transform: uppercase;
-  letter-spacing: var(--inx-tracking-caps);
-  color: var(--inx-text-muted);
-  margin-block-end: var(--inx-space-2);
+/* -----------------------------------------------------------------------------
+   INDUSTRIES — sector cells.
+
+   [CLIENT] "Looks cheap. No design whatsoever." Two structural causes, not a
+   styling problem:
+
+   1. The section ground is Platinum and .nx-cells paints its children
+      --inx-bg — which IS Platinum. Cells and surface were the same value, so
+      eight objects read as a faint grid of lines. They now sit on raised
+      white, which is what makes them read as cards at all.
+   2. Every cell carried the word "SECTOR" above a sector name. Eight
+      repetitions of a label that adds nothing, and no reason to believe the
+      headline's claim. Each cell now names the operational failure specific
+      to that sector — the section argues instead of listing.
+
+   Not numbered: these are a set, not a sequence (see §2).
+   -------------------------------------------------------------------------- */
+
+.nx-sectors {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 1px;
+  background: var(--inx-border);
+  border: 1px solid var(--inx-border);
 }
 
-@media (max-width: 900px) { .nx-trust { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+.nx-sector {
+  position: relative;
+  padding: var(--inx-space-6) var(--inx-space-5);
+  background: var(--inx-bg-raised);
+  min-inline-size: 0;
+  opacity: 0;
+  transform: translateY(10px);
+  transition:
+    opacity var(--inx-duration-slow) var(--inx-ease-out),
+    transform var(--inx-duration-slow) var(--inx-ease-out),
+    background-color var(--inx-duration-base) var(--inx-ease);
+  transition-delay: var(--nx-delay, 0ms);
+}
+.nx-sector.is-in,
+.no-js .nx-sector { opacity: 1; transform: none; }
+
+/* An accent edge lights along the top of the cell under the pointer — the
+   same behaviour as the transformation panel, so the two read as one system. */
+.nx-sector::before {
+  content: "";
+  position: absolute;
+  inset-block-start: 0;
+  inset-inline: 0;
+  block-size: 2px;
+  background: var(--inx-accent);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform var(--inx-duration-base) var(--inx-ease);
+}
+.nx-sector:hover { background: var(--inx-bg); }
+.nx-sector:hover::before { transform: scaleX(1); }
+
+.nx-sector__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  inline-size: 44px;
+  block-size: 44px;
+  margin-block-end: var(--inx-space-5);
+  border: 1px solid var(--inx-border-strong);
+  color: var(--inx-text);
+  transition:
+    border-color var(--inx-duration-base) var(--inx-ease),
+    background-color var(--inx-duration-base) var(--inx-ease),
+    color var(--inx-duration-base) var(--inx-ease);
+}
+.nx-sector__icon .nx-icon { inline-size: 22px; block-size: 22px; }
+.nx-sector:hover .nx-sector__icon {
+  border-color: var(--inx-n-950);
+  background: var(--inx-n-950);
+  color: var(--inx-n-0);
+}
+
+.nx-sector__name {
+  margin: 0 0 var(--inx-space-3);
+  font-size: var(--inx-text-sm);
+  font-weight: var(--inx-weight-semi);
+  line-height: var(--inx-leading-snug);
+}
+
+.nx-sector__note {
+  margin: 0;
+  font-size: var(--inx-text-xs);
+  line-height: var(--inx-leading-normal);
+  color: var(--inx-text-muted);
+  text-wrap: pretty;
+}
+
+@media (max-width: 1023px) { .nx-sectors { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 600px)  { .nx-sectors { grid-template-columns: minmax(0, 1fr); }
+                             .nx-sector { padding: var(--inx-space-5); }
+                             .nx-sector__icon { margin-block-end: var(--inx-space-4); } }
 
 
 /* -----------------------------------------------------------------------------

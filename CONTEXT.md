@@ -289,6 +289,25 @@ The dashboard's activity list shipped with three of them for several commits.
 `tools/audit.js` reports it in `fontWeights` — read that field, not just the
 PASS lines.
 
+**Industries: cells need a surface of their own.** The client called this one
+"cheap, no design whatsoever", and there were two structural causes.
+
+First, **the cells were the same colour as the section behind them.** The
+section grounds on `--inx-bg-sunken` (Platinum) and `.nx-cells > *` paints
+`--inx-bg` — also Platinum. Eight objects therefore read as a faint grid of
+lines rather than as cards. They now sit on `--inx-bg-raised`. **Check this
+first whenever a cell grid looks flat: compare the cell background against the
+section's.**
+
+Second, every cell carried the word "SECTOR" above a sector name — eight
+repetitions of a label carrying no information, and no support at all for the
+headline's claim. Each cell now names the operational failure specific to that
+sector, so the section argues rather than lists, and carries an icon well that
+inverts to solid ink on hover.
+
+Cost: 597px → 832px. Worth it — the section previously said nothing.
+Not numbered: these are a set, not a sequence (§2).
+
 **No signifier watermark.** The enlarged mark from the ID cards (p49) was tried
 behind the atmosphere sections and removed at the client's request: the cards
 have no page frame, but this site does, and the mark's diagonals crossed the
