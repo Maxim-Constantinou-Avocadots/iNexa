@@ -177,7 +177,7 @@ client asked for dots over the original diagonal hatch. The class is still
 | 302 | Hero (original left/right layout rules) |
 | 361 | `.nx-ui` operational interface |
 | 468 | Services rail / accordion |
-| 576 | **Transformation spine** (was the compare table) |
+| 576 | **Transformation panel** (was the compare table) |
 | 754 | Process steps |
 | 928 | **Page frame — rails and hatch bands** |
 | 1189 | **Brand atmosphere, photography, icons** |
@@ -227,27 +227,34 @@ their ramp colours (`n-100` light, `n-800` ink), so the palette check is
 unaffected. The class name `.nx-hatch` was left alone rather than renaming 13
 elements in the markup for a texture change.
 
-**The transformation section is a spine, not a table.** It was a three-column
-`<table>` — Area / Before / With — with a header row and a rule under every
-row. The client's words: "looks like an Excel sheet." The cause was structural,
-not cosmetic: six rows of equal weight, no hierarchy, and horizontal rules
-doing all the work.
+**The transformation section is a panel, not a table.** It began as a
+three-column `<table>` — Area / Before / With — with a header row and a rule
+under every row. The client read it as a spreadsheet, and the cause was
+structural: six rows of equal weight with horizontal rules doing all the work.
 
-It is now `.nx-flow`: one continuous vertical rule with a node per area, the
-fragment on the left in muted body size, the gain on the right at `text-md` in
-full white. **There is not a single horizontal rule left in the section.** The
-device carries the argument the copy makes — scattered things becoming one
-structure — instead of tabulating it. The spine draws itself downward on
-reveal and the two states slide in toward it, so the section performs the
-transformation rather than listing it.
+The first replacement was a spine — two columns either side of one continuous
+vertical rule. It killed the spreadsheet read but the client's verdict was
+"not premium, not high tech", and that was right: it had **no surfaces**.
+Everything floated on bare ink with a lot of air, which reads sparse rather
+than engineered.
 
-Two traps if you touch it: a zero-width grid column *still takes the
-column-gap*, which pushed every node 40px clear of the spine it must sit on
-(the node is positioned against the row instead), and the legend is two labels
-in the same grid as the rows — give it a third child and the second label
-wraps to its own line. Also note `align-items: center`, not `baseline`: the
-left column is two lines and the right is one, so baseline aligned the gain to
-the area label rather than to the row.
+It is now `.nx-shift-panel`: six cells hairline-gapped into one block, built
+exactly the way the hero dashboard's KPI strip is built — `gap: 1px` over a
+border-coloured ground, so the hairlines ARE the gaps rather than drawn rules.
+That construction is what makes the dashboard read as an instrument, and it is
+the most product-like idiom in the system; reuse it when a section needs to
+feel like a tool rather than a document.
+
+Inside each cell the two states stack, linked by a connector that runs between
+the two markers only — never alongside the type, or it reads as a stray tick.
+The state being left behind carries a **hollow** marker, the state gained a
+solid accent one, so the pair reads without relying on colour alone; the panel
+header states the key once. Hover lights a 2px accent edge along the top of the
+cell and lifts its surface to `n-900`.
+
+Lesson worth keeping: on this brand "premium" has meant *surface and density*,
+not restraint. The sparse editorial version was the more tasteful drawing and
+the wrong answer.
 
 **No signifier watermark.** The enlarged mark from the ID cards (p49) was tried
 behind the atmosphere sections and removed at the client's request: the cards

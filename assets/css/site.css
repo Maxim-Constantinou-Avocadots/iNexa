@@ -587,86 +587,94 @@ body {
    instead of tabulating it. There is not a single horizontal rule left.
    -------------------------------------------------------------------------- */
 
-.nx-flow {
-  position: relative;
+/* The panel. Built the same way as the hero dashboard's KPI strip — cells
+   separated by a 1px gap over a border-coloured ground, so the hairlines are
+   the gaps rather than drawn rules. That construction is what makes the
+   dashboard read as an instrument, and it is the most product-like idiom in
+   the system. */
+.nx-shift-panel {
   margin-block-start: var(--inx-space-7);
-  --nx-flow-split: 38%;   /* where the spine sits across the container */
+  border: 1px solid var(--inx-border-strong);
+  background: var(--inx-n-950);
 }
 
-/* Legend — two words over two columns. Deliberately NOT a header row: no
-   rule under it, and it shares the row grid only so the words land above
-   the columns they name. */
-.nx-flow__legend,
-.nx-flow__row {
-  display: grid;
-  grid-template-columns: minmax(0, var(--nx-flow-split)) minmax(0, 1fr);
-  column-gap: var(--inx-space-7);
+.nx-shift-panel__bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--inx-space-5);
+  flex-wrap: wrap;
+  padding: var(--inx-space-4) var(--inx-space-5);
+  border-block-end: 1px solid var(--inx-border);
 }
 
-.nx-flow__legend { margin-block-end: var(--inx-space-5); }
-
-.nx-flow__label {
+.nx-shift-panel__title,
+.nx-shift-panel__key {
+  margin: 0;
   font-size: var(--inx-text-2xs);
   font-weight: var(--inx-weight-semi);
   text-transform: uppercase;
   letter-spacing: var(--inx-tracking-caps);
-  color: var(--inx-text-muted);
+}
+.nx-shift-panel__title { color: var(--inx-text); }
+
+/* The key. Each entry carries the same marker the cells use, so the reader
+   learns the two states once and reads every cell without a second legend. */
+.nx-shift-panel__key { display: flex; gap: var(--inx-space-5); color: var(--inx-text-muted); }
+.nx-shift-panel__key span { display: flex; align-items: center; gap: var(--inx-space-2); }
+.nx-shift-panel__key span::before {
+  content: "";
+  inline-size: 7px;
+  block-size: 7px;
+  box-shadow: inset 0 0 0 1px var(--inx-n-500);
+}
+.nx-shift-panel__key-now { color: var(--inx-accent); }
+.nx-shift-panel__key-now::before { background: var(--inx-accent); }
+
+/* Six cells, hairline-gapped into one block. */
+.nx-shift-grid {
+  list-style: none;
   margin: 0;
-}
-.nx-flow__label--after { color: var(--inx-accent); }
-
-.nx-flow__list { list-style: none; margin: 0; padding: 0; position: relative; }
-
-/* The spine. One rule, unbroken, running the full height of the list — the
-   only vertical element on the page allowed to sit among content, because
-   here it IS the content. It draws itself downward on reveal. */
-.nx-flow__spine {
-  position: absolute;
-  inset-block: 0;
-  inset-inline-start: var(--nx-flow-split);
-  inline-size: 1px;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1px;
   background: var(--inx-border);
-  overflow: hidden;
 }
-.nx-flow__spine > i {
-  display: block;
-  block-size: 100%;
-  background: var(--inx-accent-soft);
-  transform: scaleY(0);
-  transform-origin: top;
-  transition: transform var(--inx-duration-slow) var(--inx-ease-out);
-}
-.is-in .nx-flow__spine > i,
-.no-js .nx-flow__spine > i { transform: scaleY(1); }
 
-.nx-flow__row {
+.nx-shift {
   position: relative;
-  align-items: center;
-  padding-block: var(--inx-space-4);
-}
-
-/* The two states converge on the spine as they arrive. */
-.nx-flow__before,
-.nx-flow__gain {
+  padding: var(--inx-space-5);
+  background: var(--inx-n-950);
+  min-inline-size: 0;
   opacity: 0;
+  transform: translateY(10px);
   transition:
     opacity var(--inx-duration-slow) var(--inx-ease-out),
-    transform var(--inx-duration-slow) var(--inx-ease-out);
+    transform var(--inx-duration-slow) var(--inx-ease-out),
+    background-color var(--inx-duration-base) var(--inx-ease);
   transition-delay: var(--nx-delay, 0ms);
 }
-.nx-flow__before { transform: translateX(-12px); }
-.nx-flow__gain   { transform: translateX(12px); }
+.nx-shift.is-in,
+.no-js .nx-shift { opacity: 1; transform: none; }
 
-.nx-flow__row.is-in .nx-flow__before,
-.nx-flow__row.is-in .nx-flow__gain,
-.no-js .nx-flow__before,
-.no-js .nx-flow__gain { opacity: 1; transform: none; }
+/* An accent edge lights along the top of the cell under the pointer. */
+.nx-shift::before {
+  content: "";
+  position: absolute;
+  inset-block-start: 0;
+  inset-inline: 0;
+  block-size: 2px;
+  background: var(--inx-accent);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform var(--inx-duration-base) var(--inx-ease);
+}
+.nx-shift:hover { background: var(--inx-n-900); }
+.nx-shift:hover::before { transform: scaleX(1); }
 
-/* Left column — the area, then what it looks like before. Left-aligned to
-   the container edge like every other block on the page; right-aligning it
-   emptied the whole left third of the section. */
-.nx-flow__area {
-  margin: 0 0 var(--inx-space-2);
+.nx-shift__area {
+  margin: 0 0 var(--inx-space-5);
   font-size: var(--inx-text-2xs);
   font-weight: var(--inx-weight-semi);
   text-transform: uppercase;
@@ -674,72 +682,68 @@ body {
   color: var(--inx-text-subtle);
 }
 
-.nx-flow__was {
-  margin: 0;
-  font-size: var(--inx-text-sm);
-  line-height: var(--inx-leading-normal);
-  color: var(--inx-text-muted);
-  transition: color var(--inx-duration-base) var(--inx-ease);
-}
-
-/* The node — where the fragment meets the structure. Positioned against the
-   row, not placed in the grid: a zero-width column still takes the
-   column-gap, which pushed every node clear of the rule it must touch. */
-.nx-flow__node {
-  position: absolute;
-  inset-inline-start: var(--nx-flow-split);
-  inset-block-start: 50%;
-  inline-size: 9px;
-  block-size: 9px;
-  margin: -4px 0 0 -4px;
-  background: var(--inx-accent);
-  transition: transform var(--inx-duration-base) var(--inx-ease);
-}
-
-/* A short tick from the node out to the statement, so the gain reads as
-   anchored to the spine rather than floating beside it. It sits in the
-   gutter and never crosses type. */
-.nx-flow__node::after {
+/* The two states, stacked and linked. The connector runs from the underside
+   of the first marker to the top of the second — between the markers only,
+   never alongside the type, or it reads as a stray tick. */
+.nx-shift__states { position: relative; }
+.nx-shift__was::after {
   content: "";
   position: absolute;
-  inset-inline-start: 9px;
-  inset-block-start: 4px;
-  inline-size: var(--inx-space-5);
-  block-size: 1px;
+  inset-inline-start: 3px;
+  inset-block: calc(0.55em + 9px) calc(var(--inx-space-4) * -1 - 0.05em);
+  inline-size: 1px;
   background: var(--inx-border-strong);
 }
 
-/* The gain — the payoff, and the largest type in the section after the
-   headline. This is what the reader should leave with. */
-.nx-flow__gain {
+.nx-shift__was,
+.nx-shift__now {
+  position: relative;
   margin: 0;
+  padding-inline-start: var(--inx-space-5);
+}
+
+.nx-shift__mark {
+  position: absolute;
+  inset-inline-start: 0;
+  inset-block-start: 0.55em;
+  inline-size: 7px;
+  block-size: 7px;
+}
+
+.nx-shift__was {
+  font-size: var(--inx-text-sm);
+  line-height: var(--inx-leading-normal);
+  color: var(--inx-text-muted);
+  margin-block-end: var(--inx-space-4);
+}
+.nx-shift__was .nx-shift__mark {
+  background: transparent;
+  box-shadow: inset 0 0 0 1px var(--inx-n-500);
+}
+
+/* The payoff — the loudest line in the cell. */
+.nx-shift__now {
   font-size: var(--inx-text-md);
   line-height: var(--inx-leading-snug);
   letter-spacing: var(--inx-tracking-tight);
   color: var(--inx-text);
   text-wrap: pretty;
 }
+.nx-shift__now .nx-shift__mark {
+  background: var(--inx-accent);
+  transition: transform var(--inx-duration-base) var(--inx-ease);
+}
+.nx-shift:hover .nx-shift__now .nx-shift__mark { transform: scale(1.4); }
 
-/* Hover trades weight between the two states. */
-.nx-flow__row:hover .nx-flow__node { transform: scale(1.5); }
-.nx-flow__row:hover .nx-flow__was { color: var(--inx-text-subtle); }
+@media (max-width: 1023px) {
+  .nx-shift-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
 
-@media (max-width: 900px) {
-  /* The spine moves to the edge and the pair stacks beside it, so the
-     before/after relationship survives without two columns to hold it. */
-  .nx-flow { --nx-flow-split: 4px; }
-  .nx-flow__legend { display: none; }
-  .nx-flow__row {
-    column-gap: var(--inx-space-5);
-    padding-block: var(--inx-space-4);
-  }
-  .nx-flow__row { grid-template-columns: minmax(0, 1fr); padding-inline-start: var(--inx-space-5); }
-  .nx-flow__before { grid-row: 2; margin-block-start: var(--inx-space-2); transform: none; }
-  .nx-flow__gain   { grid-row: 1; font-size: var(--inx-text-base); }
-  .nx-flow__node   { inset-block-start: 0.75em; margin-block-start: 0; }
-  .nx-flow__node::after { display: none; }
-  .nx-flow__area   { margin-block-end: 2px; }
-  .nx-flow__was::before { content: "Before · "; color: var(--inx-accent-soft); }
+@media (max-width: 767px) {
+  .nx-shift-grid { grid-template-columns: minmax(0, 1fr); }
+  .nx-shift { padding: var(--inx-space-4); }
+  .nx-shift__now { font-size: var(--inx-text-base); }
+  .nx-shift-panel__bar { padding: var(--inx-space-3) var(--inx-space-4); }
 }
 
 
