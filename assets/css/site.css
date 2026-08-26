@@ -2520,3 +2520,202 @@ html.lenis, html.lenis body { block-size: auto; }
   .nx-dash { margin-block-start: var(--inx-space-4); }
   .nx-hero { padding-block-end: var(--inx-space-3); }
 }
+
+
+/* -----------------------------------------------------------------------------
+   CONTACT PAGE — /contact/.
+
+   The brief specifies this page (title, intro, five fields, CTA) and the site
+   had no form at all — zero <form> and zero <input> before this.
+
+   Submission: there is no backend. The form posts natively to a mailto: with
+   enctype="text/plain", which works with JavaScript off; site.js enhances it
+   into a composed subject and body. Nothing is silently swallowed, which a
+   fake success panel on a live page would do. Swapping in a real endpoint is
+   a one-line change to the action.
+   -------------------------------------------------------------------------- */
+
+.nx-contact-hero .nx-head__lead {
+  margin-block-start: var(--inx-space-5);
+  font-size: var(--inx-text-md);
+  color: var(--inx-text-muted);
+  max-inline-size: var(--inx-measure);
+}
+.nx-contact-hero__out { margin-block-start: var(--inx-space-7); grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.nx-contact-hero .nx-feature__out li { background: var(--inx-n-950); }
+
+.nx-contact {
+  display: grid;
+  grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+  gap: var(--inx-space-6);
+  align-items: start;
+}
+
+/* What happens next — ink, so the reassurance reads as a distinct object
+   rather than more page. Sticky, so it stays with a long form. */
+.nx-next {
+  position: sticky;
+  inset-block-start: 104px;
+  padding: var(--inx-space-6);
+  background: var(--inx-n-950);
+  border: 1px solid var(--inx-n-800);
+}
+
+.nx-next__list {
+  list-style: none;
+  margin: var(--inx-space-5) 0 0;
+  padding: 0;
+  position: relative;
+}
+.nx-next__step {
+  position: relative;
+  padding: 0 0 var(--inx-space-6) var(--inx-space-6);
+  opacity: 0;
+  transform: translateY(8px);
+  transition:
+    opacity var(--inx-duration-slow) var(--inx-ease-out),
+    transform var(--inx-duration-slow) var(--inx-ease-out);
+  transition-delay: var(--nx-delay, 0ms);
+}
+.nx-next__step.is-in,
+.no-js .nx-next__step { opacity: 1; transform: none; }
+.nx-next__step:last-child { padding-block-end: 0; }
+
+/* The run between markers — drawn on the step, not the list, so it stops at
+   the last marker instead of running past it. */
+.nx-next__step:not(:last-child)::before {
+  content: "";
+  position: absolute;
+  inset-inline-start: 3px;
+  inset-block: 1.1em 0;
+  inline-size: 1px;
+  background: var(--inx-n-700);
+}
+.nx-next__dot {
+  position: absolute;
+  inset-inline-start: 0;
+  inset-block-start: 0.45em;
+  inline-size: 7px;
+  block-size: 7px;
+  background: var(--inx-accent);
+}
+.nx-next__when {
+  margin: 0 0 var(--inx-space-2);
+  font-size: var(--inx-text-sm);
+  font-weight: var(--inx-weight-semi);
+  color: var(--inx-n-0);
+}
+.nx-next__what {
+  margin: 0;
+  font-size: var(--inx-text-xs);
+  line-height: var(--inx-leading-normal);
+  color: var(--inx-n-200);
+}
+
+.nx-next__direct {
+  margin-block-start: var(--inx-space-6);
+  padding-block-start: var(--inx-space-5);
+  border-block-start: 1px solid var(--inx-n-800);
+}
+.nx-next__label {
+  margin: 0 0 var(--inx-space-3);
+  font-size: var(--inx-text-3xs);
+  font-weight: var(--inx-weight-semi);
+  text-transform: uppercase;
+  letter-spacing: var(--inx-tracking-caps);
+  color: var(--inx-n-300);
+}
+.nx-next__mail {
+  font-size: var(--inx-text-md);
+  color: var(--inx-n-0);
+  text-decoration-color: var(--inx-n-600);
+  text-underline-offset: 4px;
+}
+.nx-next__addr {
+  margin-block-start: var(--inx-space-4);
+  font-style: normal;
+  font-size: var(--inx-text-3xs);
+  line-height: var(--inx-leading-normal);
+  color: var(--inx-n-300);
+}
+
+/* The form, as a panel with chrome — same family as the dashboard and the
+   integration map, so it reads as part of the instrument rather than a
+   generic contact form dropped on the page. */
+.nx-form-panel {
+  border: 1px solid var(--inx-border-strong);
+  background: var(--inx-bg-raised);
+}
+.nx-form-panel__bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--inx-space-4);
+  flex-wrap: wrap;
+  padding: var(--inx-space-4) var(--inx-space-5);
+  border-block-end: 1px solid var(--inx-border);
+  background: var(--inx-bg-sunken);
+}
+
+.nx-form { padding: var(--inx-space-6); }
+
+.nx-form__set { border: 0; margin: 0 0 var(--inx-space-6); padding: 0; }
+.nx-form__set:last-of-type { margin-block-end: var(--inx-space-5); }
+.nx-form__legend {
+  padding: 0;
+  margin-block-end: var(--inx-space-5);
+  font-size: var(--inx-text-3xs);
+  font-weight: var(--inx-weight-semi);
+  text-transform: uppercase;
+  letter-spacing: var(--inx-tracking-caps);
+  color: var(--inx-text-muted);
+}
+.nx-form__row {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--inx-space-5);
+}
+
+.nx-form__foot {
+  padding-block-start: var(--inx-space-5);
+  border-block-start: 1px solid var(--inx-border);
+  display: flex;
+  align-items: center;
+  gap: var(--inx-space-5);
+  flex-wrap: wrap;
+}
+.nx-form__note {
+  margin: 0;
+  font-size: var(--inx-text-3xs);
+  line-height: var(--inx-leading-normal);
+  color: var(--inx-text-muted);
+  max-inline-size: 30ch;
+}
+
+/* Sent state — replaces the form once the mail client has been handed the
+   message. It says what actually happened, not "we received it". */
+.nx-form__sent { padding: var(--inx-space-7) var(--inx-space-6); }
+.nx-form__sent h2 {
+  margin: 0 0 var(--inx-space-4);
+  font-size: var(--inx-text-lg);
+  letter-spacing: var(--inx-tracking-tight);
+}
+.nx-form__sent p {
+  margin: 0 0 var(--inx-space-5);
+  font-size: var(--inx-text-sm);
+  line-height: var(--inx-leading-normal);
+  color: var(--inx-text-subtle);
+  max-inline-size: var(--inx-measure);
+}
+
+@media (max-width: 1023px) {
+  .nx-contact { grid-template-columns: minmax(0, 1fr); }
+  .nx-next { position: static; }
+  .nx-contact-hero__out { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+
+@media (max-width: 600px) {
+  .nx-form__row { grid-template-columns: minmax(0, 1fr); }
+  .nx-form { padding: var(--inx-space-5); }
+  .nx-contact-hero__out { grid-template-columns: minmax(0, 1fr); }
+}

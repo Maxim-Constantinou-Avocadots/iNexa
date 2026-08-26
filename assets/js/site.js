@@ -407,6 +407,58 @@
     plot.addEventListener('mouseleave', hide);
   }
 
+  /* ---------------------------------------------------------------------
+     CONTACT FORM
+     There is no backend. The form posts natively to a mailto: with
+     enctype="text/plain", which already works with JavaScript off — this
+     only improves on it, composing a readable subject and body so the
+     message arrives structured rather than as raw form encoding.
+
+     Nothing here fakes a submission: the page only claims the mail client
+     was opened, because that is all that actually happened.
+     ------------------------------------------------------------------ */
+
+  function initContactForm() {
+    var form = document.querySelector('[data-contact]');
+    if (!form) return;
+
+    form.addEventListener('submit', function (e) {
+      /* novalidate is set so the browser does not block before we can read
+         the fields; run the same check ourselves and let the browser show
+         its own messages. */
+      if (!form.checkValidity()) {
+        e.preventDefault();
+        form.reportValidity();
+        return;
+      }
+
+      e.preventDefault();
+
+      var data = new FormData(form);
+      var lines = [];
+      data.forEach(function (value, key) {
+        lines.push(key + ':\n' + String(value).trim() + '\n');
+      });
+
+      var subject = 'Strategy call request — ' + (data.get('Company') || data.get('Name') || 'new enquiry');
+      var href = 'mailto:hello@inexa.com'
+        + '?subject=' + encodeURIComponent(subject)
+        + '&body=' + encodeURIComponent(lines.join('\n'));
+
+      window.location.href = href;
+
+      var panel = form.parentNode;
+      panel.innerHTML =
+        '<div class="nx-form__sent">' +
+        '<h2>Your email client should now be open.</h2>' +
+        '<p>The message is addressed to hello@inexa.com with your answers in the body. ' +
+        'Send it and we will reply within one working day.</p>' +
+        '<p><a class="inx-btn inx-btn--secondary" href="mailto:hello@inexa.com">' +
+        'Nothing opened? Email us directly</a></p>' +
+        '</div>';
+    });
+  }
+
   function boot() {
     document.documentElement.classList.remove('no-js');
     initSmoothScroll();
@@ -418,6 +470,7 @@
     initAccordion();
     initCounters();
     initPlot();
+    initContactForm();
     initSectionTracking();
 
     requestAnimationFrame(function () {

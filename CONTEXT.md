@@ -126,7 +126,8 @@ stops contradicting the applications section. Flag this to the brand owner.
 
 ```
 index.html                  The homepage — 1059 lines, 14 sections
-case-study/index.html       The case study detail page (first sub-page)
+case-study/index.html       The case study detail page
+contact/index.html          The contact page — the site's only form
 CONTEXT.md                  This file
 README.md                   What the site is, and the placeholder register
 style-guide/index.html      The design system document (deployed)
@@ -336,6 +337,26 @@ line, one destination.
 Trap: nothing occupies the middle grid column, so the hub auto-placed into the
 88px gutter and crushed to one word per line. **`grid-column: 3` on
 `.nx-map__hub` is load-bearing.**
+
+**The contact page fills a brief gap, and carries the site's only form.**
+The brief specifies this page — title, intro, five fields, CTA — and the audit
+found the site had **zero `<form>` and zero `<input>` elements**. It is built
+from the design system's own form components (`.inx-field`, `.inx-input`,
+`.inx-select`, `.inx-textarea`, `.inx-help`), which were fully specified in
+the style guide and had never been used on a page.
+
+Structure: an ink hero with a three-cell response strip (1 working day / 45
+minutes / no cost), then a sticky ink "what happens next" panel beside a form
+panel with chrome — the same panel family as the dashboard and the integration
+map, so it reads as part of the instrument rather than a generic contact form.
+The address block is the real one, from the brief's letterhead.
+
+**Two things this fixed that were already broken.** The case study page had no
+drawer at all — the earlier extraction stopped at `</header>`, so its mobile
+menu button had `aria-controls="nav-drawer"` pointing at nothing and opened
+nothing. And the header/drawer are duplicated across three pages now: a nav
+change means editing all three. If a fourth page appears, that duplication is
+the thing to fix first.
 
 **No signifier watermark.** The enlarged mark from the ID cards (p49) was tried
 behind the atmosphere sections and removed at the client's request: the cards
@@ -547,6 +568,13 @@ placeholder, and the build spec forbids inventing replacements:
 - Footer legal links (Privacy, Cookie, Terms) point nowhere. Those pages, plus
   About and Insights, are in the spec's architecture but outside this scope —
   which is why they are absent from the header.
+- **The contact form has no backend.** It posts natively to
+  `mailto:hello@inexa.com` with `enctype="text/plain"`, which works with
+  JavaScript off; `initContactForm` in `site.js` improves on that by composing
+  a readable subject and body. Nothing is silently swallowed — the sent panel
+  says the mail client was opened, because that is all that happened. Point
+  the form's `action` at a real endpoint and delete the JS handler to switch
+  to a server. **Do not replace it with a fake success message.**
 
 **For the brand owner.**
 1. The gradient contradiction (§3) should be written into the guidelines.
