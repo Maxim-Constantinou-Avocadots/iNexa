@@ -125,7 +125,7 @@ stops contradicting the applications section. Flag this to the brand owner.
 ## 4. File map
 
 ```
-index.html                  The homepage — 1074 lines, 14 sections
+index.html                  The homepage — 1095 lines, 14 sections
 CONTEXT.md                  This file
 README.md                   What the site is, and the placeholder register
 style-guide/index.html      The design system document (deployed)
@@ -135,7 +135,7 @@ assets/
     fonts.css               Manrope, self-hosted, inlined as data URIs (54KB)
     inexa-tokens.css        Token layer — verbatim from the style guide
     inexa-components.css    Component layer — verbatim from the style guide
-    site.css                Marketing layer, nx- prefix — 2011 lines
+    site.css                Marketing layer, nx- prefix — 2134 lines
   js/
     site.js                 Progressive enhancement only — 417 lines
     vendor/lenis.min.js     Lenis 1.3.19, MIT, 17KB
@@ -177,7 +177,8 @@ client asked for dots over the original diagonal hatch. The class is still
 | 302 | Hero (original left/right layout rules) |
 | 361 | `.nx-ui` operational interface |
 | 468 | Services rail / accordion |
-| 631 | Process steps |
+| 576 | **Transformation spine** (was the compare table) |
+| 754 | Process steps |
 | 928 | **Page frame — rails and hatch bands** |
 | 1189 | **Brand atmosphere, photography, icons** |
 | 1207 | Atmosphere gradient tokens |
@@ -225,6 +226,28 @@ so this is not the case the zeroed corner scale governs. Both variants keep
 their ramp colours (`n-100` light, `n-800` ink), so the palette check is
 unaffected. The class name `.nx-hatch` was left alone rather than renaming 13
 elements in the markup for a texture change.
+
+**The transformation section is a spine, not a table.** It was a three-column
+`<table>` — Area / Before / With — with a header row and a rule under every
+row. The client's words: "looks like an Excel sheet." The cause was structural,
+not cosmetic: six rows of equal weight, no hierarchy, and horizontal rules
+doing all the work.
+
+It is now `.nx-flow`: one continuous vertical rule with a node per area, the
+fragment on the left in muted body size, the gain on the right at `text-md` in
+full white. **There is not a single horizontal rule left in the section.** The
+device carries the argument the copy makes — scattered things becoming one
+structure — instead of tabulating it. The spine draws itself downward on
+reveal and the two states slide in toward it, so the section performs the
+transformation rather than listing it.
+
+Two traps if you touch it: a zero-width grid column *still takes the
+column-gap*, which pushed every node 40px clear of the spine it must sit on
+(the node is positioned against the row instead), and the legend is two labels
+in the same grid as the rows — give it a third child and the second label
+wraps to its own line. Also note `align-items: center`, not `baseline`: the
+left column is two lines and the right is one, so baseline aligned the gain to
+the area label rather than to the row.
 
 **No signifier watermark.** The enlarged mark from the ID cards (p49) was tried
 behind the atmosphere sections and removed at the client's request: the cards

@@ -572,21 +572,40 @@ body {
    TRANSFORMATION — spec §13.5: Before iNexa / With iNexa.
    -------------------------------------------------------------------------- */
 
-.nx-compare { border-block-start: 1px solid var(--inx-border); }
+/* -----------------------------------------------------------------------------
+   OPERATIONAL TRANSFORMATION — the before/after.
 
-.nx-compare__head,
-.nx-compare__row {
-  display: grid;
-  grid-template-columns: 160px 1fr 1fr;
-  gap: var(--nx-gutter);
-  padding-block: var(--inx-space-5);
-  border-block-end: 1px solid var(--inx-border);
-  align-items: start;
+   [CLIENT] This was a three-column table with a header row and a rule under
+   every row, which read as a spreadsheet. The information is a comparison,
+   but a table is the wrong form for it: six rows of equal weight, no
+   hierarchy, and the horizontal rules doing the talking.
+
+   It is now a spine. The two states sit either side of one continuous
+   vertical rule: fragments on the left, disconnected and muted; the gain on
+   the right, larger and bright, each anchored to a node ON the rule. The
+   device carries the argument — scattered things becoming one structure —
+   instead of tabulating it. There is not a single horizontal rule left.
+   -------------------------------------------------------------------------- */
+
+.nx-flow {
+  position: relative;
+  margin-block-start: var(--inx-space-7);
+  --nx-flow-split: 38%;   /* where the spine sits across the container */
 }
 
-.nx-compare__head { padding-block: var(--inx-space-3); }
+/* Legend — two words over two columns. Deliberately NOT a header row: no
+   rule under it, and it shares the row grid only so the words land above
+   the columns they name. */
+.nx-flow__legend,
+.nx-flow__row {
+  display: grid;
+  grid-template-columns: minmax(0, var(--nx-flow-split)) minmax(0, 1fr);
+  column-gap: var(--inx-space-7);
+}
 
-.nx-compare__col {
+.nx-flow__legend { margin-block-end: var(--inx-space-5); }
+
+.nx-flow__label {
   font-size: var(--inx-text-2xs);
   font-weight: var(--inx-weight-semi);
   text-transform: uppercase;
@@ -594,36 +613,133 @@ body {
   color: var(--inx-text-muted);
   margin: 0;
 }
-.nx-compare__col--after { color: var(--inx-text); }
+.nx-flow__label--after { color: var(--inx-accent); }
 
-.nx-compare__topic { font-size: var(--inx-text-sm); font-weight: var(--inx-weight-semi); margin: 0; }
+.nx-flow__list { list-style: none; margin: 0; padding: 0; position: relative; }
 
-.nx-compare__cell {
+/* The spine. One rule, unbroken, running the full height of the list — the
+   only vertical element on the page allowed to sit among content, because
+   here it IS the content. It draws itself downward on reveal. */
+.nx-flow__spine {
+  position: absolute;
+  inset-block: 0;
+  inset-inline-start: var(--nx-flow-split);
+  inline-size: 1px;
+  background: var(--inx-border);
+  overflow: hidden;
+}
+.nx-flow__spine > i {
+  display: block;
+  block-size: 100%;
+  background: var(--inx-accent-soft);
+  transform: scaleY(0);
+  transform-origin: top;
+  transition: transform var(--inx-duration-slow) var(--inx-ease-out);
+}
+.is-in .nx-flow__spine > i,
+.no-js .nx-flow__spine > i { transform: scaleY(1); }
+
+.nx-flow__row {
+  position: relative;
+  align-items: center;
+  padding-block: var(--inx-space-4);
+}
+
+/* The two states converge on the spine as they arrive. */
+.nx-flow__before,
+.nx-flow__gain {
+  opacity: 0;
+  transition:
+    opacity var(--inx-duration-slow) var(--inx-ease-out),
+    transform var(--inx-duration-slow) var(--inx-ease-out);
+  transition-delay: var(--nx-delay, 0ms);
+}
+.nx-flow__before { transform: translateX(-12px); }
+.nx-flow__gain   { transform: translateX(12px); }
+
+.nx-flow__row.is-in .nx-flow__before,
+.nx-flow__row.is-in .nx-flow__gain,
+.no-js .nx-flow__before,
+.no-js .nx-flow__gain { opacity: 1; transform: none; }
+
+/* Left column — the area, then what it looks like before. Left-aligned to
+   the container edge like every other block on the page; right-aligning it
+   emptied the whole left third of the section. */
+.nx-flow__area {
+  margin: 0 0 var(--inx-space-2);
+  font-size: var(--inx-text-2xs);
+  font-weight: var(--inx-weight-semi);
+  text-transform: uppercase;
+  letter-spacing: var(--inx-tracking-caps);
+  color: var(--inx-text-subtle);
+}
+
+.nx-flow__was {
+  margin: 0;
   font-size: var(--inx-text-sm);
   line-height: var(--inx-leading-normal);
   color: var(--inx-text-muted);
-  margin: 0;
+  transition: color var(--inx-duration-base) var(--inx-ease);
 }
 
-.nx-compare__cell--after {
-  color: var(--inx-text);
-  padding-inline-start: var(--inx-space-5);
-  border-inline-start: 2px solid var(--inx-accent);
+/* The node — where the fragment meets the structure. Positioned against the
+   row, not placed in the grid: a zero-width column still takes the
+   column-gap, which pushed every node clear of the rule it must touch. */
+.nx-flow__node {
+  position: absolute;
+  inset-inline-start: var(--nx-flow-split);
+  inset-block-start: 50%;
+  inline-size: 9px;
+  block-size: 9px;
+  margin: -4px 0 0 -4px;
+  background: var(--inx-accent);
+  transition: transform var(--inx-duration-base) var(--inx-ease);
 }
+
+/* A short tick from the node out to the statement, so the gain reads as
+   anchored to the spine rather than floating beside it. It sits in the
+   gutter and never crosses type. */
+.nx-flow__node::after {
+  content: "";
+  position: absolute;
+  inset-inline-start: 9px;
+  inset-block-start: 4px;
+  inline-size: var(--inx-space-5);
+  block-size: 1px;
+  background: var(--inx-border-strong);
+}
+
+/* The gain — the payoff, and the largest type in the section after the
+   headline. This is what the reader should leave with. */
+.nx-flow__gain {
+  margin: 0;
+  font-size: var(--inx-text-md);
+  line-height: var(--inx-leading-snug);
+  letter-spacing: var(--inx-tracking-tight);
+  color: var(--inx-text);
+  text-wrap: pretty;
+}
+
+/* Hover trades weight between the two states. */
+.nx-flow__row:hover .nx-flow__node { transform: scale(1.5); }
+.nx-flow__row:hover .nx-flow__was { color: var(--inx-text-subtle); }
 
 @media (max-width: 900px) {
-  .nx-compare__head { display: none; }
-  .nx-compare__row { grid-template-columns: 1fr; gap: var(--inx-space-3); }
-  .nx-compare__cell::before {
-    content: attr(data-label);
-    display: block;
-    font-size: var(--inx-text-3xs);
-    font-weight: var(--inx-weight-semi);
-    text-transform: uppercase;
-    letter-spacing: var(--inx-tracking-caps);
-    color: var(--inx-text-muted);
-    margin-block-end: var(--inx-space-2);
+  /* The spine moves to the edge and the pair stacks beside it, so the
+     before/after relationship survives without two columns to hold it. */
+  .nx-flow { --nx-flow-split: 4px; }
+  .nx-flow__legend { display: none; }
+  .nx-flow__row {
+    column-gap: var(--inx-space-5);
+    padding-block: var(--inx-space-4);
   }
+  .nx-flow__row { grid-template-columns: minmax(0, 1fr); padding-inline-start: var(--inx-space-5); }
+  .nx-flow__before { grid-row: 2; margin-block-start: var(--inx-space-2); transform: none; }
+  .nx-flow__gain   { grid-row: 1; font-size: var(--inx-text-base); }
+  .nx-flow__node   { inset-block-start: 0.75em; margin-block-start: 0; }
+  .nx-flow__node::after { display: none; }
+  .nx-flow__area   { margin-block-end: 2px; }
+  .nx-flow__was::before { content: "Before · "; color: var(--inx-accent-soft); }
 }
 
 
