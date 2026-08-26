@@ -504,6 +504,15 @@ point it at the deployed URL to verify a release).
 
 ### Gotchas when running it
 
+- **Asset URLs are cache-busted at deploy time, and this matters.** GitHub
+  Pages sends `cache-control: max-age=600` on HTML *and* CSS, and the two
+  expire independently — so a visitor can be served **new markup with the
+  previous stylesheet**, which renders any newly-added section completely
+  unstyled. This bit the build twice before it was fixed. Asset links carry
+  `?v=dev` in the repo; `.github/workflows/deploy-pages.yml` rewrites that to
+  the commit SHA before upload, so each deploy's HTML requests its own assets.
+  **Keep `?v=dev` on any new asset link you add, and on any new page.**
+  Verify after a deploy by checking the served HTML carries a SHA, not `dev`.
 - **Always pass `reducedMotion: 'reduce'`** on any page that needs
   `window.scrollTo` — Lenis owns the scroll otherwise.
 - Playwright **cannot reach the deployed URL from this container** — the agent
