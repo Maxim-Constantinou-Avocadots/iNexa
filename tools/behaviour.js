@@ -12,9 +12,10 @@ const { launchOpts, PAGE_URL } = require('./env');
   await p.evaluate(() => document.querySelector('#systems').scrollIntoView({block:'center'})); await p.waitForTimeout(900);
   out.systemsMap = await p.evaluate(() => {
     const nodes = document.querySelectorAll('.nx-map__node');
-    const spine = document.querySelector('.nx-map__spine');
+    const left = document.querySelector('.nx-map__left');
+    const hub = document.querySelector('.nx-map__hub');
     const drawn = [...nodes].every(n => n.classList.contains('is-in'));
-    return nodes.length === 4 && !!spine && spine.classList.contains('is-in') && drawn;
+    return nodes.length === 4 && drawn && !!hub && left.classList.contains('is-in');
   });
   await p.evaluate(() => document.getElementById('q3-btn').scrollIntoView({block:'center'})); await p.waitForTimeout(300);
   await p.click('#q3-btn'); await p.waitForTimeout(500);

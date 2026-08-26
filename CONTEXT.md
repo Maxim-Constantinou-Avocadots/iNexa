@@ -326,11 +326,16 @@ clicks `#sys-t2`; it asserts the map draws instead. `initTabs` in `site.js`
 now has no consumer — kept, and labelled as such, because `.inx-tabs` is a
 documented design-system component.
 
-Trap: nothing occupies the middle grid column (the spine is positioned inside
-`.nx-map__left`), so the hub auto-placed into the 88px gutter and crushed to
-one word per line. `grid-column: 3` is load-bearing. And `grid-auto-rows: 1fr`
-on the sources is what keeps the four node centres at 12.5% / 87.5%, which is
-what the spine's inset assumes.
+**Simplified on a second pass** — "a bit too complex". The first version drew
+a spoke off every node into a vertical bus and then a stub across to the hub:
+three line systems doing the work of one. It is now a single connector from
+the sources block to the hub, and each node's owner sits on the same line as
+what it exchanges instead of in a second right-aligned column. Four rows, one
+line, one destination.
+
+Trap: nothing occupies the middle grid column, so the hub auto-placed into the
+88px gutter and crushed to one word per line. **`grid-column: 3` on
+`.nx-map__hub` is load-bearing.**
 
 **No signifier watermark.** The enlarged mark from the ID cards (p49) was tried
 behind the atmosphere sections and removed at the client's request: the cards

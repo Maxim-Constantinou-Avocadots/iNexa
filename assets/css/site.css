@@ -434,11 +434,11 @@ body {
    information), so both fold into one always-visible node — nothing is hidden
    and the tabs are gone.
 
-   The spine is positioned against .nx-map__left, NOT against the middle
-   column: the grid row is as tall as its tallest child, so a percentage inset
-   in the middle column silently breaks the moment the hub outgrows the
-   sources. grid-auto-rows:1fr keeps the four node centres at exactly 12.5%
-   and 87.5% of the column, which is what the spine's inset assumes.
+   [CLIENT, 2nd pass] "A bit too complex." The first version drew a spoke off
+   every node into a vertical bus and then a stub across to the hub — three
+   line systems doing the work of one. It is now a single connector from the
+   sources block to the hub, and each node's owner sits on the same line as
+   what it exchanges rather than in a second right-aligned column.
    -------------------------------------------------------------------------- */
 
 .nx-map {
@@ -462,7 +462,6 @@ body {
 }
 
 .nx-map__node {
-  position: relative;
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
   gap: var(--inx-space-4);
@@ -473,54 +472,22 @@ body {
 }
 .nx-map__node:hover { background: var(--inx-bg); }
 
-/* Each node's lead-out to the spine. Draws right on reveal, one pass. */
-.nx-map__node::after {
+/* One connector, sources → hub. Draws right on reveal, a single pass. */
+.nx-map__left::after {
   content: "";
   position: absolute;
   inset-inline-start: 100%;
   inset-block-start: 50%;
-  inline-size: 44px;
+  inline-size: 88px;
   block-size: 1px;
   background: var(--inx-border-strong);
   transform: scaleX(0);
   transform-origin: left;
   transition: transform var(--inx-duration-slow) var(--inx-ease-out);
-  transition-delay: var(--nx-delay, 0ms);
+  transition-delay: 200ms;
 }
-.nx-map__node.is-in::after,
-.no-js .nx-map__node::after { transform: scaleX(1); }
-
-/* A source that is scheduled rather than live gets a fainter spoke, so the
-   map's own line weight carries the state the pill states in words. */
-.nx-map__node[data-state="pending"]::after { background: var(--inx-border); }
-
-/* Hover brightens the spoke, so the row and its line read as one object. */
-.nx-map__node:hover::after { background: var(--inx-accent); }
-
-/* The spine: vertical bus from the first node's centre to the last node's,
-   plus the stub across to the hub. Draws downward on reveal. */
-.nx-map__spine {
-  position: absolute;
-  inset-inline-start: calc(100% + 44px);
-  inset-block: 12.5% 12.5%;
-  inline-size: 1px;
-  background: var(--inx-accent);
-  transform: scaleY(0);
-  transform-origin: top;
-  transition: transform var(--inx-duration-slow) var(--inx-ease-out);
-  transition-delay: 280ms;
-}
-.nx-map__spine.is-in,
-.no-js .nx-map__spine { transform: scaleY(1); }
-.nx-map__spine::after {
-  content: "";
-  position: absolute;
-  inset-inline-start: 0;
-  inset-block-start: 50%;
-  inline-size: 44px;
-  block-size: 1px;
-  background: var(--inx-accent);
-}
+.nx-map__left.is-in::after,
+.no-js .nx-map__left::after { transform: scaleX(1); }
 
 .nx-map__sys {
   margin: 0 0 2px;
@@ -533,14 +500,6 @@ body {
   color: var(--inx-text-muted);
   line-height: var(--inx-leading-snug);
 }
-.nx-map__who { text-align: end; }
-.nx-map__owner {
-  margin: var(--inx-space-2) 0 0;
-  font-size: var(--inx-text-3xs);
-  color: var(--inx-text-muted);
-  white-space: nowrap;
-}
-
 /* The hub — the thing everything feeds. Ink, so it reads as the destination
    rather than a fifth peer.
 
@@ -596,10 +555,8 @@ body {
      beneath it, so the "feeds into" relationship survives the reflow. */
   .nx-map { grid-template-columns: minmax(0, 1fr); gap: var(--inx-space-5); padding: var(--inx-space-4); }
   .nx-map__hub { grid-column: 1; }
-  .nx-map__node::after,
-  .nx-map__spine { display: none; }
-  .nx-map__who { text-align: start; }
-  .nx-map__node { grid-template-columns: minmax(0, 1fr); gap: var(--inx-space-3); }
+  .nx-map__left::after { display: none; }
+  .nx-map__node { grid-template-columns: minmax(0, 1fr); gap: var(--inx-space-3); justify-items: start; }
 }
 
 
