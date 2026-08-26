@@ -422,6 +422,188 @@ body {
    -------------------------------------------------------------------------- */
 
 /* -----------------------------------------------------------------------------
+   SYSTEMS INTEGRATION — the integration map.
+
+   [CLIENT] "Super simple and boring." It was two tabs of plain tables inside
+   the same .nx-ui chrome the hero dashboard uses — the third table-shaped
+   panel on the page, with half its content hidden behind a tab.
+
+   Systems integration is the most diagrammatic subject on the site: four
+   sources feeding one view. It is now drawn as that. The two tables held the
+   same four systems from different angles (what they exchange / who owns the
+   information), so both fold into one always-visible node — nothing is hidden
+   and the tabs are gone.
+
+   The spine is positioned against .nx-map__left, NOT against the middle
+   column: the grid row is as tall as its tallest child, so a percentage inset
+   in the middle column silently breaks the moment the hub outgrows the
+   sources. grid-auto-rows:1fr keeps the four node centres at exactly 12.5%
+   and 87.5% of the column, which is what the spine's inset assumes.
+   -------------------------------------------------------------------------- */
+
+.nx-map {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) 88px minmax(0, 0.8fr);
+  align-items: center;
+  padding: var(--inx-space-6);
+}
+
+.nx-map__left { position: relative; }
+
+.nx-map__sources {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-auto-rows: 1fr;      /* equal rows — the spine's inset depends on it */
+  gap: 1px;
+  background: var(--inx-border);
+  border: 1px solid var(--inx-border);
+}
+
+.nx-map__node {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: var(--inx-space-4);
+  align-items: center;
+  padding: var(--inx-space-4) var(--inx-space-5);
+  background: var(--inx-bg-raised);
+  transition: background-color var(--inx-duration-base) var(--inx-ease);
+}
+.nx-map__node:hover { background: var(--inx-bg); }
+
+/* Each node's lead-out to the spine. Draws right on reveal, one pass. */
+.nx-map__node::after {
+  content: "";
+  position: absolute;
+  inset-inline-start: 100%;
+  inset-block-start: 50%;
+  inline-size: 44px;
+  block-size: 1px;
+  background: var(--inx-border-strong);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform var(--inx-duration-slow) var(--inx-ease-out);
+  transition-delay: var(--nx-delay, 0ms);
+}
+.nx-map__node.is-in::after,
+.no-js .nx-map__node::after { transform: scaleX(1); }
+
+/* A source that is scheduled rather than live gets a fainter spoke, so the
+   map's own line weight carries the state the pill states in words. */
+.nx-map__node[data-state="pending"]::after { background: var(--inx-border); }
+
+/* Hover brightens the spoke, so the row and its line read as one object. */
+.nx-map__node:hover::after { background: var(--inx-accent); }
+
+/* The spine: vertical bus from the first node's centre to the last node's,
+   plus the stub across to the hub. Draws downward on reveal. */
+.nx-map__spine {
+  position: absolute;
+  inset-inline-start: calc(100% + 44px);
+  inset-block: 12.5% 12.5%;
+  inline-size: 1px;
+  background: var(--inx-accent);
+  transform: scaleY(0);
+  transform-origin: top;
+  transition: transform var(--inx-duration-slow) var(--inx-ease-out);
+  transition-delay: 280ms;
+}
+.nx-map__spine.is-in,
+.no-js .nx-map__spine { transform: scaleY(1); }
+.nx-map__spine::after {
+  content: "";
+  position: absolute;
+  inset-inline-start: 0;
+  inset-block-start: 50%;
+  inline-size: 44px;
+  block-size: 1px;
+  background: var(--inx-accent);
+}
+
+.nx-map__sys {
+  margin: 0 0 2px;
+  font-size: var(--inx-text-sm);
+  font-weight: var(--inx-weight-semi);
+}
+.nx-map__ex {
+  margin: 0;
+  font-size: var(--inx-text-xs);
+  color: var(--inx-text-muted);
+  line-height: var(--inx-leading-snug);
+}
+.nx-map__who { text-align: end; }
+.nx-map__owner {
+  margin: var(--inx-space-2) 0 0;
+  font-size: var(--inx-text-3xs);
+  color: var(--inx-text-muted);
+  white-space: nowrap;
+}
+
+/* The hub — the thing everything feeds. Ink, so it reads as the destination
+   rather than a fifth peer.
+
+   grid-column is explicit: nothing occupies the middle column (the spine is
+   positioned inside .nx-map__left), so auto-placement dropped the hub into
+   the 88px gutter and crushed it to one word per line. */
+.nx-map__hub {
+  grid-column: 3;
+  padding: var(--inx-space-6);
+  background: var(--inx-n-950);
+  color: var(--inx-n-0);
+  border: 1px solid var(--inx-n-800);
+}
+.nx-map__mark {
+  display: block;
+  inline-size: 28px;
+  block-size: 28px;
+  margin-block-end: var(--inx-space-5);
+  --inx-logo-mark: var(--inx-n-200);
+}
+.nx-map__mark svg { inline-size: 100%; block-size: 100%; display: block; }
+.nx-map__hub-name {
+  margin: 0 0 var(--inx-space-2);
+  font-size: var(--inx-text-md);
+  letter-spacing: var(--inx-tracking-tight);
+}
+.nx-map__hub-note {
+  margin: 0 0 var(--inx-space-5);
+  font-size: var(--inx-text-xs);
+  line-height: var(--inx-leading-normal);
+  color: var(--inx-n-200);
+}
+.nx-map__hub-stats {
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--inx-space-4);
+  padding-block-start: var(--inx-space-5);
+  border-block-start: 1px solid var(--inx-n-800);
+}
+.nx-map__hub-stats dt {
+  font-size: var(--inx-text-3xs);
+  font-weight: var(--inx-weight-semi);
+  text-transform: uppercase;
+  letter-spacing: var(--inx-tracking-caps);
+  color: var(--inx-n-300);
+  margin-block-end: var(--inx-space-1);
+}
+.nx-map__hub-stats dd { margin: 0; font-size: var(--inx-text-sm); }
+
+@media (max-width: 900px) {
+  /* Stacked: the spine turns horizontal under the sources and the hub sits
+     beneath it, so the "feeds into" relationship survives the reflow. */
+  .nx-map { grid-template-columns: minmax(0, 1fr); gap: var(--inx-space-5); padding: var(--inx-space-4); }
+  .nx-map__hub { grid-column: 1; }
+  .nx-map__node::after,
+  .nx-map__spine { display: none; }
+  .nx-map__who { text-align: start; }
+  .nx-map__node { grid-template-columns: minmax(0, 1fr); gap: var(--inx-space-3); }
+}
+
+
+/* -----------------------------------------------------------------------------
    INDUSTRIES — sector cells.
 
    [CLIENT] "Looks cheap. No design whatsoever." Two structural causes, not a

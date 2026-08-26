@@ -207,8 +207,13 @@
   }
 
   /* ---------------------------------------------------------------------
-     TABS — the operational interface mockups (hero, systems view).
-     Approved tab-panel fade; aria-selected carries the state.
+     TABS — approved tab-panel fade; aria-selected carries the state.
+
+     NOTE: no markup currently uses [data-tabs]. The systems section was the
+     last consumer and is now an always-visible integration map. This is kept
+     because .inx-tabs is a documented component of the design system, so the
+     next section that needs tabs should not have to reimplement the
+     behaviour — it no-ops when there is nothing to bind.
      ------------------------------------------------------------------ */
 
   function initTabs() {

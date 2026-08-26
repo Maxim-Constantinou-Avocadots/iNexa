@@ -769,44 +769,79 @@
         <div class="nx-span-7">
           <h2 class="nx-head__title" data-reveal>Connected systems create a clearer operating picture.</h2>
         </div>
+        <div class="nx-span-5">
+          <p class="nx-head__lead" data-reveal>Nothing is replaced. The tools you already run keep their job — and
+             stop being the only place their information exists.</p>
+        </div>
       </div>
     </div>
 
     <div class="nx-ui" data-reveal>
       <div class="nx-ui__head">
-        <p class="inx-eyebrow">Operational view</p>
+        <p class="inx-eyebrow">Integration map</p>
         <span class="inx-pill">Sample</span>
       </div>
-      <div class="inx-tabs nx-ui__tabs" role="tablist" aria-label="Systems view" data-tabs>
-        <button class="inx-tab" role="tab" id="sys-t1" aria-controls="sys-p1" aria-selected="true">Active integrations</button>
-        <button class="inx-tab" role="tab" id="sys-t2" aria-controls="sys-p2" aria-selected="false">Information ownership</button>
-      </div>
-      <div class="nx-ui__body nx-scroll-x" tabindex="0" role="group" aria-label="Systems tables, scrollable">
-        <div class="nx-ui__panel" id="sys-p1" role="tabpanel" aria-labelledby="sys-t1">
-          <table class="inx-table">
-            <caption class="nx-visually-hidden">Active integrations and what they exchange</caption>
-            <thead><tr><th scope="col">Connection</th><th scope="col">Information exchanged</th><th scope="col">Status</th></tr></thead>
-            <tbody>
-              <tr><td>Finance ↔ operational view</td><td>Invoices, payments, cost</td><td><span class="inx-pill inx-pill--success"><span class="inx-pill__dot"></span>Connected</span></td></tr>
-              <tr><td>CRM ↔ operational view</td><td>Clients, pipeline</td><td><span class="inx-pill inx-pill--success"><span class="inx-pill__dot"></span>Connected</span></td></tr>
-              <tr><td>Projects ↔ operational view</td><td>Delivery status, capacity</td><td><span class="inx-pill inx-pill--success"><span class="inx-pill__dot"></span>Connected</span></td></tr>
-              <tr><td>Support ↔ operational view</td><td>Tickets, response measures</td><td><span class="inx-pill inx-pill--info"><span class="inx-pill__dot"></span>Scheduled</span></td></tr>
-            </tbody>
-          </table>
+
+      <div class="nx-map">
+        <div class="nx-map__left">
+          <ul class="nx-map__sources">
+          <li class="nx-map__node" data-reveal style="--nx-delay:0ms">
+            <div class="nx-map__id">
+              <p class="nx-map__sys">Finance</p>
+              <p class="nx-map__ex">Invoices, payments, cost</p>
+            </div>
+            <div class="nx-map__who">
+              <span class="inx-pill inx-pill--success"><span class="inx-pill__dot"></span>Connected</span>
+              <p class="nx-map__owner">Finance lead</p>
+            </div>
+          </li>
+          <li class="nx-map__node" data-reveal style="--nx-delay:70ms">
+            <div class="nx-map__id">
+              <p class="nx-map__sys">CRM</p>
+              <p class="nx-map__ex">Clients, pipeline</p>
+            </div>
+            <div class="nx-map__who">
+              <span class="inx-pill inx-pill--success"><span class="inx-pill__dot"></span>Connected</span>
+              <p class="nx-map__owner">Commercial lead</p>
+            </div>
+          </li>
+          <li class="nx-map__node" data-reveal style="--nx-delay:140ms">
+            <div class="nx-map__id">
+              <p class="nx-map__sys">Projects</p>
+              <p class="nx-map__ex">Delivery status, capacity</p>
+            </div>
+            <div class="nx-map__who">
+              <span class="inx-pill inx-pill--success"><span class="inx-pill__dot"></span>Connected</span>
+              <p class="nx-map__owner">Operations lead</p>
+            </div>
+          </li>
+          <li class="nx-map__node" data-state="pending" data-reveal style="--nx-delay:210ms">
+            <div class="nx-map__id">
+              <p class="nx-map__sys">Support</p>
+              <p class="nx-map__ex">Tickets, response measures</p>
+            </div>
+            <div class="nx-map__who">
+              <span class="inx-pill inx-pill--info"><span class="inx-pill__dot"></span>Scheduled</span>
+              <p class="nx-map__owner">Service lead</p>
+            </div>
+          </li>
+          </ul>
+          <span class="nx-map__spine" data-reveal aria-hidden="true"></span>
         </div>
-        <div class="nx-ui__panel" id="sys-p2" role="tabpanel" aria-labelledby="sys-t2" hidden>
-          <table class="inx-table">
-            <caption class="nx-visually-hidden">Which system owns which information</caption>
-            <thead><tr><th scope="col">Information</th><th scope="col">System of record</th><th scope="col">Owner</th></tr></thead>
-            <tbody>
-              <tr><td>Revenue and pipeline</td><td>CRM</td><td>Commercial lead</td></tr>
-              <tr><td>Cost and margin</td><td>Finance</td><td>Finance lead</td></tr>
-              <tr><td>Delivery and capacity</td><td>Projects</td><td>Operations lead</td></tr>
-              <tr><td>Client health</td><td>Support</td><td>Service lead</td></tr>
-            </tbody>
-          </table>
+
+        <div class="nx-map__hub" data-reveal>
+          <span class="inx-signifier nx-map__mark" aria-hidden="true">
+            <svg viewBox="0 0 93.86 86.66" aria-hidden="true"><use href="#inx-signifier"></use></svg>
+          </span>
+          <p class="nx-map__hub-name">Operational view</p>
+          <p class="nx-map__hub-note">One place the whole business reads from.</p>
+          <dl class="nx-map__hub-stats">
+            <div><dt>Sources</dt><dd>3 of 4 live</dd></div>
+            <div><dt>Refresh</dt><dd>Daily</dd></div>
+          </dl>
         </div>
       </div>
+
       <p class="nx-ui__foot">One number for one thing, wherever in the business you ask.</p>
     </div>
   </div>

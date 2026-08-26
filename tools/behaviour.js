@@ -6,9 +6,16 @@ const { launchOpts, PAGE_URL } = require('./env');
   await p.goto(PAGE_URL, { waitUntil: 'load' });
   await p.waitForTimeout(700);
   const out = {};
-  await p.evaluate(() => document.getElementById('sys-t2').scrollIntoView({block:'center'})); await p.waitForTimeout(300);
-  await p.click('#sys-t2'); await p.waitForTimeout(200);
-  out.systemsTabs = await p.evaluate(() => document.getElementById('sys-t2').getAttribute('aria-selected')==='true' && !document.getElementById('sys-p2').hidden);
+  /* The systems section was two tabs of tables; it is now one always-visible
+     integration map, so there is no tab to click. What matters instead is
+     that the map draws: four source nodes, each with a spoke, and the spine. */
+  await p.evaluate(() => document.querySelector('#systems').scrollIntoView({block:'center'})); await p.waitForTimeout(900);
+  out.systemsMap = await p.evaluate(() => {
+    const nodes = document.querySelectorAll('.nx-map__node');
+    const spine = document.querySelector('.nx-map__spine');
+    const drawn = [...nodes].every(n => n.classList.contains('is-in'));
+    return nodes.length === 4 && !!spine && spine.classList.contains('is-in') && drawn;
+  });
   await p.evaluate(() => document.getElementById('q3-btn').scrollIntoView({block:'center'})); await p.waitForTimeout(300);
   await p.click('#q3-btn'); await p.waitForTimeout(500);
   out.faq = await p.evaluate(() => document.getElementById('q3-btn').getAttribute('aria-expanded')==='true' && document.getElementById('q1-btn').getAttribute('aria-expanded')==='false');

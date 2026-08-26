@@ -308,6 +308,30 @@ inverts to solid ink on hover.
 Cost: 597px → 832px. Worth it — the section previously said nothing.
 Not numbered: these are a set, not a sequence (§2).
 
+**Systems integration is a diagram, not tables.** It was two tabs of plain
+tables inside the same `.nx-ui` chrome the hero dashboard uses — the third
+table-shaped panel on the page, with half its content hidden behind a tab.
+Client: "super simple and boring."
+
+Systems integration is the most diagrammatic subject on the site: four sources
+feeding one view. It is drawn as that now — source nodes on the left, each
+with a spoke into a vertical bus, a stub across to an **ink** hub card so the
+destination reads as a destination rather than a fifth peer. The spokes draw
+right and the spine draws down on reveal, one pass, no loop.
+
+The two tables described the same four systems from different angles (what
+they exchange / who owns the information), so both fold into one always-visible
+node. **The tabs are gone and nothing is hidden.** `behaviour.js` no longer
+clicks `#sys-t2`; it asserts the map draws instead. `initTabs` in `site.js`
+now has no consumer — kept, and labelled as such, because `.inx-tabs` is a
+documented design-system component.
+
+Trap: nothing occupies the middle grid column (the spine is positioned inside
+`.nx-map__left`), so the hub auto-placed into the 88px gutter and crushed to
+one word per line. `grid-column: 3` is load-bearing. And `grid-auto-rows: 1fr`
+on the sources is what keeps the four node centres at 12.5% / 87.5%, which is
+what the spine's inset assumes.
+
 **No signifier watermark.** The enlarged mark from the ID cards (p49) was tried
 behind the atmosphere sections and removed at the client's request: the cards
 have no page frame, but this site does, and the mark's diagonals crossed the
