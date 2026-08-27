@@ -3116,34 +3116,58 @@ html.lenis, html.lenis body { block-size: auto; }
   .nx-vision__say { font-size: var(--inx-text-xl); }
 }
 
+
 /* -----------------------------------------------------------------------------
-   SERVICES PAGE — the four service lines, as named in the client brief
-   (§"WHAT WE DO", pages 6–7). Names, descriptions and capability lists are
-   the client's own words and must not be reworded here or on the homepage.
+   SERVICE CARDS — the four service lines, as named in the client brief
+   (§"WHAT WE DO", pages 6–7). Names, descriptions and capability lists are the
+   client's own words and must not be reworded, re-cased or trimmed. Used on
+   the services page and, identically, on the homepage.
    -------------------------------------------------------------------------- */
 
-/* Four large panels sharing 1px boundaries over a border-coloured ground
-   (§3.3) — the instrument idiom, at card scale. Two-up rather than a stack,
-   so this does not read as a second copy of the About principles ledger, and
-   so each panel has room for its capability list beside the description.
-   Services are a SET: no numbering, and the panels carry no implied order. */
+/* These were built on the shared-boundary idiom first — 1px gaps over a
+   border-coloured ground — and the client's read was "one big card, a mess,
+   users will not know where to click". Correct on both counts. That idiom is
+   for a group of cells you READ AS ONE THING (a dashboard, a spec table). Four
+   services are four things you CHOOSE BETWEEN, and choices need to look
+   separable and look clickable. So:
+
+     · real gaps, so each card is its own object rather than a cell in a slab
+     · a tinted surface against the white page, so the card has an edge
+     · a short kicker (Operations / Marketing / Technology / Strategy — the
+       client's own shorthand, brief page 15) so the four are scannable
+       without reading the full names, which all begin the same way
+     · one obvious control per card, styled as a button, not a text link
+
+   Rule of thumb worth keeping: shared boundaries = one object to read;
+   separated cards = separate things to pick. */
+
 .nx-svcs {
   list-style: none;
   margin: 0;
   padding: 0;
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 1px;
-  background: var(--inx-border);
-  border: 1px solid var(--inx-border);
+  gap: var(--inx-space-5);
 }
-.nx-svc {
-  background: var(--inx-bg);
-  transition: background-color var(--inx-duration-base) var(--inx-ease);
-}
-.nx-svc:hover { background: var(--inx-bg-sunken); }
+.nx-svcs--home { margin-block-start: var(--inx-space-7); }
 
-/* The whole panel is the link, so the target is the panel and not a 90px
+.nx-svc {
+  border: 1px solid var(--inx-border);
+  background: var(--inx-bg);
+  transition:
+    border-color var(--inx-duration-base) var(--inx-ease),
+    background-color var(--inx-duration-base) var(--inx-ease);
+}
+/* Hover lightens rather than darkens: the card comes forward off the page
+   instead of receding into it, and there are no shadows in this system to
+   do the job. */
+.nx-svc:hover,
+.nx-svc:focus-within {
+  border-color: var(--inx-text);
+  background: var(--inx-n-0);
+}
+
+/* The whole card is the link, so the target is 300px tall and not a 90px
    phrase at the bottom of it. */
 .nx-svc__link {
   display: flex;
@@ -3153,24 +3177,37 @@ html.lenis, html.lenis body { block-size: auto; }
   color: inherit;
   text-decoration: none;
 }
+.nx-svc__link:focus-visible { outline: none; }   /* the card carries the ring */
 
-.nx-svc__top {
+.nx-svc__head {
   display: flex;
   align-items: center;
-  gap: var(--inx-space-5);
+  gap: var(--inx-space-4);
+  margin-block-end: var(--inx-space-5);
 }
-.nx-svc__top .nx-icon-well { margin-block-end: 0; flex: none; }
-.nx-svc__mark {
-  flex: 1;
-  block-size: 1px;
-  background: var(--inx-border);
+.nx-svc__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  inline-size: 44px;
+  block-size: 44px;
+  background: var(--inx-n-900);
+  color: var(--inx-n-0);
   transition: background-color var(--inx-duration-base) var(--inx-ease);
 }
-.nx-svc:hover .nx-svc__mark { background: var(--inx-border-strong); }
+.nx-svc:hover .nx-svc__icon { background: var(--inx-n-950); }
+.nx-svc__kicker {
+  font-size: var(--inx-text-3xs);
+  font-weight: var(--inx-weight-semi);
+  letter-spacing: var(--inx-tracking-caps);
+  text-transform: uppercase;
+  color: var(--inx-text-muted);
+}
 
 .nx-svc__name {
-  margin: var(--inx-space-5) 0 0;
-  font-size: var(--inx-text-xl);
+  margin: 0;
+  font-size: var(--inx-text-lg);
   font-weight: var(--inx-weight-semi);
   line-height: var(--inx-leading-tight);
   letter-spacing: var(--inx-tracking-tight);
@@ -3181,9 +3218,10 @@ html.lenis, html.lenis body { block-size: auto; }
   font-size: var(--inx-text-sm);
   line-height: var(--inx-leading-normal);
   color: var(--inx-text-subtle);
-  max-inline-size: 46ch;
 }
 
+/* A sentence, so it stays a sentence. Tracked caps are for two-word labels
+   like the kicker; a full line set that way shouts and stops being readable. */
 .nx-svc__lead {
   display: block;
   margin-block-start: var(--inx-space-5);
@@ -3196,9 +3234,9 @@ html.lenis, html.lenis body { block-size: auto; }
   list-style: none;
   margin: var(--inx-space-4) 0 0;
   padding: 0;
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: var(--inx-space-3) var(--inx-space-5);
+  display: flex;
+  flex-direction: column;
+  gap: var(--inx-space-3);
 }
 .nx-svc__list li {
   position: relative;
@@ -3210,27 +3248,46 @@ html.lenis, html.lenis body { block-size: auto; }
   content: "";
   position: absolute;
   inset-inline-start: 0;
-  inset-block-start: 0.5em;
+  inset-block-start: 0.52em;
   inline-size: 4px;
   block-size: 4px;
   background: var(--inx-border-strong);
+  transition: background-color var(--inx-duration-base) var(--inx-ease);
 }
+.nx-svc:hover .nx-svc__list li::before { background: var(--inx-text); }
 
-/* Pushed to the panel's floor, so all four affordances line up however
-   uneven the capability lists above them are. */
-.nx-svc__go {
-  display: flex;
+/* One control per card, and it reads as a control. Pushed to the card's
+   floor so all four line up however uneven the lists above them are. */
+.nx-svc__cta {
+  display: inline-flex;
   align-items: center;
+  justify-content: space-between;
   gap: var(--inx-space-3);
-  margin-block-start: auto;
-  padding-block-start: var(--inx-space-6);
-  font-size: var(--inx-text-xs);
+  align-self: flex-start;
+  min-inline-size: 180px;
+  margin-block-start: var(--inx-space-6);
+  padding: 0 var(--inx-space-5);
+  block-size: var(--inx-control-height-md);
+  border: 1px solid var(--inx-border-strong);
+  font-size: var(--inx-text-sm);
   font-weight: var(--inx-weight-semi);
+  transition:
+    background-color var(--inx-duration-base) var(--inx-ease),
+    border-color var(--inx-duration-base) var(--inx-ease),
+    color var(--inx-duration-base) var(--inx-ease);
 }
-.nx-svc__go svg {
-  transition: transform var(--inx-duration-base) var(--inx-ease);
+.nx-svc__cta svg { transition: transform var(--inx-duration-base) var(--inx-ease); }
+.nx-svc:hover .nx-svc__cta,
+.nx-svc:focus-within .nx-svc__cta {
+  background: var(--inx-n-950);
+  border-color: var(--inx-n-950);
+  color: var(--inx-n-0);
 }
-.nx-svc:hover .nx-svc__go svg { transform: translateX(4px); }
+.nx-svc:hover .nx-svc__cta svg { transform: translateX(4px); }
+
+/* Anchored from the homepage cards and every footer, so a jumped-to card has
+   to clear the condensed navbar. */
+.nx-svc { scroll-margin-block-start: 120px; }
 
 .nx-svcs__note {
   margin: var(--inx-space-6) 0 0;
@@ -3241,36 +3298,7 @@ html.lenis, html.lenis body { block-size: auto; }
 }
 
 @media (max-width: 900px) {
-  .nx-svcs { grid-template-columns: minmax(0, 1fr); }
+  .nx-svcs { grid-template-columns: minmax(0, 1fr); gap: var(--inx-space-4); }
   .nx-svc__link { padding: var(--inx-space-5); }
-  .nx-svc__name { font-size: var(--inx-text-lg); }
+  .nx-svc__cta { align-self: stretch; }
 }
-@media (max-width: 560px) {
-  .nx-svc__list { grid-template-columns: minmax(0, 1fr); }
-}
-
-/* The same four services on the homepage. The cells were static before; each
-   is now the link to its service page, so the whole cell is the target. */
-.nx-svc-cells > * {
-  padding: 0;                       /* the anchor carries the padding instead */
-  transition: background-color var(--inx-duration-base) var(--inx-ease);
-}
-.nx-svc-cells > *:hover { background: var(--inx-bg-sunken); }
-.nx-svc-cell {
-  display: flex;
-  flex-direction: column;
-  block-size: 100%;
-  padding: var(--inx-space-6);
-  color: inherit;
-  text-decoration: none;
-}
-.nx-svc-cell__list {
-  grid-template-columns: minmax(0, 1fr);
-  margin-block-start: var(--inx-space-5);
-}
-.nx-svc-cell .nx-svc__go { padding-block-start: var(--inx-space-5); }
-.nx-svc-cell:hover .nx-svc__go svg { transform: translateX(4px); }
-
-/* Anchored from the homepage cells and every footer, so each panel has to
-   clear the condensed navbar when it is jumped to. */
-.nx-svc { scroll-margin-block-start: 120px; }

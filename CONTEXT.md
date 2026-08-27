@@ -415,10 +415,35 @@ names, not headings. The old status pills in the homepage cells ("Operating
 rhythm — Weekly") were invented specifics and went with the rename; the
 client's bullets replaced them.
 
+**Shared boundaries are for reading; separate cards are for choosing.** This is
+the rule the services page cost us, and it is worth keeping. The four were
+built first on the hairline-gap idiom — 1px gaps over a border-coloured ground
+— and the client's read was "one big card, a mess, users will not know where to
+click". Correct on both counts. That idiom exists for a group of cells you read
+as ONE THING: a dashboard, a spec table, the hero strip. Four services are four
+things you CHOOSE BETWEEN, and a choice has to look separable and look
+clickable. Applying a reading idiom to a choosing problem is what produced a
+grey slab with a text link in the corner of each quarter.
+
+The rebuilt card is: real gaps between cards; a tinted surface (`--inx-bg`)
+against the white page so each has an edge; an ink icon tile; a one-word kicker
+(Operations / Marketing / Technology / Strategy — the client's own shorthand,
+brief page 15) so the four are scannable without reading names that all begin
+the same way; and exactly one control per card, styled as a button. Hover
+*lightens* the card to white with an ink border and fills the button — the card
+comes forward off the page rather than receding into it, which matters because
+there are no shadows in this system to do that job. The same component is used
+on the homepage, so a service looks the same wherever it is offered.
+
+Two smaller notes on it. The capability caption is a sentence, so it is set as
+one — an earlier pass had it in tracked caps, which shouts and stops being
+readable past about three words; tracked caps are for the two-word kicker only.
+And because the cards are separate objects with their own background, fading
+them on reveal is safe here, unlike the About ledger where the border ground
+showed through.
+
 **The services page, and the four pages that do not exist yet.** `services/`
-lists the four as large panels sharing 1px boundaries (§3.3) — two-up, so it
-does not read as a second copy of the About principles ledger, and so each has
-room for its capability list. Each panel is one `<a>`, and each links to its
+lists the four as cards, two-up. Each card is one `<a>`, and each links to its
 **dedicated service page, which has not been built**. Those four URLs 404 until
 they are. That was the client's call, made knowingly. Everything else —
 homepage cells, every footer Services column — points at `services/#<slug>`
@@ -612,6 +637,7 @@ Dropped as the MD requires: the marquee (continuous decorative movement).
 | Composed line-break statement re-wrapped | `.nx-say` carried `max-inline-size: 18ch`, narrower than its own longest line, so one mask held two rows | Cap removed; the composed lines *are* the measure, and the clamp keeps them one row down to 360px |
 | Footer's Company column ~1/6 width on phones | `style="grid-column:span 2"` inline on the column — inline styles outrank every media query, and `.nx-span-2` was never in the grid scale at all | `.nx-span-2` added to the scale and to both breakpoints; inline style deleted from all five pages |
 | Case study's "Built on iNexa Design System" 404'd | Sub-page path rewrite missed the footer's `style-guide/` | `../style-guide/` |
+| Three stale service cards left behind in the markup | The replacement's end anchor was `'      </ul>'` (6 spaces), which is also a substring of the inner list's `'            </ul>'` (12 spaces), so `.index` stopped at the first inner list and only the first card was replaced | Cut the stale region and assert on a marker unique to it; **anchor block replacements on something that cannot appear nested inside the block** |
 | Four homepage icons silently swapped | A bulk `#i-build`→`#i-nodes` / `#i-eye`→`#i-pulse` replace across the whole file, meant for the services cells, hit the challenge section, process step 03 and two industry tiles | Restored by line; **scope icon-id replacements to the section, never the file** |
 | Cache-bust stamping never reached a single visitor | It ran in the deploy workflow, but Pages publishes the branch — the artifact the step edited is not what goes online | Stamping moved to commit time (`tools/stamp.js`); the workflow step now only *checks* |
 
