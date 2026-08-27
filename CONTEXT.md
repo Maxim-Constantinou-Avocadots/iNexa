@@ -128,6 +128,7 @@ stops contradicting the applications section. Flag this to the brand owner.
 index.html                  The homepage — 1138 lines, 14 sections
 about/index.html            The About page — thesis, principles, operating layer
 services/index.html         The services index — the client's four service lines
+industries/index.html       The industries page — the client's three industries
 case-study/index.html       The case study detail page
 contact/index.html          The contact page — the site's only form
 faq/index.html              The FAQ page — 6 topics, 25 answers, tabbed
@@ -196,6 +197,7 @@ client asked for dots over the original diagonal hatch. The class is still
 | 2600+ | Contact page · FAQ tablist |
 | 2915+ | **About — thesis, principles ledger, operating-layer stack, vision** |
 | 3130+ | **Services — the four panels, and their homepage cells** |
+| 3300+ | **Industries — the editorial index of three** |
 
 ---
 
@@ -465,6 +467,43 @@ or a proof point. Also: Technology & Platform Development has only **three**
 bullets where the others have four, and none of them is platform development,
 despite that being the service's name. Ask before inventing any of it (§22.13–14).
 
+**The industries page is one page listing three — because that is all the brief
+asks for.** §"INDUSTRIES PAGE" (page 9) gives a title and three industries with
+one line each. Checked three ways before building: the brief's only page-level
+headings are ABOUT PAGE, INDUSTRIES PAGE and CONTACT PAGE; the industries block
+contains no sub-page spec, no link treatment and no per-industry copy; and the
+visual-mockup section (pages 12–22) does not mock industries at all — the
+navbar it specifies does not even include them. **There is no page per industry
+and none should be built without the client asking.**
+
+    Trading & Commodities · Digital Platforms & Marketplaces · Growth-Stage Businesses
+
+Three items with a dozen words each is far too little for a card grid — that is
+precisely the empty-template look the homepage sector strip was told off for. It
+is built as an **editorial index**: one row per industry at display scale,
+hairline-separated, unnumbered (a set, not a sequence, §2).
+
+Each row carries a differentiating role on the right — *Full operational
+management / Built, launched and run / Structure and reporting* — the same three
+already on the About operating-layer diagram, sourced from the brief's case
+studies. A first pass instead repeated the four service names under all three
+industries, which triplicated one list down the page and read as filler; that
+statement is now made **once**, in the band below the three.
+
+Row alignment is done with real grid rows — the icon owns row 1 and spans the
+width, the three text columns sit on row 2. An earlier version pushed the
+columns down with a hand-tuned `padding-block-start`, which drifted the moment
+"Digital Platforms & Marketplaces" wrapped to two lines.
+
+**The homepage industries section still does NOT match the brief.** It lists
+eight invented sectors (Professional services, Logistics & distribution,
+Healthcare groups, Manufacturing, Financial services, Construction, Technology,
+Multi-site retail). None is in the brief, and they read as claims about who
+iNexa has worked with. The client's three are the ones on the new page, and they
+agree with the Trust-section line and the About stack diagram. Replacing the
+homepage eight was **not** in the scope of the request that built this page —
+raise it before doing it.
+
 **The About page is the brief's argument, not a team page.** The client asked
 for something modern with "wow effects" and "no boring sections that look like
 templates", and there is no staff roster, no founder photo and no headcount to
@@ -637,6 +676,7 @@ Dropped as the MD requires: the marquee (continuous decorative movement).
 | Composed line-break statement re-wrapped | `.nx-say` carried `max-inline-size: 18ch`, narrower than its own longest line, so one mask held two rows | Cap removed; the composed lines *are* the measure, and the clamp keeps them one row down to 360px |
 | Footer's Company column ~1/6 width on phones | `style="grid-column:span 2"` inline on the column — inline styles outrank every media query, and `.nx-span-2` was never in the grid scale at all | `.nx-span-2` added to the scale and to both breakpoints; inline style deleted from all five pages |
 | Case study's "Built on iNexa Design System" 404'd | Sub-page path rewrite missed the footer's `style-guide/` | `../style-guide/` |
+| Industries page's footer pointed at ids that were not on it | Built from the services page, whose footer Services column uses same-page anchors (`#operations-management`); those came along and resolved to nothing | Repointed to `../services/#slug`; **when cloning a page, re-check every same-page anchor in what you copied** |
 | Three stale service cards left behind in the markup | The replacement's end anchor was `'      </ul>'` (6 spaces), which is also a substring of the inner list's `'            </ul>'` (12 spaces), so `.index` stopped at the first inner list and only the first card was replaced | Cut the stale region and assert on a marker unique to it; **anchor block replacements on something that cannot appear nested inside the block** |
 | Four homepage icons silently swapped | A bulk `#i-build`→`#i-nodes` / `#i-eye`→`#i-pulse` replace across the whole file, meant for the services cells, hit the challenge section, process step 03 and two industry tiles | Restored by line; **scope icon-id replacements to the section, never the file** |
 | Cache-bust stamping never reached a single visitor | It ran in the deploy workflow, but Pages publishes the branch — the artifact the step edited is not what goes online | Stamping moved to commit time (`tools/stamp.js`); the workflow step now only *checks* |
@@ -752,6 +792,8 @@ placeholder, and the build spec forbids inventing replacements:
   in the spec's architecture but unbuilt, which is why it is absent from the
   header. About and Services now exist and are linked from the nav, drawer and
   footer.
+- **The homepage's eight industries are invented and contradict the new
+  industries page.** The client named three (§5). Flagged, not changed.
 - **The four service detail pages are not built and their URLs 404.** They are
   linked from the four cards on `services/` and nowhere else, deliberately. See
   §5 for the slugs and for what the client still owes us before they can be
