@@ -33,6 +33,7 @@ const PAGES = [
   'index.html',
   'about/index.html',
   'case-study/index.html',
+  'services/index.html',
   'contact/index.html',
   'faq/index.html',
 ];

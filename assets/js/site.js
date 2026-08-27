@@ -14,7 +14,6 @@
   'use strict';
 
   var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var desktop = window.matchMedia('(min-width: 1024px)');
 
   /* ---------------------------------------------------------------------
      SCROLL REVEAL
@@ -155,69 +154,6 @@
         links.forEach(function (link) { link.removeAttribute('aria-current'); });
       }
     }, { passive: true });
-  }
-
-  /* ---------------------------------------------------------------------
-     SERVICES — one DOM, two behaviours (spec §13.4).
-     Desktop: a vertical rail where exactly one panel is open, tab-style.
-     Below 1024px: an accordion where the open item can also be closed.
-     Disclosure semantics (aria-expanded + region) work for both.
-     ------------------------------------------------------------------ */
-
-  function initServices() {
-    document.querySelectorAll('[data-svc]').forEach(function (group) {
-      var tabs = Array.prototype.slice.call(group.querySelectorAll('.nx-svc__tab'));
-
-      function panelOf(tab) {
-        return document.getElementById(tab.getAttribute('aria-controls'));
-      }
-
-      function open(tab) {
-        tabs.forEach(function (other) {
-          var on = other === tab;
-          other.setAttribute('aria-expanded', String(on));
-          var p = panelOf(other);
-          if (p) p.hidden = !on;
-        });
-      }
-
-      function collapse(tab) {
-        tab.setAttribute('aria-expanded', 'false');
-        var p = panelOf(tab);
-        if (p) p.hidden = true;
-      }
-
-      tabs.forEach(function (tab, i) {
-        tab.addEventListener('click', function () {
-          var isOpen = tab.getAttribute('aria-expanded') === 'true';
-          if (isOpen && !desktop.matches) { collapse(tab); return; }
-          open(tab);
-        });
-
-        /* Arrow-key movement along the rail (spec §19). */
-        tab.addEventListener('keydown', function (e) {
-          var d = e.key === 'ArrowDown' || e.key === 'ArrowRight' ? 1 :
-                  e.key === 'ArrowUp'   || e.key === 'ArrowLeft'  ? -1 : 0;
-          if (!d) return;
-          e.preventDefault();
-          var next = tabs[(i + d + tabs.length) % tabs.length];
-          next.focus();
-          if (desktop.matches) open(next);
-        });
-      });
-
-      /* The markup ships fully open for the no-JS case; collapse to the
-         first service once behaviour is attached. */
-      open(tabs[0]);
-
-      /* Returning to desktop must never leave everything closed. */
-      var onChange = function () {
-        if (desktop.matches && !tabs.some(function (t) { return t.getAttribute('aria-expanded') === 'true'; })) {
-          open(tabs[0]);
-        }
-      };
-      if (desktop.addEventListener) desktop.addEventListener('change', onChange);
-    });
   }
 
   /* ---------------------------------------------------------------------
@@ -480,7 +416,6 @@
     initNav();
     initDrawer();
     initReveal();
-    initServices();
     initTabs();
     initAccordion();
     initCounters();

@@ -14,7 +14,7 @@
 <link rel="stylesheet" href="assets/css/fonts.css?v=0b397c7f">
 <link rel="stylesheet" href="assets/css/inexa-tokens.css?v=a8fe4578">
 <link rel="stylesheet" href="assets/css/inexa-components.css?v=4cbda450">
-<link rel="stylesheet" href="assets/css/site.css?v=82dcb263">
+<link rel="stylesheet" href="assets/css/site.css?v=9d365563">
 
 <style>
   /* Without JavaScript nothing is hidden: reveals are visible, every service
@@ -76,7 +76,7 @@
         </span>
       </a>
       <nav class="nx-nav__links" aria-label="Primary">
-        <a class="nx-nav__link" href="#services" data-track>Services</a>
+        <a class="nx-nav__link" href="services/">Services</a>
         <a class="nx-nav__link" href="#how-we-work" data-track>How we work</a>
         <a class="nx-nav__link" href="#case-study" data-track>Case study</a>
         <a class="nx-nav__link" href="#pricing" data-track>Pricing</a>
@@ -102,7 +102,7 @@
         <svg viewBox="0 0 14 14" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><path d="M1 1l12 12M13 1L1 13"/></svg>
       </button>
     </div>
-    <a class="nx-drawer__link" href="#services">Services</a>
+    <a class="nx-drawer__link" href="services/">Services</a>
     <a class="nx-drawer__link" href="#how-we-work">How we work</a>
     <a class="nx-drawer__link" href="#case-study">Case study</a>
     <a class="nx-drawer__link" href="#pricing">Pricing</a>
@@ -436,51 +436,79 @@
           <h2 class="nx-head__title" data-reveal>The operational structure behind sustainable growth.</h2>
         </div>
         <div class="nx-span-5">
-          <p class="nx-head__lead" data-reveal>Four services, not four steps. Start with any one of them.</p>
+          <p class="nx-head__lead" data-reveal>End-to-end operational management, combining execution, technology,
+             and strategy into a single integrated service.</p>
         </div>
       </div>
     </div>
 
-    <div class="nx-cells nx-challenge" data-stagger="70">
+    <div class="nx-cells nx-challenge nx-svc-cells" data-stagger="70">
       <div data-reveal>
-        <span class="nx-icon-well"><svg class="nx-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-grid"></use></svg></span>
-        <h3>Operations management</h3>
-        <p>Ongoing ownership of the routines, hand-offs and reporting.</p>
-        <div class="nx-mini" style="margin-block-start:var(--inx-space-5)">
-          <div class="nx-mini__row"><span>Operating rhythm</span><span class="inx-pill inx-pill--success"><span class="inx-pill__dot"></span>Weekly</span></div>
-          <div class="nx-mini__row"><span>Process ownership</span><span class="inx-pill inx-pill--success"><span class="inx-pill__dot"></span>Named</span></div>
-          <div class="nx-mini__row"><span>Leadership reporting</span><span class="inx-pill inx-pill--info"><span class="inx-pill__dot"></span>Scheduled</span></div>
-        </div>
+        <a class="nx-svc-cell" href="services/#operations-management">
+          <span class="nx-icon-well"><svg class="nx-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-grid"></use></svg></span>
+          <h3>Operations Management</h3>
+          <p>We take control of your day-to-day operations, ensuring efficiency, structure, and accountability across your business.</p>
+          <ul class="nx-svc__list nx-svc-cell__list">
+            <li>Daily operations</li>
+            <li>Staff coordination</li>
+            <li>Workflow optimisation</li>
+            <li>KPI tracking</li>
+          </ul>
+          <span class="nx-svc__go">
+            <span>View service</span>
+            <svg class="nx-icon nx-icon--sm" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-arrow-right"></use></svg>
+          </span>
+        </a>
       </div>
       <div data-reveal>
-        <span class="nx-icon-well"><svg class="nx-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-flow"></use></svg></span>
-        <h3>Workflow optimisation</h3>
-        <p>Workflows mapped, simplified, then documented — before automation.</p>
-        <div class="nx-mini" style="margin-block-start:var(--inx-space-5)">
-          <div class="nx-mini__row"><span>Current-state map</span><span class="inx-pill inx-pill--success"><span class="inx-pill__dot"></span>Complete</span></div>
-          <div class="nx-mini__row"><span>Bottleneck review</span><span class="inx-pill inx-pill--info"><span class="inx-pill__dot"></span>In progress</span></div>
-          <div class="nx-mini__row"><span>Procedures</span><span class="inx-pill"><span class="inx-pill__dot"></span>Drafting</span></div>
-        </div>
+        <a class="nx-svc-cell" href="services/#marketing-growth-execution">
+          <span class="nx-icon-well"><svg class="nx-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-chart"></use></svg></span>
+          <h3>Marketing &amp; Growth Execution</h3>
+          <p>From strategy to execution, we manage campaigns, lead generation, and brand positioning to drive measurable growth.</p>
+          <ul class="nx-svc__list nx-svc-cell__list">
+            <li>Campaign management</li>
+            <li>Lead generation systems</li>
+            <li>Brand positioning</li>
+            <li>Performance marketing</li>
+          </ul>
+          <span class="nx-svc__go">
+            <span>View service</span>
+            <svg class="nx-icon nx-icon--sm" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-arrow-right"></use></svg>
+          </span>
+        </a>
       </div>
       <div data-reveal>
-        <span class="nx-icon-well"><svg class="nx-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-nodes"></use></svg></span>
-        <h3>Systems integration</h3>
-        <p>The tools you already run, connected into one operating picture.</p>
-        <div class="nx-mini" style="margin-block-start:var(--inx-space-5)">
-          <div class="nx-mini__row"><span>Finance ↔ operations</span><span class="inx-pill inx-pill--success"><span class="inx-pill__dot"></span>Connected</span></div>
-          <div class="nx-mini__row"><span>CRM ↔ operations</span><span class="inx-pill inx-pill--success"><span class="inx-pill__dot"></span>Connected</span></div>
-          <div class="nx-mini__row"><span>Projects ↔ operations</span><span class="inx-pill inx-pill--info"><span class="inx-pill__dot"></span>Planned</span></div>
-        </div>
+        <a class="nx-svc-cell" href="services/#technology-platform-development">
+          <span class="nx-icon-well"><svg class="nx-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-nodes"></use></svg></span>
+          <h3>Technology &amp; Platform Development</h3>
+          <p>We build, manage, and scale digital platforms—transforming ideas into fully operational systems.</p>
+          <ul class="nx-svc__list nx-svc-cell__list">
+            <li>Automation systems</li>
+            <li>AI-powered tools</li>
+            <li>Ongoing support &amp; scaling</li>
+          </ul>
+          <span class="nx-svc__go">
+            <span>View service</span>
+            <svg class="nx-icon nx-icon--sm" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-arrow-right"></use></svg>
+          </span>
+        </a>
       </div>
       <div data-reveal>
-        <span class="nx-icon-well"><svg class="nx-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-chart"></use></svg></span>
-        <h3>Strategic support</h3>
-        <p>Planning and decision support grounded in how the work actually runs.</p>
-        <div class="nx-mini" style="margin-block-start:var(--inx-space-5)">
-          <div class="nx-mini__row"><span>Operating model review</span><span class="inx-pill inx-pill--success"><span class="inx-pill__dot"></span>Current</span></div>
-          <div class="nx-mini__row"><span>Capacity planning</span><span class="inx-pill inx-pill--info"><span class="inx-pill__dot"></span>Quarterly</span></div>
-          <div class="nx-mini__row"><span>Priority review</span><span class="inx-pill inx-pill--info"><span class="inx-pill__dot"></span>Monthly</span></div>
-        </div>
+        <a class="nx-svc-cell" href="services/#strategic-oversight">
+          <span class="nx-icon-well"><svg class="nx-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-pulse"></use></svg></span>
+          <h3>Strategic Oversight</h3>
+          <p>We align operations with long-term goals, ensuring every action contributes to scalable growth.</p>
+          <ul class="nx-svc__list nx-svc-cell__list">
+            <li>Growth planning</li>
+            <li>Revenue optimisation</li>
+            <li>Market positioning</li>
+            <li>Expansion strategy</li>
+          </ul>
+          <span class="nx-svc__go">
+            <span>View service</span>
+            <svg class="nx-icon nx-icon--sm" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-arrow-right"></use></svg>
+          </span>
+        </a>
       </div>
     </div>
   </div>
@@ -1095,10 +1123,10 @@
       <div class="nx-span-3 nx-footer__col">
         <h3>Services</h3>
         <ul>
-          <li><a href="#services">Operations management</a></li>
-          <li><a href="#services">Workflow optimisation</a></li>
-          <li><a href="#services">Systems integration</a></li>
-          <li><a href="#services">Strategic support</a></li>
+          <li><a href="services/#operations-management">Operations Management</a></li>
+          <li><a href="services/#marketing-growth-execution">Marketing &amp; Growth Execution</a></li>
+          <li><a href="services/#technology-platform-development">Technology &amp; Platform Development</a></li>
+          <li><a href="services/#strategic-oversight">Strategic Oversight</a></li>
         </ul>
       </div>
       <div class="nx-span-2 nx-footer__col">
@@ -1133,6 +1161,6 @@
 </footer>
 
 <script src="assets/js/vendor/lenis.min.js?v=fad087ed" defer></script>
-<script src="assets/js/site.js?v=a481203a" defer></script>
+<script src="assets/js/site.js?v=f7af27bd" defer></script>
 </body>
 </html>

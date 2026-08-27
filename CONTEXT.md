@@ -127,6 +127,7 @@ stops contradicting the applications section. Flag this to the brand owner.
 ```
 index.html                  The homepage — 1138 lines, 14 sections
 about/index.html            The About page — thesis, principles, operating layer
+services/index.html         The services index — the client's four service lines
 case-study/index.html       The case study detail page
 contact/index.html          The contact page — the site's only form
 faq/index.html              The FAQ page — 6 topics, 25 answers, tabbed
@@ -194,6 +195,7 @@ client asked for dots over the original diagonal hatch. The class is still
 | 2200+ | Case study feature · sectors · integration map |
 | 2600+ | Contact page · FAQ tablist |
 | 2915+ | **About — thesis, principles ledger, operating-layer stack, vision** |
+| 3130+ | **Services — the four panels, and their homepage cells** |
 
 ---
 
@@ -390,6 +392,54 @@ anchor, which freed the nav slot that FAQ took. The bar stays at six items and
 `navfit.js` passes at all ten widths on all five pages. Contact remains in the
 drawer and the footer.
 
+**The services are the client's, verbatim, and must stay that way.** The brief
+names four service lines in §"WHAT WE DO" (pages 6–7). The site had been built
+to a different set — Operations management / Workflow optimisation / Systems
+integration / Strategic support — which dropped **Marketing & Growth Execution**
+entirely and promoted "Workflow optimisation", a *bullet under Operations
+Management*, to a service of its own. The client's instruction was explicit:
+listed, not renamed, missing or altered. So the four are now:
+
+| Service | Slug |
+|---|---|
+| Operations Management | `services/operations-management/` |
+| Marketing & Growth Execution | `services/marketing-growth-execution/` |
+| Technology & Platform Development | `services/technology-platform-development/` |
+| Strategic Oversight | `services/strategic-oversight/` |
+
+Names, descriptions and capability bullets are the client's own words on the
+homepage, the services page and every footer. **Do not reword them, do not
+re-case them to match the site's sentence case, and do not "fix" the em dash in
+"platforms—transforming".** They are Title Case because they are proper service
+names, not headings. The old status pills in the homepage cells ("Operating
+rhythm — Weekly") were invented specifics and went with the rename; the
+client's bullets replaced them.
+
+**The services page, and the four pages that do not exist yet.** `services/`
+lists the four as large panels sharing 1px boundaries (§3.3) — two-up, so it
+does not read as a second copy of the About principles ledger, and so each has
+room for its capability list. Each panel is one `<a>`, and each links to its
+**dedicated service page, which has not been built**. Those four URLs 404 until
+they are. That was the client's call, made knowingly. Everything else —
+homepage cells, every footer Services column — points at `services/#<slug>`
+anchors instead, so the broken links are confined to the four cards where they
+were asked for. When the detail pages land, only those four hrefs change.
+
+Two other things moved with it. The nav's "Services" item now goes to
+`services/` rather than the homepage anchor; `navfit.js` still passes at all ten
+widths on all six pages. And the old services rail — `.nx-svc__tab` /
+`.nx-svc__panel` under `[data-svc]`, plus its `initServices` JS partner — was
+deleted. Nothing had used it since the services section became a cell grid, and
+its `.nx-svc` / `.nx-svc__desc` / `.nx-svc__list` names would have collided
+silently with the new page's.
+
+**Still missing from the brief, and blocking the four detail pages.** The brief
+gives ~65 words per service. That is enough for a card, not for a page. Nobody
+has supplied scope, what is in and out, how an engagement runs, who it is for,
+or a proof point. Also: Technology & Platform Development has only **three**
+bullets where the others have four, and none of them is platform development,
+despite that being the service's name. Ask before inventing any of it (§22.13–14).
+
 **The About page is the brief's argument, not a team page.** The client asked
 for something modern with "wow effects" and "no boring sections that look like
 templates", and there is no staff roster, no founder photo and no headcount to
@@ -562,6 +612,7 @@ Dropped as the MD requires: the marquee (continuous decorative movement).
 | Composed line-break statement re-wrapped | `.nx-say` carried `max-inline-size: 18ch`, narrower than its own longest line, so one mask held two rows | Cap removed; the composed lines *are* the measure, and the clamp keeps them one row down to 360px |
 | Footer's Company column ~1/6 width on phones | `style="grid-column:span 2"` inline on the column — inline styles outrank every media query, and `.nx-span-2` was never in the grid scale at all | `.nx-span-2` added to the scale and to both breakpoints; inline style deleted from all five pages |
 | Case study's "Built on iNexa Design System" 404'd | Sub-page path rewrite missed the footer's `style-guide/` | `../style-guide/` |
+| Four homepage icons silently swapped | A bulk `#i-build`→`#i-nodes` / `#i-eye`→`#i-pulse` replace across the whole file, meant for the services cells, hit the challenge section, process step 03 and two industry tiles | Restored by line; **scope icon-id replacements to the section, never the file** |
 | Cache-bust stamping never reached a single visitor | It ran in the deploy workflow, but Pages publishes the branch — the artifact the step edited is not what goes online | Stamping moved to commit time (`tools/stamp.js`); the workflow step now only *checks* |
 
 ---
@@ -673,7 +724,12 @@ placeholder, and the build spec forbids inventing replacements:
 - Hero and systems interfaces: labelled "Sample".
 - Footer legal links (Privacy, Cookie, Terms) point nowhere. Insights is still
   in the spec's architecture but unbuilt, which is why it is absent from the
-  header. About now exists and is linked from the drawer and the footer.
+  header. About and Services now exist and are linked from the nav, drawer and
+  footer.
+- **The four service detail pages are not built and their URLs 404.** They are
+  linked from the four cards on `services/` and nowhere else, deliberately. See
+  §5 for the slugs and for what the client still owes us before they can be
+  written.
 - **The About page's operating-layer diagram uses generic labels** — "Trading
   business", "Digital platform", "Growth-stage group" — not AGD Global,
   CyDrive.eu or MyRealEstate. Naming real businesses is a client decision, not

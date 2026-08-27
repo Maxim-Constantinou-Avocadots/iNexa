@@ -687,109 +687,10 @@ body {
 @media (max-width: 767px) { .nx-challenge { grid-template-columns: 1fr; } }
 
 
-/* -----------------------------------------------------------------------------
-   SERVICES — spec §13.4. Vertical rail with a large active panel on desktop;
-   the same DOM behaves as an accordion below 1024px. Active state is border
-   plus surface plus text — never colour alone. Services are not numbered.
-   -------------------------------------------------------------------------- */
-
-.nx-svc {
-  display: grid;
-  grid-template-columns: minmax(0, 4fr) minmax(0, 8fr);
-  /* Three content-sized rows and a final flexible one: the rail buttons stack
-     tightly at the top instead of stretching to share the panel's height. */
-  grid-template-rows: repeat(3, auto) 1fr;
-  gap: 0 var(--inx-space-8);
-  border-block-start: 1px solid var(--inx-border);
-  align-items: start;
-}
-
-.nx-svc__item { display: contents; }
-
-.nx-svc__tab {
-  grid-column: 1;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: var(--inx-space-4);
-  inline-size: 100%;
-  padding: var(--inx-space-5) var(--inx-space-4);
-  border: 0;
-  border-block-end: 1px solid var(--inx-border);
-  border-inline-start: 2px solid transparent;
-  background: transparent;
-  font-family: var(--inx-font);
-  font-size: var(--inx-text-md);
-  font-weight: var(--inx-weight-regular);
-  letter-spacing: var(--inx-tracking-tight);
-  color: var(--inx-text-muted);
-  text-align: start;
-  cursor: pointer;
-  transition: color var(--inx-transition),
-              border-color var(--inx-transition),
-              background-color var(--inx-transition);
-}
-
-.nx-svc__tab:hover { color: var(--inx-text); }
-
-.nx-svc__tab[aria-expanded="true"] {
-  color: var(--inx-text);
-  border-inline-start-color: var(--inx-text);
-  background: var(--inx-bg-sunken);
-}
-
-.nx-svc__sign { flex: none; inline-size: 12px; block-size: 12px; position: relative; }
-.nx-svc__sign::before,
-.nx-svc__sign::after {
-  content: "";
-  position: absolute;
-  inset-block-start: 50%;
-  inset-inline-start: 0;
-  inline-size: 100%;
-  block-size: 1px;
-  background: currentColor;
-  transition: transform var(--inx-transition);
-}
-.nx-svc__sign::after { transform: rotate(90deg); }
-.nx-svc__tab[aria-expanded="true"] .nx-svc__sign::after { transform: rotate(0deg); }
-
-.nx-svc__panel {
-  grid-column: 2;
-  grid-row: 1 / span 4;
-  padding-block: var(--inx-space-5);
-  min-inline-size: 0;
-}
-.nx-svc__panel[hidden] { display: none; }
-
-.nx-svc__panel { animation: nx-panel-in var(--inx-duration-base) var(--inx-ease); }
-
-.nx-svc__desc {
-  font-size: var(--inx-text-base);
-  line-height: var(--inx-leading-normal);
-  color: var(--inx-text-subtle);
-  margin: 0 0 var(--inx-space-5);
-  max-inline-size: var(--inx-measure);
-}
-
-.nx-svc__list { list-style: none; margin: 0 0 var(--inx-space-6); padding: 0; }
-.nx-svc__list li {
-  padding-block: var(--inx-space-3);
-  border-block-start: 1px solid var(--inx-border);
-  font-size: var(--inx-text-sm);
-  color: var(--inx-text-subtle);
-}
-.nx-svc__list li:last-child { border-block-end: 1px solid var(--inx-border); }
-
-.nx-svc__cta { margin-block-start: var(--inx-space-6); }
-
-@media (max-width: 1023px) {
-  /* Accordion: each panel sits under its own control, in DOM order. */
-  .nx-svc { display: block; }
-  .nx-svc__panel { grid-row: auto; padding-block: var(--inx-space-5); border-block-end: 1px solid var(--inx-border); }
-  .nx-svc__tab { border-inline-start: 0; padding-inline: 0; }
-  .nx-svc__tab[aria-expanded="true"] { background: transparent; }
-}
-
+/* The old services rail (a tab/accordion under [data-svc]) was removed with
+   this block. Nothing had used it since the services section became a cell
+   grid, and its .nx-svc / .nx-svc__desc / .nx-svc__list names now belong to
+   the services page below. Its JS partner, initServices, went with it. */
 
 /* -----------------------------------------------------------------------------
    TRANSFORMATION — spec §13.5: Before iNexa / With iNexa.
@@ -3214,3 +3115,162 @@ html.lenis, html.lenis body { block-size: auto; }
   .nx-stack__drop { block-size: var(--inx-space-5); }
   .nx-vision__say { font-size: var(--inx-text-xl); }
 }
+
+/* -----------------------------------------------------------------------------
+   SERVICES PAGE — the four service lines, as named in the client brief
+   (§"WHAT WE DO", pages 6–7). Names, descriptions and capability lists are
+   the client's own words and must not be reworded here or on the homepage.
+   -------------------------------------------------------------------------- */
+
+/* Four large panels sharing 1px boundaries over a border-coloured ground
+   (§3.3) — the instrument idiom, at card scale. Two-up rather than a stack,
+   so this does not read as a second copy of the About principles ledger, and
+   so each panel has room for its capability list beside the description.
+   Services are a SET: no numbering, and the panels carry no implied order. */
+.nx-svcs {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1px;
+  background: var(--inx-border);
+  border: 1px solid var(--inx-border);
+}
+.nx-svc {
+  background: var(--inx-bg);
+  transition: background-color var(--inx-duration-base) var(--inx-ease);
+}
+.nx-svc:hover { background: var(--inx-bg-sunken); }
+
+/* The whole panel is the link, so the target is the panel and not a 90px
+   phrase at the bottom of it. */
+.nx-svc__link {
+  display: flex;
+  flex-direction: column;
+  block-size: 100%;
+  padding: var(--inx-space-6);
+  color: inherit;
+  text-decoration: none;
+}
+
+.nx-svc__top {
+  display: flex;
+  align-items: center;
+  gap: var(--inx-space-5);
+}
+.nx-svc__top .nx-icon-well { margin-block-end: 0; flex: none; }
+.nx-svc__mark {
+  flex: 1;
+  block-size: 1px;
+  background: var(--inx-border);
+  transition: background-color var(--inx-duration-base) var(--inx-ease);
+}
+.nx-svc:hover .nx-svc__mark { background: var(--inx-border-strong); }
+
+.nx-svc__name {
+  margin: var(--inx-space-5) 0 0;
+  font-size: var(--inx-text-xl);
+  font-weight: var(--inx-weight-semi);
+  line-height: var(--inx-leading-tight);
+  letter-spacing: var(--inx-tracking-tight);
+  text-wrap: pretty;
+}
+.nx-svc__desc {
+  margin: var(--inx-space-4) 0 0;
+  font-size: var(--inx-text-sm);
+  line-height: var(--inx-leading-normal);
+  color: var(--inx-text-subtle);
+  max-inline-size: 46ch;
+}
+
+.nx-svc__lead {
+  display: block;
+  margin-block-start: var(--inx-space-5);
+  padding-block-start: var(--inx-space-5);
+  border-block-start: 1px solid var(--inx-border);
+  font-size: var(--inx-text-xs);
+  color: var(--inx-text-muted);
+}
+.nx-svc__list {
+  list-style: none;
+  margin: var(--inx-space-4) 0 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--inx-space-3) var(--inx-space-5);
+}
+.nx-svc__list li {
+  position: relative;
+  padding-inline-start: var(--inx-space-4);
+  font-size: var(--inx-text-xs);
+  line-height: var(--inx-leading-snug);
+}
+.nx-svc__list li::before {
+  content: "";
+  position: absolute;
+  inset-inline-start: 0;
+  inset-block-start: 0.5em;
+  inline-size: 4px;
+  block-size: 4px;
+  background: var(--inx-border-strong);
+}
+
+/* Pushed to the panel's floor, so all four affordances line up however
+   uneven the capability lists above them are. */
+.nx-svc__go {
+  display: flex;
+  align-items: center;
+  gap: var(--inx-space-3);
+  margin-block-start: auto;
+  padding-block-start: var(--inx-space-6);
+  font-size: var(--inx-text-xs);
+  font-weight: var(--inx-weight-semi);
+}
+.nx-svc__go svg {
+  transition: transform var(--inx-duration-base) var(--inx-ease);
+}
+.nx-svc:hover .nx-svc__go svg { transform: translateX(4px); }
+
+.nx-svcs__note {
+  margin: var(--inx-space-6) 0 0;
+  font-size: var(--inx-text-xs);
+  line-height: var(--inx-leading-normal);
+  color: var(--inx-text-muted);
+  max-inline-size: var(--inx-measure);
+}
+
+@media (max-width: 900px) {
+  .nx-svcs { grid-template-columns: minmax(0, 1fr); }
+  .nx-svc__link { padding: var(--inx-space-5); }
+  .nx-svc__name { font-size: var(--inx-text-lg); }
+}
+@media (max-width: 560px) {
+  .nx-svc__list { grid-template-columns: minmax(0, 1fr); }
+}
+
+/* The same four services on the homepage. The cells were static before; each
+   is now the link to its service page, so the whole cell is the target. */
+.nx-svc-cells > * {
+  padding: 0;                       /* the anchor carries the padding instead */
+  transition: background-color var(--inx-duration-base) var(--inx-ease);
+}
+.nx-svc-cells > *:hover { background: var(--inx-bg-sunken); }
+.nx-svc-cell {
+  display: flex;
+  flex-direction: column;
+  block-size: 100%;
+  padding: var(--inx-space-6);
+  color: inherit;
+  text-decoration: none;
+}
+.nx-svc-cell__list {
+  grid-template-columns: minmax(0, 1fr);
+  margin-block-start: var(--inx-space-5);
+}
+.nx-svc-cell .nx-svc__go { padding-block-start: var(--inx-space-5); }
+.nx-svc-cell:hover .nx-svc__go svg { transform: translateX(4px); }
+
+/* Anchored from the homepage cells and every footer, so each panel has to
+   clear the condensed navbar when it is jumped to. */
+.nx-svc { scroll-margin-block-start: 120px; }
