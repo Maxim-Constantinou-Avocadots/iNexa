@@ -146,6 +146,7 @@ assets/
   img/                      leadership 146KB · collaboration 99KB · operations 108KB
   fonts/*.woff2             Raw font files, for production hosting
 tools/                      Verification harness — see §7. Not part of the site.
+  stamp.js                  Cache-bust stamper. Run before committing assets.
 .github/workflows/deploy-pages.yml
 ```
 
@@ -552,6 +553,7 @@ Dropped as the MD requires: the marquee (continuous decorative movement).
 | Composed line-break statement re-wrapped | `.nx-say` carried `max-inline-size: 18ch`, narrower than its own longest line, so one mask held two rows | Cap removed; the composed lines *are* the measure, and the clamp keeps them one row down to 360px |
 | Footer's Company column ~1/6 width on phones | `style="grid-column:span 2"` inline on the column — inline styles outrank every media query, and `.nx-span-2` was never in the grid scale at all | `.nx-span-2` added to the scale and to both breakpoints; inline style deleted from all five pages |
 | Case study's "Built on iNexa Design System" 404'd | Sub-page path rewrite missed the footer's `style-guide/` | `../style-guide/` |
+| Cache-bust stamping never reached a single visitor | It ran in the deploy workflow, but Pages publishes the branch — the artifact the step edited is not what goes online | Stamping moved to commit time (`tools/stamp.js`); the workflow step now only *checks* |
 
 ---
 
@@ -605,15 +607,27 @@ point it at the deployed URL to verify a release).
 
 ### Gotchas when running it
 
-- **Asset URLs are cache-busted at deploy time, and this matters.** GitHub
+- **Asset URLs are cache-busted at COMMIT time, and this matters.** GitHub
   Pages sends `cache-control: max-age=600` on HTML *and* CSS, and the two
   expire independently — so a visitor can be served **new markup with the
   previous stylesheet**, which renders any newly-added section completely
-  unstyled. This bit the build twice before it was fixed. Asset links carry
-  `?v=dev` in the repo; `.github/workflows/deploy-pages.yml` rewrites that to
-  the commit SHA before upload, so each deploy's HTML requests its own assets.
-  **Keep `?v=dev` on any new asset link you add, and on any new page.**
-  Verify after a deploy by checking the served HTML carries a SHA, not `dev`.
+  unstyled. This bit the build twice.
+  **`tools/stamp.js` writes a content hash of each asset into every HTML link
+  to it. Run `npm run stamp` in `tools/` before committing any change to a
+  `.css` or `.js` file, and after adding a page.** `npm run all` and the
+  deploy both run `stamp.js --check`, which fails on a stale link.
+  New asset links can be written `?v=0` — the stamper replaces whatever is
+  there. It is idempotent, and skips `previous/`.
+- **Pages publishes the BRANCH, not the workflow artifact — do not put a build
+  step in the deploy and expect anyone to see it.** This was the previous
+  design and it silently did nothing for weeks: the workflow rewrote `?v=dev`
+  to the commit SHA, its own verification grep printed the stamped value, the
+  artifact was uploaded with it, `deploy-pages` reported success — and every
+  served page still said `?v=dev`. Proven by writing a file in the workflow
+  that was never committed and finding it 404 on the live site while the rest
+  of the site was current. If Pages is ever switched to the GitHub Actions
+  source, commit-time stamping keeps working regardless, so there is nothing
+  to undo.
 - **Always pass `reducedMotion: 'reduce'`** on any page that needs
   `window.scrollTo` — Lenis owns the scroll otherwise. Without it, Lenis
   restores its own scroll target on the next frame and the jump is undone

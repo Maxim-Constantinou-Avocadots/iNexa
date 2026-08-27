@@ -36,22 +36,16 @@ jobs:
         with:
           enablement: true
 
-      - name: Stamp asset versions
-        # HTML and CSS are cached independently for ten minutes, so a visitor
-        # can be served new markup alongside the PREVIOUS stylesheet — which
-        # renders any new section completely unstyled until the CSS expires.
-        # Stamping the commit onto every asset URL makes each deploy's HTML
-        # request its own assets, so the two can never be out of step.
-        run: |
-          find . -name '*.html' -not -path './.git/*' -print0 \
-            | xargs -0 --no-run-if-empty sed -i "s/?v=dev/?v=${GITHUB_SHA:0:8}/g"
-          echo "Stamped ?v=${GITHUB_SHA:0:8}"
-          grep -o 'site\.css?v=[a-z0-9]*' index.html | head -1
-          # Written here, never committed. If this file is reachable on the
-          # deployed site, Pages is publishing the workflow artifact; if it
-          # 404s while the rest of the site is current, Pages is publishing the
-          # branch directly and no workflow step can rewrite anything.
-          echo "${GITHUB_SHA:0:8}" > build-stamp.txt
+      - name: Check asset versions are stamped
+        # This job's output is NOT what visitors receive: Pages on this
+        # repository publishes the branch, not this artifact. An earlier
+        # version of this step rewrote ?v=dev to the commit SHA here, reported
+        # success, and changed nothing anyone could see. So the stamping now
+        # happens at commit time (tools/stamp.js) and this step only guards it:
+        # if a page references an asset under a hash that is not that asset's
+        # current content hash, the deploy fails rather than shipping a page
+        # that can be served against a stale cached stylesheet.
+        run: node tools/stamp.js --check
 
       - name: Upload the site
         uses: actions/upload-pages-artifact@v3

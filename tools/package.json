@@ -11,7 +11,9 @@
     "align": "node align.js",
     "behaviour": "node behaviour.js",
     "herofit": "node herofit.js",
-    "all": "node overflow.js && node palette.js && node audit.js && node navfit.js && node align.js && node behaviour.js && node herofit.js"
+    "all": "node overflow.js && node palette.js && node audit.js && node navfit.js && node align.js && node behaviour.js && node herofit.js && node stamp.js --check",
+    "stamp": "node stamp.js",
+    "stamp:check": "node stamp.js --check"
   },
   "devDependencies": {
     "playwright": "^1.62.1"
