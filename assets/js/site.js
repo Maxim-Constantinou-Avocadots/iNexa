@@ -35,15 +35,29 @@
       return;
     }
 
-    var io = new IntersectionObserver(function (entries) {
-      entries.forEach(function (entry) {
-        if (!entry.isIntersecting) return;
-        entry.target.classList.add('is-in');
-        io.unobserve(entry.target);
-      });
-    }, { rootMargin: '0px 0px -10% 0px', threshold: 0.1 });
+    /* Two observers. The default one is generous — a section only has to
+       peek into view to start. Elements marked data-reveal="deep" wait until
+       they are properly on screen: a full-viewport statement whose lines rise
+       one after another sits high enough on the page to be half-visible on
+       landing, and a set-piece the reader never sees begin is a set-piece
+       wasted. */
+    function watch(opts) {
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (!entry.isIntersecting) return;
+          entry.target.classList.add('is-in');
+          io.unobserve(entry.target);
+        });
+      }, opts);
+      return io;
+    }
 
-    targets.forEach(function (el) { io.observe(el); });
+    var io = watch({ rootMargin: '0px 0px -10% 0px', threshold: 0.1 });
+    var ioDeep = watch({ rootMargin: '0px 0px -35% 0px', threshold: 0.35 });
+
+    targets.forEach(function (el) {
+      (el.getAttribute('data-reveal') === 'deep' ? ioDeep : io).observe(el);
+    });
   }
 
   /* ---------------------------------------------------------------------

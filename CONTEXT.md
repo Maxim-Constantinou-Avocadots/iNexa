@@ -125,7 +125,8 @@ stops contradicting the applications section. Flag this to the brand owner.
 ## 4. File map
 
 ```
-index.html                  The homepage — 1059 lines, 14 sections
+index.html                  The homepage — 1138 lines, 14 sections
+about/index.html            The About page — thesis, principles, operating layer
 case-study/index.html       The case study detail page
 contact/index.html          The contact page — the site's only form
 faq/index.html              The FAQ page — 6 topics, 25 answers, tabbed
@@ -138,9 +139,9 @@ assets/
     fonts.css               Manrope, self-hosted, inlined as data URIs (54KB)
     inexa-tokens.css        Token layer — verbatim from the style guide
     inexa-components.css    Component layer — verbatim from the style guide
-    site.css                Marketing layer, nx- prefix — 2134 lines
+    site.css                Marketing layer, nx- prefix — 3135 lines
   js/
-    site.js                 Progressive enhancement only — 417 lines
+    site.js                 Progressive enhancement only — 501 lines
     vendor/lenis.min.js     Lenis 1.3.19, MIT, 17KB
   img/                      leadership 146KB · collaboration 99KB · operations 108KB
   fonts/*.woff2             Raw font files, for production hosting
@@ -189,6 +190,9 @@ client asked for dots over the original diagonal hatch. The class is still
 | 1393 | **Operational dashboard** |
 | 1630 | **The plot — SVG path, HTML everything else** |
 | 1897+ | Responsive + height-aware compaction |
+| 2200+ | Case study feature · sectors · integration map |
+| 2600+ | Contact page · FAQ tablist |
+| 2915+ | **About — thesis, principles ledger, operating-layer stack, vision** |
 
 ---
 
@@ -382,8 +386,48 @@ Two things worth knowing:
 
 **Nav:** the header CTA now points at `/contact/` rather than the homepage
 anchor, which freed the nav slot that FAQ took. The bar stays at six items and
-`navfit.js` passes at all ten widths on all four pages. Contact remains in the
+`navfit.js` passes at all ten widths on all five pages. Contact remains in the
 drawer and the footer.
+
+**The About page is the brief's argument, not a team page.** The client asked
+for something modern with "wow effects" and "no boring sections that look like
+templates", and there is no staff roster, no founder photo and no headcount to
+put on it — inventing any of those is barred by §22.13–14. So the page argues
+instead: a thesis, what the company is, what it will not be talked out of, and
+where it goes. Every line of copy comes from the brief.
+
+Its sections, and why each is shaped that way:
+- **Thesis** (`.nx-say`) — the one masked line-reveal on the page, four
+  composed lines rising in sequence. The homepage's `.nx-line` could not be
+  reused: that fires off `.is-ready`, set once at boot, so a statement in the
+  middle of a page would be over before the reader reached it. `.nx-say` is
+  driven by the scroll observer instead, at the **deep** threshold (below).
+- **What we are** — photo bleed against copy, `.nx-about`, 5fr/7fr.
+- **Four principles** (`.nx-prins`) — the brief's four messaging lines as a
+  hairline ledger: claim left, consequence right, a rule between. Explicitly
+  **not** a four-card grid and **not numbered** — they are a set, not a
+  sequence (§2), and a card grid is precisely the template look asked against.
+- **The operating layer** (`.nx-stack`) — three businesses dropping into one
+  shared layer. The drops scale from `scaleY(0)` after their box arrives, so
+  the diagram assembles top-down. Labels are generic pending client sign-off
+  on naming real businesses — see §8.
+- **Vision** — the brief's closing statement, set large, with the site's
+  standard CTA pair.
+
+**`data-reveal="deep"`.** `initReveal` now runs two observers. The default one
+stays generous — a section only has to peek in. Anything marked
+`data-reveal="deep"` waits for threshold 0.35 and a `-35%` bottom margin. The
+thesis needed it: the sub-page hero is only ~700px, so at 1440x900 the
+statement is already 200px on screen at load and the whole sequence played
+before the reader scrolled at all. A set-piece nobody sees begin is wasted.
+
+**Two shared-component fixes went in alongside it**, because the About page
+made them visible and they were wrong on every page: the footer's Company
+column carried an inline `grid-column:span 2` that outranked both breakpoints
+and left it at a sixth of the width on phones, and `.nx-span-2` was missing
+from the grid scale entirely. About is now listed in that column on all five
+pages. The case study's style-guide link was also resolving to
+`case-study/style-guide`.
 
 **No signifier watermark.** The enlarged mark from the ID cards (p49) was tried
 behind the atmosphere sections and removed at the client's request: the cards
@@ -504,6 +548,10 @@ Dropped as the MD requires: the marquee (continuous decorative movement).
 | Screenshot harness scrolled nowhere | Lenis intercepts `window.scrollTo` | Harness pages use `reducedMotion: 'reduce'`, which disables Lenis |
 | Invented client name in the dashboard | "Northgate Group" — a fabricated client | Changed to "Distribution client" |
 | Chart label contradicted its own bars | Bars descend, so they plot touchpoints *remaining*, but the label said "removed" | Label corrected |
+| About's thesis reveal already played on landing | The hero is ~700px, so the statement is partly on screen at load and the shared observer (threshold 0.1, `-10%` margin) fired immediately | Second observer, `data-reveal="deep"` — threshold 0.35, `-35%` margin |
+| Composed line-break statement re-wrapped | `.nx-say` carried `max-inline-size: 18ch`, narrower than its own longest line, so one mask held two rows | Cap removed; the composed lines *are* the measure, and the clamp keeps them one row down to 360px |
+| Footer's Company column ~1/6 width on phones | `style="grid-column:span 2"` inline on the column — inline styles outrank every media query, and `.nx-span-2` was never in the grid scale at all | `.nx-span-2` added to the scale and to both breakpoints; inline style deleted from all five pages |
+| Case study's "Built on iNexa Design System" 404'd | Sub-page path rewrite missed the footer's `style-guide/` | `../style-guide/` |
 
 ---
 
@@ -567,7 +615,15 @@ point it at the deployed URL to verify a release).
   **Keep `?v=dev` on any new asset link you add, and on any new page.**
   Verify after a deploy by checking the served HTML carries a SHA, not `dev`.
 - **Always pass `reducedMotion: 'reduce'`** on any page that needs
-  `window.scrollTo` — Lenis owns the scroll otherwise.
+  `window.scrollTo` — Lenis owns the scroll otherwise. Without it, Lenis
+  restores its own scroll target on the next frame and the jump is undone
+  before the IntersectionObserver ever sees the element, so reveals read as
+  `opacity: 0` and the page looks broken when it is not. If you need a page
+  with motion *on* (to check the reveals themselves), drive it with
+  `page.mouse.wheel(0, 300)` in a loop or `el.scrollIntoView()` — both are
+  input Lenis honours. A blank section in a `fullPage` screenshot is this
+  artefact far more often than it is a bug; confirm with wheel input before
+  changing any code.
 - Playwright **cannot reach the deployed URL from this container** — the agent
   proxy resets browser connections. Verify deploys by comparing served bytes
   instead:
@@ -592,9 +648,13 @@ placeholder, and the build spec forbids inventing replacements:
 - Why iNexa counter figures: captioned "sample figures".
 - Pricing: **£12,000 and £9,500 are illustrative** and say so on the page.
 - Hero and systems interfaces: labelled "Sample".
-- Footer legal links (Privacy, Cookie, Terms) point nowhere. Those pages, plus
-  About and Insights, are in the spec's architecture but outside this scope —
-  which is why they are absent from the header.
+- Footer legal links (Privacy, Cookie, Terms) point nowhere. Insights is still
+  in the spec's architecture but unbuilt, which is why it is absent from the
+  header. About now exists and is linked from the drawer and the footer.
+- **The About page's operating-layer diagram uses generic labels** — "Trading
+  business", "Digital platform", "Growth-stage group" — not AGD Global,
+  CyDrive.eu or MyRealEstate. Naming real businesses is a client decision, not
+  ours (§22.13–14). Ask before substituting them.
 - **The contact form has no backend.** It posts natively to
   `mailto:hello@inexa.com` with `enctype="text/plain"`, which works with
   JavaScript off; `initContactForm` in `site.js` improves on that by composing
