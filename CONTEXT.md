@@ -404,10 +404,19 @@ Its sections, and why each is shaped that way:
   middle of a page would be over before the reader reached it. `.nx-say` is
   driven by the scroll observer instead, at the **deep** threshold (below).
 - **What we are** — photo bleed against copy, `.nx-about`, 5fr/7fr.
-- **Four principles** (`.nx-prins`) — the brief's four messaging lines as a
-  hairline ledger: claim left, consequence right, a rule between. Explicitly
-  **not** a four-card grid and **not numbered** — they are a set, not a
-  sequence (§2), and a card grid is precisely the template look asked against.
+- **Four principles** (`.nx-prins`) — the brief's four messaging lines.
+  Explicitly **not numbered** (a set, not a sequence, §2) and not a four-card
+  grid. The first attempt was a plain hairline ledger and the client's read was
+  "could have been designed better" — correctly: the heading left half the
+  width empty above it and the rows were body text on rules, with the notes
+  carrying no weight. Rebuilt as two things. The heading moved beside the list
+  and **sticks** at 104px, so the section has no dead half and the claims run
+  past a fixed title. The rows became **surfaces** — shared 1px boundaries over
+  a border-coloured ground (§3.3), the dashboard's instrument idiom — each with
+  a square marker that fills on hover and a rule that grows under the claim.
+  The reveal animates each row's *contents*, never the row: fading the cell
+  shows the ground through it as a solid blue block, which is how the FAQ rail
+  broke.
 - **The operating layer** (`.nx-stack`) — three businesses dropping into one
   shared layer. The drops scale from `scaleY(0)` after their box arrives, so
   the diagram assembles top-down. Labels are generic pending client sign-off

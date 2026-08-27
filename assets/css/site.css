@@ -2992,47 +2992,125 @@ html.lenis, html.lenis body { block-size: auto; }
   max-inline-size: var(--inx-measure);
 }
 
-/* Principles. Statement-scale type on a hairline ledger — not a card grid,
-   which is what every About page in the world reaches for. A set, so it is
-   deliberately NOT numbered (§2). */
+/* Principles. Four claims and what each one costs us to hold.
+
+   Deliberately NOT numbered (§2) — they are a set, not a sequence — and
+   deliberately not a four-card grid, which is what every About page reaches
+   for. The first attempt was a plain hairline ledger and read as loose body
+   text: the heading left half the width empty above it, and the notes in the
+   right column carried no weight. This is the fix, and it is two changes.
+
+   One: the heading moved beside the list and sticks, so the section has no
+   dead half and the claims run past a fixed title.
+
+   Two: the rows became surfaces. Shared 1px boundaries over a border-coloured
+   ground (§3.3) — the same instrument idiom as the dashboard — so the group
+   reads as one panel rather than four paragraphs. Note that the reveal
+   animates each row's CONTENTS, never the row itself: fading the cell would
+   show the ground through it as a solid blue block, which is exactly how the
+   FAQ rail broke. */
+.nx-prins-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 4fr) minmax(0, 8fr);
+  gap: var(--inx-space-7);
+  align-items: start;
+}
+.nx-prins__head {
+  position: sticky;
+  inset-block-start: 104px;   /* clears the condensed navbar, as §case-facts */
+}
+.nx-prins__title {
+  margin: var(--inx-space-5) 0 0;
+  font-size: var(--inx-text-2xl);
+  line-height: var(--inx-leading-tight);
+  letter-spacing: var(--inx-tracking-display);
+  text-wrap: balance;
+}
+.nx-prins__lead {
+  margin: var(--inx-space-5) 0 0;
+  font-size: var(--inx-text-sm);
+  line-height: var(--inx-leading-normal);
+  color: var(--inx-text-muted);
+  max-inline-size: 32ch;
+}
+
 .nx-prins {
   list-style: none;
-  margin: var(--inx-space-7) 0 0;
+  margin: 0;
   padding: 0;
-  border-block-start: 1px solid var(--inx-border);
+  display: grid;
+  gap: 1px;
+  background: var(--inx-border);
+  border: 1px solid var(--inx-border);
 }
 .nx-prin {
   display: grid;
-  grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
-  gap: var(--inx-space-6);
-  align-items: baseline;
-  padding-block: var(--inx-space-6);
-  border-block-end: 1px solid var(--inx-border);
+  grid-template-columns: var(--inx-space-6) minmax(0, 1fr);
+  padding: var(--inx-space-6);
+  background: var(--inx-bg);
+  transition: background-color var(--inx-duration-base) var(--inx-ease);
+}
+.nx-prin:hover { background: var(--inx-bg-sunken); }
+
+/* The reveal lives on the row's children, not the row — see the note above. */
+.nx-prin > * {
   opacity: 0;
   transform: translateY(10px);
   transition:
     opacity var(--inx-duration-slow) var(--inx-ease-out),
-    transform var(--inx-duration-slow) var(--inx-ease-out),
-    background-color var(--inx-duration-base) var(--inx-ease);
+    transform var(--inx-duration-slow) var(--inx-ease-out);
   transition-delay: var(--nx-delay, 0ms);
 }
-.nx-prin.is-in,
-.no-js .nx-prin { opacity: 1; transform: none; }
+.nx-prin.is-in > *,
+.no-js .nx-prin > * { opacity: 1; transform: none; }
+
+.nx-prin__mark {
+  inline-size: 10px;
+  block-size: 10px;
+  margin-block-start: 0.5em;   /* onto the claim's optical centre line */
+  background: var(--inx-border-strong);
+  transition:
+    background-color var(--inx-duration-base) var(--inx-ease),
+    transform var(--inx-duration-base) var(--inx-ease);
+}
+.nx-prin:hover .nx-prin__mark {
+  background: var(--inx-text);
+  transform: scale(1.4);
+}
 
 .nx-prin__say {
   margin: 0;
   font-size: var(--inx-text-lg);
+  font-weight: var(--inx-weight-semi);
   line-height: var(--inx-leading-tight);
   letter-spacing: var(--inx-tracking-tight);
   text-wrap: pretty;
-  transition: transform var(--inx-duration-base) var(--inx-ease);
 }
-.nx-prin:hover .nx-prin__say { transform: translateX(6px); }
+/* Drawn at full width and held back by scaleX, so hover animates a transform
+   rather than a width and never reflows the row. */
+.nx-prin__rule {
+  display: block;
+  inline-size: 64px;
+  block-size: 1px;
+  margin-block: var(--inx-space-4);
+  background: var(--inx-border-strong);
+  transform: scaleX(0.4);
+  transform-origin: left center;
+  transition:
+    transform var(--inx-duration-base) var(--inx-ease),
+    background-color var(--inx-duration-base) var(--inx-ease);
+}
+.nx-prin:hover .nx-prin__rule {
+  transform: scaleX(1);
+  background: var(--inx-text);
+}
+
 .nx-prin__note {
   margin: 0;
   font-size: var(--inx-text-xs);
   line-height: var(--inx-leading-normal);
   color: var(--inx-text-muted);
+  max-inline-size: 54ch;
 }
 
 /* The operating layer, drawn as a layer: businesses sitting on top, iNexa as
@@ -3126,7 +3204,10 @@ html.lenis, html.lenis body { block-size: auto; }
 @media (max-width: 900px) {
   .nx-about { grid-template-columns: minmax(0, 1fr); }
   .nx-about__media { min-block-size: 260px; }
-  .nx-prin { grid-template-columns: minmax(0, 1fr); gap: var(--inx-space-3); padding-block: var(--inx-space-5); }
+  .nx-prins-layout { grid-template-columns: minmax(0, 1fr); gap: var(--inx-space-6); }
+  .nx-prins__head { position: static; }
+  .nx-prins__title { font-size: var(--inx-text-xl); }
+  .nx-prin { padding: var(--inx-space-5); grid-template-columns: var(--inx-space-5) minmax(0, 1fr); }
   .nx-prin__say { font-size: var(--inx-text-md); }
   .nx-stack__row { grid-template-columns: minmax(0, 1fr); gap: var(--inx-space-4); }
   .nx-stack__biz { margin-block-end: var(--inx-space-5); }
