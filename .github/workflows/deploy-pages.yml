@@ -47,6 +47,11 @@ jobs:
             | xargs -0 --no-run-if-empty sed -i "s/?v=dev/?v=${GITHUB_SHA:0:8}/g"
           echo "Stamped ?v=${GITHUB_SHA:0:8}"
           grep -o 'site\.css?v=[a-z0-9]*' index.html | head -1
+          # Written here, never committed. If this file is reachable on the
+          # deployed site, Pages is publishing the workflow artifact; if it
+          # 404s while the rest of the site is current, Pages is publishing the
+          # branch directly and no workflow step can rewrite anything.
+          echo "${GITHUB_SHA:0:8}" > build-stamp.txt
 
       - name: Upload the site
         uses: actions/upload-pages-artifact@v3
