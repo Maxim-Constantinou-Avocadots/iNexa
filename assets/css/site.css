@@ -3311,102 +3311,94 @@ html.lenis, html.lenis body { block-size: auto; }
    three; it specifies no page per industry, and none is built.
    -------------------------------------------------------------------------- */
 
-/* Ink panels on a white page. Two earlier passes set this on white with
-   hairline rules and small outline icons, and it read as a wireframe — "half
-   done", correctly. There is very little copy here (three names, one line
-   each), so the presence has to come from the surface, and on this brand that
-   has always meant ink and density rather than air.
+/* Ink panels on a white page, built from the same parts as the service cards:
+   a 44px solid icon tile beside a one-word kicker, then the name, then the
+   copy. Same anatomy, inverted for the dark surface — that is what makes the
+   two pages read as one system.
 
-   Ink PANELS rather than an ink section: the page's hero is already an ink
-   band, and a second full-width dark section directly below would read as one
-   long dark region instead of three objects.
+   It took several passes. On white with hairline rules it read as a wireframe
+   ("half done"); with an 84px emblem plate on the right it read as a graphic
+   the site has no other use for. The icon is back at the system's own size and
+   the right-hand box carries only the role, which is all it ever needed to say.
 
-   Each panel pairs its copy with a plate carrying the industry's own mark at
-   scale. A first version floated that mark behind the whole panel, where it
-   ran through the role chip and read as an accident; giving it an object of
-   its own is what makes it deliberate. Deliberately unnumbered: a set, not a
-   sequence (§2). */
+   Ink PANELS rather than an ink section: the hero above is already an ink band,
+   and a second full-width dark section directly beneath would read as one long
+   dark region instead of three objects. Unnumbered: a set, not a sequence. */
 .nx-inds {
   list-style: none;
   margin: 0;
   padding: 0;
   display: grid;
   gap: var(--inx-space-4);
+  grid-auto-rows: 1fr;      /* three equal panels, however the copy wraps */
 }
 .nx-ind {
   display: grid;
-  grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
-  gap: var(--inx-space-7);
+  grid-template-columns: minmax(0, 8fr) minmax(0, 4fr);
+  gap: var(--inx-space-5) var(--inx-space-6);
   align-items: center;
-  padding: var(--inx-space-7);
+  padding: var(--inx-space-6);
   background: var(--inx-n-950);
   border: 1px solid var(--inx-n-800);
   transition: border-color var(--inx-duration-base) var(--inx-ease);
 }
 .nx-ind:hover { border-color: var(--inx-n-600); }
 
+/* Row 1 spans both columns so the tile sits above the copy and the role box
+   alike, rather than pushing either out of alignment. */
+.nx-ind__head {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: center;
+  gap: var(--inx-space-4);
+}
+.nx-ind__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  inline-size: 44px;
+  block-size: 44px;
+  background: var(--inx-n-200);     /* the service card's solid tile, inverted */
+  color: var(--inx-n-950);
+  transition: background-color var(--inx-duration-base) var(--inx-ease);
+}
+.nx-ind:hover .nx-ind__icon { background: var(--inx-n-0); }
 .nx-ind__kicker {
-  display: block;
-  margin-block-end: var(--inx-space-5);
   font-size: var(--inx-text-3xs);
   font-weight: var(--inx-weight-semi);
   letter-spacing: var(--inx-tracking-caps);
   text-transform: uppercase;
   color: var(--inx-n-400);
 }
+
 .nx-ind__name {
   margin: 0;
-  font-size: var(--inx-text-2xl);
+  font-size: var(--inx-text-xl);
+  font-weight: var(--inx-weight-semi);
   line-height: var(--inx-leading-tight);
-  letter-spacing: var(--inx-tracking-display);
+  letter-spacing: var(--inx-tracking-tight);
   color: var(--inx-n-0);
   text-wrap: pretty;
 }
 .nx-ind__line {
   margin: var(--inx-space-4) 0 0;
-  font-size: var(--inx-text-md);
-  line-height: var(--inx-leading-snug);
+  font-size: var(--inx-text-sm);
+  line-height: var(--inx-leading-normal);
   color: var(--inx-n-200);
-  max-inline-size: 42ch;
+  max-inline-size: 52ch;
 }
 
-/* Mark over role, sharing one boundary — the 1px-gap idiom (§3.3) at plate
-   scale. This is a group to READ, not a set of choices, so shared boundaries
-   are the right call here. */
-.nx-ind__plate {
-  display: grid;
-  gap: 1px;
-  background: var(--inx-n-800);
-  border: 1px solid var(--inx-n-800);
-}
-.nx-ind__mark {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-block-size: 168px;
-  padding: var(--inx-space-5);
-  background: var(--inx-n-900);
-}
-.nx-ind__mark svg {
-  inline-size: 84px;
-  block-size: 84px;
-  fill: none;
-  stroke: var(--inx-n-500);
-  stroke-width: 1;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-  transition:
-    stroke var(--inx-duration-slow) var(--inx-ease),
-    transform var(--inx-duration-slow) var(--inx-ease-out);
-}
-.nx-ind:hover .nx-ind__mark svg {
-  stroke: var(--inx-n-200);
-  transform: scale(1.06);
-}
-
+/* Small, and only as wide as it needs to be: capped and pushed to the panel's
+   right edge rather than stretched across its whole column. */
 .nx-ind__role {
+  align-self: center;
+  justify-self: end;
+  inline-size: 100%;
+  max-inline-size: 280px;
   padding: var(--inx-space-5);
   background: var(--inx-n-900);
+  border: 1px solid var(--inx-n-800);
 }
 .nx-ind__cap {
   margin: 0 0 var(--inx-space-3);
@@ -3471,12 +3463,9 @@ html.lenis, html.lenis body { block-size: auto; }
     gap: var(--inx-space-5);
     padding: var(--inx-space-5);
   }
-  .nx-ind__name { font-size: var(--inx-text-xl); }
-  .nx-ind__line { font-size: var(--inx-text-sm); }
-  /* The plate turns on its side so the mark does not eat a phone screen. */
-  .nx-ind__plate { grid-template-columns: auto minmax(0, 1fr); }
-  .nx-ind__mark { min-block-size: 0; inline-size: 96px; }
-  .nx-ind__mark svg { inline-size: 44px; block-size: 44px; }
+  .nx-inds { grid-auto-rows: auto; }
+  .nx-ind__name { font-size: var(--inx-text-lg); }
+  .nx-ind__role { justify-self: stretch; max-inline-size: none; }
   .nx-inds__same { grid-template-columns: minmax(0, 1fr); padding: var(--inx-space-5); }
 }
 @media (max-width: 560px) {
