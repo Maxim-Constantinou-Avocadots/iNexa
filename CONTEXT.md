@@ -497,11 +497,20 @@ words about their own work is exactly what was asked. (The About operating-layer
 diagram is a different matter — those generic labels were our construct, not
 theirs, and still are.)
 
-Below the two cards, each engagement gets its full write-up: the scope bullets
-in a bordered panel, then Challenge / Solution / Result as one three-column
-instrument panel sharing 1px boundaries (§3.3 — a group to read together, so
-shared boundaries are right, unlike the service cards which are choices). The
-cards link to those write-ups by anchor, so nothing 404s.
+Below the two cards, each engagement gets its full write-up as **one object**.
+The first version floated a Scope box top-right and put Challenge / Solution /
+Result in a separate row below it — two white orphans on a pale band with a gap
+between them and nothing joining them. Everything now lives in a single
+bordered panel: an ink band carrying the name (which ties the write-up back to
+the dark card above, so the two read as the same object continued), the intro
+and scope beneath it divided by a rule rather than a second box, and
+Challenge / Solution / Result across the panel's tinted foot with shared 1px
+boundaries (§3.3 — a group to read together, unlike the service cards, which
+are choices and so are separated). The cards link to those write-ups by anchor,
+so nothing 404s.
+
+The section behind them went from sunken back to white when the panels gained
+their own surface — a tinted band under tinted panels was one layer too many.
 
 **Nav:** "Case study" became "Case studies" and points at the new page rather
 than the homepage anchor, on all eight pages. `navfit.js` still passes at all

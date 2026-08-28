@@ -3578,42 +3578,59 @@ html.lenis, html.lenis body { block-size: auto; }
 
 /* --- the full write-ups ------------------------------------------------- */
 
+/* One object per engagement, not three. The first version put a floating
+   Scope box top-right and a separate Challenge/Solution/Result row below it,
+   both white on a pale band, with nothing joining them — two orphans and a gap.
+   Everything now lives inside a single bordered panel: an ink band carrying the
+   name (which ties the write-up back to the dark card above, so they read as
+   the same object continued), the copy and scope beneath it, and the
+   Challenge/Solution/Result across the panel's foot. */
+.nx-cases { display: grid; gap: var(--inx-space-5); }
+
 .nx-case {
-  padding-block: var(--inx-space-7);
-  border-block-start: 1px solid var(--inx-border);
+  border: 1px solid var(--inx-border);
+  background: var(--inx-n-0);
   scroll-margin-block-start: 120px;   /* clears the condensed navbar */
 }
-.nx-case:first-child { border-block-start: 0; padding-block-start: 0; }
 
-.nx-case__head {
+.nx-case__band {
+  padding: var(--inx-space-6);
+  background: var(--inx-n-950);
+}
+.nx-case__name {
+  margin: 0;
+  font-size: var(--inx-text-xl);
+  font-weight: var(--inx-weight-semi);
+  line-height: var(--inx-leading-tight);
+  letter-spacing: var(--inx-tracking-tight);
+  color: var(--inx-n-0);
+}
+.nx-case__sub {
+  margin: var(--inx-space-3) 0 0;
+  font-size: var(--inx-text-sm);
+  line-height: var(--inx-leading-snug);
+  color: var(--inx-n-200);
+}
+
+.nx-case__body {
   display: grid;
   grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
   gap: var(--inx-space-6);
   align-items: start;
+  padding: var(--inx-space-6);
 }
-.nx-case__name {
+.nx-case__intro {
   margin: 0;
-  font-size: var(--inx-text-2xl);
-  line-height: var(--inx-leading-tight);
-  letter-spacing: var(--inx-tracking-display);
-}
-.nx-case__sub {
-  margin: var(--inx-space-3) 0 0;
   font-size: var(--inx-text-md);
   line-height: var(--inx-leading-snug);
   color: var(--inx-text-subtle);
 }
-.nx-case__intro {
-  margin: var(--inx-space-5) 0 0;
-  font-size: var(--inx-text-sm);
-  line-height: var(--inx-leading-normal);
-  color: var(--inx-text-muted);
-  max-inline-size: var(--inx-measure);
-}
+
+/* Scope sits inside the panel now, marked by a rule rather than a box — one
+   fewer border competing with the panel's own. */
 .nx-case__scope {
-  padding: var(--inx-space-5);
-  border: 1px solid var(--inx-border);
-  background: var(--inx-n-0);
+  padding-inline-start: var(--inx-space-6);
+  border-inline-start: 1px solid var(--inx-border);
 }
 .nx-case__scope-cap {
   margin: 0 0 var(--inx-space-4);
@@ -3640,17 +3657,16 @@ html.lenis, html.lenis body { block-size: auto; }
   background: var(--inx-border-strong);
 }
 
-/* Challenge / Solution / Result as one instrument panel — a group to read
-   together, so shared 1px boundaries (§3.3) are right here. */
+/* The panel's foot. A group to read together, so shared 1px boundaries. */
 .nx-case__csr {
-  margin: var(--inx-space-6) 0 0;
+  margin: 0;
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 1px;
   background: var(--inx-border);
-  border: 1px solid var(--inx-border);
+  border-block-start: 1px solid var(--inx-border);
 }
-.nx-case__csr > div { padding: var(--inx-space-5); background: var(--inx-n-0); }
+.nx-case__csr > div { padding: var(--inx-space-6); background: var(--inx-bg); }
 .nx-case__csr dt {
   margin: 0 0 var(--inx-space-3);
   font-size: var(--inx-text-3xs);
@@ -3669,7 +3685,15 @@ html.lenis, html.lenis body { block-size: auto; }
   .nx-cses { grid-template-columns: minmax(0, 1fr); gap: var(--inx-space-4); }
   .nx-cs__link { aspect-ratio: 3 / 2; }
   .nx-cs__name { font-size: var(--inx-text-lg); }
-  .nx-case__head { grid-template-columns: minmax(0, 1fr); }
-  .nx-case__name { font-size: var(--inx-text-xl); }
+  .nx-case__band { padding: var(--inx-space-5); }
+  .nx-case__name { font-size: var(--inx-text-lg); }
+  .nx-case__body {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--inx-space-5);
+    padding: var(--inx-space-5);
+  }
+  .nx-case__intro { font-size: var(--inx-text-sm); }
+  .nx-case__scope { padding-inline-start: 0; border-inline-start: 0; padding-block-start: var(--inx-space-5); border-block-start: 1px solid var(--inx-border); }
   .nx-case__csr { grid-template-columns: minmax(0, 1fr); }
+  .nx-case__csr > div { padding: var(--inx-space-5); }
 }
