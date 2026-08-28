@@ -478,22 +478,35 @@ and none should be built without the client asking.**
 
     Trading & Commodities · Digital Platforms & Marketplaces · Growth-Stage Businesses
 
-Three items with a dozen words each is far too little for a card grid — that is
-precisely the empty-template look the homepage sector strip was told off for. It
-is built as an **editorial index**: one row per industry at display scale,
-hairline-separated, unnumbered (a set, not a sequence, §2).
+**Three ink panels on a white page**, and it took three passes to get there.
+There is almost no copy — three names and one line each — so the presence has
+to come from the surface, not the text, and on this brand that has always meant
+ink and density rather than air (§5, "premium has meant surface"). The first two
+attempts set it on white with hairline rules and small outline icons; the
+client's read was "half done, give it some life", and both times they were
+right. A card grid was never an option either: three items at this content
+weight is exactly the empty-template look the homepage sector strip was told off
+for.
 
-Each row carries a differentiating role on the right — *Full operational
-management / Built, launched and run / Structure and reporting* — the same three
-already on the About operating-layer diagram, sourced from the brief's case
-studies. A first pass instead repeated the four service names under all three
-industries, which triplicated one list down the page and read as filler; that
+Ink **panels**, not an ink section: the page's hero is already an ink band, and
+a second full-width dark section directly beneath would read as one long dark
+region instead of three objects.
+
+Each panel pairs its copy with a **plate** — the industry's own mark at 84px
+over the role beneath it, sharing one boundary. Two things that plate fixes:
+it gives the three panels visibly different graphics, so near-identical copy
+does not read as the same panel three times; and it gives the mark somewhere to
+live. A version before it floated the mark oversized behind the whole panel,
+where it ran straight through the role chip and looked like an accident.
+
+The roles — *Full operational management / Built, launched and run / Structure
+and reporting* — are the same three already on the About operating-layer
+diagram, sourced from the brief's case studies. Unnumbered: a set, not a
+sequence (§2).
+
+An even earlier pass repeated the four service names under all three
+industries, which triplicated one list down the page and read as filler. That
 statement is now made **once**, in the band below the three.
-
-Row alignment is done with real grid rows — the icon owns row 1 and spans the
-width, the three text columns sit on row 2. An earlier version pushed the
-columns down with a hand-tuned `padding-block-start`, which drifted the moment
-"Digital Platforms & Marketplaces" wrapped to two lines.
 
 **The homepage industries section still does NOT match the brief.** It lists
 eight invented sectors (Professional services, Logistics & distribution,

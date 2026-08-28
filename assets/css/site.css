@@ -3304,77 +3304,109 @@ html.lenis, html.lenis body { block-size: auto; }
 }
 
 
+
 /* -----------------------------------------------------------------------------
    INDUSTRIES — the three the client named in the brief (§"INDUSTRIES PAGE",
    page 9). Names and lines are their words. The brief asks for ONE page listing
    three; it specifies no page per industry, and none is built.
    -------------------------------------------------------------------------- */
 
-/* An editorial index, not a card grid. Three items with one line each is far
-   too little for cards — a 3-up grid at that content weight is exactly the
-   empty template the homepage sector strip was told off for. Set at display
-   scale, one per row, the thinness reads as deliberate.
-   Deliberately unnumbered: three industries are a set, not a sequence (§2).
+/* Ink panels on a white page. Two earlier passes set this on white with
+   hairline rules and small outline icons, and it read as a wireframe — "half
+   done", correctly. There is very little copy here (three names, one line
+   each), so the presence has to come from the surface, and on this brand that
+   has always meant ink and density rather than air.
 
-   Each row carries a role on the right — Full operational management / Built,
-   launched and run / Structure and reporting — the same three already on the
-   About operating-layer diagram, sourced from the brief's case studies. That
-   is what stops the three rows looking identical. An earlier pass repeated the
-   four service names under every industry instead, which triplicated the same
-   list down the page and read as filler; that statement is now made ONCE, in
-   the band below. */
+   Ink PANELS rather than an ink section: the page's hero is already an ink
+   band, and a second full-width dark section directly below would read as one
+   long dark region instead of three objects.
+
+   Each panel pairs its copy with a plate carrying the industry's own mark at
+   scale. A first version floated that mark behind the whole panel, where it
+   ran through the role chip and read as an accident; giving it an object of
+   its own is what makes it deliberate. Deliberately unnumbered: a set, not a
+   sequence (§2). */
 .nx-inds {
   list-style: none;
   margin: 0;
   padding: 0;
-  border-block-start: 1px solid var(--inx-border);
+  display: grid;
+  gap: var(--inx-space-4);
 }
-/* Two real grid rows: the icon owns the first and spans the width, so the
-   three text columns start on a shared grid line. An earlier pass pushed them
-   down with a hand-tuned padding instead, which drifted the moment an industry
-   name wrapped to two lines. */
 .nx-ind {
   display: grid;
-  grid-template-columns: minmax(0, 6fr) minmax(0, 4fr) minmax(0, 3fr);
-  gap: var(--inx-space-2) var(--inx-space-6);
-  align-items: start;
-  padding-block: var(--inx-space-7);
-  border-block-end: 1px solid var(--inx-border);
-}
-.nx-ind__icon { grid-column: 1 / -1; grid-row: 1; }
-.nx-ind__name { grid-column: 1; grid-row: 2; }
-.nx-ind__line { grid-column: 2; grid-row: 2; }
-.nx-ind__role { grid-column: 3; grid-row: 2; }
-
-.nx-ind__icon {
-  display: inline-flex;
+  grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+  gap: var(--inx-space-7);
   align-items: center;
-  justify-content: center;
-  inline-size: 40px;
-  block-size: 40px;
-  margin-block-end: var(--inx-space-5);
-  border: 1px solid var(--inx-border-strong);
-  color: var(--inx-text);
-  transition:
-    background-color var(--inx-duration-base) var(--inx-ease),
-    color var(--inx-duration-base) var(--inx-ease);
-}
-.nx-ind:hover .nx-ind__icon {
+  padding: var(--inx-space-7);
   background: var(--inx-n-950);
-  color: var(--inx-n-0);
+  border: 1px solid var(--inx-n-800);
+  transition: border-color var(--inx-duration-base) var(--inx-ease);
+}
+.nx-ind:hover { border-color: var(--inx-n-600); }
+
+.nx-ind__kicker {
+  display: block;
+  margin-block-end: var(--inx-space-5);
+  font-size: var(--inx-text-3xs);
+  font-weight: var(--inx-weight-semi);
+  letter-spacing: var(--inx-tracking-caps);
+  text-transform: uppercase;
+  color: var(--inx-n-400);
 }
 .nx-ind__name {
   margin: 0;
   font-size: var(--inx-text-2xl);
   line-height: var(--inx-leading-tight);
   letter-spacing: var(--inx-tracking-display);
+  color: var(--inx-n-0);
   text-wrap: pretty;
 }
 .nx-ind__line {
-  margin: 0;
+  margin: var(--inx-space-4) 0 0;
   font-size: var(--inx-text-md);
   line-height: var(--inx-leading-snug);
-  color: var(--inx-text-subtle);
+  color: var(--inx-n-200);
+  max-inline-size: 42ch;
+}
+
+/* Mark over role, sharing one boundary — the 1px-gap idiom (§3.3) at plate
+   scale. This is a group to READ, not a set of choices, so shared boundaries
+   are the right call here. */
+.nx-ind__plate {
+  display: grid;
+  gap: 1px;
+  background: var(--inx-n-800);
+  border: 1px solid var(--inx-n-800);
+}
+.nx-ind__mark {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-block-size: 168px;
+  padding: var(--inx-space-5);
+  background: var(--inx-n-900);
+}
+.nx-ind__mark svg {
+  inline-size: 84px;
+  block-size: 84px;
+  fill: none;
+  stroke: var(--inx-n-500);
+  stroke-width: 1;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  transition:
+    stroke var(--inx-duration-slow) var(--inx-ease),
+    transform var(--inx-duration-slow) var(--inx-ease-out);
+}
+.nx-ind:hover .nx-ind__mark svg {
+  stroke: var(--inx-n-200);
+  transform: scale(1.06);
+}
+
+.nx-ind__role {
+  padding: var(--inx-space-5);
+  background: var(--inx-n-900);
 }
 .nx-ind__cap {
   margin: 0 0 var(--inx-space-3);
@@ -3382,27 +3414,25 @@ html.lenis, html.lenis body { block-size: auto; }
   font-weight: var(--inx-weight-semi);
   letter-spacing: var(--inx-tracking-caps);
   text-transform: uppercase;
-  color: var(--inx-text-muted);
+  color: var(--inx-n-400);
 }
 .nx-ind__role-name {
   margin: 0;
-  padding-block-start: var(--inx-space-3);
-  border-block-start: 1px solid var(--inx-border-strong);
   font-size: var(--inx-text-sm);
   font-weight: var(--inx-weight-semi);
   line-height: var(--inx-leading-snug);
+  color: var(--inx-n-0);
 }
 
-/* The one statement that applies to all three, made once. */
+/* The one thing true of all three, said once rather than repeated under each. */
 .nx-inds__same {
   display: grid;
   grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
   gap: var(--inx-space-6);
   align-items: center;
-  margin-block-start: var(--inx-space-7);
+  margin-block-start: var(--inx-space-6);
   padding: var(--inx-space-6);
   border: 1px solid var(--inx-border);
-  background: var(--inx-bg);
 }
 .nx-inds__same-say {
   margin: 0;
@@ -3433,22 +3463,20 @@ html.lenis, html.lenis body { block-size: auto; }
     background-color var(--inx-duration-base) var(--inx-ease),
     color var(--inx-duration-base) var(--inx-ease);
 }
-.nx-inds__svcs a:hover {
-  background: var(--inx-bg-sunken);
-  color: var(--inx-text);
-}
+.nx-inds__svcs a:hover { background: var(--inx-bg); color: var(--inx-text); }
 
 @media (max-width: 900px) {
   .nx-ind {
     grid-template-columns: minmax(0, 1fr);
-    gap: var(--inx-space-4);
-    padding-block: var(--inx-space-6);
+    gap: var(--inx-space-5);
+    padding: var(--inx-space-5);
   }
   .nx-ind__name { font-size: var(--inx-text-xl); }
   .nx-ind__line { font-size: var(--inx-text-sm); }
-  .nx-ind__icon, .nx-ind__name, .nx-ind__line, .nx-ind__role {
-    grid-column: 1; grid-row: auto;
-  }
+  /* The plate turns on its side so the mark does not eat a phone screen. */
+  .nx-ind__plate { grid-template-columns: auto minmax(0, 1fr); }
+  .nx-ind__mark { min-block-size: 0; inline-size: 96px; }
+  .nx-ind__mark svg { inline-size: 44px; block-size: 44px; }
   .nx-inds__same { grid-template-columns: minmax(0, 1fr); padding: var(--inx-space-5); }
 }
 @media (max-width: 560px) {
