@@ -478,7 +478,7 @@ and none should be built without the client asking.**
 
     Trading & Commodities · Digital Platforms & Marketplaces · Growth-Stage Businesses
 
-**Three ink panels on a white page**, and it took three passes to get there.
+**Three ink panels on a white page**, and it took four passes to get there.
 There is almost no copy — three names and one line each — so the presence has
 to come from the surface, not the text, and on this brand that has always meant
 ink and density rather than air (§5, "premium has meant surface"). The first two
@@ -492,12 +492,22 @@ Ink **panels**, not an ink section: the page's hero is already an ink band, and
 a second full-width dark section directly beneath would read as one long dark
 region instead of three objects.
 
-Each panel pairs its copy with a **plate** — the industry's own mark at 84px
-over the role beneath it, sharing one boundary. Two things that plate fixes:
-it gives the three panels visibly different graphics, so near-identical copy
-does not read as the same panel three times; and it gives the mark somewhere to
-live. A version before it floated the mark oversized behind the whole panel,
-where it ran straight through the role chip and looked like an accident.
+**The panel is built from the service card's parts**: a 44px solid icon tile
+beside a one-word kicker, then the name, then the copy — the same anatomy,
+inverted for the dark surface. That inversion is what makes the services and
+industries pages read as one system rather than two designs, and it is the
+answer to "make sure it all looks consistent".
+
+Two graphic ideas were tried and dropped on the way. An oversized mark floated
+behind the whole panel ran straight through the role chip and looked like an
+accident. Replacing it with an 84px mark on its own plate fixed the collision
+but introduced a graphic at a size nothing else on the site uses — "the huge
+icon is unnecessary", and correct. The icon is back at 44px, the system's own
+size, and the right-hand box carries only the role: capped at 280px and pushed
+to the panel's right edge rather than stretched across its column, so it reads
+as a small annotation instead of a second panel. `grid-auto-rows: 1fr` keeps
+the three panels the same height however the copy wraps, which is most of what
+"consistent" meant here.
 
 The roles — *Full operational management / Built, launched and run / Structure
 and reporting* — are the same three already on the About operating-layer
