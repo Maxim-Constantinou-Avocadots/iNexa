@@ -924,44 +924,16 @@ body {
 
 
 /* -----------------------------------------------------------------------------
-   FEATURED CASE STUDY — spec §13.7.
-
-   [CLIENT] The previous build stacked six full-width cells — intro, meta,
-   prose, KPIs, a photo AND a sample report table, then a quote — and ran to
-   1877px, the tallest section on the page by 650px. Two of those cells were
-   restatements: the operational table appears twice more (hero dashboard and
-   the systems section), and the challenge/approach prose belongs on the
-   detail page, not the shop window.
-
-   It is now one feature panel: photo bleeding down the left, the claim and
-   its proof on the right, outcomes as a hairline-gapped strip beneath, and a
-   button through to the full study.
+   HERO OUTCOME STRIP + PHOTO CAPTION
+   What remains of the old featured-case-study panel. That panel showed an
+   anonymised SAMPLE engagement on the homepage; once the client's two real
+   case studies went live it contradicted them, so the homepage now uses the
+   same .nx-cs card as /case-studies/ and the panel went with it. Two of its
+   parts outlived it and are still used everywhere:
+     .nx-feature__out  the three-cell strip under every sub-page hero
+     .nx-feature__tag  the caption on the About page's photograph
    -------------------------------------------------------------------------- */
 
-.nx-feature {
-  display: grid;
-  grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
-  border: 1px solid var(--inx-border);
-  background: var(--inx-bg-raised);
-  overflow: hidden;
-}
-
-/* Media — a bleed, not a stacked figure. The photo fills its half of the
-   panel's first row at whatever height the body sets, instead of setting the
-   height itself. Spanning both rows squeezed the outcomes into half the
-   width and left the photo absurdly tall. */
-.nx-feature__media {
-  position: relative;
-  min-block-size: 320px;
-  background: var(--inx-n-900);
-}
-.nx-feature__media img {
-  position: absolute;
-  inset: 0;
-  inline-size: 100%;
-  block-size: 100%;
-  object-fit: cover;
-}
 .nx-feature__tag {
   position: absolute;
   inset-block-end: 0;
@@ -975,61 +947,8 @@ body {
   letter-spacing: var(--inx-tracking-caps);
 }
 
-.nx-feature__body {
-  padding: var(--inx-space-7);
-  border-inline-start: 1px solid var(--inx-border);
-  min-inline-size: 0;
-}
-
-.nx-feature__flag { margin-block-end: var(--inx-space-5); }
-
-.nx-feature__title {
-  margin: 0 0 var(--inx-space-5);
-  font-size: var(--inx-text-xl);
-  line-height: var(--inx-leading-tight);
-  letter-spacing: var(--inx-tracking-tight);
-  text-wrap: pretty;
-}
-
-/* Meta reads as a spec strip, not a definition list stacked down the page. */
-.nx-feature__meta {
-  margin: 0 0 var(--inx-space-5);
-  padding-block: var(--inx-space-5);
-  border-block: 1px solid var(--inx-border);
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: var(--inx-space-4);
-}
-.nx-feature__meta dt {
-  font-size: var(--inx-text-3xs);
-  font-weight: var(--inx-weight-semi);
-  text-transform: uppercase;
-  letter-spacing: var(--inx-tracking-caps);
-  color: var(--inx-text-muted);
-  margin-block-end: var(--inx-space-2);
-}
-.nx-feature__meta dd { margin: 0; font-size: var(--inx-text-xs); line-height: var(--inx-leading-snug); }
-
-.nx-feature__quote {
-  margin: 0 0 var(--inx-space-5);
-  font-size: var(--inx-text-md);
-  line-height: var(--inx-leading-snug);
-  letter-spacing: var(--inx-tracking-tight);
-  text-wrap: pretty;
-}
-.nx-feature__quote cite {
-  display: block;
-  margin-block-start: var(--inx-space-3);
-  font-size: var(--inx-text-3xs);
-  font-style: normal;
-  color: var(--inx-text-muted);
-}
-
-.nx-feature__cta .nx-icon { inline-size: 18px; block-size: 18px; transition: transform var(--inx-duration-base) var(--inx-ease); }
-.nx-feature__cta:hover .nx-icon { transform: translateX(3px); }
-
-/* Outcomes — the dashboard's hairline-gapped construction, so the proof
-   reads as instrument output rather than four more paragraphs. */
+/* Four cells on the old panel; the sub-page heroes override to three. The
+   grid-column span is a leftover of that panel and is harmless here. */
 .nx-feature__out {
   list-style: none;
   margin: 0;
@@ -1041,6 +960,7 @@ body {
   background: var(--inx-border);
   border-block-start: 1px solid var(--inx-border);
 }
+
 .nx-feature__out li {
   padding: var(--inx-space-5);
   background: var(--inx-bg-raised);
@@ -1051,6 +971,7 @@ body {
     transform var(--inx-duration-slow) var(--inx-ease-out);
   transition-delay: var(--nx-delay, 0ms);
 }
+
 .nx-feature__out li.is-in,
 .no-js .nx-feature__out li { opacity: 1; transform: none; }
 .nx-feature__out strong {
@@ -1062,6 +983,7 @@ body {
   line-height: 1.1;
   letter-spacing: var(--inx-tracking-display);
 }
+
 .nx-feature__out span { font-size: var(--inx-text-3xs); line-height: var(--inx-leading-normal); color: var(--inx-text-muted); }
 
 @media (max-width: 1023px) {
@@ -1071,10 +993,11 @@ body {
   .nx-feature__out { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 
+@media (max-width: 1023px) {
+  .nx-feature__out { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
 @media (max-width: 600px) {
-  .nx-feature__meta { grid-template-columns: minmax(0, 1fr); gap: var(--inx-space-3); }
   .nx-feature__out { grid-template-columns: minmax(0, 1fr); }
-  .nx-feature__body { padding: var(--inx-space-5); }
 }
 
 

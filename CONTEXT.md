@@ -130,6 +130,7 @@ about/index.html            The About page — thesis, principles, operating lay
 services/index.html         The services index — the client's four service lines
 industries/index.html       The industries page — the client's three industries
 case-studies/index.html     The case studies index — AGD Global and CyDrive.eu
+case-study/index.html       Redirect to case-studies/ — held an anonymised sample
 case-study/index.html       The case study detail page
 contact/index.html          The contact page — the site's only form
 faq/index.html              The FAQ page — 6 topics, 25 answers, tabbed
@@ -469,6 +470,28 @@ or a proof point. Also: Technology & Platform Development has only **three**
 bullets where the others have four, and none of them is platform development,
 despite that being the service's name. Ask before inventing any of it (§22.13–14).
 
+**One case study, one source of truth — the homepage uses the same component.**
+The homepage used to feature a completely different, invented engagement: "Sample
+engagement", a "Confidential distribution group", a placeholder quotation, and
+outcome figures nobody supplied. It was honestly labelled, but it meant the site
+showed three case studies — two real ones on `case-studies/` and one fiction on
+the homepage — with no relationship between them.
+
+The homepage section now renders **the same two engagements through the same
+`.nx-cs` card** as `case-studies/`, linking to `case-studies/#<slug>`. If a case
+study changes on that page, the homepage has to change with it; using the same
+component is what keeps that honest rather than hoping someone remembers.
+
+`case-study/` (singular) held the sample as a full detail page. It is now a
+**redirect** to `case-studies/` — not a deletion, so any link already shared
+still lands somewhere useful, and the original layout stays in git history if it
+is ever wanted as the template for a real per-case page.
+
+The old `.nx-feature` panel went with it. Two of its parts survived and are
+still used everywhere: `.nx-feature__out`, the three-cell strip under every
+sub-page hero, and `.nx-feature__tag`, the caption on the About photograph.
+**Both were nearly lost** — see §6.
+
 **The case studies page is the one place the brief actually specified a
 design, so it is built to that spec.** §"CASE STUDIES" (page 8) gives the title
 *Real Execution. Real Results.* and two engagements in full; the visual mockup
@@ -748,6 +771,7 @@ Dropped as the MD requires: the marquee (continuous decorative movement).
 | Composed line-break statement re-wrapped | `.nx-say` carried `max-inline-size: 18ch`, narrower than its own longest line, so one mask held two rows | Cap removed; the composed lines *are* the measure, and the clamp keeps them one row down to 360px |
 | Footer's Company column ~1/6 width on phones | `style="grid-column:span 2"` inline on the column — inline styles outrank every media query, and `.nx-span-2` was never in the grid scale at all | `.nx-span-2` added to the scale and to both breakpoints; inline style deleted from all five pages |
 | Case study's "Built on iNexa Design System" 404'd | Sub-page path rewrite missed the footer's `style-guide/` | `../style-guide/` |
+| Nearly deleted a live rule while stripping dead CSS | Removing the `.nx-feature` panel, the cleanup split rules on `'\n}\n'` and kept only selectors matching the survivors — which silently dropped the `.nx-feature__out` **container** rule, the grid for the hero strip on all six sub-pages | Restored from git and verified the strip renders 3-up on every page. **When deleting a component, list what survives and assert each one still computes** |
 | Industries page's footer pointed at ids that were not on it | Built from the services page, whose footer Services column uses same-page anchors (`#operations-management`); those came along and resolved to nothing | Repointed to `../services/#slug`; **when cloning a page, re-check every same-page anchor in what you copied** |
 | Three stale service cards left behind in the markup | The replacement's end anchor was `'      </ul>'` (6 spaces), which is also a substring of the inner list's `'            </ul>'` (12 spaces), so `.index` stopped at the first inner list and only the first card was replaced | Cut the stale region and assert on a marker unique to it; **anchor block replacements on something that cannot appear nested inside the block** |
 | Four homepage icons silently swapped | A bulk `#i-build`→`#i-nodes` / `#i-eye`→`#i-pulse` replace across the whole file, meant for the services cells, hit the challenge section, process step 03 and two industry tiles | Restored by line; **scope icon-id replacements to the section, never the file** |
@@ -864,13 +888,11 @@ placeholder, and the build spec forbids inventing replacements:
   in the spec's architecture but unbuilt, which is why it is absent from the
   header. About and Services now exist and are linked from the nav, drawer and
   footer.
-- **`case-study/` (singular) is still the anonymous sample.** "Sample
-  engagement", "Confidential distribution group", "Sample quotation — to be
-  replaced with a permissioned client quote". It is honest about being a
-  placeholder, but the site now also has two *named, real* case studies at
-  `case-studies/`, and the homepage still features the anonymous one. Either
-  rebuild the homepage section around AGD Global or CyDrive.eu, or retire the
-  sample. Not done: it was outside the request that built the new page.
+- **The homepage testimonials are still samples.** "Sample quotations,
+  attributed by role. Replaced with permissioned statements before launch."
+  Honestly labelled, but they still need real permissioned quotes. This is the
+  last placeholder content on the site — the case studies are no longer among
+  them.
 - **The homepage's eight industries are invented and contradict the new
   industries page.** The client named three (§5). Flagged, not changed.
 - **The four service detail pages are not built and their URLs 404.** They are

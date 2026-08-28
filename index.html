@@ -14,7 +14,7 @@
 <link rel="stylesheet" href="assets/css/fonts.css?v=0b397c7f">
 <link rel="stylesheet" href="assets/css/inexa-tokens.css?v=a8fe4578">
 <link rel="stylesheet" href="assets/css/inexa-components.css?v=4cbda450">
-<link rel="stylesheet" href="assets/css/site.css?v=20f2f05d">
+<link rel="stylesheet" href="assets/css/site.css?v=07e6a494">
 
 <style>
   /* Without JavaScript nothing is hidden: reveals are visible, every service
@@ -689,55 +689,62 @@
 
 <div class="nx-hatch nx-hatch--sunken" aria-hidden="true"><div class="nx-shell nx-rail"></div></div>
 
-<!-- 7 · CASE STUDY -->
+<!-- 7 · CASE STUDIES — the same two engagements, and the same card component,
+     as case-studies/. One source of truth: if a case study changes there, the
+     homepage must change with it. -->
 <section class="nx-section" id="case-study">
   <div class="nx-shell nx-rail">
     <div class="nx-head">
-      <p class="inx-eyebrow" data-reveal>Case study</p>
+      <p class="inx-eyebrow" data-reveal>Case studies</p>
       <div class="nx-grid">
         <div class="nx-span-7">
-          <h2 class="nx-head__title" data-reveal>Creating operational visibility across a growing organisation.</h2>
+          <h2 class="nx-head__title" data-reveal>Real Execution. Real Results.</h2>
+        </div>
+        <div class="nx-span-5">
+          <p class="nx-head__lead" data-reveal>Two engagements we run today — what we were brought in to fix, and
+             what we took over.</p>
         </div>
       </div>
     </div>
 
-    <article class="nx-feature" data-reveal>
-      <div class="nx-feature__media">
-        <!-- Photography principle 2: Meaningful Collaboration (p38). -->
-        <img src="assets/img/collaboration.jpg" width="1200" height="900" loading="lazy"
-             alt="Two colleagues working through a problem together at a desk">
-        <span class="nx-feature__tag">Logistics &amp; distribution</span>
-      </div>
+    <ul class="nx-cses">
+        <li class="nx-cs" data-reveal style="--nx-delay:0ms">
+          <a class="nx-cs__link" href="case-studies/#agd-global">
+            <img class="nx-cs__img" src="assets/img/operations.jpg" width="1200" height="900"
+                 loading="lazy" decoding="async" alt="An operations team working across desks in an open office">
+            <span class="nx-cs__scrim" aria-hidden="true"></span>
+            <span class="nx-cs__text">
+              <span class="nx-cs__name">AGD Global Pty Ltd</span>
+              <span class="nx-cs__sub">Full Operational Management &amp; Business Optimisation</span>
+              <span class="nx-cs__go">
+                <span>View case</span>
+                <svg class="nx-icon nx-icon--sm" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-arrow-right"></use></svg>
+              </span>
+            </span>
+          </a>
+        </li>
+        <li class="nx-cs" data-reveal style="--nx-delay:90ms">
+          <a class="nx-cs__link" href="case-studies/#cydrive">
+            <img class="nx-cs__img" src="assets/img/collaboration.jpg" width="1200" height="900"
+                 loading="lazy" decoding="async" alt="Two colleagues working through a problem together at a desk">
+            <span class="nx-cs__scrim" aria-hidden="true"></span>
+            <span class="nx-cs__text">
+              <span class="nx-cs__name">CyDrive.eu</span>
+              <span class="nx-cs__sub">Platform Development &amp; Full Operational Execution</span>
+              <span class="nx-cs__go">
+                <span>View case</span>
+                <svg class="nx-icon nx-icon--sm" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-arrow-right"></use></svg>
+              </span>
+            </span>
+          </a>
+        </li>
+    </ul>
 
-      <div class="nx-feature__body">
-        <span class="inx-pill nx-feature__flag">Sample engagement</span>
-
-        <h3 class="nx-feature__title">A distribution group replaces coordination effort with structure.</h3>
-
-        <dl class="nx-feature__meta">
-          <div><dt>Client</dt><dd>Confidential distribution group</dd></div>
-          <div><dt>Scale</dt><dd>Multi-site, 100–200 people</dd></div>
-          <div><dt>Services</dt><dd>Operations management, systems integration</dd></div>
-        </dl>
-
-        <blockquote class="nx-feature__quote">
-          “The operating report replaced a week of chasing.”
-          <cite>Sample quotation — to be replaced with a permissioned client quote</cite>
-        </blockquote>
-
-        <a class="inx-btn inx-btn--primary nx-feature__cta" href="case-study/">
-          Read the full case study
-          <svg class="nx-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-arrow-right"></use></svg>
-        </a>
-      </div>
-
-      <ul class="nx-feature__out" data-stagger="70">
-        <li data-reveal><strong>Days, not weeks</strong><span>to a complete operational picture</span></li>
-        <li data-reveal><strong>Named owners</strong><span>for every recurring process</span></li>
-        <li data-reveal><strong>One view</strong><span>of orders, capacity and cost</span></li>
-        <li data-reveal><strong>Weekly</strong><span>operating report to leadership</span></li>
-      </ul>
-    </article>
+    <div class="nx-vision__cta" data-reveal>
+      <a class="inx-btn inx-btn--secondary" href="case-studies/">See both case studies
+        <svg class="nx-icon nx-icon--sm" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-arrow-right"></use></svg>
+      </a>
+    </div>
   </div>
 </section>
 
