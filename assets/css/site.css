@@ -3471,3 +3471,205 @@ html.lenis, html.lenis body { block-size: auto; }
 @media (max-width: 560px) {
   .nx-inds__svcs { grid-template-columns: minmax(0, 1fr); }
 }
+
+/* -----------------------------------------------------------------------------
+   CASE STUDIES — the two engagements the client names in the brief
+   (§"CASE STUDIES", page 8). Names, scope, Challenge/Solution/Result are their
+   words about their own work: AGD Global Pty Ltd and CyDrive.eu are named in
+   the brief itself, so using them is what was asked, not a claim we invented.
+   -------------------------------------------------------------------------- */
+
+/* The card treatment is the brief's own (page 19): "2 large cards side by
+   side", "background image (dark overlay)", "white text on top", and on hover
+   "image zooms slightly, overlay darkens, CTA appears". Built to that, with
+   two adjustments the brief could not have known about — the corners stay
+   sharp per the design system, and the CTA is revealed on hover only where
+   there is a pointer to hover with (see below). */
+.nx-cses {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--inx-space-5);
+}
+.nx-cs { position: relative; }
+.nx-cs__link {
+  position: relative;
+  display: block;
+  overflow: hidden;              /* holds the zoom inside the frame */
+  aspect-ratio: 4 / 3;
+  color: var(--inx-n-0);
+  text-decoration: none;
+  border: 1px solid var(--inx-n-800);
+}
+.nx-cs__img {
+  position: absolute;
+  inset: 0;
+  inline-size: 100%;
+  block-size: 100%;
+  object-fit: cover;
+  transform: scale(1);
+  transition: transform var(--inx-duration-slow) var(--inx-ease-out);
+}
+.nx-cs__link:hover .nx-cs__img,
+.nx-cs__link:focus-visible .nx-cs__img { transform: scale(1.06); }
+
+/* A flat scrim, not a gradient: the system has no decorative gradients outside
+   the approved atmosphere tokens, and 62% of Ink Black already clears AA for
+   white text over any part of these photographs. */
+.nx-cs__scrim {
+  position: absolute;
+  inset: 0;
+  background: rgba(7, 11, 20, 0.74);
+  transition: background-color var(--inx-duration-slow) var(--inx-ease);
+}
+.nx-cs__link:hover .nx-cs__scrim,
+.nx-cs__link:focus-visible .nx-cs__scrim { background: rgba(7, 11, 20, 0.88); }
+
+.nx-cs__text {
+  position: absolute;
+  inset-block-end: 0;
+  inset-inline: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--inx-space-3);
+  padding: var(--inx-space-6);
+}
+.nx-cs__name {
+  font-size: var(--inx-text-xl);
+  font-weight: var(--inx-weight-semi);
+  line-height: var(--inx-leading-tight);
+  letter-spacing: var(--inx-tracking-tight);
+}
+.nx-cs__sub {
+  font-size: var(--inx-text-sm);
+  line-height: var(--inx-leading-snug);
+  color: var(--inx-n-200);
+}
+
+/* "CTA appears" — but only where hovering is possible. On a touch screen there
+   is no hover, so a control that only exists on hover is a control that never
+   exists; there it is simply always visible. Keyboard users get it on focus. */
+.nx-cs__go {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--inx-space-3);
+  margin-block-start: var(--inx-space-3);
+  padding: var(--inx-space-3) var(--inx-space-5);
+  border: 1px solid var(--inx-n-0);
+  font-size: var(--inx-text-xs);
+  font-weight: var(--inx-weight-semi);
+}
+.nx-cs__go svg { transition: transform var(--inx-duration-base) var(--inx-ease); }
+@media (hover: hover) {
+  .nx-cs__go {
+    opacity: 0;
+    transform: translateY(6px);
+    transition:
+      opacity var(--inx-duration-base) var(--inx-ease-out),
+      transform var(--inx-duration-base) var(--inx-ease-out);
+  }
+  .nx-cs__link:hover .nx-cs__go,
+  .nx-cs__link:focus-visible .nx-cs__go { opacity: 1; transform: none; }
+  .nx-cs__link:hover .nx-cs__go svg { transform: translateX(4px); }
+}
+
+/* --- the full write-ups ------------------------------------------------- */
+
+.nx-case {
+  padding-block: var(--inx-space-7);
+  border-block-start: 1px solid var(--inx-border);
+  scroll-margin-block-start: 120px;   /* clears the condensed navbar */
+}
+.nx-case:first-child { border-block-start: 0; padding-block-start: 0; }
+
+.nx-case__head {
+  display: grid;
+  grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+  gap: var(--inx-space-6);
+  align-items: start;
+}
+.nx-case__name {
+  margin: 0;
+  font-size: var(--inx-text-2xl);
+  line-height: var(--inx-leading-tight);
+  letter-spacing: var(--inx-tracking-display);
+}
+.nx-case__sub {
+  margin: var(--inx-space-3) 0 0;
+  font-size: var(--inx-text-md);
+  line-height: var(--inx-leading-snug);
+  color: var(--inx-text-subtle);
+}
+.nx-case__intro {
+  margin: var(--inx-space-5) 0 0;
+  font-size: var(--inx-text-sm);
+  line-height: var(--inx-leading-normal);
+  color: var(--inx-text-muted);
+  max-inline-size: var(--inx-measure);
+}
+.nx-case__scope {
+  padding: var(--inx-space-5);
+  border: 1px solid var(--inx-border);
+  background: var(--inx-n-0);
+}
+.nx-case__scope-cap {
+  margin: 0 0 var(--inx-space-4);
+  font-size: var(--inx-text-3xs);
+  font-weight: var(--inx-weight-semi);
+  letter-spacing: var(--inx-tracking-caps);
+  text-transform: uppercase;
+  color: var(--inx-text-muted);
+}
+.nx-case__scope ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: var(--inx-space-3); }
+.nx-case__scope li {
+  position: relative;
+  padding-inline-start: var(--inx-space-4);
+  font-size: var(--inx-text-xs);
+  line-height: var(--inx-leading-snug);
+}
+.nx-case__scope li::before {
+  content: "";
+  position: absolute;
+  inset-inline-start: 0;
+  inset-block-start: 0.52em;
+  inline-size: 4px;
+  block-size: 4px;
+  background: var(--inx-border-strong);
+}
+
+/* Challenge / Solution / Result as one instrument panel — a group to read
+   together, so shared 1px boundaries (§3.3) are right here. */
+.nx-case__csr {
+  margin: var(--inx-space-6) 0 0;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1px;
+  background: var(--inx-border);
+  border: 1px solid var(--inx-border);
+}
+.nx-case__csr > div { padding: var(--inx-space-5); background: var(--inx-n-0); }
+.nx-case__csr dt {
+  margin: 0 0 var(--inx-space-3);
+  font-size: var(--inx-text-3xs);
+  font-weight: var(--inx-weight-semi);
+  letter-spacing: var(--inx-tracking-caps);
+  text-transform: uppercase;
+  color: var(--inx-text-muted);
+}
+.nx-case__csr dd {
+  margin: 0;
+  font-size: var(--inx-text-sm);
+  line-height: var(--inx-leading-normal);
+}
+
+@media (max-width: 900px) {
+  .nx-cses { grid-template-columns: minmax(0, 1fr); gap: var(--inx-space-4); }
+  .nx-cs__link { aspect-ratio: 3 / 2; }
+  .nx-cs__name { font-size: var(--inx-text-lg); }
+  .nx-case__head { grid-template-columns: minmax(0, 1fr); }
+  .nx-case__name { font-size: var(--inx-text-xl); }
+  .nx-case__csr { grid-template-columns: minmax(0, 1fr); }
+}

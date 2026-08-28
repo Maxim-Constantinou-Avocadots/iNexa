@@ -129,6 +129,7 @@ index.html                  The homepage — 1138 lines, 14 sections
 about/index.html            The About page — thesis, principles, operating layer
 services/index.html         The services index — the client's four service lines
 industries/index.html       The industries page — the client's three industries
+case-studies/index.html     The case studies index — AGD Global and CyDrive.eu
 case-study/index.html       The case study detail page
 contact/index.html          The contact page — the site's only form
 faq/index.html              The FAQ page — 6 topics, 25 answers, tabbed
@@ -198,6 +199,7 @@ client asked for dots over the original diagonal hatch. The class is still
 | 2915+ | **About — thesis, principles ledger, operating-layer stack, vision** |
 | 3130+ | **Services — the four panels, and their homepage cells** |
 | 3300+ | **Industries — the editorial index of three** |
+| 3450+ | **Case studies — the brief's own card treatment, plus the write-ups** |
 
 ---
 
@@ -466,6 +468,44 @@ has supplied scope, what is in and out, how an engagement runs, who it is for,
 or a proof point. Also: Technology & Platform Development has only **three**
 bullets where the others have four, and none of them is platform development,
 despite that being the service's name. Ask before inventing any of it (§22.13–14).
+
+**The case studies page is the one place the brief actually specified a
+design, so it is built to that spec.** §"CASE STUDIES" (page 8) gives the title
+*Real Execution. Real Results.* and two engagements in full; the visual mockup
+section (page 19) then specifies the treatment outright:
+
+> 2 large cards side by side · background image (dark overlay) · white text on
+> top · hover: image zooms slightly, overlay darkens, CTA appears ("View Case")
+
+All four behaviours are implemented and measured. Two departures, both
+deliberate: corners stay sharp (the design system's radius scale is 0, §5), and
+the CTA is hidden-until-hover only inside `@media (hover: hover)` — on a touch
+screen a control that exists only on hover is a control that never exists, so
+there it is always visible; keyboard users get it on `:focus-visible`.
+
+The scrim is a flat `rgba(7, 11, 20, .74)`, not a gradient — the system has no
+decorative gradients outside the approved atmosphere tokens. Checked against the
+worst case, a pure-white pixel under the scrim: white text 8.87:1, the n-200
+subtitle 5.58:1. Both clear AA. It darkens to .88 on hover.
+
+**AGD Global Pty Ltd and CyDrive.eu are named because the client named them.**
+Earlier notes in this file flagged naming these businesses as pending client
+permission — that flag was wrong for this page and is now cleared. The brief is
+the client's own document, and its case studies section names both, describes
+each engagement, and gives Challenge / Solution / Result for each. Using their
+words about their own work is exactly what was asked. (The About operating-layer
+diagram is a different matter — those generic labels were our construct, not
+theirs, and still are.)
+
+Below the two cards, each engagement gets its full write-up: the scope bullets
+in a bordered panel, then Challenge / Solution / Result as one three-column
+instrument panel sharing 1px boundaries (§3.3 — a group to read together, so
+shared boundaries are right, unlike the service cards which are choices). The
+cards link to those write-ups by anchor, so nothing 404s.
+
+**Nav:** "Case study" became "Case studies" and points at the new page rather
+than the homepage anchor, on all eight pages. `navfit.js` still passes at all
+ten widths.
 
 **The industries page is one page listing three — because that is all the brief
 asks for.** §"INDUSTRIES PAGE" (page 9) gives a title and three industries with
@@ -815,6 +855,13 @@ placeholder, and the build spec forbids inventing replacements:
   in the spec's architecture but unbuilt, which is why it is absent from the
   header. About and Services now exist and are linked from the nav, drawer and
   footer.
+- **`case-study/` (singular) is still the anonymous sample.** "Sample
+  engagement", "Confidential distribution group", "Sample quotation — to be
+  replaced with a permissioned client quote". It is honest about being a
+  placeholder, but the site now also has two *named, real* case studies at
+  `case-studies/`, and the homepage still features the anonymous one. Either
+  rebuild the homepage section around AGD Global or CyDrive.eu, or retire the
+  sample. Not done: it was outside the request that built the new page.
 - **The homepage's eight industries are invented and contradict the new
   industries page.** The client named three (§5). Flagged, not changed.
 - **The four service detail pages are not built and their URLs 404.** They are
